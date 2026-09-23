@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | AEDOSPOT</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green-deep:   #071a0f;
+            --green-dark:   #0d2b18;
+            --green-mid:    #145c30;
+            --green-bright: #2ecc71;
+            --green-bright-alt: #1a8a4a;
+            --green-glow:   rgba(46,204,113,0.18);
+            --amber:        #f39c12;
+            --red:          #e74c3c;
+            --blue:         #3498db;
+            --purple:       #9b59b6;
+            --text-main:    #e8f5ee;
+            --text-muted:   rgba(232,245,238,0.55);
+            --glass:        rgba(255,255,255,0.055);
+            --glass-border: rgba(255,255,255,0.10);
+            --transition:   0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            --nav-bg: rgba(7,26,15,0.75);
+            --nav-bg-mobile: rgba(7,26,15,0.95);
+            --bg-1: #1a5c35;
+            --bg-2: #0a2e1c;
+            --bg-3: #071a0f;
+            --on-accent: #04150a;
+        }
+
+        body.light-theme {
+            --green-deep:   #ffffff;
+            --green-dark:   #f3faf6;
+            --green-mid:    #e6f5ec;
+            --green-bright: #0d6b3a;
+            --green-bright-alt: #0a4f2a;
+            --green-glow:   rgba(13,107,58,0.10);
+            --text-main:    #10261a;
+            --text-muted:   rgba(16,38,26,0.6);
+            --glass:        rgba(13,107,58,0.045);
+            --glass-border: rgba(13,107,58,0.14);
+            --nav-bg: rgba(255,255,255,0.82);
+            --nav-bg-mobile: rgba(255,255,255,0.97);
+            --bg-1: #ffffff;
+            --bg-2: #f2faf5;
+            --bg-3: #e8f5ee;
+            --on-accent: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at 20% 0%, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* ── TOP NAV ── */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .top-nav .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .top-nav .nav-logo-mark {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            object-fit: contain;
+            display: block;
+        }
+
+        .top-nav .nav-logo-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .top-nav .nav-logo-text .accent { color: var(--green-bright); }
+
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            list-style: none;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.28rem;
+            border-radius: 50px;
+        }
+
+        .top-nav .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            font-weight: 600;
+            padding: 0.55rem 1.05rem;
+            border-radius: 50px;
+            transition: all var(--transition);
+        }
+
+        .top-nav .nav-links a i { font-size: 0.82rem; }
+
+        .top-nav .nav-links a:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.07);
+        }
+
+        body.light-theme .top-nav .nav-links a:hover {
+            background: rgba(13,107,58,0.08);
+        }
+
+        .top-nav .nav-links a.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            box-shadow: 0 4px 14px rgba(46,204,113,0.35);
+        }
+
+        body.light-theme .top-nav .nav-links a.active {
+            color: var(--green-bright-alt);
+            background: linear-gradient(135deg, #ffffff, #e7f7ee);
+            border: 1px solid rgba(13,107,58,0.22);
+            box-shadow: 0 4px 14px rgba(13,107,58,0.14);
+        }
+
+        .nav-item.hidden { display: none; }
+
+        .top-nav .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--green-bright);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--green-glow);
+            transform: rotate(20deg);
+        }
+
+        .top-nav .nav-actions .account-btn-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1rem 0.4rem 0.6rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+
+        .top-nav .nav-actions .account-btn-top:hover {
+            background: var(--green-glow);
+            border-color: rgba(46,204,113,0.3);
+        }
+
+        .nav-avatar-wrap {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+        }
+
+        .nav-avatar {
+            width: 100%;
+            height: 100%;
+            display: none;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .nav-avatar-wrap i {
+            font-size: 1.2rem;
+            color: var(--green-bright);
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.25;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-greeting {
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name {
+            max-width: none;
+            white-space: nowrap;
+        }
+
+        .top-nav .nav-actions .logout-btn-top {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.08);
+            color: #ff8a80;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .top-nav .nav-actions .logout-btn-top:hover {
+            background: rgba(231,76,60,0.75);
+            color: white;
+        }
+
+        /* ── MOBILE MENU ── */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+
+        .mobile-nav-dropdown {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg-mobile);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 1.5rem;
+            z-index: 99;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .mobile-nav-dropdown.open { display: flex; }
+
+        .mobile-nav-dropdown a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all var(--transition);
+        }
+
+        .mobile-nav-dropdown a:hover {
+            color: var(--text-main);
+            background: var(--glass);
+        }
+
+        .mobile-nav-dropdown a.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+        }
+
+        /* ── MAIN ── */
+        .main-content {
+            margin-top: 70px;
+            padding: 1.4rem 1.6rem 2.5rem;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.4rem;
+        }
+
+        .dash-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: white;
+            text-shadow: 0 0 30px rgba(46,204,113,0.25);
+        }
+
+        .realtime-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.45rem 1.1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(46,204,113,0.35);
+            background: rgba(46,204,113,0.08);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--green-bright);
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 0 0 rgba(46,204,113,0.6);
+            animation: pulse-ring 1.6s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(46,204,113,0.65); }
+            60%  { box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+            100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+        }
+
+        .realtime-divider { width: 1px; height: 14px; background: rgba(46,204,113,0.3); }
+        .realtime-clock-wrap { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+        .realtime-clock {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--green-bright);
+            white-space: nowrap;
+        }
+        .realtime-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: rgba(46,204,113,0.7);
+            white-space: nowrap;
+        }
+
+        /* ── SETTINGS LAYOUT ── */
+        .settings-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 1.2rem;
+            align-items: start;
+        }
+
+        /* ── SETTINGS NAV ── */
+        .settings-nav {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            position: sticky;
+            top: 1rem;
+        }
+
+        .settings-nav-header {
+            padding: 0.85rem 1.1rem 0.6rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .settings-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.75rem 1.1rem;
+            font-size: 0.83rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .settings-nav-item:last-child { border-bottom: none; }
+        .settings-nav-item i { width: 18px; text-align: center; font-size: 0.9rem; }
+        .settings-nav-item:hover { color: var(--text-main); background: rgba(255,255,255,0.03); }
+        .settings-nav-item.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+            border-left-color: var(--green-bright);
+        }
+
+        /* Compact dropdown selector shown in place of the nav list on
+           narrow screens — same section-switching behavior, far less
+           vertical space than a wrapped row of buttons. */
+        .settings-nav-select {
+            display: none;
+            width: 100%;
+            min-width: 0;
+            margin: 0.7rem;
+            width: calc(100% - 1.4rem);
+        }
+
+        body.light-theme .settings-nav-item.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+            border-left-color: var(--green-bright);
+        }
+
+        /* ── SETTINGS PANELS ── */
+        .settings-panel { display: none; flex-direction: column; gap: 1rem; }
+        .settings-panel.active { display: flex; }
+
+        /* ── SECTION CARD ── */
+        .section-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 0.9rem 1.3rem 0.75rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-header i { color: var(--green-bright); font-size: 0.9rem; }
+
+        body.light-theme .section-header i {
+            color: var(--green-bright);
+        }
+
+        .section-body { padding: 0.6rem 0; }
+
+        /* ── SETTING ROW ── */
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            gap: 1rem;
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-row:hover { background: rgba(255,255,255,0.02); }
+
+        body.light-theme .setting-row {
+            border-bottom: 1px solid rgba(13,107,58,0.06);
+        }
+        body.light-theme .setting-row:hover {
+            background: rgba(13,107,58,0.03);
+        }
+
+        .setting-info { flex: 1; min-width: 0; }
+        .setting-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        .setting-desc {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* ── TOGGLE SWITCH ── */
+        .toggle-wrap { flex-shrink: 0; }
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.25s;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 3px;
+            bottom: 3px;
+            background: rgba(232,245,238,0.45);
+            transition: all 0.25s;
+        }
+        .toggle input:checked + .toggle-slider {
+            background: var(--green-mid);
+            border-color: rgba(46,204,113,0.4);
+        }
+        .toggle input:checked + .toggle-slider::before {
+            transform: translateX(20px);
+            background: var(--green-bright);
+            box-shadow: 0 0 8px rgba(46,204,113,0.6);
+        }
+
+        body.light-theme .toggle-slider {
+            background: rgba(13,107,58,0.1);
+        }
+        body.light-theme .toggle-slider::before {
+            background: rgba(13,107,58,0.3);
+        }
+        body.light-theme .toggle input:checked + .toggle-slider {
+            background: var(--green-mid);
+            border-color: rgba(13,107,58,0.3);
+        }
+        body.light-theme .toggle input:checked + .toggle-slider::before {
+            background: var(--green-bright);
+            box-shadow: 0 0 8px rgba(13,107,58,0.4);
+        }
+
+        /* ── SELECT / INPUT ── */
+        .setting-select, .setting-input {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            padding: 0.45rem 0.8rem;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            min-width: 140px;
+        }
+        .setting-select:focus, .setting-input:focus {
+            border-color: rgba(46,204,113,0.4);
+            box-shadow: 0 0 0 2px rgba(46,204,113,0.08);
+        }
+        .setting-select option { background: #0d2b18; color: var(--text-main); }
+        .setting-input { min-width: 200px; }
+
+        /* ── EMAIL MESSAGE TEXTAREA ── */
+        .setting-textarea {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            padding: 0.7rem 0.9rem;
+            outline: none;
+            resize: vertical;
+            min-height: 108px;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+        .setting-textarea:focus {
+            border-color: rgba(46,204,113,0.4);
+            box-shadow: 0 0 0 2px rgba(46,204,113,0.08);
+        }
+        body.light-theme .setting-textarea {
+            background: rgba(13,107,58,0.06);
+            border-color: rgba(13,107,58,0.15);
+            color: var(--text-main);
+        }
+        body.light-theme .setting-textarea:focus {
+            border-color: rgba(13,107,58,0.4);
+            box-shadow: 0 0 0 2px rgba(13,107,58,0.08);
+        }
+        .setting-row.stacked {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .setting-row.stacked .setting-info { margin-bottom: 0.6rem; }
+        .char-count {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 4px;
+        }
+        .char-count.over-limit { color: var(--red); font-weight: 700; }
+
+        /* ── EMAIL PREVIEW (mimics the actual Gmail HTML email) ── */
+        .email-preview-wrap {
+            padding: 1rem 1.3rem 1.3rem;
+        }
+        .email-preview-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+        .email-preview-frame {
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: #05130a;
+        }
+        .live-email-preview-frame {
+            background: #ffffff;
+        }
+        .email-preview-iframe {
+            display: block;
+            width: 100%;
+            height: 760px;
+            border: 0;
+            background: #f4f7f5;
+        }
+        .email-preview-live-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-top: 0.7rem;
+            padding: 0.65rem 0.8rem;
+            border-radius: 8px;
+            background: rgba(46,204,113,0.06);
+            border: 1px solid rgba(46,204,113,0.12);
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            line-height: 1.5;
+        }
+        .email-preview-live-note i {
+            color: var(--green-bright);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .email-preview-subject-bar {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.8rem;
+            color: #e8f5ee;
+            background: rgba(255,255,255,0.03);
+        }
+        .email-preview-subject-bar strong { color: var(--green-bright); font-weight: 700; }
+        .email-preview-body {
+            padding: 22px 18px;
+        }
+        .email-preview-card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: #0d2b18;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .email-preview-header {
+            background: linear-gradient(135deg, #1a5c35, #0a2e1c);
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .email-preview-header h4 {
+            color: #2ecc71;
+            margin: 0;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+        .email-preview-header p {
+            color: #b0d4c0;
+            margin: 5px 0 0;
+            font-size: 0.72rem;
+        }
+        .email-preview-content { padding: 16px; }
+        .email-preview-badge {
+            text-align: center;
+            padding: 8px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .email-preview-readings {
+            color: #b0d4c0;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin: 0 0 16px;
+            padding-left: 18px;
+        }
+        .email-preview-advice {
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-left: 4px solid var(--green-bright);
+            padding: 12px 14px;
+        }
+        .email-preview-advice-label {
+            margin: 0 0 5px;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .email-preview-advice-text {
+            margin: 0;
+            color: #e8f5ee;
+            font-size: 0.78rem;
+            line-height: 1.6;
+        }
+        .email-preview-footer {
+            background: rgba(0,0,0,0.15);
+            padding: 12px 16px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .email-preview-footer p {
+            color: #7fa897;
+            font-size: 0.65rem;
+            margin: 0;
+        }
+        .preview-toggle-group {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 0.9rem;
+        }
+        .preview-toggle-btn {
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preview-toggle-btn.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            border-color: transparent;
+        }
+
+        /* ── IN-APP NOTIFICATION PREVIEW (mirrors the real In-App Notification
+           card shown in Admin Alerts / resident Alerts) ── */
+        .inapp-preview-card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--nav-bg-mobile);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+        .inapp-preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .inapp-preview-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .inapp-preview-title i { color: var(--amber); }
+        .inapp-preview-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            border: 1px solid rgba(243,156,18,0.3);
+            background: rgba(243,156,18,0.12);
+            color: var(--amber);
+        }
+        .inapp-preview-badge.high-risk {
+            border-color: rgba(231,76,60,0.35);
+            background: rgba(231,76,60,0.12);
+            color: var(--red);
+        }
+        .inapp-preview-source {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+        .inapp-preview-card .env-data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem 0.8rem;
+            padding: 0.65rem 0.85rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            margin-bottom: 0.9rem;
+        }
+        .inapp-preview-card .env-data-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            padding: 0.15rem 0;
+        }
+        .inapp-preview-card .env-data-item .label { color: var(--text-muted); font-weight: 500; }
+        .inapp-preview-card .env-data-item .value { color: var(--text-main); font-weight: 600; }
+        .inapp-preview-card .env-data-item .value.high-risk { color: var(--red); }
+        .inapp-preview-card .env-data-item .value.moderate-risk { color: var(--amber); }
+        .inapp-preview-field-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+        .inapp-preview-message {
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            word-break: break-word;
+            padding: 0.75rem 0.85rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+        }
+
+        body.light-theme .setting-select,
+        body.light-theme .setting-input {
+            background: rgba(13,107,58,0.06);
+            border-color: rgba(13,107,58,0.15);
+            color: var(--text-main);
+        }
+        body.light-theme .setting-select option {
+            background: #f3faf6;
+            color: var(--text-main);
+        }
+        body.light-theme .setting-select:focus,
+        body.light-theme .setting-input:focus {
+            border-color: rgba(13,107,58,0.4);
+            box-shadow: 0 0 0 2px rgba(13,107,58,0.08);
+        }
+
+        /* Range slider */
+        .setting-range-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .setting-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 120px;
+            height: 4px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+        .setting-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(46,204,113,0.5);
+            cursor: pointer;
+        }
+        .setting-range::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(46,204,113,0.5);
+            cursor: pointer;
+            border: none;
+        }
+
+        body.light-theme .setting-range {
+            background: rgba(13,107,58,0.12);
+        }
+        body.light-theme .setting-range::-webkit-slider-thumb {
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(13,107,58,0.3);
+        }
+        body.light-theme .setting-range::-moz-range-thumb {
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(13,107,58,0.3);
+        }
+
+        .range-val {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--green-bright);
+            min-width: 36px;
+            text-align: right;
+        }
+
+        /* Min–max range boxes */
+        .range-box-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .range-box {
+            width: 64px;
+            min-width: 64px;
+            text-align: center;
+            cursor: text;
+        }
+        .range-box-sep {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .range-box-unit {
+            font-size: 0.8rem;
+            color: var(--green-bright);
+            font-weight: 700;
+            min-width: 32px;
+        }
+
+        /* Threshold summary */
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            font-size: 0.85rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed var(--glass-border);
+        }
+        .summary-line:last-child { border-bottom: none; }
+        .summary-line .summary-label { color: var(--text-muted); font-weight: 600; }
+        .summary-line .summary-value { color: var(--green-bright); font-weight: 700; text-align: right; }
+
+        /* ── SAVE BUTTON ── */
+        .save-bar {
+            padding: 0.85rem 1.3rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        .btn-save {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0.55rem 1.4rem;
+            border-radius: 9px;
+            background: var(--green-mid);
+            border: 1px solid rgba(46,204,113,0.35);
+            color: var(--green-bright);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.22s;
+        }
+        .btn-save:hover {
+            background: rgba(46,204,113,0.25);
+            box-shadow: 0 0 14px rgba(46,204,113,0.2);
+        }
+
+        body.light-theme .btn-save {
+            color: var(--text-inverse);
+            background: var(--green-bright);
+            border-color: var(--green-bright);
+        }
+        body.light-theme .btn-save:hover {
+            background: var(--green-bright-alt);
+            box-shadow: 0 0 14px rgba(13,107,58,0.2);
+        }
+
+        .btn-cancel {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0.55rem 1.1rem;
+            border-radius: 9px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.22s;
+        }
+        .btn-cancel:hover { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
+
+        body.light-theme .btn-cancel {
+            border-color: rgba(13,107,58,0.15);
+            color: var(--text-muted);
+        }
+        body.light-theme .btn-cancel:hover {
+            color: var(--text-main);
+            border-color: rgba(13,107,58,0.3);
+        }
+
+        /* ── DANGER ZONE ── */
+        .danger-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.3rem;
+            border-bottom: 1px solid rgba(231,76,60,0.08);
+            gap: 1rem;
+        }
+        .danger-row:last-child { border-bottom: none; }
+        .danger-row:hover { background: rgba(231,76,60,0.02); }
+
+        body.light-theme .danger-row {
+            border-bottom: 1px solid rgba(231,76,60,0.06);
+        }
+        body.light-theme .danger-row:hover {
+            background: rgba(231,76,60,0.03);
+        }
+
+        .btn-danger {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            background: rgba(231,76,60,0.1);
+            border: 1px solid rgba(231,76,60,0.3);
+            color: #ff8a80;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.22s;
+            flex-shrink: 0;
+        }
+        .btn-danger:hover { background: rgba(231,76,60,0.75); color: white; }
+
+        body.light-theme .btn-danger {
+            color: var(--red);
+            border-color: rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.06);
+        }
+        body.light-theme .btn-danger:hover {
+            background: rgba(231,76,60,0.75);
+            color: white;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--nav-bg-mobile);
+            border: 1px solid rgba(46,204,113,0.35);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-main);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 999;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(.4,0,.2,1);
+            pointer-events: none;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--green-bright); }
+
+        /* ── RESPONSIVE ── */
+
+        /* Tablet / small laptop: keep full nav links but tighten spacing
+           so they don't overflow before the hamburger breakpoint kicks in. */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .top-nav { padding: 0.6rem 1.2rem; }
+            .top-nav .nav-links { gap: 0.45rem; padding: 0.22rem; }
+            .top-nav .nav-links a { padding: 0.5rem 0.75rem; font-size: 0.76rem; }
+            .top-nav .nav-links a span { display: none; }
+            .top-nav .nav-links a i { font-size: 0.95rem; }
+        }
+
+        @media (max-width: 950px) {
+            .settings-layout { grid-template-columns: 1fr; }
+            .settings-nav {
+                position: static;
+                padding: 0;
+            }
+            .settings-nav-header { display: none; }
+            .settings-nav-item { display: none; }
+            .settings-nav-select { display: block; }
+            .section-body.form-grid-wrap { padding: 0; }
+        }
+
+        @media (max-width: 768px) {
+            /* theme.css forces padding-left:52px !important on .top-bar
+               (leftover spacing meant for another page's back button).
+               That asymmetric padding throws off the centering here, so
+               neutralize it — same specificity, loads after theme.css. */
+            .top-bar { padding-left: 0 !important; }
+            .top-nav { padding: 0.55rem 1rem; }
+            .top-nav .nav-links { display: none; }
+            .menu-toggle { display: block; }
+
+            /* Icon-only account button on mobile: keep it a single tap
+               target that still links to /account, just drop the text. */
+            .top-nav .nav-actions .account-btn-top {
+                gap: 0;
+                padding: 0;
+                width: 38px;
+                height: 38px;
+                justify-content: center;
+                border-radius: 50%;
+            }
+            .top-nav .nav-actions .account-btn-top .user-name-stack { display: none; }
+            .nav-avatar-wrap { width: 30px; height: 30px; }
+
+            .main-content { padding: 1rem; }
+            .top-bar { flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
+            .dash-title { font-size: 1.4rem; }
+            .realtime-divider { display: none; }
+            .realtime-badge { flex-shrink: 0; white-space: nowrap; }
+
+            /* Shrink content instead of hiding it so settings rows stay
+               fully visible on narrow screens. */
+            .section-header { padding: 0.75rem 0.9rem 0.6rem; font-size: 0.82rem; }
+            .setting-row { padding: 0.75rem 0.9rem; }
+            .setting-label { font-size: 0.8rem; }
+            .setting-desc { font-size: 0.68rem; }
+            .setting-textarea { font-size: 0.78rem; padding: 0.6rem 0.8rem; }
+            .setting-select, .setting-input { font-size: 0.76rem; }
+            .char-count { font-size: 0.64rem; }
+            .btn-save, .btn-cancel { font-size: 0.78rem; padding: 0.5rem 1.1rem; }
+            .preview-toggle-btn { font-size: 0.68rem; padding: 0.32rem 0.8rem; }
+            .email-preview-label { font-size: 0.66rem; }
+            .inapp-preview-title { font-size: 0.92rem; }
+            .inapp-preview-badge { font-size: 0.66rem; padding: 0.28rem 0.6rem; }
+            .inapp-preview-source { font-size: 0.68rem; }
+            .inapp-preview-card .env-data-grid { grid-template-columns: 1fr; }
+            .inapp-preview-card .env-data-item { font-size: 0.7rem; }
+            .inapp-preview-message { font-size: 0.78rem; }
+        }
+
+        /* theme.css ships a global rule that hides .realtime-clock entirely
+           below 650px (display:none !important). That's too aggressive for
+           this dashboard, so re-show it here. Same specificity + !important,
+           and this <style> block loads after theme.css, so this wins. */
+        @media (max-width: 650px) {
+            .realtime-clock {
+                display: block !important;
+            }
+            .main-content { padding: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .top-nav { padding: 0.5rem 0.8rem; }
+            .top-nav .nav-logo-text { font-size: 0.9rem; }
+            .top-nav .nav-logo-mark { width: 28px; height: 28px; font-size: 0.85rem; }
+            .theme-toggle-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+            .top-nav .nav-actions { gap: 0.35rem; }
+            .top-nav .nav-actions .account-btn-top { width: 34px; height: 34px; }
+            .nav-avatar-wrap { width: 24px; height: 24px; }
+            .top-nav .nav-actions .logout-btn-top { padding: 0.3rem 0.6rem; font-size: 0.65rem; }
+            .dash-title { font-size: 1.25rem; }
+
+            .section-header { font-size: 0.76rem; padding: 0.65rem 0.8rem 0.55rem; }
+            .setting-row { flex-wrap: wrap; padding: 0.65rem 0.8rem; }
+            .setting-range-wrap { width: 100%; justify-content: flex-start; }
+            .range-box-wrap { width: 100%; justify-content: flex-start; }
+            .setting-range { flex: 1; }
+            .setting-label { font-size: 0.76rem; }
+            .setting-desc { font-size: 0.65rem; }
+            .setting-textarea { font-size: 0.74rem; padding: 0.55rem 0.7rem; }
+            .char-count { font-size: 0.6rem; }
+            .btn-save, .btn-cancel { font-size: 0.72rem; padding: 0.45rem 0.9rem; }
+            .inapp-preview-title { font-size: 0.85rem; }
+            .inapp-preview-source { font-size: 0.65rem; }
+            .inapp-preview-card .env-data-item { font-size: 0.66rem; }
+            .inapp-preview-message { font-size: 0.74rem; }
+        }
+
+        @media (max-width: 360px) {
+            .top-nav .nav-logo-text { font-size: 0.8rem; }
+            .top-nav .nav-logo-mark { width: 24px; height: 24px; }
+            .dash-title { font-size: 1.1rem; }
+            .realtime-badge { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            .realtime-clock { font-size: 0.85rem; }
+            .section-header { font-size: 0.7rem; }
+        }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+            filter: blur(2px);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        .page-transition {
+            animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(3px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll,
+            .animate-on-scroll.visible,
+            .page-transition {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<script>
+    // ── EARLY THEME INIT (prevents flash of wrong theme) ──
+    (function() {
+        try {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        } catch(e) {}
+    })();
+</script>
+
+<!-- ── TOP NAV ── -->
+<nav class="top-nav">
+    <a href="/home" class="nav-logo">
+        <img src="/static/aedospot-logo.png" alt="AEDOSPOT" class="nav-logo-mark" onerror="this.style.display='none'">
+        <span class="nav-logo-text">AEDO<span class="accent">SPOT</span></span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/home"><i class="fas fa-house"></i><span>Home</span></a></li>
+        <li><a href="/risk_map"><i class="fas fa-map-location-dot"></i><span>Risk Map</span></a></li>
+        <li><a href="/alerts"><i class="fas fa-triangle-exclamation"></i><span>Alerts</span></a></li>
+        <li><a href="/admin_reports"><i class="fas fa-chart-simple"></i><span>Reports & Data</span></a></li>
+        <li><a href="/admin_user_residents"><i class="fas fa-users"></i><span>Residents</span></a></li>
+        <li><a href="/settings" class="active"><i class="fas fa-gear"></i><span>Settings</span></a></li>
+    </ul>
+
+    <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <a href="/account" class="account-btn-top" id="accountBtn">
+            <span class="nav-avatar-wrap">
+                <img id="navAvatar" class="nav-avatar" src="" alt="Profile">
+                <i id="navAvatarFallback" class="fas fa-user-circle"></i>
+            </span>
+            <span class="user-name-stack">
+                <span class="user-greeting">Administrator</span>
+                <span class="user-name" id="userName">User</span>
+            </span>
+        </a>
+        <button class="logout-btn-top" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav-dropdown" id="mobileNav">
+    <a href="/home"><i class="fas fa-house"></i>&nbsp; Home</a>
+    <a href="/risk_map"><i class="fas fa-map-location-dot"></i>&nbsp; Risk Map</a>
+    <a href="/alerts"><i class="fas fa-triangle-exclamation"></i>&nbsp; Alerts</a>
+    <a href="/admin_reports"><i class="fas fa-chart-simple"></i>&nbsp; Reports & Data</a>
+    <a href="/admin_user_residents"><i class="fas fa-users"></i>&nbsp; Residents</a>
+    <a href="/settings" class="active"><i class="fas fa-gear"></i>&nbsp; Settings</a>
+    <a href="/account"><i class="fas fa-user-circle"></i>&nbsp; Account</a>
+</div>
+
+<!-- MAIN -->
+<main class="main-content page-transition" id="mainContent">
+
+    <!-- TOP BAR -->
+    <div class="top-bar animate-on-scroll">
+        <div class="dash-title">SETTINGS</div>
+        <div class="realtime-badge">
+            <div class="pulse-dot"></div>
+            REAL TIME
+            <div class="realtime-divider"></div>
+            <div class="realtime-clock-wrap">
+                <div class="realtime-clock" id="realtimeClock">12:00:00 AM</div>
+                <div class="realtime-date" id="realtimeDate">Monday, Jan 1, 2025</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-layout animate-on-scroll">
+
+        <!-- LEFT NAV -->
+        <nav class="settings-nav">
+            <div class="settings-nav-header">Configuration</div>
+            <select class="settings-nav-select setting-select" id="settingsNavSelect" onchange="switchTabFromSelect(this)">
+                <option value="thresholds">Risk Thresholds</option>
+                <option value="lstm">LSTM Model Settings</option>
+                <option value="email-messages">Email Messages</option>
+                <option value="sms-messages">SMS Messages</option>
+                <option value="app-messages">In-App Messages</option>
+            </select>
+            <div class="settings-nav-item active" onclick="switchTab('thresholds', this)">
+                <i class="fas fa-sliders-h"></i> Risk Thresholds
+            </div>
+            <div class="settings-nav-item" onclick="switchTab('lstm', this)">
+                <i class="fas fa-brain"></i> LSTM Model Settings
+            </div>
+            <div class="settings-nav-item" onclick="switchTab('email-messages', this)">
+                <i class="fas fa-envelope-open-text"></i> Email Messages
+            </div>
+            <div class="settings-nav-item" onclick="switchTab('sms-messages', this)">
+                <i class="fas fa-comment-sms"></i> SMS Messages
+            </div>
+            <div class="settings-nav-item" onclick="switchTab('app-messages', this)">
+                <i class="fas fa-bell"></i> In-App Messages
+            </div>
+        </nav>
+
+        <!-- RIGHT PANELS -->
+        <div>
+
+            <!-- ── RISK THRESHOLDS ── -->
+            <div class="settings-panel active" id="panel-thresholds">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-triangle-exclamation"></i> Moderate Risk Thresholds</div>
+                    <div class="section-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Moderate Risk — Temperature (°C)</div>
+                                <div class="setting-desc">Temperature range considered moderate dengue risk.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="modTempMin" value="27" step="0.1" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="modTempMax" value="30" step="0.1" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">°C</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Moderate Risk — Humidity (%)</div>
+                                <div class="setting-desc">Humidity range considered moderate dengue breeding potential.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="modHumMin" value="60" step="1" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="modHumMax" value="70" step="1" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">%</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Moderate Risk — Rainfall (mm)</div>
+                                <div class="setting-desc">Rainfall range that may flag potential stagnant water sites.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="modRainMin" value="50" step="1" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="modRainMax" value="75" step="1" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">mm</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Moderate Risk — Wind Speed (m/s)</div>
+                                <div class="setting-desc">Wind speed range considered moderate dengue risk.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="modWindMin" value="5" step="0.1" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="modWindMax" value="10" step="0.1" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">m/s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel">Cancel</button>
+                        <button class="btn-save" onclick="showToast('Moderate risk thresholds saved.')"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-triangle-exclamation"></i> High Risk Thresholds</div>
+                    <div class="section-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — Temperature (°C)</div>
+                                <div class="setting-desc">Temperature range considered high dengue risk.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="highTempMin" value="30" step="0.1" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="highTempMax" value="35" step="0.1" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">°C</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — Humidity (%)</div>
+                                <div class="setting-desc">Humidity range for high dengue breeding potential.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="highHumMin" value="70" step="1" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="highHumMax" value="90" step="1" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">%</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — Rainfall (mm)</div>
+                                <div class="setting-desc">Rainfall range to flag potential stagnant water sites.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="highRainMin" value="75" step="1" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="highRainMax" value="100" step="1" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">mm</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — Wind Speed (m/s)</div>
+                                <div class="setting-desc">Wind speed range considered high dengue risk.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="highWindMin" value="10" step="0.1" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="highWindMax" value="15" step="0.1" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">m/s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel">Cancel</button>
+                        <button class="btn-save" onclick="showToast('High risk thresholds saved.')"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-vial"></i> Acidic pH Threshold</div>
+                    <div class="section-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Acidic pH Range</div>
+                                <div class="setting-desc">pH values within this range are flagged as conducive to mosquito breeding.</div>
+                            </div>
+                            <div class="range-box-wrap">
+                                <input type="number" class="setting-input range-box" id="phMin" value="4.0" step="0.1" min="0" max="14" oninput="updateThresholdSummary()">
+                                <span class="range-box-sep">to</span>
+                                <input type="number" class="setting-input range-box" id="phMax" value="5.8" step="0.1" min="0" max="14" oninput="updateThresholdSummary()">
+                                <span class="range-box-unit">pH</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel">Cancel</button>
+                        <button class="btn-save" onclick="showToast('Acidic pH threshold saved.')"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-list-check"></i> Threshold Summary</div>
+                    <div class="section-body" id="thresholdSummary" style="padding: 0.7rem 1.3rem 0.9rem;">
+                        <!-- populated by updateThresholdSummary() -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── LSTM MODEL SETTINGS ── -->
+            <div class="settings-panel" id="panel-lstm">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-brain"></i> LSTM Model Settings</div>
+                    <div class="section-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Forecast Horizon</div>
+                                <div class="setting-desc">Number of days the LSTM model predicts ahead.</div>
+                            </div>
+                            <select class="setting-select">
+                                <option>3 days</option>
+                                <option selected>7 days</option>
+                                <option>14 days</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Model Retraining Schedule</div>
+                                <div class="setting-desc">How often the LSTM model is retrained with new sensor data.</div>
+                            </div>
+                            <select class="setting-select">
+                                <option>Every week</option>
+                                <option selected>Every 2 weeks</option>
+                                <option>Every month</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Prediction Confidence Display</div>
+                                <div class="setting-desc">Show model confidence intervals on the risk map chart.</div>
+                            </div>
+                            <div class="toggle-wrap">
+                                <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel">Cancel</button>
+                        <button class="btn-save" onclick="showToast('LSTM model settings saved.')"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── EMAIL MESSAGES ── -->
+            <div class="settings-panel" id="panel-email-messages">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-envelope-open-text"></i> Risk Alert Email Messages</div>
+                    <div class="section-body">
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Moderate Risk — Recommended Actions</div>
+                                <div class="setting-desc">Sent under "Recommended Actions" in the email whenever a resident receives a Moderate risk alert.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="moderateAdviceMsg" maxlength="2000" oninput="onAdviceInput('moderate')" placeholder="Loading..."></textarea>
+                            <div class="char-count" id="moderateCharCount">0 / 2000</div>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — Recommended Actions</div>
+                                <div class="setting-desc">Sent under "Recommended Actions" in the email whenever a resident receives a High risk alert.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="highAdviceMsg" maxlength="2000" oninput="onAdviceInput('high')" placeholder="Loading..."></textarea>
+                            <div class="char-count" id="highCharCount">0 / 2000</div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetAdviceMessages()">Reset to Default</button>
+                        <button class="btn-save" onclick="saveEmailMessages()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-eye"></i> Email Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="preview-toggle-group">
+                            <button class="preview-toggle-btn active" id="previewBtnModerate" onclick="renderEmailPreview('moderate')">Moderate</button>
+                            <button class="preview-toggle-btn" id="previewBtnHigh" onclick="renderEmailPreview('high')">High</button>
+                        </div>
+                        <div class="email-preview-label">Live preview of the actual resident email</div>
+
+                        <div class="email-preview-frame live-email-preview-frame">
+                            <div class="email-preview-subject-bar">
+                                <strong>Subject:</strong> <span id="previewSubject">AEDOSPOT Alert: Moderate Dengue Risk Detected</span>
+                            </div>
+                            <iframe
+                                id="emailPreviewIframe"
+                                title="AEDOSPOT resident email preview"
+                                class="email-preview-iframe"
+                                sandbox="allow-same-origin"
+                            ></iframe>
+                        </div>
+
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            Preview uses the latest sensor reading and the same HTML template used when the email is sent. Changes to the message above appear here automatically before saving.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── SMS MESSAGES ── -->
+            <div class="settings-panel" id="panel-sms-messages">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-comment-sms"></i> Risk Alert SMS Messages</div>
+                    <div class="section-body">
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Moderate Risk — SMS Advice</div>
+                                <div class="setting-desc">Sent as the SMS text whenever a resident with SMS notifications enabled receives a Moderate risk alert.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="moderateSmsMsg" maxlength="320" oninput="onSmsInput('moderate')" placeholder="Loading..." style="min-height:76px;"></textarea>
+                            <div class="char-count" id="moderateSmsCharCount">0 / 320</div>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — SMS Advice</div>
+                                <div class="setting-desc">Sent as the SMS text whenever a resident with SMS notifications enabled receives a High risk alert.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="highSmsMsg" maxlength="320" oninput="onSmsInput('high')" placeholder="Loading..." style="min-height:76px;"></textarea>
+                            <div class="char-count" id="highSmsCharCount">0 / 320</div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetSmsMessages()">Reset to Default</button>
+                        <button class="btn-save" onclick="saveSmsMessages()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-eye"></i> SMS Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="preview-toggle-group">
+                            <button class="preview-toggle-btn active" id="smsPreviewBtnModerate" onclick="renderSmsPreview('moderate')">Moderate</button>
+                            <button class="preview-toggle-btn" id="smsPreviewBtnHigh" onclick="renderSmsPreview('high')">High</button>
+                        </div>
+                        <div class="email-preview-label">Live preview of the actual resident SMS</div>
+
+                        <div class="email-preview-frame" style="background:#0d2b18; padding:1.2rem;">
+                            <div style="max-width:320px; margin:0 auto; display:flex; flex-direction:column; gap:6px;">
+                                <div style="font-size:0.65rem; color:var(--text-muted); text-align:center; margin-bottom:2px;">AEDOSPOT</div>
+                                <div id="smsPreviewBubble" style="background:var(--green-mid); color:#e8f5ee; border-radius:16px 16px 16px 4px; padding:10px 14px; font-size:0.8rem; line-height:1.5; word-wrap:break-word; font-family:'Inter', sans-serif;">
+                                    Loading...
+                                </div>
+                                <div id="smsPreviewMeta" style="font-size:0.65rem; color:var(--text-muted); text-align:right;"></div>
+                            </div>
+                        </div>
+
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            Preview uses the latest sensor reading. Changes to the message above appear here automatically before saving. This is the same text sent to residents' phone numbers, and any SMS actually sent shows up on the Alerts page with the recipient's contact number.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── IN-APP MESSAGES ── -->
+            <div class="settings-panel" id="panel-app-messages">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-bell"></i> Resident Alerts — In-App Messages</div>
+                    <div class="section-body">
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Moderate Risk — Alert Headline</div>
+                                <div class="setting-desc">Shown on the resident's Alerts page whenever a Moderate risk alert is logged. The live sensor readings (temperature, humidity, rainfall, pH, wind) are appended automatically after this text.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="moderateAppMsg" maxlength="300" oninput="onAppInput('moderate')" placeholder="Loading..." style="min-height:70px;"></textarea>
+                            <div class="char-count" id="moderateAppCharCount">0 / 300</div>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — Alert Headline</div>
+                                <div class="setting-desc">Shown on the resident's Alerts page whenever a High risk alert is logged. The live sensor readings (temperature, humidity, rainfall, pH, wind) are appended automatically after this text.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="highAppMsg" maxlength="300" oninput="onAppInput('high')" placeholder="Loading..." style="min-height:70px;"></textarea>
+                            <div class="char-count" id="highAppCharCount">0 / 300</div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetAppMessages()">Reset to Default</button>
+                        <button class="btn-save" onclick="saveAppMessages()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-eye"></i> In-App Message Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="preview-toggle-group">
+                            <button class="preview-toggle-btn active" id="appPreviewBtnModerate" onclick="renderAppPreview('moderate')">Moderate</button>
+                            <button class="preview-toggle-btn" id="appPreviewBtnHigh" onclick="renderAppPreview('high')">High</button>
+                        </div>
+                        <div class="email-preview-label">Live preview of how this message appears as an In-App Notification</div>
+
+                        <div class="email-preview-frame" style="padding:1.2rem;">
+                            <div class="inapp-preview-card">
+                                <div class="inapp-preview-header">
+                                    <div class="inapp-preview-title"><i class="fas fa-bell"></i> In-App Notification</div>
+                                    <div class="inapp-preview-badge" id="appPreviewBadge">Moderate</div>
+                                </div>
+                                <div class="inapp-preview-source">Sent to all residents via In-App Notification</div>
+
+                                <div class="env-data-grid">
+                                    <div class="env-data-item"><span class="label">Temperature</span><span class="value" id="appPreviewTemp">--°C</span></div>
+                                    <div class="env-data-item"><span class="label">Humidity</span><span class="value" id="appPreviewHumidity">--%</span></div>
+                                    <div class="env-data-item"><span class="label">Rainfall</span><span class="value" id="appPreviewRainfall">-- mm</span></div>
+                                    <div class="env-data-item"><span class="label">pH Level</span><span class="value" id="appPreviewPh">--</span></div>
+                                    <div class="env-data-item"><span class="label">Wind Speed</span><span class="value" id="appPreviewWind">-- m/s</span></div>
+                                    <div class="env-data-item"><span class="label">Risk Level</span><span class="value" id="appPreviewRisk">Moderate</span></div>
+                                </div>
+
+                                <div class="inapp-preview-field-label">Message</div>
+                                <div class="inapp-preview-message" id="appPreviewCard">Loading...</div>
+                            </div>
+                            <div id="appPreviewMeta" style="font-size:0.65rem; color:var(--text-muted); margin-top:8px;"></div>
+                        </div>
+
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            The message above updates here instantly as you type — this is the same text used by the notification system. Sensor readings are shown separately and refresh from the latest reading; they are not part of the editable message. This mirrors the exact In-App Notification shown in Admin Alerts and on a resident's Alerts page, whether or not an email or SMS also went out.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Saved.</span></div>
+
+<script>
+    // ── THEME TOGGLE ──
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    function refreshThemeIcon() {
+        const isLight = document.body.classList.contains('light-theme');
+        themeToggleBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    }
+    refreshThemeIcon();
+    themeToggleBtn.addEventListener('click', function() {
+        toggleTheme();
+        refreshThemeIcon();
+    });
+
+    // ── MOBILE MENU ──
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuToggle.addEventListener('click', function() {
+        mobileNav.classList.toggle('open');
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+
+    document.querySelectorAll('.mobile-nav-dropdown a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            mobileNav.classList.remove('open');
+            document.querySelector('.menu-toggle i').classList.remove('fa-times');
+            document.querySelector('.menu-toggle i').classList.add('fa-bars');
+        });
+    });
+
+    // ── SCROLL ANIMATIONS ──
+    function initScrollAnimations() {
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        if (animatedElements.length === 0) return;
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            return rect.top <= windowHeight - 100;
+        }
+
+        function checkVisibility() {
+            animatedElements.forEach(function(el) {
+                if (isElementInViewport(el)) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    checkVisibility();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        window.addEventListener('resize', checkVisibility);
+        checkVisibility();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            initScrollAnimations();
+        }, 100);
+    });
+
+    // ── CLOCK ──
+    function updateClock() {
+        const now = new Date();
+        let hh = now.getHours();
+        const ampm = hh >= 12 ? 'PM' : 'AM';
+        hh = hh % 12 || 12;
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('realtimeClock').textContent = hh + ':' + mm + ':' + ss + ' ' + ampm;
+
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        document.getElementById('realtimeDate').textContent =
+            days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ── SESSION ──
+    async function loadUserInfo() {
+        try {
+            const res = await fetch('/api/check_session', { credentials: 'include' });
+            const data = await res.json();
+            if (data.logged_in) {
+                document.getElementById('userName').textContent = data.user.name;
+
+                const navAvatar = document.getElementById('navAvatar');
+                const navAvatarFallback = document.getElementById('navAvatarFallback');
+
+                if (data.user.avatar_url) {
+                    navAvatar.src = data.user.avatar_url;
+                    navAvatar.style.display = 'block';
+                    navAvatarFallback.style.display = 'none';
+                    navAvatar.onerror = function() {
+                        this.style.display = 'none';
+                        navAvatarFallback.style.display = 'inline-block';
+                    };
+                } else {
+                    navAvatar.style.display = 'none';
+                    navAvatarFallback.style.display = 'inline-block';
+                }
+            } else {
+                window.location.href = '/login';
+            }
+        } catch(e) {
+            window.location.href = '/login';
+        }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch(e) {}
+        window.location.href = '/';
+    });
+
+    // ── SETTINGS TAB SWITCH ──
+    function switchTab(tab, el) {
+        document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('panel-' + tab).classList.add('active');
+        if (el) el.classList.add('active');
+        const select = document.getElementById('settingsNavSelect');
+        if (select) select.value = tab;
+    }
+
+    function switchTabFromSelect(select) {
+        const tab = select.value;
+        const navItem = document.querySelector('.settings-nav-item[onclick*="' + tab + '"]');
+        switchTab(tab, navItem);
+    }
+
+    // ── OPEN TAB FROM URL HASH (e.g. /admin/settings#risk-thresholds) ──
+    function openTabFromHash() {
+        const hash = window.location.hash.replace('#', '');
+        if (!hash) return;
+        const tabMap = { 'risk-thresholds': 'thresholds', 'thresholds': 'thresholds', 'lstm': 'lstm', 'lstm-settings': 'lstm', 'email-messages': 'email-messages', 'email': 'email-messages', 'sms-messages': 'sms-messages', 'sms': 'sms-messages', 'app-messages': 'app-messages', 'in-app-messages': 'app-messages', 'app': 'app-messages' };
+        const tab = tabMap[hash];
+        if (!tab) return;
+        const navItem = document.querySelector('.settings-nav-item[onclick*="' + tab + '"]');
+        if (navItem) switchTab(tab, navItem);
+    }
+    openTabFromHash();
+
+    // ── THRESHOLD SUMMARY ──
+    function updateThresholdSummary() {
+        const rows = [
+            ['Moderate Risk — Temperature', 'modTempMin', 'modTempMax', '°C'],
+            ['Moderate Risk — Humidity', 'modHumMin', 'modHumMax', '%'],
+            ['Moderate Risk — Rainfall', 'modRainMin', 'modRainMax', 'mm'],
+            ['Moderate Risk — Wind Speed', 'modWindMin', 'modWindMax', ' m/s'],
+            ['High Risk — Temperature', 'highTempMin', 'highTempMax', '°C'],
+            ['High Risk — Humidity', 'highHumMin', 'highHumMax', '%'],
+            ['High Risk — Rainfall', 'highRainMin', 'highRainMax', 'mm'],
+            ['High Risk — Wind Speed', 'highWindMin', 'highWindMax', ' m/s'],
+            ['Acidic pH Threshold', 'phMin', 'phMax', '']
+        ];
+        const container = document.getElementById('thresholdSummary');
+        if (!container) return;
+        container.innerHTML = rows.map(function(row) {
+            const label = row[0], minId = row[1], maxId = row[2], unit = row[3];
+            const minEl = document.getElementById(minId);
+            const maxEl = document.getElementById(maxId);
+            if (!minEl || !maxEl) return '';
+            return '<div class="summary-line"><span class="summary-label">' + label +
+                '</span><span class="summary-value">' + minEl.value + unit + ' to ' + maxEl.value + unit + '</span></div>';
+        }).join('');
+    }
+
+    // ── TOAST ──
+    let toastTimer;
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg;
+        const icon = toast.querySelector('i');
+        if (msg.includes('❌') || msg.includes('error')) {
+            icon.style.color = '#e74c3c';
+        } else {
+            icon.style.color = 'var(--green-bright)';
+        }
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // ── EMAIL MESSAGES (Recommended Actions text shown in resident risk alert emails) ──
+    const DEFAULT_MODERATE_ADVICE = "Moderate dengue risk detected. Increase mosquito prevention measures and monitor for possible symptoms. Remove stagnant water around your home, use mosquito repellent, wear long sleeves, and keep doors/windows screened. If symptoms such as fever, severe headache, body aches, nausea, or rash develop, seek medical advice promptly.";
+    const DEFAULT_HIGH_ADVICE = "High dengue risk detected. Take immediate precautions to prevent mosquito bites and eliminate all stagnant water around your home. Use mosquito repellent, wear long sleeves, and keep your surroundings clean. Monitor for dengue symptoms such as high fever, severe headache, body pain, rash, or bleeding. If symptoms develop, seek medical attention immediately.";
+
+    let currentPreviewLevel = 'moderate';
+    let previewTimer = null;
+    let previewRequestId = 0;
+
+    async function loadEmailMessages() {
+        try {
+            const res = await fetch('/api/get_email_messages', { credentials: 'include' });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('moderateAdviceMsg').value = data.moderate_message;
+                document.getElementById('highAdviceMsg').value = data.high_message;
+            } else {
+                document.getElementById('moderateAdviceMsg').value = DEFAULT_MODERATE_ADVICE;
+                document.getElementById('highAdviceMsg').value = DEFAULT_HIGH_ADVICE;
+            }
+        } catch (e) {
+            document.getElementById('moderateAdviceMsg').value = DEFAULT_MODERATE_ADVICE;
+            document.getElementById('highAdviceMsg').value = DEFAULT_HIGH_ADVICE;
+        }
+        updateCharCount('moderate');
+        updateCharCount('high');
+        renderEmailPreview(currentPreviewLevel);
+    }
+
+    function updateCharCount(level) {
+        const textarea = document.getElementById(level + 'AdviceMsg');
+        const counter = document.getElementById(level + 'CharCount');
+        const len = textarea.value.length;
+        counter.textContent = len + ' / 2000';
+        counter.classList.toggle('over-limit', len > 2000);
+    }
+
+    function onAdviceInput(level) {
+        updateCharCount(level);
+
+        // The currently selected email preview updates as the admin types.
+        if (level === currentPreviewLevel) {
+            clearTimeout(previewTimer);
+            previewTimer = setTimeout(function() {
+                renderEmailPreview(level);
+            }, 180);
+        }
+    }
+
+    async function renderEmailPreview(level) {
+        if (level !== 'moderate' && level !== 'high') level = 'moderate';
+        currentPreviewLevel = level;
+
+        document.getElementById('previewBtnModerate').classList.toggle('active', level === 'moderate');
+        document.getElementById('previewBtnHigh').classList.toggle('active', level === 'high');
+
+        const textarea = document.getElementById(level + 'AdviceMsg');
+        const adviceText = textarea.value.trim() ||
+            (level === 'high' ? DEFAULT_HIGH_ADVICE : DEFAULT_MODERATE_ADVICE);
+
+        const requestId = ++previewRequestId;
+        const iframe = document.getElementById('emailPreviewIframe');
+        const subject = document.getElementById('previewSubject');
+
+        try {
+            const res = await fetch('/api/email_preview', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    risk_level: level,
+                    advice_text: adviceText
+                })
+            });
+            const data = await res.json();
+
+            // Ignore an older request if the admin typed again while it was loading.
+            if (requestId !== previewRequestId) return;
+
+            if (!data.success) throw new Error(data.message || 'Preview failed');
+
+            subject.textContent = data.subject;
+            iframe.srcdoc = data.html;
+        } catch (e) {
+            if (requestId !== previewRequestId) return;
+            iframe.srcdoc = '<div style="font-family:Arial,sans-serif;padding:30px;text-align:center;color:#b42318;background:#fff;">Unable to load email preview.</div>';
+        }
+    }
+
+    // Keep the monitoring values in the preview current even when the admin
+    // does not type anything. The email itself uses the latest sensor row too.
+    setInterval(function() {
+        renderEmailPreview(currentPreviewLevel);
+    }, 60000);
+
+    async function saveEmailMessages() {
+        const moderate_message = document.getElementById('moderateAdviceMsg').value.trim();
+        const high_message = document.getElementById('highAdviceMsg').value.trim();
+
+        if (moderate_message.length > 2000 || high_message.length > 2000) {
+            showToast('❌ Message is too long (2000 character max).');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/update_email_messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ moderate_message, high_message })
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('moderateAdviceMsg').value = data.moderate_message;
+                document.getElementById('highAdviceMsg').value = data.high_message;
+                updateCharCount('moderate');
+                updateCharCount('high');
+                renderEmailPreview(currentPreviewLevel);
+                showToast('Email messages saved.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to save.'));
+            }
+        } catch (e) {
+            showToast('❌ Failed to save email messages.');
+        }
+    }
+
+    function resetAdviceMessages() {
+        document.getElementById('moderateAdviceMsg').value = DEFAULT_MODERATE_ADVICE;
+        document.getElementById('highAdviceMsg').value = DEFAULT_HIGH_ADVICE;
+        updateCharCount('moderate');
+        updateCharCount('high');
+        renderEmailPreview(currentPreviewLevel);
+    }
+
+    // ── SMS MESSAGES (Advice text shown in resident risk alert SMS) ──
+    const DEFAULT_MODERATE_SMS = "Moderate dengue risk detected in your area. Remove stagnant water, use mosquito repellent, and watch for fever, headache, or rash. Stay safe!";
+    const DEFAULT_HIGH_SMS = "HIGH dengue risk detected in your area. Eliminate stagnant water now and use mosquito protection. Seek medical help right away if symptoms occur.";
+    const SMS_CHAR_LIMIT = 320;
+
+    let currentSmsPreviewLevel = 'moderate';
+    let smsPreviewTimer = null;
+    let smsPreviewRequestId = 0;
+
+    async function loadSmsMessages() {
+        try {
+            const res = await fetch('/api/get_sms_messages', { credentials: 'include' });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('moderateSmsMsg').value = data.moderate_message;
+                document.getElementById('highSmsMsg').value = data.high_message;
+            } else {
+                document.getElementById('moderateSmsMsg').value = DEFAULT_MODERATE_SMS;
+                document.getElementById('highSmsMsg').value = DEFAULT_HIGH_SMS;
+            }
+        } catch (e) {
+            document.getElementById('moderateSmsMsg').value = DEFAULT_MODERATE_SMS;
+            document.getElementById('highSmsMsg').value = DEFAULT_HIGH_SMS;
+        }
+        updateSmsCharCount('moderate');
+        updateSmsCharCount('high');
+        renderSmsPreview(currentSmsPreviewLevel);
+    }
+
+    function updateSmsCharCount(level) {
+        const textarea = document.getElementById(level + 'SmsMsg');
+        const counter = document.getElementById(level + 'SmsCharCount');
+        const len = textarea.value.length;
+        counter.textContent = len + ' / ' + SMS_CHAR_LIMIT;
+        counter.classList.toggle('over-limit', len > SMS_CHAR_LIMIT);
+    }
+
+    function onSmsInput(level) {
+        updateSmsCharCount(level);
+
+        // The currently selected SMS preview updates as the admin types.
+        if (level === currentSmsPreviewLevel) {
+            clearTimeout(smsPreviewTimer);
+            smsPreviewTimer = setTimeout(function() {
+                renderSmsPreview(level);
+            }, 180);
+        }
+    }
+
+    async function renderSmsPreview(level) {
+        if (level !== 'moderate' && level !== 'high') level = 'moderate';
+        currentSmsPreviewLevel = level;
+
+        document.getElementById('smsPreviewBtnModerate').classList.toggle('active', level === 'moderate');
+        document.getElementById('smsPreviewBtnHigh').classList.toggle('active', level === 'high');
+
+        const textarea = document.getElementById(level + 'SmsMsg');
+        const adviceText = textarea.value.trim() ||
+            (level === 'high' ? DEFAULT_HIGH_SMS : DEFAULT_MODERATE_SMS);
+
+        const requestId = ++smsPreviewRequestId;
+        const bubble = document.getElementById('smsPreviewBubble');
+        const meta = document.getElementById('smsPreviewMeta');
+
+        try {
+            const res = await fetch('/api/sms_preview', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    risk_level: level,
+                    advice_text: adviceText
+                })
+            });
+            const data = await res.json();
+
+            // Ignore an older request if the admin typed again while it was loading.
+            if (requestId !== smsPreviewRequestId) return;
+
+            if (!data.success) throw new Error(data.message || 'Preview failed');
+
+            bubble.textContent = data.text;
+            const segments = Math.max(1, Math.ceil(data.char_count / 153));
+            meta.textContent = data.char_count + ' chars · ' + segments + ' segment' + (segments > 1 ? 's' : '');
+        } catch (e) {
+            if (requestId !== smsPreviewRequestId) return;
+            bubble.textContent = 'Unable to load SMS preview.';
+            meta.textContent = '';
+        }
+    }
+
+    // Keep the monitoring values in the preview current even when the admin
+    // does not type anything. The actual SMS uses the latest sensor row too.
+    setInterval(function() {
+        renderSmsPreview(currentSmsPreviewLevel);
+    }, 60000);
+
+    async function saveSmsMessages() {
+        const moderate_message = document.getElementById('moderateSmsMsg').value.trim();
+        const high_message = document.getElementById('highSmsMsg').value.trim();
+
+        if (moderate_message.length > SMS_CHAR_LIMIT || high_message.length > SMS_CHAR_LIMIT) {
+            showToast('❌ Message is too long (' + SMS_CHAR_LIMIT + ' character max).');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/update_sms_messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ moderate_message, high_message })
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('moderateSmsMsg').value = data.moderate_message;
+                document.getElementById('highSmsMsg').value = data.high_message;
+                updateSmsCharCount('moderate');
+                updateSmsCharCount('high');
+                renderSmsPreview(currentSmsPreviewLevel);
+                showToast('SMS messages saved.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to save.'));
+            }
+        } catch (e) {
+            showToast('❌ Failed to save SMS messages.');
+        }
+    }
+
+    function resetSmsMessages() {
+        document.getElementById('moderateSmsMsg').value = DEFAULT_MODERATE_SMS;
+        document.getElementById('highSmsMsg').value = DEFAULT_HIGH_SMS;
+        updateSmsCharCount('moderate');
+        updateSmsCharCount('high');
+        renderSmsPreview(currentSmsPreviewLevel);
+    }
+
+    // ── IN-APP MESSAGES (headline shown on the resident Alerts page) ──
+    const DEFAULT_MODERATE_APP = "Moderate mosquito breeding risk detected";
+    const DEFAULT_HIGH_APP = "High mosquito breeding risk detected";
+    const APP_MSG_CHAR_LIMIT = 300;
+
+    let currentAppPreviewLevel = 'moderate';
+    let appPreviewTimer = null;
+    let appPreviewRequestId = 0;
+
+    async function loadAppMessages() {
+        try {
+            const res = await fetch('/api/get_app_messages', { credentials: 'include' });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('moderateAppMsg').value = data.moderate_message;
+                document.getElementById('highAppMsg').value = data.high_message;
+            } else {
+                document.getElementById('moderateAppMsg').value = DEFAULT_MODERATE_APP;
+                document.getElementById('highAppMsg').value = DEFAULT_HIGH_APP;
+            }
+        } catch (e) {
+            document.getElementById('moderateAppMsg').value = DEFAULT_MODERATE_APP;
+            document.getElementById('highAppMsg').value = DEFAULT_HIGH_APP;
+        }
+        updateAppCharCount('moderate');
+        updateAppCharCount('high');
+        renderAppPreview(currentAppPreviewLevel);
+    }
+
+    function updateAppCharCount(level) {
+        const textarea = document.getElementById(level + 'AppMsg');
+        const counter = document.getElementById(level + 'AppCharCount');
+        const len = textarea.value.length;
+        counter.textContent = len + ' / ' + APP_MSG_CHAR_LIMIT;
+        counter.classList.toggle('over-limit', len > APP_MSG_CHAR_LIMIT);
+    }
+
+    function onAppInput(level) {
+        updateAppCharCount(level);
+
+        // The currently selected in-app preview updates as the admin types.
+        if (level === currentAppPreviewLevel) {
+            // The message itself renders straight from the field — instantly,
+            // with no network round-trip and no dependency on anything saved
+            // to the database — so the preview can never show a stale,
+            // hardcoded, or previously-saved version of the message.
+            updateAppPreviewMessage(level);
+
+            // Sensor readings are separate context, not part of the editable
+            // message, so refreshing them can stay debounced.
+            clearTimeout(appPreviewTimer);
+            appPreviewTimer = setTimeout(function() {
+                refreshAppPreviewEnvData(level);
+            }, 180);
+        }
+    }
+
+    // Renders the badge + the exact message text currently in the textarea.
+    // This is the same value onAppInput/saveAppMessages reads, so what the
+    // admin sees here is guaranteed to match what actually gets saved and
+    // what the notification system will use.
+    function updateAppPreviewMessage(level) {
+        currentAppPreviewLevel = level;
+
+        document.getElementById('appPreviewBtnModerate').classList.toggle('active', level === 'moderate');
+        document.getElementById('appPreviewBtnHigh').classList.toggle('active', level === 'high');
+
+        const textarea = document.getElementById(level + 'AppMsg');
+        const headline = textarea.value.trim() ||
+            (level === 'high' ? DEFAULT_HIGH_APP : DEFAULT_MODERATE_APP);
+
+        const isHigh = level === 'high';
+        const badgeLabel = isHigh ? 'High' : 'Moderate';
+
+        const badge = document.getElementById('appPreviewBadge');
+        badge.textContent = badgeLabel;
+        badge.className = 'inapp-preview-badge' + (isHigh ? ' high-risk' : '');
+
+        const riskValue = document.getElementById('appPreviewRisk');
+        riskValue.textContent = badgeLabel;
+        riskValue.className = 'value ' + (isHigh ? 'high-risk' : 'moderate-risk');
+
+        // white-space: pre-wrap on .inapp-preview-message means line breaks
+        // the admin types show up here the same way they'll appear in the
+        // real In-App Notification, so basic formatting is preserved.
+        const card = document.getElementById('appPreviewCard');
+        card.textContent = headline;
+        document.getElementById('appPreviewMeta').textContent = headline.length + ' characters · exact text logged to Recent Alerts';
+    }
+
+    // Fetches only the environmental/sensor readings shown alongside the
+    // message — kept in a separate request (and a visually separate part of
+    // the card) from the editable message so the two never get conflated.
+    async function refreshAppPreviewEnvData(level) {
+        const textarea = document.getElementById(level + 'AppMsg');
+        const headline = textarea.value.trim() ||
+            (level === 'high' ? DEFAULT_HIGH_APP : DEFAULT_MODERATE_APP);
+
+        const requestId = ++appPreviewRequestId;
+        try {
+            const res = await fetch('/api/app_message_preview', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    risk_level: level,
+                    headline: headline
+                })
+            });
+            const data = await res.json();
+
+            // Ignore an older request if the admin switched levels or typed again while it was loading.
+            if (requestId !== appPreviewRequestId) return;
+            if (!data.success) throw new Error(data.message || 'Preview failed');
+
+            const env = data.env || {};
+            document.getElementById('appPreviewTemp').textContent = env.temperature + '°C';
+            document.getElementById('appPreviewHumidity').textContent = env.humidity + '%';
+            document.getElementById('appPreviewRainfall').textContent = env.rainfall + ' mm';
+            document.getElementById('appPreviewPh').textContent = env.ph;
+            document.getElementById('appPreviewWind').textContent = env.wind + ' m/s';
+        } catch (e) {
+            if (requestId !== appPreviewRequestId) return;
+            document.getElementById('appPreviewTemp').textContent = '--°C';
+            document.getElementById('appPreviewHumidity').textContent = '--%';
+            document.getElementById('appPreviewRainfall').textContent = '-- mm';
+            document.getElementById('appPreviewPh').textContent = '--';
+            document.getElementById('appPreviewWind').textContent = '-- m/s';
+        }
+    }
+
+    // Renders the full preview: the message instantly, then the sensor
+    // readings once fetched. Used on load, toggle, save, and reset.
+    async function renderAppPreview(level) {
+        if (level !== 'moderate' && level !== 'high') level = 'moderate';
+        updateAppPreviewMessage(level);
+        await refreshAppPreviewEnvData(level);
+    }
+
+    // Keep the preview's sensor values current even when the admin does not
+    // type anything. The actual alert log uses the latest sensor row too.
+    setInterval(function() {
+        renderAppPreview(currentAppPreviewLevel);
+    }, 60000);
+
+    async function saveAppMessages() {
+        const moderate_message = document.getElementById('moderateAppMsg').value.trim();
+        const high_message = document.getElementById('highAppMsg').value.trim();
+
+        if (moderate_message.length > APP_MSG_CHAR_LIMIT || high_message.length > APP_MSG_CHAR_LIMIT) {
+            showToast('❌ Message is too long (' + APP_MSG_CHAR_LIMIT + ' character max).');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/update_app_messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ moderate_message, high_message })
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('moderateAppMsg').value = data.moderate_message;
+                document.getElementById('highAppMsg').value = data.high_message;
+                updateAppCharCount('moderate');
+                updateAppCharCount('high');
+                renderAppPreview(currentAppPreviewLevel);
+                showToast('In-app messages saved.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to save.'));
+            }
+        } catch (e) {
+            showToast('❌ Failed to save in-app messages.');
+        }
+    }
+
+    function resetAppMessages() {
+        document.getElementById('moderateAppMsg').value = DEFAULT_MODERATE_APP;
+        document.getElementById('highAppMsg').value = DEFAULT_HIGH_APP;
+        updateAppCharCount('moderate');
+        updateAppCharCount('high');
+        renderAppPreview(currentAppPreviewLevel);
+    }
+
+    loadUserInfo();
+    updateThresholdSummary();
+    loadEmailMessages();
+    loadSmsMessages();
+    loadAppMessages();
+
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+            loadUserInfo();
+        }
+    });
+</script>
+<script src="/static/theme-toggle.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,2141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residents | AEDOSPOT</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-deep:   #071a0f;
+            --green-dark:   #0d2b18;
+            --green-mid:    #145c30;
+            --green-bright: #2ecc71;
+            --green-bright-alt: #1a8a4a;
+            --green-glow:   rgba(46,204,113,0.18);
+            --amber:        #f39c12;
+            --red:          #e74c3c;
+            --blue:         #3498db;
+            --purple:       #9b59b6;
+            --text-main:    #e8f5ee;
+            --text-muted:   rgba(232,245,238,0.55);
+            --glass:        rgba(255,255,255,0.055);
+            --glass-border: rgba(255,255,255,0.10);
+            --transition:   0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            --nav-bg: rgba(7,26,15,0.75);
+            --nav-bg-mobile: rgba(7,26,15,0.95);
+            --bg-1: #1a5c35;
+            --bg-2: #0a2e1c;
+            --bg-3: #071a0f;
+            --on-accent: #04150a;
+        }
+
+        body.light-theme {
+            --green-deep:   #ffffff;
+            --green-dark:   #f3faf6;
+            --green-mid:    #e6f5ec;
+            --green-bright: #0d6b3a;
+            --green-bright-alt: #0a4f2a;
+            --green-glow:   rgba(13,107,58,0.10);
+            --text-main:    #10261a;
+            --text-muted:   rgba(16,38,26,0.6);
+            --glass:        rgba(13,107,58,0.045);
+            --glass-border: rgba(13,107,58,0.14);
+            --nav-bg: rgba(255,255,255,0.82);
+            --nav-bg-mobile: rgba(255,255,255,0.97);
+            --bg-1: #ffffff;
+            --bg-2: #f2faf5;
+            --bg-3: #e8f5ee;
+            --on-accent: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at 20% 0%, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* ── TOP NAV ── */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .top-nav .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .top-nav .nav-logo-mark {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            object-fit: contain;
+            display: block;
+        }
+
+        .top-nav .nav-logo-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .top-nav .nav-logo-text .accent { color: var(--green-bright); }
+
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            list-style: none;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.28rem;
+            border-radius: 50px;
+        }
+
+        .top-nav .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            font-weight: 600;
+            padding: 0.55rem 1.05rem;
+            border-radius: 50px;
+            transition: all var(--transition);
+        }
+
+        .top-nav .nav-links a i { font-size: 0.82rem; }
+
+        .top-nav .nav-links a:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.07);
+        }
+
+        body.light-theme .top-nav .nav-links a:hover {
+            background: rgba(13,107,58,0.08);
+        }
+
+        .top-nav .nav-links a.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            box-shadow: 0 4px 14px rgba(46,204,113,0.35);
+        }
+
+        body.light-theme .top-nav .nav-links a.active {
+            color: var(--green-bright-alt);
+            background: linear-gradient(135deg, #ffffff, #e7f7ee);
+            border: 1px solid rgba(13,107,58,0.22);
+            box-shadow: 0 4px 14px rgba(13,107,58,0.14);
+        }
+
+        .nav-item.hidden { display: none; }
+        .hidden { display: none !important; }
+
+        .top-nav .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--green-bright);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--green-glow);
+            transform: rotate(20deg);
+        }
+
+        .top-nav .nav-actions .account-btn-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1rem 0.4rem 0.6rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+
+        .top-nav .nav-actions .account-btn-top:hover {
+            background: var(--green-glow);
+            border-color: rgba(46,204,113,0.3);
+        }
+
+        .top-nav .nav-actions .account-btn-top i {
+            font-size: 1.2rem;
+            color: var(--green-bright);
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-avatar-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.25;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-greeting {
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name {
+            max-width: none;
+            white-space: nowrap;
+        }
+
+        .top-nav .nav-actions .logout-btn-top {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.08);
+            color: #ff8a80;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .top-nav .nav-actions .logout-btn-top:hover {
+            background: rgba(231,76,60,0.75);
+            color: white;
+        }
+
+        /* ── MOBILE MENU ── */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+
+        .mobile-nav-dropdown {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg-mobile);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 1.5rem;
+            z-index: 99;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .mobile-nav-dropdown.open { display: flex; }
+
+        .mobile-nav-dropdown a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all var(--transition);
+        }
+
+        .mobile-nav-dropdown a:hover {
+            color: var(--text-main);
+            background: var(--glass);
+        }
+
+        .mobile-nav-dropdown a.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+        }
+
+        /* ── MAIN ── */
+        .main-content {
+            margin-top: 70px;
+            padding: 1.4rem 1.6rem 2.5rem;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.4rem;
+        }
+
+        .dash-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: white;
+            text-shadow: 0 0 30px rgba(46,204,113,0.25);
+        }
+
+        .realtime-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.45rem 1.1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(46,204,113,0.35);
+            background: rgba(46,204,113,0.08);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--green-bright);
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 0 0 rgba(46,204,113,0.6);
+            animation: pulse-ring 1.6s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(46,204,113,0.65); }
+            60%  { box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+            100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+        }
+
+        .realtime-divider { width: 1px; height: 14px; background: rgba(46,204,113,0.3); }
+        .realtime-clock-wrap { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+        .realtime-clock {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--green-bright);
+            white-space: nowrap;
+        }
+        .realtime-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: rgba(46,204,113,0.7);
+            white-space: nowrap;
+        }
+
+        /* ── RESIDENT CARD ── */
+        .resident-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 0.9rem 1.3rem 0.75rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .card-header i {
+            color: var(--green-bright);
+            font-size: 0.9rem;
+        }
+
+        .card-header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .badge-count {
+            font-size: 0.6rem;
+            padding: 2px 12px;
+            border-radius: 40px;
+            background: var(--green-glow);
+            color: var(--green-bright);
+            border: 1px solid rgba(46,204,113,0.15);
+            font-weight: 600;
+        }
+
+        /* "Download List of Residents" — sits at the right of the card
+           header, opens a PDF preview before actually saving anything. */
+        .download-list-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0.5rem 1.05rem;
+            border-radius: 10px;
+            border: 1px solid rgba(46,204,113,0.4);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            color: var(--on-accent);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: 0 4px 14px rgba(46,204,113,0.28);
+            white-space: nowrap;
+        }
+
+        .download-list-btn i { color: var(--on-accent); font-size: 0.78rem; }
+
+        .download-list-btn:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 6px 20px rgba(46,204,113,0.4);
+            transform: translateY(-1px);
+        }
+
+        .download-list-btn:active { transform: translateY(0); }
+
+        .table-wrap {
+            overflow-x: auto;
+            padding: 0.2rem 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .resident-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .resident-table th {
+            text-align: left;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0.7rem 1.2rem;
+            border-bottom: 1px solid var(--glass-border);
+            white-space: nowrap;
+        }
+
+        .resident-table td {
+            padding: 0.7rem 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            vertical-align: middle;
+            color: var(--text-main);
+        }
+
+        .resident-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .resident-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        body.light-theme .resident-table td {
+            border-bottom: 1px solid rgba(13,107,58,0.05);
+        }
+
+        body.light-theme .resident-table tr:hover td {
+            background: rgba(13,107,58,0.03);
+        }
+
+        .user-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .user-avatar-small {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-bright));
+            color: #fff;
+        }
+
+        .user-avatar-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-sub-cell {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(46,204,113,0.12);
+            color: var(--green-bright);
+        }
+
+        .status-badge .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            display: inline-block;
+            background: var(--green-bright);
+        }
+
+        body.light-theme .status-badge {
+            background: #e7f6ed;
+            color: #08783f;
+            border: 1px solid #cce8d7;
+        }
+        body.light-theme .status-badge .dot {
+            background: #08783f;
+        }
+
+        .status-badge.off {
+            background: rgba(231,76,60,0.12);
+            color: var(--red);
+        }
+        .status-badge.off .dot { background: var(--red); }
+        body.light-theme .status-badge.off {
+            background: #fbeae8;
+            color: #c0392b;
+            border: 1px solid #f3d1cd;
+        }
+        body.light-theme .status-badge.off .dot { background: #c0392b; }
+
+        .action-btn-group {
+            display: flex;
+            gap: 4px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .joined-cell {
+            white-space: nowrap;
+        }
+
+        .joined-date {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .joined-time {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.04);
+        }
+
+        body.light-theme .action-btn {
+            background: #fff;
+            border-color: #d7e3dc;
+            color: #5d6d64;
+        }
+        body.light-theme .action-btn:hover {
+            background: #f1f7f3;
+            color: #17231c;
+            border-color: #bfd5c8;
+        }
+
+        .action-btn.warning {
+            border-color: rgba(243,156,18,0.25);
+            color: #f1c40f;
+        }
+
+        .action-btn.warning:hover {
+            background: rgba(243,156,18,0.08);
+        }
+
+        body.light-theme .action-btn.warning {
+            color: #a56600;
+            border-color: #ead7ad;
+            background: #fffaf0;
+        }
+        body.light-theme .action-btn.warning:hover {
+            background: #fdf5e6;
+        }
+
+        .action-btn.danger {
+            border-color: rgba(231,76,60,0.25);
+            color: #e74c3c;
+        }
+
+        .action-btn.danger:hover {
+            background: rgba(231,76,60,0.08);
+        }
+
+        body.light-theme .action-btn.danger {
+            color: #c0392b;
+            border-color: #edcbc6;
+            background: #fff8f7;
+        }
+        body.light-theme .action-btn.danger:hover {
+            background: #fde8e5;
+        }
+
+        /* ── NEAR MONITORED LOCATION CELL ── */
+        .near-loc-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .near-loc-value {
+            font-size: 0.78rem;
+            color: var(--text-main);
+        }
+
+        .near-loc-value.unset {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .near-loc-edit-btn {
+            width: 24px; height: 24px;
+            border-radius: 7px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-muted);
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 0.68rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .near-loc-edit-btn:hover {
+            color: var(--green-bright);
+            border-color: rgba(46,204,113,0.35);
+            background: rgba(46,204,113,0.08);
+        }
+        .near-loc-edit-btn.is-set {
+            color: var(--green-bright);
+            border-color: rgba(46,204,113,0.3);
+            background: rgba(46,204,113,0.06);
+        }
+
+        body.light-theme .near-loc-edit-btn {
+            background: #fff;
+            border-color: #d7e3dc;
+            color: #5d6d64;
+        }
+        body.light-theme .near-loc-edit-btn:hover,
+        body.light-theme .near-loc-edit-btn.is-set {
+            color: #08783f;
+            border-color: #bfd5c8;
+            background: #f1f7f3;
+        }
+
+        /* ── NEAR MONITORED LOCATION — ADMIN PICKER MODAL ── */
+        .near-loc-modal-list {
+            max-height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin: -0.2rem 0 0.4rem;
+        }
+        .near-loc-modal-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 0.6rem 0.8rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .near-loc-modal-item:hover {
+            background: rgba(255,255,255,0.04);
+        }
+        .near-loc-modal-item.selected {
+            background: rgba(46,204,113,0.08);
+            border-color: rgba(46,204,113,0.25);
+        }
+        body.light-theme .near-loc-modal-item:hover { background: #f1f7f3; }
+        body.light-theme .near-loc-modal-item.selected { background: #e8f5ec; border-color: #bfe3cb; }
+
+        .near-loc-modal-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+        .near-loc-modal-item-name { font-size: 0.82rem; font-weight: 600; color: var(--text-main); flex: 1; }
+        .near-loc-modal-item.selected i { color: var(--green-bright); }
+        .near-loc-modal-item-name.none-label { font-style: italic; color: var(--text-muted); font-weight: 500; }
+
+        .empty-state {
+            padding: 2.8rem 1.2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .empty-state i {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 0.6rem;
+            opacity: 0.3;
+        }
+
+        /* ── MODALS ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-2);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        body.light-theme .modal {
+            background: #fff;
+            border-color: #dce8e1;
+            box-shadow: 0 24px 60px rgba(18,32,24,.18);
+        }
+
+        .modal-header {
+            padding: 1.6rem 1.6rem 0.2rem;
+            text-align: center;
+        }
+
+        .modal-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+            margin: 0 auto 0.8rem;
+        }
+
+        .modal-icon.success {
+            background: linear-gradient(135deg, #145c30, #2ecc71);
+        }
+
+        .modal-icon.danger {
+            background: linear-gradient(135deg, #7a2a20, #e74c3c);
+        }
+
+        .modal-icon.warning {
+            background: linear-gradient(135deg, #7a5a0a, #f39c12);
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .modal-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+
+        body.light-theme .modal-sub {
+            color: #68786f;
+        }
+
+        .modal-body {
+            padding: 1.2rem 1.6rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.4rem;
+        }
+
+        .modal-actions .btn-cancel {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 12px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-actions .btn-cancel:hover {
+            background: rgba(255,255,255,0.04);
+        }
+
+        body.light-theme .modal-actions .btn-cancel {
+            background: #fff;
+            border-color: #d7e3dc;
+            color: #17231c;
+        }
+        body.light-theme .modal-actions .btn-cancel:hover {
+            background: #f3f7f5;
+        }
+
+        .modal-actions .btn-confirm {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 12px;
+            border: 1px solid rgba(46,204,113,0.4);
+            background: var(--green-bright);
+            color: #071a0f;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-actions .btn-confirm:hover {
+            background: #27ae60;
+            color: white;
+        }
+
+        .modal-actions .btn-confirm.danger {
+            background: #e74c3c;
+            border-color: rgba(231,76,60,0.5);
+            color: white;
+        }
+
+        .modal-actions .btn-confirm.danger:hover {
+            background: #c0392b;
+        }
+
+        body.light-theme .modal-actions .btn-confirm {
+            color: #fff;
+            background: #08783f;
+        }
+        body.light-theme .modal-actions .btn-confirm:hover {
+            background: #066b38;
+        }
+
+        .btn-modal-primary {
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 12px;
+            background: var(--green-bright);
+            border: none;
+            color: #071a0f;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-modal-primary:hover {
+            background: #27ae60;
+            box-shadow: 0 0 20px rgba(46,204,113,0.3);
+        }
+
+        body.light-theme .btn-modal-primary {
+            color: #fff;
+            background: #08783f;
+        }
+        body.light-theme .btn-modal-primary:hover {
+            background: #066b38;
+        }
+
+        .temp-password-box {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-align: center;
+            color: var(--green-bright);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.8rem;
+            user-select: all;
+        }
+
+        body.light-theme .temp-password-box {
+            background: #f5faf7;
+            border-color: #dce8e1;
+            color: #08783f;
+        }
+
+        /* ── BARANGAY PICKER MODAL (Download List of Residents per Barangay) ── */
+        .barangay-picker-modal {
+            max-width: 420px;
+            width: 100%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .barangay-picker-body {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 0.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .barangay-picker-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            padding: 0.75rem 0.9rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            transition: all var(--transition);
+        }
+
+        .barangay-picker-item:hover {
+            background: var(--green-glow);
+            border-color: rgba(46,204,113,0.4);
+            transform: translateY(-1px);
+        }
+
+        .barangay-picker-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .barangay-picker-name i { color: var(--green-bright); font-size: 0.78rem; }
+
+        .barangay-picker-count {
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 40px;
+            background: var(--green-glow);
+            color: var(--green-bright);
+            border: 1px solid rgba(46,204,113,0.15);
+            white-space: nowrap;
+        }
+
+        .barangay-picker-empty {
+            padding: 2rem 1rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        /* ── PDF PREVIEW MODAL (Download List of Residents) ── */
+        .pdf-preview-modal {
+            max-width: 860px;
+            width: 100%;
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+
+        .pdf-preview-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .pdf-preview-title i { color: var(--red); font-size: 1rem; }
+
+        .pdf-preview-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+        }
+
+        .pdf-preview-close:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.06);
+        }
+
+        .pdf-preview-body {
+            flex: 1;
+            min-height: 0;
+            padding: 1.1rem 1.5rem;
+            background: rgba(0,0,0,0.18);
+        }
+
+        .pdf-preview-body iframe {
+            width: 100%;
+            height: 62vh;
+            border: none;
+            border-radius: 10px;
+            background: #ffffff;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+        }
+
+        .pdf-preview-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 62vh;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .pdf-preview-footer {
+            display: flex;
+            gap: 0.8rem;
+            padding: 1.1rem 1.5rem 1.4rem;
+            border-top: 1px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+
+        .pdf-preview-footer .btn-cancel,
+        .pdf-preview-footer .btn-confirm {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--nav-bg-mobile);
+            border: 1px solid rgba(46,204,113,0.35);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-main);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 999;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(.4,0,.2,1);
+            pointer-events: none;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--green-bright); }
+
+        body.light-theme .toast {
+            background: #fff;
+            border-color: #dce8e1;
+            box-shadow: 0 10px 30px rgba(18,32,24,.12);
+        }
+        body.light-theme .toast i {
+            color: #08783f;
+        }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+            filter: blur(2px);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        .page-transition {
+            animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(3px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll,
+            .animate-on-scroll.visible,
+            .page-transition {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+
+        /* ── RESPONSIVE: general safety net (all sizes) ── */
+        html, body { max-width: 100%; overflow-x: hidden; }
+        img, svg, canvas, video { max-width: 100%; height: auto; }
+        .modal, .barangay-picker-modal, .pdf-preview-modal { max-width: 100%; }
+
+        /* ── SMALL-DESKTOP (≤1200px) ── */
+        @media (max-width: 1200px) {
+            .main-content { padding: 1.3rem 1.4rem 2.2rem; }
+        }
+
+        /* ── TABLET / small laptop (≤1100px, ≥769px): keep full nav links
+           visible but tighten spacing so they don't overflow before the
+           hamburger breakpoint kicks in — matches admin_alerts. ── */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .top-nav { padding: 0.6rem 1.2rem; }
+            .top-nav .nav-links { gap: 0.45rem; padding: 0.22rem; }
+            .top-nav .nav-links a { padding: 0.5rem 0.75rem; font-size: 0.76rem; }
+            .top-nav .nav-links a span { display: none; }
+            .top-nav .nav-links a i { font-size: 0.95rem; }
+            .top-nav .nav-actions .account-btn-top .user-name { max-width: 100px; }
+        }
+
+        /* ── TABLET (≤900px) ── */
+        @media (max-width: 900px) {
+            .main-content { padding: 1.1rem 1.2rem 2rem; }
+            .top-bar { flex-wrap: wrap; gap: 0.6rem; }
+            .modal, .barangay-picker-modal, .pdf-preview-modal { max-width: 92vw; }
+            .card-header { padding: 0.85rem 1.1rem 0.65rem; }
+        }
+
+        /* ── PHONE (≤768px) ──
+           Matches admin_home's phone treatment: title stacks above the
+           real-time badge (centered), and the account/logout buttons
+           collapse to icon-only circles instead of being tucked away
+           into the hamburger menu. */
+        @media (max-width: 768px) {
+            .top-nav { padding: 0.55rem 1rem; }
+            .top-nav .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .main-content { padding: 1rem 1rem 1.8rem; }
+
+            /* Icon-only account button on mobile, same as admin_home:
+               keep it a single tap target that still links to /account,
+               just drop the name/greeting text. */
+            .top-nav .nav-actions .account-btn-top {
+                gap: 0;
+                padding: 0;
+                width: 38px;
+                height: 38px;
+                justify-content: center;
+                border-radius: 50%;
+            }
+            .top-nav .nav-actions .account-btn-top .user-name-stack { display: none; }
+            .top-nav .nav-actions .account-btn-top i,
+            .top-nav .nav-actions .account-btn-top .user-avatar-img { margin: 0; }
+            .top-nav .nav-actions .account-btn-top .user-avatar-img { width: 26px; height: 26px; }
+
+            .top-bar { padding-left: 0 !important; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
+            .dash-title { font-size: 1.4rem; letter-spacing: 1px; white-space: normal; overflow: visible; text-overflow: initial; }
+            .realtime-divider { display: none; }
+            .realtime-badge { flex-shrink: 0; white-space: nowrap; }
+
+            .card-header { padding: 0.8rem 1rem 0.6rem; font-size: 0.82rem; }
+            /* Below tablet width, the two download buttons sit side-by-side,
+               equal width, centered as a group — only the desktop/tablet
+               default (margin-left:auto) pushes them to the right. */
+            .card-header-right { margin-left: 0; width: 100%; justify-content: center; gap: 0.6rem; }
+            .download-list-btn { flex: 1 1 0; max-width: 240px; justify-content: center; font-size: 0.62rem; padding: 0.45rem 0.8rem; }
+
+            /* The table has 7 columns of real data (user, contact,
+               barangay, monitored location, notif. frequency, joined,
+               actions) — that never fits a phone's width. Instead of
+               letting it squeeze into unreadable columns, give it a
+               floor width so .table-wrap's overflow-x:auto kicks in
+               and the table scrolls horizontally, phones only. */
+            .table-wrap { -webkit-overflow-scrolling: touch; }
+            .resident-table { min-width: 780px; }
+            .resident-table th,
+            .resident-table td { padding: 0.5rem 0.8rem; }
+            .action-btn { padding: 0.2rem 0.5rem; font-size: 0.55rem; }
+
+            .modal-header { padding: 1.3rem 1.3rem 0.2rem; }
+            .modal-body { padding: 1rem 1.3rem 1.3rem; }
+            .pdf-preview-header, .pdf-preview-footer { padding: 0.9rem 1.1rem; }
+            .pdf-preview-body { padding: 0.9rem 1.1rem; }
+            .pdf-preview-body iframe,
+            .pdf-preview-loading { height: 52vh; }
+
+            .toast { left: 1rem; right: 1rem; bottom: 1rem; max-width: calc(100% - 2rem); box-sizing: border-box; }
+        }
+
+        /* ── SMALL PHONE (≤480px) ── */
+        @media (max-width: 480px) {
+            .top-nav { padding: 0.5rem 0.8rem; }
+            .top-nav .nav-logo-text { font-size: 0.9rem; }
+            .top-nav .nav-logo-mark { width: 28px; height: 28px; }
+            .theme-toggle-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+            .top-nav .nav-actions { gap: 0.35rem; }
+            .top-nav .nav-actions .account-btn-top { width: 34px; height: 34px; }
+            .top-nav .nav-actions .account-btn-top .user-avatar-img { width: 24px; height: 24px; }
+            .top-nav .nav-actions .logout-btn-top { padding: 0.3rem 0.6rem; font-size: 0.65rem; }
+            .mobile-nav-dropdown { top: 54px; padding: 0.8rem 1rem; }
+
+            .dash-title { font-size: 1.2rem; letter-spacing: 0.5px; }
+
+            .resident-table { font-size: 0.7rem; }
+            .resident-table th,
+            .resident-table td { padding: 0.4rem 0.5rem; }
+            .user-name-cell { gap: 8px; }
+            .user-avatar-small { width: 28px; height: 28px; font-size: 0.6rem; }
+            .card-header { padding: 0.65rem 0.9rem 0.55rem; }
+            .download-list-btn { max-width: none; font-size: 0.6rem; padding: 0.45rem 0.5rem; }
+
+            .modal-title, .pdf-preview-title { font-size: 0.9rem; }
+            .modal-sub { font-size: 0.7rem; }
+            .modal-actions { flex-wrap: wrap; }
+            .modal-actions .btn-cancel, .modal-actions .btn-confirm { flex: 1 1 auto; min-width: 120px; }
+            .pdf-preview-footer { flex-wrap: wrap; }
+            .pdf-preview-footer .btn-cancel, .pdf-preview-footer .btn-confirm { flex: 1 1 auto; min-width: 120px; }
+            .pdf-preview-body iframe,
+            .pdf-preview-loading { height: 48vh; }
+        }
+
+        /* theme.css ships a global rule that hides .realtime-clock entirely
+           below 650px (display:none !important). That's too aggressive for
+           this dashboard, so re-show it here. Same specificity + !important,
+           and this <style> block loads after theme.css, so this wins. */
+        @media (max-width: 650px) {
+            .realtime-clock {
+                display: block !important;
+            }
+        }
+
+        /* ── SMALLEST PHONE (≤360px) ── */
+        @media (max-width: 360px) {
+            .top-nav .nav-logo-text { font-size: 0.8rem; }
+            .top-nav .nav-logo-mark { width: 24px; height: 24px; }
+            .dash-title { font-size: 1.1rem; }
+            .realtime-badge { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            .realtime-clock { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme');
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- ── TOP NAV ── -->
+    <nav class="top-nav">
+        <a href="/home" class="nav-logo">
+            <img src="/static/aedospot-logo.png" alt="AEDOSPOT" class="nav-logo-mark" onerror="this.style.display='none'">
+            <span class="nav-logo-text">AEDO<span class="accent">SPOT</span></span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/home"><i class="fas fa-house"></i><span>Home</span></a></li>
+            <li><a href="/risk_map"><i class="fas fa-map-location-dot"></i><span>Risk Map</span></a></li>
+            <li><a href="/alerts"><i class="fas fa-triangle-exclamation"></i><span>Alerts</span></a></li>
+            <li><a href="/admin_reports"><i class="fas fa-chart-simple"></i><span>Reports & Data</span></a></li>
+            <li><a href="/admin_user_residents" class="active"><i class="fas fa-users"></i><span>Residents</span></a></li>
+            <li><a href="/settings" id="navSettings" class="hidden"><i class="fas fa-gear"></i><span>Settings</span></a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="/account" class="account-btn-top" id="accountBtn" aria-label="Account" title="Account">
+                <i class="fas fa-user-circle" id="userAvatarIcon"></i>
+                <img src="" alt="" class="user-avatar-img" id="userAvatarImg">
+                <span class="user-name-stack">
+                    <span class="user-greeting">Administrator</span>
+                    <span class="user-name" id="userName">User</span>
+                </span>
+            </a>
+            <button class="logout-btn-top" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ── MOBILE NAV ── -->
+    <div class="mobile-nav-dropdown" id="mobileNav">
+        <a href="/home"><i class="fas fa-house"></i>&nbsp; Home</a>
+        <a href="/risk_map"><i class="fas fa-map-location-dot"></i>&nbsp; Risk Map</a>
+        <a href="/alerts"><i class="fas fa-triangle-exclamation"></i>&nbsp; Alerts</a>
+        <a href="/admin_reports"><i class="fas fa-chart-simple"></i>&nbsp; Reports & Data</a>
+        <a href="/admin_user_residents" class="active"><i class="fas fa-users"></i>&nbsp; Residents</a>
+        <a href="/settings" id="mobileNavSettings" class="hidden"><i class="fas fa-gear"></i>&nbsp; Settings</a>
+        <a href="/account"><i class="fas fa-user-circle"></i>&nbsp; Account</a>
+    </div>
+
+    <!-- ── MAIN ── -->
+    <main class="main-content page-transition" id="mainContent">
+
+        <!-- TOP BAR -->
+        <div class="top-bar animate-on-scroll">
+            <div class="dash-title">RESIDENTS</div>
+            <div class="realtime-badge">
+                <div class="pulse-dot"></div>
+                <span class="realtime-label">REAL TIME</span>
+                <div class="realtime-divider"></div>
+                <div class="realtime-clock-wrap">
+                    <div class="realtime-clock" id="realtimeClock">12:00:00 AM</div>
+                    <div class="realtime-date" id="realtimeDate">Monday, Jan 1, 2025</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESIDENT CARD -->
+        <div class="resident-card animate-on-scroll">
+            <div class="card-header">
+                <i class="fas fa-user"></i> Registered Residents
+                <div class="card-header-right">
+                    <button class="download-list-btn" id="downloadResidentsBtn" onclick="openAllResidentsPdfPreview()">
+                        <i class="fas fa-file-pdf"></i> Download All List of Residents
+                    </button>
+                    <button class="download-list-btn" id="downloadResidentsPerBarangayBtn" onclick="openBarangayPickerModal()">
+                        <i class="fas fa-map-marker-alt"></i> Download List of Residents per Barangay
+                    </button>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table class="resident-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Contact #</th>
+                            <th>Barangay</th>
+                            <th>Near Monitored Location</th>
+                            <th>Notification Frequency</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="residentTableBody">
+                        <tr><td colspan="7" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading residents...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ── MODALS ── -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-icon" id="confirmIcon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="modal-title" id="confirmTitle">Confirm Action</div>
+                <div class="modal-sub" id="confirmMessage"></div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-actions">
+                    <button class="btn-cancel" onclick="closeConfirmModal()">Cancel</button>
+                    <button class="btn-confirm" id="confirmBtn">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-icon success" id="infoIcon"><i class="fas fa-check"></i></div>
+                <div class="modal-title" id="infoTitle">Done</div>
+                <div class="modal-sub" id="infoMessage"></div>
+            </div>
+            <div class="modal-body">
+                <div class="temp-password-box" id="infoTempPassword" style="display:none;"></div>
+                <button class="btn-modal-primary" id="infoOkBtn">Got it</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── BARANGAY PICKER MODAL (Download List of Residents per Barangay) ── -->
+    <div class="modal-overlay" id="barangayPickerModal">
+        <div class="modal barangay-picker-modal">
+            <div class="pdf-preview-header">
+                <div class="pdf-preview-title"><i class="fas fa-map-marker-alt"></i> Select a Barangay</div>
+                <button class="pdf-preview-close" onclick="closeBarangayPickerModal()"><i class="fas fa-xmark"></i></button>
+            </div>
+            <div class="barangay-picker-body" id="barangayPickerList">
+                <div class="barangay-picker-empty"><i class="fas fa-spinner fa-spin"></i> Loading barangays...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── PDF PREVIEW MODAL (Download List of Residents) ── -->
+    <div class="modal-overlay" id="pdfPreviewModal">
+        <div class="modal pdf-preview-modal">
+            <div class="pdf-preview-header">
+                <div class="pdf-preview-title" id="pdfPreviewTitle"><i class="fas fa-file-pdf"></i> Preview — Registered Residents List</div>
+                <button class="pdf-preview-close" onclick="closePdfPreview()"><i class="fas fa-xmark"></i></button>
+            </div>
+            <div class="pdf-preview-body" id="pdfPreviewBody">
+                <div class="pdf-preview-loading" id="pdfPreviewLoading">
+                    <i class="fas fa-spinner fa-spin"></i> Generating preview...
+                </div>
+                <iframe id="pdfPreviewFrame" title="Residents list PDF preview" style="display:none;"></iframe>
+            </div>
+            <div class="pdf-preview-footer">
+                <button class="btn-cancel" onclick="closePdfPreview()">Cancel</button>
+                <button class="btn-confirm" id="pdfDownloadBtn"><i class="fas fa-download"></i> Download PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Saved.</span></div>
+
+    <!-- PDF generation for "Download List of Residents" -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <script>
+        // ── THEME TOGGLE ──
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+        function refreshThemeIcon() {
+            const isLight = document.body.classList.contains('light-theme');
+            themeToggleBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+        refreshThemeIcon();
+
+        // ── MOBILE MENU ──
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+
+        function closeMobileMenu() {
+            mobileNav.classList.remove('open');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            toggleTheme();
+            refreshThemeIcon();
+        });
+
+        menuToggle.addEventListener('click', function() {
+            mobileNav.classList.toggle('open');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        document.querySelectorAll('.mobile-nav-dropdown a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                closeMobileMenu();
+            });
+        });
+
+        // ── SCROLL ANIMATIONS ──
+        function initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            if (animatedElements.length === 0) return;
+
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                return rect.top <= windowHeight - 100;
+            }
+
+            function checkVisibility() {
+                animatedElements.forEach(function(el) {
+                    if (isElementInViewport(el)) {
+                        el.classList.add('visible');
+                    }
+                });
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        checkVisibility();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            window.addEventListener('resize', checkVisibility);
+            checkVisibility();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                initScrollAnimations();
+            }, 100);
+        });
+
+        // ── CLOCK ──
+        function updateClock() {
+            const now = new Date();
+            let hh = now.getHours();
+            const ampm = hh >= 12 ? 'PM' : 'AM';
+            hh = hh % 12 || 12;
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            const ss = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('realtimeClock').textContent = hh + ':' + mm + ':' + ss + ' ' + ampm;
+
+            const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            document.getElementById('realtimeDate').textContent =
+                days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // ── SESSION ──
+        async function loadUserInfo() {
+            try {
+                const res = await fetch('/api/check_session', { credentials: 'include' });
+                const data = await res.json();
+                if (data.logged_in) {
+                    document.getElementById('userName').textContent = data.user.name;
+
+                    const avatarImg = document.getElementById('userAvatarImg');
+                    const avatarIcon = document.getElementById('userAvatarIcon');
+                    if (data.user.avatar_url) {
+                        avatarImg.src = data.user.avatar_url;
+                        avatarImg.style.display = 'block';
+                        avatarIcon.style.display = 'none';
+                    } else {
+                        avatarImg.style.display = 'none';
+                        avatarIcon.style.display = 'inline';
+                    }
+
+                    if (data.user.is_admin) {
+                        document.getElementById('navSettings').classList.remove('hidden');
+                        document.getElementById('mobileNavSettings').classList.remove('hidden');
+                    }
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch(e) {
+                window.location.href = '/login';
+            }
+        }
+
+        async function handleLogoutClick() {
+            closeMobileMenu();
+            try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch(e) {}
+            window.location.href = '/';
+        }
+        document.getElementById('logoutBtn').addEventListener('click', handleLogoutClick);
+
+        // ── TOAST ──
+        let toastTimer;
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.querySelector('i').style.color = isError ? '#e74c3c' : 'var(--green-bright)';
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+        }
+
+        // ── MODALS ──
+        let pendingConfirmAction = null;
+
+        function openConfirmModal(title, message, confirmText = 'Confirm', isDanger = false, onConfirm) {
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMessage').textContent = message;
+            const icon = document.getElementById('confirmIcon');
+            icon.className = 'modal-icon ' + (isDanger ? 'danger' : 'warning');
+            icon.innerHTML = isDanger ? '<i class="fas fa-trash-alt"></i>' : '<i class="fas fa-exclamation-triangle"></i>';
+            const btn = document.getElementById('confirmBtn');
+            btn.textContent = confirmText;
+            btn.className = 'btn-confirm' + (isDanger ? ' danger' : '');
+            pendingConfirmAction = onConfirm;
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+            pendingConfirmAction = null;
+        }
+
+        document.getElementById('confirmBtn').addEventListener('click', function() {
+            document.getElementById('confirmModal').classList.remove('show');
+            const action = pendingConfirmAction;
+            pendingConfirmAction = null;
+            if (action) action();
+        });
+
+        document.getElementById('confirmModal').addEventListener('click', function(e) {
+            if (e.target === this) closeConfirmModal();
+        });
+
+        function openInfoModal(title, message, tempPassword = null) {
+            document.getElementById('infoTitle').textContent = title;
+            document.getElementById('infoMessage').textContent = message;
+            const box = document.getElementById('infoTempPassword');
+            if (tempPassword) {
+                box.textContent = tempPassword;
+                box.style.display = 'block';
+            } else {
+                box.style.display = 'none';
+            }
+            document.getElementById('infoModal').classList.add('show');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('infoModal').classList.remove('show');
+        }
+
+        document.getElementById('infoOkBtn').addEventListener('click', closeInfoModal);
+        document.getElementById('infoModal').addEventListener('click', function(e) {
+            if (e.target === this) closeInfoModal();
+        });
+
+        // ── NOTIFICATION FREQUENCY HELPER ──
+        function getNotificationFrequencyLabel(user) {
+            const emailOn = !!user.email_enabled;
+            const smsOn = !!user.sms_enabled;
+            const freq = user.notif_freq;
+            
+            // If both email and SMS are off, use In-App Notification
+            if (!emailOn && !smsOn) {
+                return { text: 'In-App Notification', isOff: false };
+            }
+            
+            // Check if frequency is turned off
+            const isOff = freq === 'off' || freq === 0 || freq === '0';
+            
+            if (isOff) {
+                // If freq is off but email/SMS are on, show "Turned off"
+                return { text: 'Turned off', isOff: true };
+            }
+            
+            // Build the frequency text
+            let freqText = '';
+            const f = Number(freq);
+            if (f === 15) freqText = 'Every 15 minutes';
+            else if (f === 30) freqText = 'Every 30 minutes';
+            else if (f === 60) freqText = 'Every hour';
+            else if (f && !isNaN(f)) freqText = `Every ${f} minutes`;
+            else freqText = 'Every 15 minutes'; // fallback
+            
+            // Build channel text
+            let channelText = '';
+            if (emailOn && smsOn) {
+                channelText = `Email & SMS enabled ${freqText}`;
+            } else if (emailOn) {
+                channelText = `Email enabled ${freqText}`;
+            } else if (smsOn) {
+                channelText = `SMS enabled ${freqText}`;
+            } else {
+                // This shouldn't happen if we handled the !emailOn && !smsOn case above
+                channelText = `In-App Notification`;
+            }
+            
+            return { text: channelText, isOff: false };
+        }
+
+        // ── LOAD RESIDENTS ──
+        let currentResidents = [];
+
+        async function loadResidents() {
+            const tbody = document.getElementById('residentTableBody');
+            try {
+                const res = await fetch('/api/admin/users', { credentials: 'include' });
+                const data = await res.json();
+                if (!data.success) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="7" class="empty-state"><i class="fas fa-exclamation-triangle"></i> ${data.message || 'Unable to load residents.'}</td></tr>`;
+                    return;
+                }
+                const residents = data.users.filter(u => !u.is_admin);
+                currentResidents = residents;
+
+                if (residents.length === 0) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="7" class="empty-state"><i class="fas fa-users"></i> No residents registered yet.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = residents.map(u => {
+                    const joinedParts = (() => {
+                        if (!u.created_at) return { date: '—', time: '' };
+                        const d = new Date(String(u.created_at).replace(' ', 'T'));
+                        if (isNaN(d.getTime())) return { date: '—', time: '' };
+                        const datePart = d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+                        const timePart = d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                        return { date: datePart, time: timePart };
+                    })();
+                    const initials = u.fullname.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase()
+                        .slice(0, 2);
+                    const avatarInner = u.avatar_url
+                        ? `<img src="${u.avatar_url}" alt="${u.fullname}" onerror="this.parentElement.textContent='${initials}';">`
+                        : initials;
+                    
+                    // Get notification frequency label using the helper
+                    const freq = getNotificationFrequencyLabel(u);
+                    
+                    return `
+                        <tr>
+                            <td>
+                                <div class="user-name-cell">
+                                    <div class="user-avatar-small">${avatarInner}</div>
+                                    <div>
+                                        <div>${u.fullname}</div>
+                                        <div class="user-sub-cell">${u.email}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>${formatPhoneLocal(u.phone)}</td>
+                            <td>${u.barangay || '—'}</td>
+                            <td>
+                                <div class="near-loc-cell">
+                                    <span class="near-loc-value${u.near_hotspot_name ? '' : ' unset'}">${u.near_hotspot_name || 'Not set'}</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge${freq.isOff ? ' off' : ''}"><span class="dot"></span> ${freq.text}</span></td>
+                            <td class="joined-cell">
+                                <div class="joined-date">${joinedParts.date}</div>
+                                ${joinedParts.time ? `<div class="joined-time">${joinedParts.time}</div>` : ''}
+                            </td>
+                            <td>
+                                <div class="action-btn-group">
+                                    <button class="action-btn warning" onclick="resetResidentPassword(${u.id}, '${u.fullname.replace(/'/g, "\\'")}')">
+                                        <i class="fas fa-key"></i> Reset
+                                    </button>
+                                    <button class="action-btn danger" onclick="deleteResident(${u.id}, '${u.fullname.replace(/'/g, "\\'")}')">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (e) {
+                tbody.innerHTML =
+                    `<tr><td colspan="7" class="empty-state"><i class="fas fa-exclamation-triangle"></i> Server error loading residents.</td></tr>`;
+            }
+        }
+
+        // ── DELETE RESIDENT ──
+        function deleteResident(userId, fullname) {
+            openConfirmModal('Delete Resident', `Delete the account for "${fullname}"? This cannot be undone.`, 'Delete',
+                true, async () => {
+                    try {
+                        const res = await fetch('/api/admin/users/' + userId, { method: 'DELETE',
+                            credentials: 'include' });
+                        const data = await res.json();
+                        if (data.success) {
+                            showToast('Resident deleted successfully.');
+                            loadResidents();
+                        } else {
+                            showToast(data.message || 'Failed to delete resident.', true);
+                        }
+                    } catch (e) {
+                        showToast('Server error. Please try again.', true);
+                    }
+                });
+        }
+
+        // ── RESET PASSWORD ──
+        function resetResidentPassword(userId, fullname) {
+            openConfirmModal('Reset Password',
+                `Reset password for "${fullname}" to default temporary password? They'll be prompted to set a new one.`,
+                'Reset Password', false, async () => {
+                    try {
+                        const res = await fetch('/api/admin/users/' + userId + '/reset_password', { method: 'POST',
+                            credentials: 'include' });
+                        const data = await res.json();
+                        if (data.success) {
+                            openInfoModal('Password Reset',
+                                `Share this temporary password with ${fullname} directly. They'll be prompted to set a new password on next login.`,
+                                data.temporary_password);
+                            loadResidents();
+                        } else {
+                            showToast(data.message || 'Failed to reset password.', true);
+                        }
+                    } catch (e) {
+                        showToast('Server error. Please try again.', true);
+                    }
+                });
+        }
+
+        // ── DOWNLOAD LIST OF RESIDENTS (PDF, with a preview before saving) ──
+        function formatPhoneLocal(phone) {
+            if (!phone) return '\u2014';
+            const digits = phone.replace(/\D/g, '');
+            if (phone.trim().startsWith('+63') && digits.length === 12) {
+                return '0' + digits.slice(2);
+            }
+            if (digits.length === 10) {
+                return '0' + digits;
+            }
+            return phone;
+        }
+
+        function buildResidentsPdf(residents, barangayLabel = null) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+            const pageWidth = doc.internal.pageSize.getWidth();
+
+            doc.setFillColor(7, 26, 15);
+            doc.rect(0, 0, pageWidth, 100, 'F');
+            doc.setFillColor(46, 204, 113);
+            doc.rect(0, 100, pageWidth, 3, 'F');
+
+            doc.setTextColor(46, 204, 113);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(22);
+            doc.text('AEDOSPOT', 40, 42);
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9.5);
+            doc.text('DENGUE RISK MONITORING SYSTEM \u00B7 MORONG, RIZAL', 40, 58);
+
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(15);
+            doc.text(barangayLabel ? `Residents List — Barangay ${barangayLabel}` : 'Registered Residents List', 40, 84);
+
+            const generatedStr = new Date().toLocaleString(undefined, {
+                year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+            });
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(8.5);
+            doc.setTextColor(200, 230, 215);
+            doc.text(`Generated: ${generatedStr}`, pageWidth - 40, 42, { align: 'right' });
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(9.5);
+            doc.setTextColor(46, 204, 113);
+            doc.text(`${residents.length} Total Resident${residents.length === 1 ? '' : 's'}`, pageWidth - 40, 58, { align: 'right' });
+
+            const rows = residents.map((u, i) => {
+                const freq = getNotificationFrequencyLabel(u);
+                return [
+                    String(i + 1),
+                    u.fullname || '\u2014',
+                    u.email || '\u2014',
+                    formatPhoneLocal(u.phone),
+                    u.barangay || '\u2014',
+                    u.near_hotspot_name || 'Not set',
+                    freq.text,
+                ];
+            });
+
+            doc.autoTable({
+                startY: 122,
+                head: [['#', 'Full Name', 'Email', 'Contact #', 'Barangay', 'Near Monitored Location', 'Notif. Frequency']],
+                body: rows,
+                theme: 'grid',
+                styles: {
+                    font: 'helvetica',
+                    fontSize: 8.5,
+                    cellPadding: 6,
+                    lineColor: [223, 232, 226],
+                    lineWidth: 0.5,
+                    textColor: [25, 48, 37],
+                },
+                headStyles: {
+                    fillColor: [26, 138, 74],
+                    textColor: 255,
+                    fontStyle: 'bold',
+                    fontSize: 8.5,
+                },
+                alternateRowStyles: { fillColor: [244, 250, 247] },
+                columnStyles: {
+                    0: { cellWidth: 20, halign: 'center' },
+                    2: { cellWidth: 100 },
+                    3: { cellWidth: 70 },
+                },
+                margin: { left: 40, right: 40, bottom: 50 },
+            });
+
+            const pageCount = doc.internal.getNumberOfPages();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setDrawColor(220, 232, 224);
+                doc.setLineWidth(0.5);
+                doc.line(40, pageHeight - 34, pageWidth - 40, pageHeight - 34);
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(7.5);
+                doc.setTextColor(120, 140, 130);
+                doc.text('AEDOSPOT Dengue Monitor \u2014 Confidential resident data, admin use only.', 40, pageHeight - 20);
+                doc.text(`Page ${i} of ${pageCount}`, pageWidth - 40, pageHeight - 20, { align: 'right' });
+            }
+
+            return doc;
+        }
+
+        let generatedResidentsPdf = null;
+        let generatedResidentsPdfUrl = null;
+        let selectedBarangayLabel = null;
+
+        function openAllResidentsPdfPreview() {
+            selectedBarangayLabel = null;
+            openResidentPdfPreview(currentResidents, null);
+        }
+
+        function openResidentPdfPreview(residents, barangayLabel = null) {
+            residents = residents || [];
+
+            if (!barangayLabel && residents.length === 0) {
+                showToast('No residents to include in the PDF.', true);
+                return;
+            }
+
+            document.getElementById('pdfPreviewTitle').innerHTML = barangayLabel
+                ? `<i class="fas fa-file-pdf"></i> Preview — Residents of ${barangayLabel}`
+                : `<i class="fas fa-file-pdf"></i> Preview — Registered Residents List`;
+
+            const frame = document.getElementById('pdfPreviewFrame');
+            const loading = document.getElementById('pdfPreviewLoading');
+            frame.style.display = 'none';
+            loading.style.display = 'flex';
+            document.getElementById('pdfPreviewModal').classList.add('show');
+
+            setTimeout(() => {
+                try {
+                    generatedResidentsPdf = buildResidentsPdf(residents, barangayLabel);
+                    if (generatedResidentsPdfUrl) URL.revokeObjectURL(generatedResidentsPdfUrl);
+                    generatedResidentsPdfUrl = generatedResidentsPdf.output('bloburl');
+                    frame.src = generatedResidentsPdfUrl;
+                    loading.style.display = 'none';
+                    frame.style.display = 'block';
+                } catch (e) {
+                    loading.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Could not generate the PDF preview.';
+                }
+            }, 50);
+        }
+
+        function closePdfPreview() {
+            document.getElementById('pdfPreviewModal').classList.remove('show');
+            document.getElementById('pdfPreviewFrame').src = '';
+            document.getElementById('pdfPreviewLoading').style.display = 'flex';
+            document.getElementById('pdfPreviewLoading').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating preview...';
+        }
+
+        document.getElementById('pdfPreviewModal').addEventListener('click', function(e) {
+            if (e.target === this) closePdfPreview();
+        });
+
+        document.getElementById('pdfDownloadBtn').addEventListener('click', function() {
+            if (!generatedResidentsPdf) return;
+            const stamp = new Date().toISOString().slice(0, 10);
+            const slug = selectedBarangayLabel
+                ? '-' + selectedBarangayLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+                : '';
+            generatedResidentsPdf.save(`aedospot-registered-residents${slug}-${stamp}.pdf`);
+        });
+
+        // ── DOWNLOAD LIST OF RESIDENTS PER BARANGAY ──
+        const MORONG_BARANGAYS = [
+            'Bombongan',
+            'Caniogan-Calero-Lanang (CCL)',
+            'Lagundi',
+            'Maybancal',
+            'San Guillermo',
+            'San Jose',
+            'San Juan',
+            'San Pedro',
+        ];
+
+        function getBarangayCounts() {
+            const counts = {};
+            MORONG_BARANGAYS.forEach(b => { counts[b] = 0; });
+            (currentResidents || []).forEach(u => {
+                const raw = (u.barangay || '').trim();
+                if (!raw) return;
+                const match = MORONG_BARANGAYS.find(b => b.toLowerCase() === raw.toLowerCase());
+                if (match) counts[match]++;
+            });
+            return counts;
+        }
+
+        function openBarangayPickerModal() {
+            const counts = getBarangayCounts();
+            const listEl = document.getElementById('barangayPickerList');
+
+            listEl.innerHTML = MORONG_BARANGAYS.map(b => `
+                <button class="barangay-picker-item" onclick="selectBarangayForPdf('${b.replace(/'/g, "\\'")}')">
+                    <span class="barangay-picker-name"><i class="fas fa-map-marker-alt"></i> ${b}</span>
+                    <span class="barangay-picker-count">${counts[b]} resident${counts[b] === 1 ? '' : 's'}</span>
+                </button>
+            `).join('');
+
+            document.getElementById('barangayPickerModal').classList.add('show');
+        }
+
+        function closeBarangayPickerModal() {
+            document.getElementById('barangayPickerModal').classList.remove('show');
+        }
+
+        document.getElementById('barangayPickerModal').addEventListener('click', function(e) {
+            if (e.target === this) closeBarangayPickerModal();
+        });
+
+        function selectBarangayForPdf(barangay) {
+            selectedBarangayLabel = barangay;
+            closeBarangayPickerModal();
+            const filtered = (currentResidents || []).filter(u => (u.barangay || '').trim().toLowerCase() === barangay.toLowerCase());
+            openResidentPdfPreview(filtered, barangay);
+        }
+
+        // ── INIT ──
+        loadUserInfo();
+        loadResidents();
+
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                loadUserInfo();
+                loadResidents();
+            }
+        });
+
+        // Auto-refresh residents list every 30 seconds to pick up changes
+        setInterval(loadResidents, 30000);
+    </script>
+    <script src="/static/theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,2850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerts | AEDOSPOT</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green-deep:   #071a0f;
+            --green-dark:   #0d2b18;
+            --green-mid:    #145c30;
+            --green-bright: #2ecc71;
+            --green-bright-alt: #1a8a4a;
+            --green-glow:   rgba(46,204,113,0.18);
+            --amber:        #f39c12;
+            --red:          #e74c3c;
+            --blue:         #3498db;
+            --purple:       #9b59b6;
+            --text-main:    #e8f5ee;
+            --text-muted:   rgba(232,245,238,0.55);
+            --glass:        rgba(255,255,255,0.055);
+            --glass-border: rgba(255,255,255,0.10);
+            --transition:   0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            --nav-bg: rgba(7,26,15,0.75);
+            --nav-bg-mobile: rgba(7,26,15,0.95);
+            --bg-1: #1a5c35;
+            --bg-2: #0a2e1c;
+            --bg-3: #071a0f;
+            --on-accent: #04150a;
+        }
+
+        body.light-theme {
+            --green-deep:   #ffffff;
+            --green-dark:   #f3faf6;
+            --green-mid:    #e6f5ec;
+            --green-bright: #0d6b3a;
+            --green-bright-alt: #0a4f2a;
+            --green-glow:   rgba(13,107,58,0.10);
+            --text-main:    #10261a;
+            --text-muted:   rgba(16,38,26,0.6);
+            --glass:        rgba(13,107,58,0.045);
+            --glass-border: rgba(13,107,58,0.14);
+            --nav-bg: rgba(255,255,255,0.82);
+            --nav-bg-mobile: rgba(255,255,255,0.97);
+            --bg-1: #ffffff;
+            --bg-2: #f2faf5;
+            --bg-3: #e8f5ee;
+            --on-accent: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at 20% 0%, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* ── TOP NAV ── */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .top-nav .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .top-nav .nav-logo-mark {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            object-fit: contain;
+            display: block;
+        }
+
+        .top-nav .nav-logo-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .top-nav .nav-logo-text .accent { color: var(--green-bright); }
+
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            list-style: none;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.28rem;
+            border-radius: 50px;
+        }
+
+        .top-nav .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            font-weight: 600;
+            padding: 0.55rem 1.05rem;
+            border-radius: 50px;
+            transition: all var(--transition);
+        }
+
+        .top-nav .nav-links a i { font-size: 0.82rem; }
+
+        .top-nav .nav-links a:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.07);
+        }
+
+        body.light-theme .top-nav .nav-links a:hover {
+            background: rgba(13,107,58,0.08);
+        }
+
+        .top-nav .nav-links a.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            box-shadow: 0 4px 14px rgba(46,204,113,0.35);
+        }
+
+        body.light-theme .top-nav .nav-links a.active {
+            color: var(--green-bright-alt);
+            background: linear-gradient(135deg, #ffffff, #e7f7ee);
+            border: 1px solid rgba(13,107,58,0.22);
+            box-shadow: 0 4px 14px rgba(13,107,58,0.14);
+        }
+
+        .top-nav .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--green-bright);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--green-glow);
+            transform: rotate(20deg);
+        }
+
+        .top-nav .nav-actions .account-btn-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1rem 0.4rem 0.6rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+
+        .top-nav .nav-actions .account-btn-top:hover {
+            background: var(--green-glow);
+            border-color: rgba(46,204,113,0.3);
+        }
+
+        .nav-avatar-wrap {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+        }
+
+        .nav-avatar {
+            width: 100%;
+            height: 100%;
+            display: none;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .nav-avatar-wrap i {
+            font-size: 1.2rem;
+            color: var(--green-bright);
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.25;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-greeting {
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name {
+            max-width: none;
+            white-space: nowrap;
+        }
+
+        .top-nav .nav-actions .logout-btn-top {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.08);
+            color: #ff8a80;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .top-nav .nav-actions .logout-btn-top:hover {
+            background: rgba(231,76,60,0.75);
+            color: white;
+        }
+
+        .nav-item.hidden { display: none; }
+
+        /* ── MOBILE MENU ── */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+
+        .mobile-nav-dropdown {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg-mobile);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 1.5rem;
+            z-index: 99;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .mobile-nav-dropdown.open { display: flex; }
+
+        .mobile-nav-dropdown a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all var(--transition);
+        }
+
+        .mobile-nav-dropdown a:hover {
+            color: var(--text-main);
+            background: var(--glass);
+        }
+
+        .mobile-nav-dropdown a.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+        }
+
+        /* ── MAIN ── */
+        .main-content {
+            margin-top: 70px;
+            padding: 1.4rem 1.6rem 1.6rem;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+        }
+
+        .dash-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: white;
+            text-shadow: 0 0 30px rgba(46,204,113,0.25);
+        }
+
+        .realtime-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.45rem 1.1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(46,204,113,0.35);
+            background: rgba(46,204,113,0.08);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--green-bright);
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 0 0 rgba(46,204,113,0.6);
+            animation: pulse-ring 1.6s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(46,204,113,0.65); }
+            60%  { box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+            100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+        }
+
+        .realtime-divider { width: 1px; height: 14px; background: rgba(46,204,113,0.3); }
+        .realtime-clock-wrap { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+        .realtime-clock {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--green-bright);
+            white-space: nowrap;
+        }
+        .realtime-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: rgba(46,204,113,0.7);
+            white-space: nowrap;
+        }
+
+        /* ── DATA CONTROL BAR ── */
+        .data-control-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0.3rem 1.2rem;
+            margin-bottom: 1.2rem;
+            border-radius: 12px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+        }
+
+        /* ── ALERTS GRID ── */
+        .alerts-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 1rem;
+            align-items: start;
+            width: 100%;
+        }
+
+        /* ── CARD BASE ── */
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            /* overflow: hidden; REMOVED - was clipping the dropdown */
+        }
+
+        .card-header {
+            padding: 0.9rem 1.2rem 0.7rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        .card-header-left { display: flex; align-items: center; gap: 8px; }
+        .card-header i { color: var(--green-bright); }
+
+        /* ── ALERT LEVEL FILTERS ── */
+        .alert-filter-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .alert-filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0.32rem 0.85rem;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .alert-filter-btn:hover {
+            color: var(--text-main);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .alert-filter-btn .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
+        }
+
+        .alert-filter-btn.active {
+            color: var(--text-main);
+            border-color: transparent;
+        }
+
+        .alert-filter-btn[data-level="all"].active {
+            background: var(--green-glow);
+            color: var(--green-bright);
+            border-color: rgba(46,204,113,0.35);
+        }
+
+        .alert-filter-btn[data-level="moderate"].active {
+            background: rgba(243,156,18,0.15);
+            color: var(--amber);
+            border-color: rgba(243,156,18,0.35);
+        }
+
+        .alert-filter-btn[data-level="high"].active {
+            background: rgba(231,76,60,0.15);
+            color: var(--red);
+            border-color: rgba(231,76,60,0.35);
+        }
+
+        /* ── ALERT HEADER ACTIONS (edit / delete) ── */
+        .card-header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .alert-actions-group {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding-left: 0.6rem;
+            margin-left: 0.3rem;
+            border-left: 1px solid var(--glass-border);
+        }
+
+        .alert-action-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .alert-action-btn:hover {
+            color: var(--text-main);
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+        }
+
+        #editAlertsBtn {
+            color: var(--blue);
+            border-color: rgba(52,152,219,0.35);
+            background: rgba(52,152,219,0.08);
+        }
+
+        #editAlertsBtn:hover {
+            color: #fff;
+            border-color: var(--blue);
+            background: rgba(52,152,219,0.25);
+        }
+
+        #editAlertsBtn.active {
+            color: #fff;
+            background: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .alert-action-btn.danger {
+            color: var(--red);
+            border-color: rgba(231,76,60,0.35);
+            background: rgba(231,76,60,0.08);
+        }
+
+        .alert-action-btn.danger:hover {
+            color: #fff;
+            border-color: var(--red);
+            background: rgba(231,76,60,0.85);
+        }
+
+        /* ── CHANNEL FILTER (email / SMS / in-app) ── */
+        .channel-filter-wrap { 
+            position: relative;
+            display: inline-block;
+        }
+
+        .channel-filter-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .channel-filter-btn:hover {
+            color: var(--text-main);
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .channel-filter-btn.active {
+            color: var(--green-bright);
+            border-color: rgba(46,204,113,0.4);
+            background: var(--green-glow);
+        }
+
+        .channel-filter-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            min-width: 14px;
+            height: 14px;
+            padding: 0 3px;
+            border-radius: 7px;
+            background: var(--green-bright);
+            color: var(--on-accent);
+            font-size: 0.55rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .channel-filter-badge.hidden { display: none; }
+
+        .channel-filter-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 190px;
+            background: var(--nav-bg-mobile);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.4rem;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+            z-index: 9999;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .channel-filter-dropdown.hidden { display: none; }
+
+        .channel-filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.5rem 0.55rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+
+        .channel-filter-option:hover { background: rgba(255,255,255,0.06); }
+        body.light-theme .channel-filter-option:hover { background: rgba(13,107,58,0.06); }
+
+        .channel-filter-option i { width: 16px; text-align: center; color: var(--text-muted); }
+        .channel-filter-option input { accent-color: var(--green-bright); cursor: pointer; }
+
+        .channel-filter-divider {
+            height: 1px;
+            background: var(--glass-border);
+            margin: 0.3rem 0.1rem;
+        }
+
+        .channel-filter-reset {
+            width: 100%;
+            text-align: center;
+            padding: 0.45rem;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .channel-filter-reset:hover { color: var(--text-main); background: rgba(255,255,255,0.06); }
+
+        /* ── EDIT TOOLBAR ── */
+        .edit-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            padding: 0.6rem 1.2rem;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.02);
+            font-size: 0.78rem;
+        }
+
+        .select-all-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .select-all-wrap input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--green-bright);
+            cursor: pointer;
+        }
+
+        .edit-toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        #selectedCount {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            white-space: nowrap;
+        }
+
+        .edit-toolbar-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            padding: 0.35rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+
+        .edit-toolbar-btn.cancel {
+            color: var(--blue);
+            border-color: rgba(52,152,219,0.35);
+            background: rgba(52,152,219,0.08);
+        }
+
+        .edit-toolbar-btn.cancel:hover {
+            color: #fff;
+            border-color: var(--blue);
+            background: rgba(52,152,219,0.25);
+        }
+
+        .alert-checkbox-wrap {
+            display: flex;
+            align-items: center;
+            padding-top: 8px;
+            cursor: pointer;
+        }
+
+        .alert-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--green-bright);
+            cursor: pointer;
+        }
+
+        /* ── CONFIRM MODAL ── */
+        .confirm-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(4,10,7,0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .confirm-modal {
+            width: 100%;
+            max-width: 380px;
+            background: var(--nav-bg-mobile);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.6rem 1.5rem 1.4rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        }
+
+        .confirm-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 0.9rem;
+            border-radius: 50%;
+            background: rgba(231,76,60,0.15);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .confirm-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .confirm-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.4rem;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 0.7rem;
+        }
+
+        .confirm-btn {
+            flex: 1;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .confirm-btn.cancel:hover {
+            background: rgba(255,255,255,0.06);
+        }
+
+        .confirm-btn.danger {
+            background: var(--red);
+            border-color: var(--red);
+            color: #fff;
+        }
+
+        .confirm-btn.danger:hover {
+            background: #c0392b;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 480px) {
+            .alert-filter-btn { padding: 0.28rem 0.65rem; font-size: 0.62rem; }
+        }
+
+        .trend-arrow { font-size: 0.8rem; }
+        .trend-up   { color: var(--red); }
+        .trend-down { color: var(--green-bright); }
+        .trend-flat { color: var(--text-muted); }
+
+        /* ── DELIVERY CHANNELS ── */
+        .section-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .section-header {
+            padding: 0.9rem 1.3rem 0.75rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .section-header i { color: var(--green-bright); font-size: 0.9rem; }
+
+        .section-body { padding: 0.6rem 0; }
+
+        .setting-row {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            gap: 1rem;
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-row:hover { background: rgba(255,255,255,0.02); }
+
+        .setting-info { flex: 1; min-width: 0; }
+        .setting-label {
+            font-size: 0.85rem; font-weight: 600;
+            color: var(--text-main); margin-bottom: 2px;
+        }
+        .setting-desc {
+            font-size: 0.7rem; color: var(--text-muted); line-height: 1.4;
+        }
+
+        .always-on-badge {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: var(--green-bright);
+            background: var(--green-glow);
+            border: 1px solid rgba(46,204,113,0.35);
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+        .always-on-badge i { font-size: 0.65rem; }
+
+        .channel-divider {
+            height: 1px;
+            background: var(--glass-border);
+            margin: 0.2rem 1.3rem;
+        }
+
+        .toggle-wrap { flex-shrink: 0; }
+        .toggle {
+            position: relative; width: 44px; height: 24px;
+            cursor: pointer; display: inline-block;
+        }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; inset: 0;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.25s;
+        }
+        .toggle-slider::before {
+            content: ''; position: absolute;
+            height: 16px; width: 16px; border-radius: 50%;
+            left: 3px; bottom: 3px;
+            background: rgba(232,245,238,0.45);
+            transition: all 0.25s;
+        }
+        .toggle input:checked + .toggle-slider {
+            background: var(--green-mid);
+            border-color: rgba(46,204,113,0.4);
+        }
+        .toggle input:checked + .toggle-slider::before {
+            transform: translateX(20px);
+            background: var(--green-bright);
+            box-shadow: 0 0 8px rgba(46,204,113,0.6);
+        }
+
+        .setting-select {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            padding: 0.45rem 0.8rem;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            min-width: 140px;
+        }
+        .setting-select:focus {
+            border-color: rgba(46,204,113,0.4);
+            box-shadow: 0 0 0 2px rgba(46,204,113,0.08);
+        }
+        .setting-select option { background: #0d2b18; color: var(--text-main); }
+
+        .save-bar {
+            padding: 0.85rem 1.3rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem;
+        }
+
+        .btn-save {
+            display: flex; align-items: center; gap: 7px;
+            padding: 0.55rem 1.4rem; border-radius: 9px;
+            background: var(--green-mid);
+            border: 1px solid rgba(46,204,113,0.35);
+            color: var(--green-bright);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem; font-weight: 600;
+            cursor: pointer; transition: all 0.22s;
+        }
+        .btn-save:hover {
+            background: rgba(46,204,113,0.25);
+            box-shadow: 0 0 14px rgba(46,204,113,0.2);
+        }
+
+        .btn-cancel {
+            display: flex; align-items: center; gap: 7px;
+            padding: 0.55rem 1.1rem; border-radius: 9px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem; font-weight: 500;
+            cursor: pointer; transition: all 0.22s;
+        }
+        .btn-cancel:hover { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
+
+        /* ── QUICK NOTIFICATION-FREQUENCY SELECT ── */
+        .notif-freq-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .notif-freq-control i { color: var(--green-bright); font-size: 0.8rem; }
+        .notif-freq-control #notifFreqDisplay { transition: color var(--transition); }
+        .notif-freq-control #notifFreqDisplay.is-off { color: var(--green-bright); }
+
+        /* ── RECENT ALERTS PANEL ── */
+        .alerts-list { padding: 0.4rem 0; }
+
+        .alerts-list.scrollable {
+            max-height: var(--alerts-max-height, 900px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+        }
+        .alerts-list.scrollable::-webkit-scrollbar { width: 8px; }
+        .alerts-list.scrollable::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+            border-radius: 8px;
+        }
+        .alerts-list.scrollable::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 8px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 0.85rem 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.2s;
+            cursor: default;
+        }
+        .alert-item:last-child { border-bottom: none; }
+        .alert-item:hover { background: rgba(255,255,255,0.03); }
+        .alert-item.clickable { cursor: pointer; }
+        .alert-item.clickable:hover { background: rgba(52,152,219,0.06); }
+
+        .alert-icon-wrap {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .alert-icon-wrap.high     { background: rgba(231,76,60,0.15); color: var(--red); }
+        .alert-icon-wrap.moderate { background: rgba(243,156,18,0.15); color: var(--amber); }
+        .alert-icon-wrap.low      { background: rgba(46,204,113,0.15); color: var(--green-bright); }
+        .alert-icon-wrap.info     { background: rgba(52,152,219,0.15); color: var(--blue); }
+        .alert-icon-wrap.rain     { background: rgba(52,152,219,0.15); color: var(--blue); }
+        .alert-icon-wrap.temp     { background: rgba(243,156,18,0.12); color: var(--amber); }
+
+        /* Marks the icon as belonging to a clickable in-app message — a
+           blue ring (same blue as the row's hover tint) plus a small
+           envelope badge, instead of leaving the icon looking like a
+           plain, non-interactive risk-level icon. */
+        .alert-icon-wrap.clickable-icon {
+            position: relative;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(52,152,219,0.45);
+        }
+        .alert-icon-wrap.clickable-icon::after {
+            content: '\f0e0';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: #fff;
+            font-size: 0.46rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 2px var(--nav-bg-mobile);
+        }
+
+        .alert-body { flex: 1; min-width: 0; }
+        .alert-datetime {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: var(--green-bright);
+            margin-bottom: 3px;
+        }
+
+        /* ── CLICKABLE IN-APP RECIPIENT LABEL ── */
+        .alert-recipient {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--blue);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .alert-recipient i { font-size: 0.62rem; }
+        
+        /* In-app recipient label — a plain colored delivery indicator, same
+           treatment as the admin side. It does not carry its own click
+           affordance; the whole row does (see .alert-item.clickable above),
+           so clicking anywhere in the notification opens it, not just here. */
+        .alert-recipient.in-app {
+            color: var(--green-bright);
+        }
+
+        .alert-title {
+            font-weight: 600;
+            font-size: 0.82rem;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        .alert-title.risk-high { color: var(--red); }
+        .alert-title.risk-moderate { color: var(--amber); }
+        .alert-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        /* Small secondary "source" line — metadata about the alert, styled
+           like a sub-label rather than its own message/notification. Same
+           treatment as the improved admin_alerts notification. */
+        .alert-sensor-only {
+            font-size: 0.66rem;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .alert-sensor-only i {
+            font-size: 0.62rem;
+            color: var(--amber);
+        }
+        .alert-sensor-only.risk-high i { color: var(--red); }
+        .alert-time {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        /* ── IN-APP DETAIL MODAL (view-only, non-editable) ── */
+        .email-modal {
+            width: 100%;
+            max-width: 520px;
+            max-height: 85vh;
+            background: var(--nav-bg-mobile);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .email-modal-header {
+            padding: 1.1rem 1.3rem 0.9rem;
+            border-bottom: 1px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+
+        .email-modal-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+        }
+
+        .email-modal-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .email-modal-title i { 
+            color: var(--green-bright);
+        }
+
+        .email-modal-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+        }
+        .email-modal-close:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.06);
+        }
+
+        .email-modal-recipient {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            padding-bottom: 0.2rem;
+        }
+
+        .email-modal-recipient .recipient-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--green-glow);
+            color: var(--green-bright);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .email-modal-recipient .recipient-name {
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        /* Explicit "this came from the sensors, not an email/SMS delivery"
+           tag — amber to match the equivalent tag on admin_alerts */
+        .email-modal-source-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: var(--amber);
+            background: rgba(243,156,18,0.12);
+            border: 1px solid rgba(243,156,18,0.3);
+            padding: 0.3rem 0.65rem;
+            border-radius: 20px;
+            margin-top: 0.65rem;
+        }
+
+        /* Environment data section inside the modal */
+        .env-data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem 0.8rem;
+            padding: 0.6rem 0.8rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+        }
+
+        .env-data-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            padding: 0.2rem 0;
+        }
+
+        .env-data-item .label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .env-data-item .value {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .env-data-item .value.high-risk { color: var(--red); }
+        .env-data-item .value.moderate-risk { color: var(--amber); }
+
+        .email-modal-body {
+            padding: 1rem 1.3rem 1.3rem;
+            overflow-y: auto;
+        }
+
+        .email-modal-field-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 0.9rem 0 0.35rem;
+        }
+        .email-modal-field-label:first-child { margin-top: 0; }
+
+        .email-modal-subject {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            padding: 0.6rem 0.8rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+        }
+
+        .email-modal-message {
+            font-size: 0.76rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            word-break: break-word;
+            padding: 0.8rem 0.9rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .email-modal-meta {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin-top: 0.9rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--nav-bg-mobile);
+            border: 1px solid rgba(46,204,113,0.35);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-main);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 999;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(.4,0,.2,1);
+            pointer-events: none;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--green-bright); }
+
+        /* ── RESPONSIVE ── */
+
+        /* Tablet / small laptop: keep full nav links but tighten spacing
+           so they don't overflow before the hamburger breakpoint kicks in. */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .top-nav { padding: 0.6rem 1.2rem; }
+            .top-nav .nav-links { gap: 0.45rem; padding: 0.22rem; }
+            .top-nav .nav-links a { padding: 0.5rem 0.75rem; font-size: 0.76rem; }
+            .top-nav .nav-links a span { display: none; }
+            .top-nav .nav-links a i { font-size: 0.95rem; }
+        }
+
+        @media (max-width: 1100px) {
+            .alerts-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            /* theme.css forces padding-left:52px !important on .top-bar
+               (leftover spacing meant for another page's back button).
+               That asymmetric padding throws off the centering here, so
+               neutralize it — same specificity, loads after theme.css. */
+            .top-bar { padding-left: 0 !important; flex-direction: column; align-items: center; gap: 0.6rem; text-align: center; }
+            .top-nav .nav-links { display: none; }
+            .menu-toggle { display: block; }
+
+            /* Icon-only account button on mobile: keep it a single tap
+               target that still links to /account, just drop the text. */
+            .top-nav .nav-actions .account-btn-top {
+                gap: 0;
+                padding: 0;
+                width: 38px;
+                height: 38px;
+                justify-content: center;
+                border-radius: 50%;
+            }
+            .top-nav .nav-actions .account-btn-top .user-name-stack {
+                display: none;
+            }
+            .top-nav .nav-actions .account-btn-top .nav-avatar-wrap {
+                margin: 0;
+                width: 26px;
+                height: 26px;
+            }
+
+            .main-content { padding: 1rem; }
+            .env-data-grid { grid-template-columns: 1fr; }
+            .dash-title { font-size: 1.4rem; letter-spacing: 1.5px; }
+            .realtime-divider { display: none; }
+            .realtime-badge { flex-shrink: 0; white-space: nowrap; }
+
+            .card-header { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 0.9rem 0.6rem; font-size: 0.82rem; }
+            .card-header-right { flex-wrap: wrap; gap: 0.4rem; }
+            .alert-filter-btn { font-size: 0.58rem; padding: 0.28rem 0.55rem; }
+            .channel-filter-btn, .alert-action-btn { width: 26px; height: 26px; font-size: 0.68rem; }
+            .channel-filter-wrap { margin-left: 0.3rem; }
+            .alert-actions-group { padding-left: 0.4rem; margin-left: 0.2rem; }
+            .edit-toolbar { flex-wrap: wrap; padding: 0.55rem 0.9rem; }
+            .alert-item { padding: 0.7rem 0.9rem; gap: 9px; }
+            .alert-icon-wrap { width: 30px; height: 30px; font-size: 0.85rem; }
+            .alert-title { font-size: 0.78rem; }
+            .alert-recipient, .alert-sub { font-size: 0.66rem; }
+
+            .data-control-bar { padding: 0.6rem 0.9rem; justify-content: center; }
+            .notif-freq-control { font-size: 0.72rem; flex-wrap: wrap; text-align: center; justify-content: center; }
+            .section-header { padding: 0.75rem 0.9rem 0.6rem; font-size: 0.82rem; }
+        }
+
+        /* theme.css ships a global rule that hides .realtime-clock entirely
+           below 650px (display:none !important). That's too aggressive for
+           this dashboard, so re-show it here. Same specificity + !important,
+           and this <style> block loads after theme.css, so this wins. */
+        @media (max-width: 650px) {
+            .realtime-clock {
+                display: block !important;
+            }
+            .realtime-divider { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .top-nav { padding: 0.5rem 1rem; }
+            .top-nav .nav-logo-text { font-size: 0.9rem; }
+            .top-nav .nav-logo-mark { width: 28px; height: 28px; font-size: 0.85rem; }
+            .theme-toggle-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+            .top-nav .nav-actions .account-btn-top { width: 34px; height: 34px; }
+            .top-nav .nav-actions .account-btn-top .nav-avatar-wrap { width: 24px; height: 24px; }
+            .top-nav .nav-actions .logout-btn-top { padding: 0.3rem 0.6rem; font-size: 0.65rem; }
+            .dash-title { font-size: 1.2rem; }
+            .card-header {
+                font-size: 0.78rem;
+                letter-spacing: 0.8px;
+                padding: 0.8rem 1rem 0.6rem;
+            }
+            .card-header-left { gap: 6px; }
+            .alert-filter-group { gap: 0.2rem; }
+            .alert-filter-btn { font-size: 0.55rem; padding: 0.25rem 0.5rem; }
+            .alert-item { padding: 0.6rem 0.75rem; gap: 8px; }
+            .alert-icon-wrap { width: 28px; height: 28px; font-size: 0.8rem; }
+            .alert-datetime { font-size: 0.6rem; }
+            .alert-title { font-size: 0.74rem; }
+            .confirm-modal { padding: 1.2rem 1.1rem 1rem; }
+            .email-modal-recipient { flex-wrap: wrap; }
+            .toast {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+            }
+        }
+
+        /* ── SMALLEST PHONE (≤360px) ── */
+        @media (max-width: 360px) {
+            .top-nav .nav-logo-text { font-size: 0.8rem; }
+            .top-nav .nav-logo-mark { width: 24px; height: 24px; }
+            .dash-title { font-size: 1.1rem; }
+            .realtime-badge { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            .realtime-clock { font-size: 0.85rem; }
+            .card-header { font-size: 0.7rem; }
+            .data-control-bar { padding: 0.5rem 0.7rem; }
+            .notif-freq-control { font-size: 0.66rem; }
+        }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+            filter: blur(2px);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        .stagger-children>* {
+            opacity: 0;
+            transform: translateY(30px) scale(0.97);
+            filter: blur(1px);
+            animation: staggerIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .stagger-children>*:nth-child(1) { animation-delay: 0.05s; }
+        .stagger-children>*:nth-child(2) { animation-delay: 0.10s; }
+        .stagger-children>*:nth-child(3) { animation-delay: 0.15s; }
+        .stagger-children>*:nth-child(4) { animation-delay: 0.20s; }
+        .stagger-children>*:nth-child(5) { animation-delay: 0.25s; }
+
+        @keyframes staggerIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.97);
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        .page-transition {
+            animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(3px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll,
+            .animate-on-scroll.visible,
+            .stagger-children>*,
+            .page-transition {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<script>
+    // ── EARLY THEME INIT (prevents flash of wrong theme) ──
+    (function() {
+        try {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        } catch(e) {}
+    })();
+</script>
+
+    <!-- ── TOP NAV ── -->
+    <nav class="top-nav">
+        <a href="/home" class="nav-logo">
+            <img src="/static/aedospot-logo.png" alt="AEDOSPOT" class="nav-logo-mark" onerror="this.style.display='none'">
+            <span class="nav-logo-text">AEDO<span class="accent">SPOT</span></span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/home"><i class="fas fa-house"></i><span>Home</span></a></li>
+            <li><a href="/risk_map"><i class="fas fa-map-location-dot"></i><span>Risk Map</span></a></li>
+            <li><a href="/alerts" class="active"><i class="fas fa-triangle-exclamation"></i><span>Alerts &amp; Notifications</span></a></li>
+            <li><a href="/account" id="navMyAccount"><i class="fas fa-id-card"></i><span>My Account</span></a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="/account" class="account-btn-top" id="accountBtn">
+                <span class="nav-avatar-wrap">
+                    <img id="navAvatar" class="nav-avatar" src="" alt="Profile">
+                    <i id="navAvatarFallback" class="fas fa-user-circle"></i>
+                </span>
+                <span class="user-name-stack">
+                    <span class="user-greeting" id="userGreeting">Resident</span>
+                    <span class="user-name" id="userName">User</span>
+                </span>
+            </a>
+            <button class="logout-btn-top" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ── MOBILE NAV ── -->
+    <div class="mobile-nav-dropdown" id="mobileNav">
+        <a href="/home"><i class="fas fa-house"></i>&nbsp; Home</a>
+        <a href="/risk_map"><i class="fas fa-map-location-dot"></i>&nbsp; Risk Map</a>
+        <a href="/alerts" class="active"><i class="fas fa-triangle-exclamation"></i>&nbsp; Alerts &amp; Notifications</a>
+        <a href="/account" id="mobileNavMyAccount"><i class="fas fa-id-card"></i>&nbsp; My Account</a>
+    </div>
+
+    <!-- ── MAIN ── -->
+    <main class="main-content" id="mainContent">
+
+        <div class="top-bar">
+            <div class="dash-title animate-on-scroll">ALERTS</div>
+            <div class="realtime-badge">
+                <div class="pulse-dot"></div>
+                REAL TIME
+                <div class="realtime-divider"></div>
+                <div class="realtime-clock-wrap">
+                    <div class="realtime-clock" id="realtimeClock">12:00:00 AM</div>
+                    <div class="realtime-date" id="realtimeDate">Monday, Jan 1, 2025</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-control-bar animate-on-scroll">
+            <div class="notif-freq-control">
+                <i class="fas fa-bell"></i>
+                <span id="notifFreqDisplay">Get Notifications every 15 minutes</span>
+            </div>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="alerts-grid animate-on-scroll">
+
+            <!-- DELIVERY CHANNELS -->
+            <div class="section-card animate-on-scroll">
+                <div class="section-header"><i class="fas fa-envelope"></i> Delivery Channels</div>
+                <div class="section-body">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">In-App Notifications</div>
+                            <div class="setting-desc">Get a notification every 15 minutes by default.</div>
+                        </div>
+                        <div class="always-on-badge"><i class="fas fa-check"></i> Default</div>
+                    </div>
+                    <div class="channel-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Email Notifications</div>
+                            <div class="setting-desc">Send dengue risk alert emails to <strong style="color:var(--green-bright);" id="notifEmail">user@email.com</strong></div>
+                        </div>
+                        <div class="toggle-wrap">
+                            <label class="toggle"><input type="checkbox" id="emailEnabledToggle"><span class="toggle-slider"></span></label>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">SMS Notifications</div>
+                            <div class="setting-desc">Send SMS alerts to <strong style="color:var(--green-bright);" id="notifPhone">your registered mobile number</strong></div>
+                        </div>
+                        <div class="toggle-wrap">
+                            <label class="toggle"><input type="checkbox" id="smsEnabledToggle"><span class="toggle-slider"></span></label>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Notification Frequency</div>
+                            <div class="setting-desc">How often Email and SMS alerts are sent, counted from the moment the sensor alert is detected. Applies to both channels — set your own delivery time and it will arrive exactly then.</div>
+                        </div>
+                        <select class="setting-select" id="notifFreqSelect">
+                            <option value="15">Every 15 minutes</option>
+                            <option value="30">Every 30 minutes</option>
+                            <option value="60">Every hour</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="save-bar">
+                    <button class="btn-cancel" onclick="loadNotificationSettings()">Cancel</button>
+                    <button class="btn-save" onclick="saveNotificationSettings()"><i class="fas fa-check"></i> Save Changes</button>
+                </div>
+            </div>
+
+            <!-- RECENT ALERTS -->
+            <div class="glass-card animate-on-scroll">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <i class="fas fa-bell"></i>
+                        RECENT ALERTS <span id="alertsCount" style="font-weight:600; opacity:0.7;"></span>
+                    </div>
+                    <div class="card-header-right">
+                        <div class="alert-filter-group" id="alertFilterGroup">
+                            <button class="alert-filter-btn active" data-level="all" onclick="setAlertFilter('all')">ALL</button>
+                            <button class="alert-filter-btn" data-level="moderate" onclick="setAlertFilter('moderate')"> MODERATE</button>
+                            <button class="alert-filter-btn" data-level="high" onclick="setAlertFilter('high')"> HIGH</button>
+                        </div>
+                        <div class="channel-filter-wrap">
+                            <button class="channel-filter-btn" id="channelFilterBtn" onclick="toggleChannelFilterDropdown(event)" title="Filter by channel">
+                                <i class="fas fa-filter"></i>
+                                <span class="channel-filter-badge hidden" id="channelFilterBadge">0</span>
+                            </button>
+                            <div class="channel-filter-dropdown hidden" id="channelFilterDropdown">
+                                <label class="channel-filter-option">
+                                    <input type="checkbox" value="email" checked onchange="onChannelFilterChange()">
+                                    <i class="fas fa-envelope"></i> Email
+                                </label>
+                                <label class="channel-filter-option">
+                                    <input type="checkbox" value="sms" checked onchange="onChannelFilterChange()">
+                                    <i class="fas fa-comment-sms"></i> SMS
+                                </label>
+                                <label class="channel-filter-option">
+                                    <input type="checkbox" value="inapp" checked onchange="onChannelFilterChange()">
+                                    <i class="fas fa-bell"></i> In-App
+                                </label>
+                                <div class="channel-filter-divider"></div>
+                                <button class="channel-filter-reset" type="button" onclick="resetChannelFilter()">Reset</button>
+                            </div>
+                        </div>
+                        <div class="alert-actions-group">
+                            <button class="alert-action-btn" id="editAlertsBtn" onclick="toggleEditMode()" title="Edit alerts">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            <button class="alert-action-btn danger" id="clearAlertsBtn" onclick="handleDeleteIconClick()" title="Delete alerts">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-toolbar hidden" id="editToolbar">
+                    <label class="select-all-wrap">
+                        <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)">
+                        Select all
+                    </label>
+                    <div class="edit-toolbar-actions">
+                        <span id="selectedCount">0 selected</span>
+                        <button class="edit-toolbar-btn" id="removeSelectedBtn" onclick="deselectAllAlerts()" disabled>Deselect All</button>
+                        <button class="edit-toolbar-btn cancel" onclick="toggleEditMode()">Cancel</button>
+                    </div>
+                </div>
+                <div class="alerts-list" id="alertsList">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ── CONFIRM MODAL (delete all / remove selected) ── -->
+    <div class="confirm-overlay hidden" id="confirmOverlay">
+        <div class="confirm-modal">
+            <div class="confirm-icon"><i class="fas fa-triangle-exclamation"></i></div>
+            <div class="confirm-title" id="confirmTitle">Clear all notifications?</div>
+            <div class="confirm-text" id="confirmText">Are you sure you want to clear all notifications? This action cannot be undone.</div>
+            <div class="confirm-actions">
+                <button class="confirm-btn cancel" onclick="closeConfirmModal()">Cancel</button>
+                <button class="confirm-btn danger" id="confirmActionBtn" onclick="handleConfirmAction()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── IN-APP NOTIFICATION DETAIL MODAL (view-only, non-editable) ── -->
+    <div class="confirm-overlay hidden" id="inAppDetailOverlay" onclick="if (event.target === this) closeInAppDetail()">
+        <div class="email-modal">
+            <div class="email-modal-header">
+                <div class="email-modal-header-top">
+                    <div class="email-modal-title"><i class="fas fa-bell"></i> In-App Notification</div>
+                    <button class="email-modal-close" onclick="closeInAppDetail()"><i class="fas fa-xmark"></i></button>
+                </div>
+                <div class="email-modal-recipient">
+                    <div class="recipient-avatar"><i class="fas fa-user"></i></div>
+                    <div>
+                        <div class="recipient-name">Sent via In-App Notification</div>
+                        <div>to you</div>
+                    </div>
+                </div>
+                <div class="email-modal-source-tag"><i class="fas fa-satellite-dish"></i> Detected from Sensors</div>
+            </div>
+            <div class="email-modal-body">
+                <div class="email-modal-field-label">Environmental Data</div>
+                <div class="env-data-grid" id="envDataGrid">
+                    <!-- Filled by JS -->
+                </div>
+                <div class="email-modal-field-label">Message</div>
+                <div class="email-modal-message" id="inAppDetailMessage"></div>
+                <div class="email-modal-meta" id="inAppDetailMeta"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Saved.</span></div>
+
+    <script>
+        // ── THEME TOGGLE (wired to the shared theme system) ──
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        function refreshThemeIcon() {
+            const isLight = document.body.classList.contains('light-theme');
+            themeToggleBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+        refreshThemeIcon();
+        themeToggleBtn.addEventListener('click', function() {
+            toggleTheme();
+            refreshThemeIcon();
+        });
+
+        // ── MOBILE MENU ──
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+
+        menuToggle.addEventListener('click', function() {
+            mobileNav.classList.toggle('open');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        document.querySelectorAll('.mobile-nav-dropdown a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('open');
+                document.querySelector('.menu-toggle i').classList.remove('fa-times');
+                document.querySelector('.menu-toggle i').classList.add('fa-bars');
+            });
+        });
+
+        // ── SCROLL ANIMATIONS ──
+        function initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            if (animatedElements.length === 0) return;
+
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                return rect.top <= windowHeight - 100;
+            }
+
+            function checkVisibility() {
+                animatedElements.forEach(function(el) {
+                    if (isElementInViewport(el)) {
+                        el.classList.add('visible');
+                    }
+                });
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        checkVisibility();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            window.addEventListener('resize', checkVisibility);
+            checkVisibility();
+        }
+
+        function initPageTransition() {
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+                mainContent.classList.add('page-transition');
+            }
+        }
+
+        function initStaggerChildren() {
+            const staggerContainers = document.querySelectorAll('.stagger-children');
+            staggerContainers.forEach(function(container) {
+                const children = container.children;
+                for (let i = 0; i < children.length; i++) {
+                    children[i].style.opacity = '0';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                initPageTransition();
+                initStaggerChildren();
+                initScrollAnimations();
+            }, 100);
+        });
+
+        // ── CLOCK ──
+        function updateClock() {
+            const now = new Date();
+            let hh = now.getHours();
+            const ampm = hh >= 12 ? 'PM' : 'AM';
+            hh = hh % 12 || 12;
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            const ss = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('realtimeClock').textContent = hh + ':' + mm + ':' + ss + ' ' + ampm;
+
+            const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            document.getElementById('realtimeDate').textContent =
+                days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // ── SESSION ──
+        let currentUserEmail = '';
+        let currentUserPhone = '';
+
+        async function loadUserInfo() {
+            try {
+                const res = await fetch('/api/check_session', { credentials: 'include' });
+                const data = await res.json();
+                if (data.logged_in) {
+                    const userName = data.user.name || 'User';
+                    document.getElementById('userName').textContent = userName;
+                    document.getElementById('notifEmail').textContent = data.user.email || userName + '@email.com';
+                    document.getElementById('notifPhone').textContent = data.user.phone || 'your registered mobile number';
+                    currentUserEmail = data.user.email || '';
+                    currentUserPhone = data.user.phone || '';
+                    buildAlerts();
+
+                    document.getElementById('userGreeting').textContent = 'Resident';
+
+                    const navAvatar = document.getElementById('navAvatar');
+                    const navAvatarFallback = document.getElementById('navAvatarFallback');
+
+                    if (data.user.avatar_url) {
+                        navAvatar.src = data.user.avatar_url;
+                        navAvatar.style.display = 'block';
+                        navAvatarFallback.style.display = 'none';
+                    } else {
+                        navAvatar.style.display = 'none';
+                        navAvatarFallback.style.display = 'inline';
+                    }
+
+                    if (data.user.is_admin) {
+                        document.getElementById('userGreeting').textContent = 'Administrator';
+                    }
+
+                    await loadDataRefreshRate();
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch(e) {
+                window.location.href = '/login';
+            }
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch(e) {}
+            window.location.href = '/';
+        });
+
+        // ── DELIVERY CHANNELS ──
+        let notifSettings = { in_app_enabled: true, email_enabled: true, sms_enabled: false, notif_freq: 15, sms_notif_freq: 15 };
+
+        function freqLabel(freq, channelLabel) {
+            const f = Number(freq);
+            let text;
+            if (isNaN(f) || f === 15) text = 'every 15 minutes';
+            else if (f === 30) text = 'every 30 minutes';
+            else if (f === 60) text = 'every 1 hour';
+            else text = 'every ' + f + ' minutes';
+            return channelLabel + ' ' + text;
+        }
+
+        function applyNotifSettingsToUI() {
+            const emailToggle = document.getElementById('emailEnabledToggle');
+            const smsToggle = document.getElementById('smsEnabledToggle');
+            const freqSelect = document.getElementById('notifFreqSelect');
+            const freqDisplay = document.getElementById('notifFreqDisplay');
+
+            if (emailToggle) emailToggle.checked = notifSettings.email_enabled;
+            if (smsToggle) smsToggle.checked = notifSettings.sms_enabled;
+
+            // Email and SMS now share ONE combined frequency (notif_freq).
+            // 'off' only ever comes from an older saved value — the dropdown
+            // itself no longer offers it, since each channel already has its
+            // own enable/disable toggle above. Treat a leftover 'off' as the
+            // default cadence for display.
+            let freqVal = notifSettings.notif_freq;
+            if (freqVal === 0 || freqVal === '0' || freqVal === 'off') freqVal = 15;
+
+            if (freqSelect) freqSelect.value = String(freqVal);
+
+            // Top bar summary shows the single shared cadence, naming
+            // whichever channel(s) are actually enabled so the resident
+            // knows exactly when Email/SMS will arrive.
+            if (freqDisplay) {
+                const enabledChannels = [];
+                if (notifSettings.email_enabled) enabledChannels.push('Email');
+                if (notifSettings.sms_enabled) enabledChannels.push('SMS');
+                const isOff = enabledChannels.length === 0;
+                freqDisplay.textContent = isOff
+                    ? 'In-App Notifications enabled'
+                    : freqLabel(freqVal, enabledChannels.join(' & '));
+                freqDisplay.classList.toggle('is-off', isOff);
+            }
+
+            buildAlerts();
+        }
+
+        let loadSeq = 0;
+        let latestLoadSeq = 0;
+
+        async function loadNotificationSettings() {
+            const mySeq = ++loadSeq;
+            latestLoadSeq = mySeq;
+            try {
+                const res = await fetch('/api/get_notification_settings', { credentials: 'include' });
+                const data = await res.json();
+
+                if (mySeq !== latestLoadSeq) return;
+                
+                if (res.ok && data.success) {
+                    const normalizeFreq = (v) => {
+                        if (v === 0 || v === '0' || v === 'off') return 15;
+                        return typeof v === 'string' ? parseInt(v, 10) : v;
+                    };
+
+                    // Email and SMS now share one combined frequency. If an
+                    // older saved value left them different, notif_freq
+                    // (Email's column) is treated as the source of truth for
+                    // display, and saving will write that same value back to
+                    // both columns so they stay in sync going forward.
+                    const combinedFreq = normalizeFreq(data.notif_freq);
+                    notifSettings = {
+                        in_app_enabled: data.in_app_enabled !== undefined ? data.in_app_enabled : true,
+                        email_enabled: data.email_enabled,
+                        sms_enabled: data.sms_enabled,
+                        notif_freq: combinedFreq,
+                        sms_notif_freq: combinedFreq
+                    };
+                    applyNotifSettingsToUI();
+                } else {
+                    console.error('Failed to load notification settings:', data.message);
+                    setTimeout(loadNotificationSettings, 2000);
+                }
+            } catch (e) {
+                console.error('Failed to load notification settings:', e);
+                if (mySeq === latestLoadSeq) {
+                    setTimeout(loadNotificationSettings, 2000);
+                }
+            }
+        }
+
+        let saveInFlight = false;
+        let saveQueued = false;
+        let queuedSuccessMsg = null;
+        let pendingSettingsSnapshot = null;
+        let saveRequestSeq = 0;
+        let latestSaveRequestSeq = 0;
+
+        async function pushNotifSettings(successMsg) {
+            if (saveInFlight) {
+                saveQueued = true;
+                queuedSuccessMsg = successMsg || queuedSuccessMsg;
+                pendingSettingsSnapshot = { ...notifSettings };
+                return;
+            }
+            saveInFlight = true;
+
+            const mySeq = ++saveRequestSeq;
+            latestSaveRequestSeq = mySeq;
+
+            const saveBtn = document.querySelector('.save-bar .btn-save');
+            if (saveBtn) saveBtn.disabled = true;
+
+            try {
+                const payload = {
+                    ...notifSettings,
+                    notif_freq: Number(notifSettings.notif_freq),
+                    sms_notif_freq: Number(notifSettings.sms_notif_freq)
+                };
+
+                const res = await fetch('/api/update_notification_settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (mySeq !== latestSaveRequestSeq) return;
+
+                if (data.success) {
+                    if (successMsg) showToast(successMsg);
+                    await loadNotificationSettings();
+                } else {
+                    showToast(data.message || 'Could not save notification settings.');
+                    await loadNotificationSettings();
+                }
+            } catch (e) {
+                console.error('Failed to save notification settings:', e);
+                if (mySeq === latestSaveRequestSeq) {
+                    showToast('Could not save notification settings.');
+                    await loadNotificationSettings();
+                }
+            } finally {
+                if (mySeq === latestSaveRequestSeq) {
+                    saveInFlight = false;
+                    if (saveBtn) saveBtn.disabled = false;
+
+                    if (saveQueued) {
+                        saveQueued = false;
+                        const nextMsg = queuedSuccessMsg;
+                        queuedSuccessMsg = null;
+                        if (pendingSettingsSnapshot) {
+                            notifSettings = pendingSettingsSnapshot;
+                            pendingSettingsSnapshot = null;
+                            applyNotifSettingsToUI();
+                        }
+                        pushNotifSettings(nextMsg);
+                    }
+                }
+            }
+        }
+
+        function saveNotificationSettings() {
+            // One combined frequency now drives both Email and SMS — the
+            // exact time the resident picks here is when both channels
+            // (whichever are enabled) will actually deliver.
+            const freqVal = parseInt(document.getElementById('notifFreqSelect').value, 10);
+            const emailOn = document.getElementById('emailEnabledToggle').checked;
+            const smsOn = document.getElementById('smsEnabledToggle').checked;
+
+            notifSettings = {
+                ...notifSettings,
+                in_app_enabled: true,
+                email_enabled: emailOn,
+                sms_enabled: smsOn,
+                notif_freq: freqVal,
+                sms_notif_freq: freqVal
+            };
+            pushNotifSettings('Notification settings saved.');
+        }
+
+        // ── RECENT ALERTS ──
+        let recentAlerts = [];
+        let alertFilter = 'all';
+        let editMode = false;
+        let selectedKeys = new Set();
+        let currentFilteredAlerts = [];
+
+        function alertKey(a) {
+            return (a.source || 'notif') + '::id' + a.id;
+        }
+
+        function setAlertFilter(level) {
+            alertFilter = level;
+            document.querySelectorAll('.alert-filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.level === level);
+            });
+            buildAlerts();
+        }
+
+        let channelFilter = new Set(['email', 'sms', 'inapp']);
+
+        function toggleChannelFilterDropdown(evt) {
+            evt.stopPropagation();
+            document.getElementById('channelFilterDropdown').classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', function(e) {
+            const wrap = document.querySelector('.channel-filter-wrap');
+            const dropdown = document.getElementById('channelFilterDropdown');
+            if (wrap && dropdown && !wrap.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        function onChannelFilterChange() {
+            const checked = document.querySelectorAll('#channelFilterDropdown input[type="checkbox"]:checked');
+            channelFilter = new Set(Array.from(checked).map(cb => cb.value));
+            updateChannelFilterUI();
+            buildAlerts();
+        }
+
+        function resetChannelFilter() {
+            document.querySelectorAll('#channelFilterDropdown input[type="checkbox"]').forEach(cb => cb.checked = true);
+            channelFilter = new Set(['email', 'sms', 'inapp']);
+            updateChannelFilterUI();
+            buildAlerts();
+        }
+
+        function updateChannelFilterUI() {
+            const btn = document.getElementById('channelFilterBtn');
+            const badge = document.getElementById('channelFilterBadge');
+            const isFiltered = channelFilter.size < 3;
+            btn.classList.toggle('active', isFiltered);
+            badge.textContent = channelFilter.size;
+            badge.classList.toggle('hidden', !isFiltered);
+        }
+
+        // Matches isInAppOnly's definition in buildAlerts() below — an alert
+        // only counts as "in-app" here when neither email nor SMS actually
+        // fired for it. Otherwise checking only "In-App" in the dropdown
+        // matched every alert (since every alert reaches in-app at minimum)
+        // and never actually narrowed the list.
+        function alertChannelsFor(a) {
+            const channels = new Set();
+            if (a.delivery_channel === 'email') channels.add('email');
+            else if (a.delivery_channel === 'sms') channels.add('sms');
+            else channels.add('inapp');
+            return channels;
+        }
+
+        function iconFor(level) {
+            if (level === 'high' || level === 'moderate') return 'fa-exclamation-triangle';
+            if (level === 'low') return 'fa-check-circle';
+            return 'fa-info-circle';
+        }
+
+        function timeAgo(ts) {
+            if (!ts) return '—';
+            const iso = ts.includes('T') ? ts : ts.replace(' ', 'T') + 'Z';
+            const d = new Date(iso);
+            if (isNaN(d.getTime())) return '—';
+            const diffMs = Math.max(0, Date.now() - d.getTime());
+            const mins = Math.floor(diffMs / 60000);
+            if (mins < 1) return 'Just now';
+            if (mins < 60) return `${mins} min ago`;
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return `${hrs}h ago`;
+            const days = Math.floor(hrs / 24);
+            return `${days}d ago`;
+        }
+
+        function formatSentAt(createdAt) {
+            if (!createdAt) return '';
+            const iso = createdAt.includes('T') ? createdAt : createdAt.replace(' ', 'T') + 'Z';
+            const d = new Date(iso);
+            if (isNaN(d.getTime())) return '';
+            return d.toLocaleString(undefined, {
+                year: 'numeric', month: 'short', day: 'numeric',
+                hour: 'numeric', minute: '2-digit'
+            });
+        }
+
+        // Parse environmental data from the alert message
+        function parseEnvData(message) {
+            const data = {
+                temperature: '--',
+                humidity: '--',
+                rainfall: '--',
+                ph: '--',
+                wind: '--'
+            };
+            if (!message) return data;
+            
+            const tempMatch = message.match(/Temp\s*([\d.]+)°C/);
+            if (tempMatch) data.temperature = tempMatch[1];
+            
+            const humMatch = message.match(/Humidity\s*([\d.]+)%/);
+            if (humMatch) data.humidity = humMatch[1];
+            
+            const rainMatch = message.match(/Rainfall\s*([\d.]+)mm/);
+            if (rainMatch) data.rainfall = rainMatch[1];
+            
+            const phMatch = message.match(/pH\s*([\d.]+)/);
+            if (phMatch) data.ph = phMatch[1];
+            
+            const windMatch = message.match(/Wind\s*([\d.]+)\s*m\/s/);
+            if (windMatch) data.wind = windMatch[1];
+            
+            return data;
+        }
+
+        function buildAlerts() {
+            const list = document.getElementById('alertsList');
+            list.innerHTML = '';
+            list.classList.remove('scrollable');
+            list.style.removeProperty('--alerts-max-height');
+
+            const countEl = document.getElementById('alertsCount');
+
+            if (recentAlerts.length === 0) {
+                list.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:1.4rem 0; font-size:0.85rem;">
+                    No alerts yet. You'll see risk alerts here as soon as one is notified to you.
+                </div>`;
+                currentFilteredAlerts = [];
+                if (countEl) countEl.textContent = '(0)';
+                updateSelectedCount();
+                return;
+            }
+
+            let filtered = alertFilter === 'all'
+                ? recentAlerts
+                : recentAlerts.filter(a => a.level === alertFilter);
+
+            if (channelFilter.size < 3) {
+                filtered = filtered.filter(a => {
+                    const channels = alertChannelsFor(a);
+                    for (const c of channels) {
+                        if (channelFilter.has(c)) return true;
+                    }
+                    return false;
+                });
+            }
+            currentFilteredAlerts = filtered;
+
+            if (countEl) countEl.textContent = `(${filtered.length})`;
+
+            if (filtered.length === 0) {
+                let emptyText = `No ${alertFilter} risk alerts to show.`;
+                if (channelFilter.size === 0) {
+                    emptyText = 'No channels selected — pick at least one to see alerts.';
+                } else if (channelFilter.size < 3) {
+                    emptyText = 'No alerts match the selected channels.';
+                }
+                list.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:1.4rem 0; font-size:0.85rem;">
+                    ${emptyText}
+                </div>`;
+                updateSelectedCount();
+                return;
+            }
+
+            filtered.forEach((a, idx) => {
+                const div = document.createElement('div');
+                div.className = 'alert-item';
+                const checked = selectedKeys.has(a.key) ? 'checked' : '';
+
+                const emailOn = a.delivery_channel === 'email';
+                const smsOn = a.delivery_channel === 'sms';
+                const emailDisplay = currentUserEmail || 'your registered email';
+                const phoneDisplay = currentUserPhone || 'your registered number';
+
+                // Each item is exactly one of: the immediate in-app alert
+                // (a.delivery_channel is null/undefined), or a single-channel
+                // delivery item that ONLY ever exists once actually sent —
+                // see get_notifications, which queries scheduled_notifications
+                // WHERE status = 'sent'. There is no "scheduled"/"pending"
+                // state to render, and the in-app item never mutates into a
+                // delivery item — a delivery is always its own separate item
+                // that simply appears once it happens, timestamped with the
+                // real send moment (a.created_at, which for these items IS
+                // sent_at from the backend).
+                let channelText;
+                let channelClass = '';
+                let isInAppOnly = !emailOn && !smsOn;
+
+                if (emailOn) {
+                    channelText = `Sent to your Email (${emailDisplay})`;
+                } else if (smsOn) {
+                    channelText = `Sent to your SMS (${phoneDisplay})`;
+                } else {
+                    // In-App only - clickable like "Detected from Sensors" in admin
+                    channelText = 'Sent via In-App Notification';
+                    channelClass = 'in-app';
+                }
+                
+                // Only make In-App-only alerts clickable, and only outside
+                // edit mode (so it doesn't fight with checkbox selection).
+                const isClickableInApp = isInAppOnly && !editMode;
+                if (isClickableInApp) {
+                    div.className = 'alert-item clickable';
+                    div.onclick = () => openInAppDetail(idx);
+                }
+
+                const recipientLine = `<div class="alert-recipient ${channelClass}"><i class="fas fa-paper-plane"></i>${channelText}</div>`;
+
+                const riskClass = a.level === 'high' ? ' risk-high' : a.level === 'moderate' ? ' risk-moderate' : '';
+
+                // Small secondary source line, not a separate alert of its
+                // own — sits below the delivery info, last in the stack.
+                const sensorTag = isInAppOnly
+                    ? `<div class="alert-sensor-only${riskClass}"><i class="fas fa-satellite-dish"></i> Detected from Sensors</div>`
+                    : '';
+
+                // The In-App Message itself is never shown here as a preview —
+                // it's admin-configured and fetched live when the notification
+                // is opened, so there's no separate resident-side copy of it
+                // to keep in sync. Email/SMS alerts keep their preview as-is.
+                const messagePreview = isInAppOnly ? '' : `<div class="alert-sub">${a.message}</div>`;
+
+                div.innerHTML = `
+                    ${editMode ? `<label class="alert-checkbox-wrap"><input type="checkbox" class="alert-checkbox" data-idx="${idx}" ${checked} onchange="onAlertCheckboxChange(this)"></label>` : ''}
+                    <div class="alert-icon-wrap ${a.level}${isClickableInApp ? ' clickable-icon' : ''}">
+                        <i class="fas ${iconFor(a.level)}"></i>
+                    </div>
+                    <div class="alert-body">
+                        <div class="alert-datetime">${formatSentAt(a.created_at)}</div>
+                        <div class="alert-title${riskClass}">${a.title}</div>
+                        ${recipientLine}
+                        ${sensorTag}
+                        ${messagePreview}
+                    </div>
+                    <div class="alert-time" data-created-at="${a.created_at || ''}">${timeAgo(a.created_at)}</div>
+                `;
+                list.appendChild(div);
+            });
+
+            applyAlertsScrollCap(list);
+            updateSelectedCount();
+        }
+
+        // ── IN-APP DETAIL MODAL (view-only, non-editable) ──
+        let inAppDetailRequestId = 0;
+
+        async function openInAppDetail(alertIndex) {
+            const a = currentFilteredAlerts[alertIndex];
+            if (!a) return;
+            
+            // Environmental data is specific to THIS alert (the sensor
+            // reading at the moment it fired) — stays dynamic per-alert,
+            // parsed straight from the logged alert, same as before.
+            const envData = parseEnvData(a.message);
+            
+            // Build the environmental data grid
+            const grid = document.getElementById('envDataGrid');
+            const level = a.level || 'moderate';
+            const riskClass = level === 'high' ? 'high-risk' : level === 'moderate' ? 'moderate-risk' : '';
+            
+            grid.innerHTML = `
+                <div class="env-data-item">
+                    <span class="label">Temperature</span>
+                    <span class="value">${envData.temperature}°C</span>
+                </div>
+                <div class="env-data-item">
+                    <span class="label">Humidity</span>
+                    <span class="value">${envData.humidity}%</span>
+                </div>
+                <div class="env-data-item">
+                    <span class="label">Rainfall</span>
+                    <span class="value">${envData.rainfall} mm</span>
+                </div>
+                <div class="env-data-item">
+                    <span class="label">pH Level</span>
+                    <span class="value">${envData.ph}</span>
+                </div>
+                <div class="env-data-item">
+                    <span class="label">Wind Speed</span>
+                    <span class="value">${envData.wind} m/s</span>
+                </div>
+                <div class="env-data-item">
+                    <span class="label">Risk Level</span>
+                    <span class="value ${riskClass}">${level.charAt(0).toUpperCase() + level.slice(1)}</span>
+                </div>
+            `;
+
+            // Update meta info — source is already called out by the badge above,
+            // so this just needs the exact send time.
+            const sentAt = formatSentAt(a.created_at);
+            document.getElementById('inAppDetailMeta').textContent = `Sent ${sentAt}`;
+
+            // Show the modal right away with a loading state for the message.
+            // The message is fetched fresh from admin_settings every time —
+            // never stored or duplicated here — so an admin edit shows up
+            // immediately the next time this is opened, with no resident-side
+            // copy to keep in sync.
+            const messageEl = document.getElementById('inAppDetailMessage');
+            messageEl.textContent = 'Loading message…';
+            document.getElementById('inAppDetailOverlay').classList.remove('hidden');
+
+            const requestId = ++inAppDetailRequestId;
+            try {
+                const res = await fetch(`/api/get_current_app_message?risk_level=${encodeURIComponent(level)}`, { credentials: 'include' });
+                const data = await res.json();
+                if (requestId !== inAppDetailRequestId) return; // a newer notification was opened meanwhile
+                if (!data.success) throw new Error(data.message || 'Failed to load message');
+                messageEl.textContent = data.message;
+            } catch (e) {
+                if (requestId !== inAppDetailRequestId) return;
+                messageEl.textContent = 'Unable to load the current In-App Message.';
+            }
+        }
+
+        function closeInAppDetail() {
+            document.getElementById('inAppDetailOverlay').classList.add('hidden');
+        }
+
+        const ALERTS_VISIBLE_CAP = 6;
+        function applyAlertsScrollCap(list) {
+            const items = list.children;
+            if (items.length > ALERTS_VISIBLE_CAP) {
+                const capRow = items[ALERTS_VISIBLE_CAP - 1];
+                const maxHeight = capRow.offsetTop + capRow.offsetHeight;
+                list.style.setProperty('--alerts-max-height', `${maxHeight}px`);
+                list.classList.add('scrollable');
+            } else {
+                list.classList.remove('scrollable');
+                list.style.removeProperty('--alerts-max-height');
+            }
+        }
+
+        function tickAlertTimes() {
+            document.querySelectorAll('.alert-time[data-created-at]').forEach(el => {
+                const ts = el.getAttribute('data-created-at');
+                if (ts) el.textContent = timeAgo(ts);
+            });
+        }
+        setInterval(tickAlertTimes, 15000);
+
+        async function loadNotifications() {
+            try {
+                const res = await fetch('/api/notifications', { credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    recentAlerts = (data.notifications || []).map(a => ({ ...a, key: alertKey(a) }));
+                }
+            } catch (e) {
+                console.error('Failed to load notifications:', e);
+            }
+            buildAlerts();
+        }
+
+        // ── EDIT MODE ──
+        function toggleEditMode() {
+            editMode = !editMode;
+            selectedKeys.clear();
+            const editBtn = document.getElementById('editAlertsBtn');
+            editBtn.classList.toggle('active', editMode);
+            editBtn.innerHTML = editMode ? '<i class="fas fa-xmark"></i>' : '<i class="fas fa-pen"></i>';
+            document.getElementById('editToolbar').classList.toggle('hidden', !editMode);
+            buildAlerts();
+        }
+
+        function exitEditMode() {
+            editMode = false;
+            selectedKeys.clear();
+            const editBtn = document.getElementById('editAlertsBtn');
+            editBtn.classList.remove('active');
+            editBtn.innerHTML = '<i class="fas fa-pen"></i>';
+            document.getElementById('editToolbar').classList.add('hidden');
+        }
+
+        function onAlertCheckboxChange(cb) {
+            const idx = parseInt(cb.dataset.idx, 10);
+            const a = currentFilteredAlerts[idx];
+            if (!a) return;
+            if (cb.checked) selectedKeys.add(a.key); else selectedKeys.delete(a.key);
+            updateSelectedCount();
+        }
+
+        function toggleSelectAll(cb) {
+            if (cb.checked) {
+                currentFilteredAlerts.forEach(a => selectedKeys.add(a.key));
+            } else {
+                currentFilteredAlerts.forEach(a => selectedKeys.delete(a.key));
+            }
+            buildAlerts();
+        }
+
+        function updateSelectedCount() {
+            const countEl = document.getElementById('selectedCount');
+            const removeBtn = document.getElementById('removeSelectedBtn');
+            const selectAll = document.getElementById('selectAllCheckbox');
+            if (!countEl || !removeBtn) return;
+            countEl.textContent = `${selectedKeys.size} selected`;
+            removeBtn.disabled = selectedKeys.size === 0;
+            if (selectAll) {
+                selectAll.checked = currentFilteredAlerts.length > 0 &&
+                    currentFilteredAlerts.every(a => selectedKeys.has(a.key));
+            }
+        }
+
+        // ── CONFIRM MODAL ──
+        let pendingAction = null;
+
+        function handleDeleteIconClick() {
+            if (editMode && selectedKeys.size > 0) {
+                openConfirmModal('selected');
+            } else {
+                openConfirmModal('clear');
+            }
+        }
+
+        function deselectAllAlerts() {
+            selectedKeys.clear();
+            buildAlerts();
+        }
+
+        function openConfirmModal(action) {
+            pendingAction = action;
+            const title = document.getElementById('confirmTitle');
+            const text = document.getElementById('confirmText');
+            const actionBtn = document.getElementById('confirmActionBtn');
+            if (action === 'clear') {
+                title.textContent = 'Clear all notifications?';
+                text.textContent = 'Are you sure you want to clear all your notifications? This action cannot be undone.';
+                actionBtn.textContent = 'Clear All';
+            } else {
+                const n = selectedKeys.size;
+                title.textContent = `Remove ${n} selected alert${n === 1 ? '' : 's'}?`;
+                text.textContent = 'This action cannot be undone.';
+                actionBtn.textContent = 'Remove';
+            }
+            document.getElementById('confirmOverlay').classList.remove('hidden');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmOverlay').classList.add('hidden');
+            pendingAction = null;
+        }
+
+        async function handleConfirmAction() {
+            if (pendingAction === 'clear') {
+                await clearAllAlerts();
+            } else if (pendingAction === 'selected') {
+                await removeSelectedAlerts();
+            }
+            closeConfirmModal();
+        }
+
+        async function clearAllAlerts() {
+            try {
+                const res = await fetch('/api/notifications', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ clear_all: true })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('✅ All notifications cleared.');
+                    exitEditMode();
+                    loadNotifications();
+                } else {
+                    showToast('❌ ' + (data.message || 'Could not clear notifications.'));
+                }
+            } catch (e) {
+                showToast('❌ Could not clear notifications.');
+            }
+        }
+
+        async function removeSelectedAlerts() {
+            const toDelete = recentAlerts
+                .filter(a => selectedKeys.has(a.key))
+                .map(a => ({ source: a.source, id: a.id, title: a.title, message: a.message, level: a.level, created_at: a.created_at }));
+            if (toDelete.length === 0) return;
+            try {
+                const res = await fetch('/api/notifications', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ items: toDelete })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast(`✅ Removed ${toDelete.length} alert${toDelete.length === 1 ? '' : 's'}.`);
+                    exitEditMode();
+                    loadNotifications();
+                } else {
+                    showToast('❌ ' + (data.message || 'Could not remove selected alerts.'));
+                }
+            } catch (e) {
+                showToast('❌ Could not remove selected alerts.');
+            }
+        }
+
+        loadNotifications();
+        loadNotificationSettings();
+        let refreshTimer = null;
+        let settingsPollTimer = null;
+        let currentRate = 1;
+
+        function getIntervalMs(value) {
+            if (value === 0) return 0;
+            if (value === 1) return 60000;
+            if (value === 15) return 900000;
+            if (value === 60) return 3600000;
+            return 60000;
+        }
+
+        function setDataRefreshInterval(value) {
+            if (refreshTimer) {
+                clearInterval(refreshTimer);
+                refreshTimer = null;
+            }
+
+            const intervalMs = getIntervalMs(value);
+            if (intervalMs === 0) return;
+
+            refreshTimer = setInterval(() => {
+                loadNotifications();
+                fetchRealWeatherData();
+            }, intervalMs);
+        }
+
+        async function syncSensorRefreshRate() {
+            try {
+                const res = await fetch('/api/get_sensor_refresh_rate', { credentials: 'include' });
+                const data = await res.json();
+
+                const rate = (data.success && typeof data.refresh_rate === 'number') ? data.refresh_rate : 1;
+                if (rate !== currentRate) {
+                    currentRate = rate;
+                    setDataRefreshInterval(rate);
+                }
+            } catch (error) {
+                if (!refreshTimer) {
+                    currentRate = 1;
+                    setDataRefreshInterval(1);
+                }
+            }
+        }
+
+        async function loadDataRefreshRate() {
+            await syncSensorRefreshRate();
+            if (settingsPollTimer) clearInterval(settingsPollTimer);
+            settingsPollTimer = setInterval(syncSensorRefreshRate, 20000);
+        }
+
+        async function fetchRealWeatherData() {
+            try {
+                const response = await fetch('/api/get_sensor_data');
+                const data = await response.json();
+                if (data.error) {
+                    console.error('API Error:', data.error);
+                    return;
+                }
+                if (typeof loadNotifications === 'function') {
+                    loadNotifications();
+                }
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+            }
+        }
+
+        // ── TOAST ──
+        let toastTimer;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg.replace('✅ ', '').replace('❌ ', '');
+            const icon = toast.querySelector('i');
+            if (msg.includes('❌')) {
+                icon.style.color = '#e74c3c';
+            } else {
+                icon.style.color = '#2ecc71';
+            }
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+        }
+
+        loadUserInfo();
+
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                loadUserInfo();
+            }
+        });
+    </script>
+    <script src="/static/theme-toggle.js"></script>
+
+<!-- ── NEAR MONITORED LOCATION GATE ── -->
+<style>
+    #mainContent.nlg-blurred {
+        filter: blur(8px);
+        pointer-events: none;
+        user-select: none;
+        transition: filter 0.2s ease;
+    }
+    .nlg-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(4,15,10,0.6);
+        backdrop-filter: blur(2px);
+        padding: 1rem;
+    }
+    .nlg-overlay.open { display: flex; }
+    .nlg-box {
+        max-width: 420px;
+        width: 100%;
+        background: var(--green-dark);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 2.2rem 1.8rem 1.8rem;
+        text-align: center;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+    }
+    .nlg-icon {
+        width: 56px; height: 56px; border-radius: 14px;
+        background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.4rem; color: var(--on-accent);
+        margin: 0 auto 1.1rem;
+        box-shadow: 0 8px 20px rgba(46,204,113,0.35);
+    }
+    .nlg-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.05rem; font-weight: 800;
+        color: var(--text-main);
+        margin-bottom: 0.55rem;
+    }
+    .nlg-desc {
+        font-size: 0.83rem; color: var(--text-muted);
+        line-height: 1.55; margin-bottom: 1.5rem;
+    }
+    .nlg-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 0.75rem 1.5rem;
+        border: none; border-radius: 50px;
+        background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+        color: var(--on-accent);
+        font-family: 'Inter', sans-serif;
+        font-weight: 700; font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .nlg-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(46,204,113,0.4); }
+</style>
+
+<div class="nlg-overlay" id="nlgOverlay">
+    <div class="nlg-box">
+        <div class="nlg-icon"><i class="fas fa-map-pin"></i></div>
+        <div class="nlg-title">Near Monitored Location</div>
+        <div class="nlg-desc">Please set your Near Monitored Location first so we can show you relevant risk data for your area.</div>
+        <button class="nlg-btn" onclick="window.location.href='/resident/account'">
+            <i class="fas fa-location-crosshairs"></i> Set Near Monitored Location
+        </button>
+    </div>
+</div>
+
+<script>
+    (async function nearLocationGate() {
+        try {
+            const res = await fetch('/api/check_session', { credentials: 'include' });
+            const data = await res.json();
+            if (data.logged_in && !data.user.is_admin && !data.user.near_hotspot_id) {
+                const mainEl = document.getElementById('mainContent');
+                if (mainEl) mainEl.classList.add('nlg-blurred');
+                document.getElementById('nlgOverlay').classList.add('open');
+            }
+        } catch (e) {
+            console.error('Near location gate check failed:', e);
+        }
+    })();
+</script>
+
+</body>
+</html>

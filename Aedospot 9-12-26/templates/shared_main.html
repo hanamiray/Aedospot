@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEDOSPOT | Dengue Mosquito Risk Detection</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0d6b3a;
+            --primary-light: #1a8a4a;
+            --primary-dark: #0a4f2a;
+            --primary-bg: #e8f5ee;
+            --text-dark: #1a2a22;
+            --text-muted: rgba(26,42,34,0.6);
+            --text-light: #f0f7f4;
+            --white: #ffffff;
+            --shadow: 0 20px 60px rgba(0,0,0,0.08);
+            --shadow-hover: 0 30px 80px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-lg: 24px;
+            --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        img, svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Prevent any wide element from forcing horizontal scroll */
+        .navbar, .hero, .features, .footer-content, .footer-bottom {
+            width: 100%;
+        }
+
+        /* ── NAVIGATION ── */
+        .navbar {
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-logo span {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-outline {
+            padding: 0.5rem 1.2rem;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            background: transparent;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(13,107,58,0.3);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0.4rem;
+            line-height: 1;
+        }
+
+        /* ── MOBILE DROPDOWN MENU (Login / Sign Up) ── */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem 1rem;
+            overflow: hidden;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        .mobile-menu .btn-outline,
+        .mobile-menu .btn-primary {
+            width: 100%;
+            text-align: center;
+            padding: 0.75rem 1.2rem;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        /* ── HERO SECTION ── */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary-bg);
+            color: var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            width: fit-content;
+        }
+
+        .hero-badge i {
+            margin-right: 6px;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, #0d6b3a 0%, #1a8a4a 50%, #2ecc71 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 480px;
+        }
+
+        /* ── CHECK RISK BUTTON (Replaces search) ── */
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-check-risk {
+            padding: 0.9rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .btn-check-risk:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(13,107,58,0.35);
+        }
+
+        .btn-check-risk i {
+            font-size: 1.1rem;
+        }
+
+        .btn-check-risk:active {
+            transform: translateY(0);
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .hero-feature i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        /* ── HERO IMAGE ── */
+        .hero-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image-card {
+            background: var(--primary-bg);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-image-card .big-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .hero-image-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-image-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 300px;
+        }
+
+        .hero-image-card .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .hero-image-card .stat {
+            text-align: center;
+        }
+
+        .hero-image-card .stat .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .hero-image-card .stat .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ── FEATURES SECTION ── */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: var(--radius);
+            transition: all var(--transition);
+        }
+
+        .feature-card:hover {
+            background: var(--primary-bg);
+            transform: translateY(-4px);
+        }
+
+        .feature-card .icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--primary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .feature-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand .logo-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.6;
+            max-width: 300px;
+        }
+
+        .footer-col h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.3rem 0;
+            transition: color var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                margin: 0 auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-features {
+                justify-content: center;
+            }
+
+            .hero-image-card {
+                max-width: 100%;
+                min-height: 300px;
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-actions .btn-outline,
+            .nav-actions .btn-primary {
+                display: none;
+            }
+
+            .hero {
+                padding: 1.5rem 1.5rem 3rem;
+                min-height: auto;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+
+            .hero-features {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-check-risk {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 3rem 1.5rem;
+            }
+
+            .footer {
+                padding: 2.5rem 1.5rem 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-brand p {
+                margin: 0 auto;
+                max-width: 100%;
+            }
+
+            .footer-col a {
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .hero-image-card {
+                min-height: 200px;
+                padding: 1.5rem;
+                width: 100%;
+            }
+
+            .hero-image-card .stats {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-image-card .stat .number {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Small tablets / large phones */
+        @media (min-width: 481px) and (max-width: 600px) {
+            .hero-title {
+                font-size: 1.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0.8rem 1rem;
+            }
+
+            .mobile-menu {
+                padding: 0 1rem 1rem;
+            }
+
+            .hero {
+                padding: 1.25rem 1rem 2.5rem;
+            }
+
+            .hero-title {
+                font-size: 1.6rem;
+            }
+
+            .hero-badge {
+                font-size: 0.7rem;
+                padding: 0.35rem 0.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .features {
+                padding: 2.5rem 1rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero-image-card {
+                min-height: 180px;
+                padding: 1.25rem;
+            }
+
+            .hero-image-card .big-icon {
+                font-size: 2.5rem;
+            }
+
+            .hero-image-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .hero-image-card .stats {
+                gap: 0.75rem 1.25rem;
+            }
+
+            .footer-col a {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Ensure no element causes horizontal overflow on very narrow screens */
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 1.4rem;
+            }
+
+            .btn-check-risk {
+                padding: 0.85rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="/static/aedospot-logo.png" alt="AEDOSPOT" onerror="this.style.display='none'">
+            <span>AEDOSPOT</span>
+        </a>
+
+        <div class="nav-actions">
+            <a href="/login" class="btn-outline" id="loginBtn">Log In</a>
+            <a href="/signup" class="btn-primary" id="signupBtn">Sign Up</a>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- ── MOBILE MENU (Login / Sign Up, shown when hamburger is tapped) ── -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="/login" class="btn-outline" id="loginBtnMobile">Log In</a>
+        <a href="/signup" class="btn-primary" id="signupBtnMobile">Sign Up</a>
+    </div>
+
+    <!-- ── HERO SECTION ── -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-shield-virus"></i> Predict. Prevent. Protect.
+            </div>
+
+            <h1 class="hero-title">
+                Stay Ahead of<br>
+                <span class="highlight">Dengue Outbreaks</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Real-time dengue risk detection and prevention alerts for your community.
+                Stay informed, stay protected.
+            </p>
+
+            <!-- ── CHECK RISK BUTTON (No search input) ── -->
+            <div class="hero-actions">
+                <button class="btn-check-risk" id="checkRiskBtn">
+                    <i class="fas fa-shield-virus"></i> Check Risk
+                </button>
+            </div>
+
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Risk Map</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-bell"></i>
+                    <span>Outbreak Alerts</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Prevention</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <div class="hero-image-card">
+                <div class="big-icon">
+                    <i class="fas fa-shield-virus"></i>
+                </div>
+                <h3>DengueAlert</h3>
+                <p>Predict. Prevent. Protect.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="number">128</div>
+                        <div class="label">Active Alerts</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">94%</div>
+                        <div class="label">Accuracy</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">24/7</div>
+                        <div class="label">Monitoring</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FEATURES SECTION ── -->
+    <section class="features">
+        <div class="feature-card">
+            <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
+            <h4>Risk Map</h4>
+            <p>View real-time risk levels in your area with our interactive GIS map.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon"><i class="fas fa-bell"></i></div>
+            <h4>Outbreak Alerts</h4>
+            <p>Get instant notifications of nearby cases and potential outbreaks.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon"><i class="fas fa-shield-alt"></i></div>
+            <h4>Prevention</h4>
+            <p>Learn essential mosquito-proofing techniques to protect your family.</p>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-text">AEDOSPOT</div>
+                <p>Dengue mosquito risk detection and prevention alert system. Protecting communities with real-time data.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Contact</h5>
+                <a href="#"><i class="fas fa-envelope"></i> aedospot@gmail.com</a>
+                <a href="#"><i class="fas fa-phone"></i> (63) 912-345-6789</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Morong, Rizal</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 AEDOSPOT. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        // ── MOBILE MENU TOGGLE (hamburger opens Log In / Sign Up) ──
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            menuToggle.querySelector('i').classList.toggle('fa-bars');
+            menuToggle.querySelector('i').classList.toggle('fa-times');
+            menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Close the mobile menu automatically if the viewport grows back to desktop size
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // ── CHECK RISK BUTTON ──
+        document.getElementById('checkRiskBtn').addEventListener('click', function() {
+            window.location.href = '/risk_map';
+        });
+
+        // ── CHECK SESSION ──
+        async function checkSession() {
+            try {
+                const res = await fetch('/api/check_session', { credentials: 'include' });
+                const data = await res.json();
+
+                const loginBtn = document.getElementById('loginBtn');
+                const signupBtn = document.getElementById('signupBtn');
+                const loginBtnMobile = document.getElementById('loginBtnMobile');
+                const signupBtnMobile = document.getElementById('signupBtnMobile');
+
+                if (data.logged_in) {
+                    loginBtn.textContent = 'Dashboard';
+                    loginBtn.href = '/home';
+                    signupBtn.textContent = 'Account';
+                    signupBtn.href = '/account';
+
+                    loginBtnMobile.textContent = 'Dashboard';
+                    loginBtnMobile.href = '/home';
+                    signupBtnMobile.textContent = 'Account';
+                    signupBtnMobile.href = '/account';
+                }
+            } catch(e) {
+                console.error('Session check error:', e);
+            }
+        }
+
+        checkSession();
+    </script>
+
+</body>
+</html>

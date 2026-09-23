@@ -1,0 +1,1610 @@
+/* ── DARK THEME (DEFAULT) ── */
+:root {
+    /* Backgrounds - Deep forest greens */
+    --bg-body: radial-gradient(ellipse at 20% 0%, #1a5c35 0%, #0a2e1c 45%, #071a0f 100%);
+    --bg-body-solid: #0a2e1c;
+    --bg-sidebar: rgba(7,26,15,0.55);
+    --bg-card: rgba(13,43,24,0.55);
+    --bg-glass: rgba(255,255,255,0.055);
+    --bg-input: rgba(255,255,255,0.06);
+    --bg-toast: rgba(7,26,15,0.95);
+    --bg-modal: rgba(0,0,0,0.6);
+    --bg-overlay: rgba(0,0,0,0.4);
+    --bg-hover: rgba(255,255,255,0.03);
+    --bg-active: rgba(46,204,113,0.18);
+    --bg-popup: rgba(7,26,15,0.95);
+    --bg-tooltip: rgba(7,26,15,0.9);
+    --bg-select: #0d2b18;
+    
+    /* Text Colors */
+    --text-main: #e8f5ee;
+    --text-muted: rgba(232,245,238,0.55);
+    --text-inverse: #071a0f;
+    --text-bright: #2ecc71;
+    --text-popup: #e8f5ee;
+    --text-popup-muted: rgba(232,245,238,0.7);
+    
+    /* Borders */
+    --border-glass: rgba(255,255,255,0.10);
+    --border-light: rgba(255,255,255,0.05);
+    --border-popup: rgba(46,204,113,0.25);
+    
+    /* Accent Colors */
+    --green-deep: #071a0f;
+    --green-dark: #0d2b18;
+    --green-mid: #145c30;
+    --green-bright: #2ecc71;
+    --green-glow: rgba(46,204,113,0.18);
+    --amber: #f39c12;
+    --red: #e74c3c;
+    --blue: #3498db;
+    --purple: #9b59b6;
+    --teal: #1abc9c;
+    
+    /* Shadows */
+    --shadow-card: 0 25px 55px rgba(0,0,0,0.45), 0 0 40px rgba(46,204,113,0.08);
+    --shadow-sm: 0 4px 12px rgba(0,0,0,0.2);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+    --shadow-hover: 0 8px 30px rgba(0,0,0,0.25);
+    --shadow-popup: 0 8px 32px rgba(0,0,0,0.6);
+    
+    /* Scrollbar */
+    --scrollbar-track: rgba(13,43,24,0.55);
+    --scrollbar-thumb: #145c30;
+    
+    /* Map */
+    --map-filter: brightness(0.75) saturate(0.7);
+    --map-bg: #0d2b18;
+    
+    /* Chart Filter */
+    --chart-filter: none;
+    
+    /* Glass effect */
+    --glass-blur: blur(20px) saturate(160%);
+    --glass-blur-strong: blur(24px) saturate(180%);
+    
+    /* Transitions */
+    --theme-transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── LIGHT THEME ── */
+body.light-theme {
+    /* Backgrounds - Lighter steel green */
+    --bg-body: radial-gradient(ellipse at 20% 0%, #c5dfd4 0%, #a8c9b8 35%, #8ab3a0 100%) !important;
+    --bg-body-solid: #a8c9b8 !important;
+    --bg-sidebar: rgba(220, 237, 228, 0.85) !important;
+    --bg-card: rgba(220, 237, 228, 0.75) !important;
+    --bg-glass: rgba(255,255,255,0.35) !important;
+    --bg-input: rgba(255,255,255,0.6) !important;
+    --bg-toast: rgba(220, 237, 228, 0.95) !important;
+    --bg-modal: rgba(0,0,0,0.2) !important;
+    --bg-overlay: rgba(0,0,0,0.1) !important;
+    --bg-hover: rgba(0,0,0,0.05) !important;
+    --bg-active: rgba(13, 107, 58, 0.15) !important;
+    --bg-popup: rgba(220, 237, 228, 0.95) !important;
+    --bg-tooltip: rgba(220, 237, 228, 0.92) !important;
+    --bg-select: #d4ede4 !important;
+    
+    /* Text Colors - MUCH DARKER for readability */
+    --text-main: #0d1f17 !important;
+    --text-muted: rgba(13, 31, 23, 0.65) !important;
+    --text-inverse: #f0f7f4 !important;
+    --text-bright: #0e8a46 !important;
+    --text-popup: #0d1f17 !important;
+    --text-popup-muted: rgba(13, 31, 23, 0.65) !important;
+    
+    /* Borders */
+    --border-glass: rgba(13, 31, 23, 0.15) !important;
+    --border-light: rgba(13, 31, 23, 0.08) !important;
+    --border-popup: rgba(13, 107, 58, 0.2) !important;
+    
+    /* Accent Colors - vivid, saturated tones (not muted/brown) that still hold contrast on the light background */
+    --green-deep: #d4ede4 !important;
+    --green-dark: #c5dfd4 !important;
+    --green-mid: #4a9a75 !important;
+    --green-bright: #0e8a46 !important;
+    --green-glow: rgba(14, 138, 70, 0.15) !important;
+    --amber: #c47a0a !important;
+    --red: #c0392b !important;
+    --blue: #1f6fb0 !important;
+    --purple: #8e44ad !important;
+    --teal: #0f9d8c !important;
+    
+    /* Shadows */
+    --shadow-card: 0 25px 55px rgba(0,0,0,0.10), 0 0 40px rgba(13, 107, 58, 0.05) !important;
+    --shadow-sm: 0 4px 12px rgba(0,0,0,0.06) !important;
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10) !important;
+    --shadow-hover: 0 8px 30px rgba(0,0,0,0.08) !important;
+    --shadow-popup: 0 8px 32px rgba(0,0,0,0.15) !important;
+    
+    /* Scrollbar */
+    --scrollbar-track: #d4ede4 !important;
+    --scrollbar-thumb: #4a9a75 !important;
+    
+    /* Map */
+    --map-filter: brightness(0.92) saturate(0.85) !important;
+    --map-bg: #d4ede4 !important;
+    
+    /* Chart Filter */
+    --chart-filter: brightness(0.95) !important;
+    
+    /* Glass effect */
+    --glass-blur: blur(16px) saturate(140%) !important;
+    --glass-blur-strong: blur(20px) saturate(160%) !important;
+}
+
+/* ── APPLY TRANSITIONS ── */
+body,
+body * {
+    transition: background var(--theme-transition),
+                color var(--theme-transition),
+                border-color var(--theme-transition),
+                box-shadow var(--theme-transition),
+                backdrop-filter var(--theme-transition),
+                filter var(--theme-transition);
+}
+
+/* ── BODY ── */
+body {
+    background: var(--bg-body) !important;
+    color: var(--text-main) !important;
+    min-height: 100vh;
+}
+
+/* ============================================================ */
+/* ── SIDEBAR ── */
+/* ============================================================ */
+
+.sidebar {
+    background: var(--bg-sidebar) !important;
+    border-right-color: var(--border-glass) !important;
+    backdrop-filter: var(--glass-blur-strong) !important;
+    -webkit-backdrop-filter: var(--glass-blur-strong) !important;
+}
+
+.sidebar .nav-item {
+    color: var(--text-muted) !important;
+}
+
+.sidebar .nav-item:hover {
+    color: var(--text-main) !important;
+    background: var(--bg-hover) !important;
+}
+
+.sidebar .nav-item.active {
+    color: var(--text-bright) !important;
+    background: var(--bg-active) !important;
+}
+
+.sidebar .account-btn {
+    color: var(--text-main) !important;
+    border-color: var(--border-glass) !important;
+    background: var(--bg-glass) !important;
+}
+
+.sidebar .account-btn:hover {
+    background: var(--bg-hover) !important;
+}
+
+.sidebar .account-email-text {
+    color: var(--text-muted) !important;
+}
+
+.sidebar-logo-text {
+    color: var(--text-bright) !important;
+}
+
+/* ── SIDEBAR TOGGLE ── */
+.theme-toggle-sidebar {
+    border-color: var(--border-glass) !important;
+    background: var(--bg-glass) !important;
+}
+
+.theme-toggle-sidebar i {
+    color: var(--text-muted) !important;
+}
+
+.theme-toggle-sidebar span {
+    color: var(--text-muted) !important;
+}
+
+/* ============================================================ */
+/* ── CARDS & CONTAINERS ── */
+/* ============================================================ */
+
+.auth-card, .card, .section-card, .settings-nav, .glass-card, 
+.stat-card, .sensor-card, .map-card, .alerts-card, .device-card,
+.risk-counter-card, .lstm-card, .risk-class-card, .chart-card,
+.settings-panel .section-card, .account-panel .section-card,
+.account-nav, .setup-modal, .hotspot-card, .lstm-big-card,
+.alert-counter-card, .mini-card, .data-control-bar,
+.risk-main, .profile-top, .save-bar, .filter-bar {
+    background: var(--bg-card) !important;
+    border-color: var(--border-glass) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    box-shadow: var(--shadow-card) !important;
+}
+
+/* ============================================================ */
+/* ── INPUT FIELDS ── */
+/* ============================================================ */
+
+input, .form-input, .setting-select, .setting-input, 
+select.security-select, .data-control-select,
+.password-wrapper input, .phone-wrapper,
+.setting-select, .form-input,
+select, textarea {
+    background: var(--bg-input) !important;
+    border-color: var(--border-glass) !important;
+    color: var(--text-main) !important;
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--text-muted) !important;
+}
+
+input:focus, .form-input:focus, select:focus, textarea:focus {
+    border-color: rgba(46,204,113,0.45) !important;
+    box-shadow: 0 0 0 3px rgba(46,204,113,0.1) !important;
+}
+
+/* ── SELECT OPTIONS ── */
+select option {
+    background: var(--bg-select) !important;
+    color: var(--text-main) !important;
+}
+
+/* ============================================================ */
+/* ── TEXT COLORS - FORCE DARK IN LIGHT THEME ── */
+/* ============================================================ */
+
+body.light-theme,
+body.light-theme * {
+    color: var(--text-main) !important;
+}
+
+/* ── EXCEPTIONS - Elements that should keep their color ── */
+body.light-theme .nav-item.active,
+body.light-theme .account-nav-item.active,
+body.light-theme .settings-nav-item.active,
+body.light-theme .text-bright,
+body.light-theme .green-bright,
+body.light-theme .stat-value,
+body.light-theme .sensor-value,
+body.light-theme .risk-counter-value,
+body.light-theme .range-val,
+body.light-theme .realtime-clock,
+body.light-theme .badge-moderate,
+body.light-theme .badge-high,
+body.light-theme .badge-low,
+body.light-theme .pill-high,
+body.light-theme .pill-moderate,
+body.light-theme .pill-low,
+body.light-theme .admin-badge,
+body.light-theme .alert-icon-wrap,
+body.light-theme .trend-up,
+body.light-theme .trend-down,
+body.light-theme .status-dot.online,
+body.light-theme .device-dot.online,
+body.light-theme .device-status.online,
+body.light-theme .btn-save,
+body.light-theme .btn-login,
+body.light-theme .btn-danger,
+body.light-theme .btn-delete-user,
+body.light-theme .btn-reset-user,
+body.light-theme .gauge-label,
+body.light-theme .risk-pill,
+body.light-theme .sensor-badge,
+body.light-theme .alert-badge,
+body.light-theme .toast i,
+body.light-theme .sidebar-logo-text,
+body.light-theme .forgot-link a,
+body.light-theme .signup-text a,
+body.light-theme .login-text a,
+body.light-theme .back-link a,
+body.light-theme .toggle input:checked + .toggle-slider::before,
+body.light-theme .nav-item.active i,
+body.light-theme .nav-item.active span,
+body.light-theme .account-nav-item.active i,
+body.light-theme .account-nav-item.active span,
+body.light-theme .settings-nav-item.active i,
+body.light-theme .settings-nav-item.active span,
+body.light-theme .btn-modal-confirm,
+body.light-theme .btn-setup-submit,
+body.light-theme .btn-verify-code.verified {
+    color: inherit !important;
+}
+
+/* ── SPECIFIC TEXT OVERRIDES ── */
+body.light-theme .text-muted,
+body.light-theme .setting-desc,
+body.light-theme .stat-label,
+body.light-theme .sensor-label,
+body.light-theme .form-label,
+body.light-theme .nav-item:not(.active),
+body.light-theme .account-nav-item:not(.active),
+body.light-theme .settings-nav-item:not(.active),
+body.light-theme .account-email-text,
+body.light-theme .profile-joined,
+body.light-theme .alert-time,
+body.light-theme .realtime-date,
+body.light-theme .last-update-label,
+body.light-theme .last-update-date,
+body.light-theme .device-desc,
+body.light-theme .risk-counter-label,
+body.light-theme .risk-counter-sub,
+body.light-theme .security-hint,
+body.light-theme .phone-hint,
+body.light-theme .pw-hint,
+body.light-theme .signup-text,
+body.light-theme .login-text,
+body.light-theme .back-link,
+body.light-theme .footer-note,
+body.light-theme .risk-class-desc,
+body.light-theme .card-header .text-muted {
+    color: var(--text-muted) !important;
+}
+
+body.light-theme .dash-title,
+body.light-theme .form-title,
+body.light-theme .card-header,
+body.light-theme .section-header,
+body.light-theme .settings-nav-header,
+body.light-theme .account-nav-header,
+body.light-theme .main-title,
+body.light-theme .setup-modal-title,
+body.light-theme .profile-name,
+body.light-theme .alert-title,
+body.light-theme .risk-class-name,
+body.light-theme .device-name,
+body.light-theme .lstm-header,
+body.light-theme .stat-value,
+body.light-theme .sensor-value,
+body.light-theme .profile-meta .profile-name,
+body.light-theme h1, body.light-theme h2, body.light-theme h3, 
+body.light-theme h4, body.light-theme h5, body.light-theme h6,
+body.light-theme .setting-label,
+body.light-theme .risk-class-name,
+body.light-theme .alert-title,
+body.light-theme .device-name,
+body.light-theme .user-name-cell,
+body.light-theme .profile-display-name,
+body.light-theme .nav-item span,
+body.light-theme .account-name-text,
+body.light-theme .sidebar .account-name-text {
+    color: var(--text-main) !important;
+}
+
+/* ── ALERTS PAGE: accent text that must keep its color, same as dark mode ── */
+/* "Sent to <resident> with the email/contact number ..." line */
+body.light-theme .alert-recipient {
+    color: var(--blue) !important;
+}
+
+/* "<Level> Risk Detected from sensors" line, shown when an alert fired
+   from the automatic sensor tick with no email/SMS delivery */
+body.light-theme .alert-sensor-only {
+    color: var(--amber) !important;
+}
+
+/* "Moderate/High Risk Detected" title — colored by severity (same as the
+   icon) instead of the generic dark heading color below, whether the
+   alert actually went out via email/SMS or was sensor-only. Needs the
+   extra .risk-high/.risk-moderate specificity to win over the plain
+   .alert-title / .alert-sensor-only rules (this one and the generic
+   dark-heading one further down). */
+body.light-theme .alert-title.risk-high,
+body.light-theme .alert-sensor-only.risk-high {
+    color: var(--red) !important;
+}
+
+body.light-theme .alert-title.risk-moderate {
+    color: var(--amber) !important;
+}
+
+/* Exact sent-at timestamp above each alert's title */
+body.light-theme .alert-datetime {
+    color: var(--green-bright) !important;
+}
+
+/* Active "All / Moderate / High" filter pill (admin_alerts) — solid
+   green/amber/red background, so text needs to stay white, not go dark */
+body.light-theme .alert-filter-btn.active[data-filter] {
+    color: #ffffff !important;
+}
+
+/* Active "All / Moderate / High" filter pill (resident_alerts) — light
+   glow background instead of a solid fill, so the text should keep its
+   green/amber/red accent color (like dark mode) rather than turn white
+   or the forced dark heading color. */
+body.light-theme .alert-filter-btn.active[data-level="all"] {
+    color: var(--green-bright) !important;
+}
+body.light-theme .alert-filter-btn.active[data-level="moderate"] {
+    color: var(--amber) !important;
+}
+body.light-theme .alert-filter-btn.active[data-level="high"] {
+    color: var(--red) !important;
+}
+
+/* Active channel-filter (email/SMS/in-app) icon button */
+body.light-theme .channel-filter-btn.active {
+    color: var(--green-bright) !important;
+}
+
+/* ============================================================ */
+/* ── BUTTONS ── */
+/* ============================================================ */
+
+.btn-login {
+    background: var(--green-bright) !important;
+    color: var(--text-inverse) !important;
+}
+
+.btn-login:hover {
+    background: var(--green-mid) !important;
+    box-shadow: 0 0 20px rgba(46,204,113,0.35) !important;
+}
+
+.btn-save {
+    background: var(--green-mid) !important;
+    border-color: rgba(46,204,113,0.35) !important;
+    color: var(--text-inverse) !important;
+}
+
+.btn-save:hover {
+    background: var(--bg-active) !important;
+    box-shadow: 0 0 14px rgba(46,204,113,0.2) !important;
+}
+
+.btn-cancel {
+    border-color: var(--border-glass) !important;
+    color: var(--text-muted) !important;
+}
+
+.btn-cancel:hover {
+    color: var(--text-main) !important;
+    border-color: var(--border-glass) !important;
+}
+
+.btn-setup-submit {
+    background: var(--green-bright) !important;
+    color: var(--text-inverse) !important;
+}
+
+.btn-setup-submit:hover {
+    background: var(--green-mid) !important;
+}
+
+.btn-modal-confirm {
+    background: var(--green-bright) !important;
+    color: var(--text-inverse) !important;
+}
+
+.btn-modal-confirm:hover {
+    background: var(--green-mid) !important;
+}
+
+.btn-modal-confirm.danger {
+    background: var(--red) !important;
+    color: white !important;
+}
+
+.btn-modal-confirm.danger:hover {
+    background: #c0392b !important;
+}
+
+.btn-modal-cancel {
+    border-color: var(--border-glass) !important;
+    color: var(--text-main) !important;
+}
+
+.btn-modal-cancel:hover {
+    background: var(--bg-hover) !important;
+}
+
+/* ── TOGGLE SWITCH ── */
+.toggle-slider {
+    background: var(--bg-input) !important;
+    border-color: var(--border-glass) !important;
+}
+
+.toggle input:checked + .toggle-slider {
+    background: var(--green-mid) !important;
+    border-color: rgba(46,204,113,0.4) !important;
+}
+
+.toggle input:checked + .toggle-slider::before {
+    background: var(--green-bright) !important;
+    box-shadow: 0 0 8px rgba(46,204,113,0.6) !important;
+}
+
+/* ============================================================ */
+/* ── TOAST NOTIFICATION ── */
+/* ============================================================ */
+
+.toast {
+    background: var(--bg-toast) !important;
+    border-color: var(--border-glass) !important;
+    color: var(--text-main) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.toast i {
+    color: var(--green-bright) !important;
+}
+
+/* ============================================================ */
+/* ── MODALS & POPUPS ── */
+/* ============================================================ */
+
+/* Setup Modal */
+.setup-modal-overlay {
+    background: var(--bg-overlay) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+}
+
+.setup-modal {
+    background: var(--bg-card) !important;
+    border-color: var(--border-glass) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.setup-modal-icon {
+    background: linear-gradient(135deg, var(--green-mid), var(--green-bright)) !important;
+}
+
+.setup-modal-title {
+    color: var(--text-main) !important;
+}
+
+.setup-modal-sub {
+    color: var(--text-muted) !important;
+}
+
+.setup-error {
+    background: rgba(231,76,60,0.12) !important;
+    border-color: rgba(231,76,60,0.4) !important;
+    color: #ff8a80 !important;
+}
+
+/* Confirm Action Modal */
+#confirmActionOverlay .setup-modal {
+    background: var(--bg-card) !important;
+    border-color: var(--border-glass) !important;
+}
+
+#confirmActionOverlay .setup-modal-title {
+    color: var(--text-main) !important;
+}
+
+#confirmActionOverlay .setup-modal-sub {
+    color: var(--text-muted) !important;
+}
+
+/* Info Modal */
+#infoModalOverlay .setup-modal {
+    background: var(--bg-card) !important;
+    border-color: var(--border-glass) !important;
+}
+
+#infoModalOverlay .setup-modal-title {
+    color: var(--text-main) !important;
+}
+
+#infoModalOverlay .setup-modal-sub {
+    color: var(--text-muted) !important;
+}
+
+.temp-password-box {
+    background: var(--bg-input) !important;
+    border-color: var(--border-glass) !important;
+    color: var(--text-bright) !important;
+}
+
+/* ============================================================ */
+/* ── MAP POPUPS ── */
+/* ============================================================ */
+
+.leaflet-popup-content-wrapper {
+    background: var(--bg-popup) !important;
+    border-color: var(--border-popup) !important;
+    color: var(--text-popup) !important;
+    box-shadow: var(--shadow-popup) !important;
+}
+
+.leaflet-popup-tip {
+    background: var(--bg-popup) !important;
+}
+
+.leaflet-popup-content {
+    color: var(--text-popup) !important;
+}
+
+.leaflet-popup-content div {
+    color: var(--text-popup) !important;
+}
+
+.leaflet-popup-content span {
+    color: var(--text-popup-muted) !important;
+}
+
+/* Map popup specific text colors in light theme */
+body.light-theme .leaflet-popup-content-wrapper {
+    background: var(--bg-popup) !important;
+    color: var(--text-popup) !important;
+}
+
+body.light-theme .leaflet-popup-content div {
+    color: var(--text-popup) !important;
+}
+
+body.light-theme .leaflet-popup-content span {
+    color: var(--text-popup-muted) !important;
+}
+
+/* ── MAP ── */
+#map, .map-placeholder {
+    background: var(--map-bg) !important;
+}
+
+.leaflet-tile {
+    filter: var(--map-filter) !important;
+}
+
+.leaflet-control-zoom a {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-glass) !important;
+}
+
+.leaflet-control-zoom a:hover {
+    background: var(--bg-hover) !important;
+}
+
+/* ============================================================ */
+/* ── SCROLLBAR ── */
+/* ============================================================ */
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track) !important;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb) !important;
+    border-radius: 4px;
+}
+
+/* ============================================================ */
+/* ── BADGES & PILLS ── */
+/* ============================================================ */
+
+.admin-badge {
+    background: var(--bg-active) !important;
+    color: var(--text-bright) !important;
+}
+
+.risk-pill {
+    background: var(--bg-glass) !important;
+}
+
+.pill-high {
+    background: rgba(231,76,60,0.2) !important;
+    color: var(--red) !important;
+}
+.pill-moderate {
+    background: rgba(243,156,18,0.2) !important;
+    color: var(--amber) !important;
+}
+.pill-low {
+    background: rgba(46,204,113,0.2) !important;
+    color: var(--text-bright) !important;
+}
+
+.badge-moderate {
+    background: rgba(243,156,18,0.2) !important;
+    color: var(--amber) !important;
+}
+.badge-high {
+    background: rgba(231,76,60,0.2) !important;
+    color: var(--red) !important;
+}
+.badge-low {
+    background: rgba(46,204,113,0.2) !important;
+    color: var(--text-bright) !important;
+}
+
+.sensor-badge {
+    background: var(--bg-glass) !important;
+}
+
+/* ============================================================ */
+/* ── NAVIGATION ── */
+/* ============================================================ */
+
+.nav-item.active, .account-nav-item.active, .settings-nav-item.active {
+    color: var(--text-bright) !important;
+    background: var(--bg-active) !important;
+}
+
+.nav-item.active::before {
+    background: var(--green-bright) !important;
+}
+
+.sidebar.open .nav-item.active {
+    border-color: rgba(46,204,113,0.22) !important;
+}
+
+/* ============================================================ */
+/* ── DATA CONTROL BAR ── */
+/* ============================================================ */
+
+.data-control-bar {
+    background: var(--bg-glass) !important;
+    border-color: var(--border-glass) !important;
+}
+
+.data-control-select {
+    background: var(--bg-input) !important;
+    border-color: var(--border-glass) !important;
+    color: var(--text-main) !important;
+}
+
+.data-control-status {
+    color: var(--text-muted) !important;
+}
+
+/* ============================================================ */
+/* ── HAM BUTTON ── */
+/* ============================================================ */
+
+.ham-btn {
+    background: var(--bg-sidebar) !important;
+    border-color: var(--border-glass) !important;
+    color: var(--text-main) !important;
+}
+
+.ham-btn:hover {
+    background: var(--bg-active) !important;
+    color: var(--text-bright) !important;
+}
+
+/* ============================================================ */
+/* ── FILTER BUTTONS ── */
+/* ============================================================ */
+
+.filter-btn {
+    border-color: var(--border-glass) !important;
+    color: var(--text-muted) !important;
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: var(--bg-active) !important;
+    color: var(--text-bright) !important;
+}
+
+.filter-btn.f-high.active, .filter-btn.f-high:hover {
+    background: rgba(231,76,60,0.15) !important;
+    color: var(--red) !important;
+    border-color: rgba(231,76,60,0.3) !important;
+}
+
+.filter-btn.f-moderate.active, .filter-btn.f-moderate:hover {
+    background: rgba(243,156,18,0.15) !important;
+    color: var(--amber) !important;
+    border-color: rgba(243,156,18,0.3) !important;
+}
+
+/* ============================================================ */
+/* ── MESSAGE BOXES ── */
+/* ============================================================ */
+
+.message-box.error {
+    background: rgba(231,76,60,0.12) !important;
+    border-color: rgba(231,76,60,0.4) !important;
+    color: #ff8a80 !important;
+}
+.message-box.success {
+    background: var(--bg-active) !important;
+    border-color: rgba(46,204,113,0.4) !important;
+    color: var(--text-bright) !important;
+}
+
+/* ============================================================ */
+/* ── PASSWORD STRENGTH ── */
+/* ============================================================ */
+
+.pw-strength-bar {
+    background: rgba(255,255,255,0.08) !important;
+}
+
+.pw-hint.ok {
+    color: var(--green-bright) !important;
+}
+
+/* ============================================================ */
+/* ── LOGOUT & DANGER BUTTONS ── */
+/* ============================================================ */
+
+.logout-btn {
+    border-color: rgba(231,76,60,0.25) !important;
+    background: rgba(231,76,60,0.08) !important;
+    color: #ff8a80 !important;
+}
+
+.logout-btn:hover {
+    background: rgba(231,76,60,0.75) !important;
+    color: white !important;
+}
+
+.btn-danger {
+    background: rgba(231,76,60,0.1) !important;
+    border-color: rgba(231,76,60,0.3) !important;
+    color: #ff8a80 !important;
+}
+
+.btn-danger:hover {
+    background: rgba(231,76,60,0.75) !important;
+    color: white !important;
+}
+
+.btn-delete-user {
+    background: rgba(231,76,60,0.1) !important;
+    border-color: rgba(231,76,60,0.3) !important;
+    color: #ff8a80 !important;
+}
+
+.btn-delete-user:hover {
+    background: rgba(231,76,60,0.75) !important;
+    color: white !important;
+}
+
+.btn-reset-user {
+    background: rgba(243,156,18,0.1) !important;
+    border-color: rgba(243,156,18,0.35) !important;
+    color: #f5b041 !important;
+}
+
+.btn-reset-user:hover {
+    background: rgba(243,156,18,0.75) !important;
+    color: white !important;
+}
+
+/* ============================================================ */
+/* ── TABLES ── */
+/* ============================================================ */
+
+.user-table td, .hotspot-table td, .sensor-table td {
+    border-bottom-color: var(--border-light) !important;
+}
+
+.user-table tr:hover td, .hotspot-table tr:hover td, .sensor-table tr:hover td {
+    background: var(--bg-hover) !important;
+}
+
+.user-table th, .hotspot-table th, .sensor-table th {
+    color: var(--text-muted) !important;
+    border-bottom-color: var(--border-glass) !important;
+}
+
+.table-empty-state {
+    color: var(--text-muted) !important;
+}
+
+/* ============================================================ */
+/* ── ALERT ITEMS ── */
+/* ============================================================ */
+
+.alert-item, .risk-class-item, .device-item, .setting-row, .danger-row {
+    border-bottom-color: var(--border-light) !important;
+}
+
+.alert-item:hover, .risk-class-item:hover, .device-item:hover, .setting-row:hover {
+    background: var(--bg-hover) !important;
+}
+
+/* ============================================================ */
+/* ── AVATAR ── */
+/* ============================================================ */
+
+.avatar-circle {
+    background: linear-gradient(135deg, var(--green-mid), var(--green-bright)) !important;
+}
+
+.avatar-edit-btn {
+    background: var(--green-bright) !important;
+    color: var(--text-inverse) !important;
+}
+
+/* ============================================================ */
+/* ── REALTIME BADGE ── */
+/* ============================================================ */
+
+.realtime-badge {
+    border-color: rgba(46,204,113,0.35) !important;
+    background: var(--bg-active) !important;
+    color: var(--text-bright) !important;
+}
+
+.pulse-dot {
+    background: var(--green-bright) !important;
+}
+
+.realtime-clock {
+    color: var(--text-bright) !important;
+}
+
+.realtime-divider {
+    background: rgba(46,204,113,0.3) !important;
+}
+
+/* ============================================================ */
+/* ── SECURITY QUESTION ── */
+/* ============================================================ */
+
+.security-question-box {
+    background: var(--bg-input) !important;
+    border-color: var(--border-glass) !important;
+    color: var(--text-main) !important;
+}
+
+.security-hint.ok {
+    color: var(--green-bright) !important;
+}
+
+/* ============================================================ */
+/* ── TOGGLE PASSWORD ── */
+/* ============================================================ */
+
+.toggle-password {
+    color: var(--text-muted) !important;
+}
+
+.toggle-password:hover {
+    color: var(--text-bright) !important;
+}
+
+/* ============================================================ */
+/* ── PHONE PREFIX ── */
+/* ============================================================ */
+
+.phone-prefix {
+    color: var(--text-main) !important;
+    border-right-color: var(--border-glass) !important;
+}
+
+/* ============================================================ */
+/* ── RISK LEGEND ── */
+/* ============================================================ */
+
+.risk-legend {
+    border-top-color: var(--border-glass) !important;
+}
+
+/* ============================================================ */
+/* ── SAVE BAR ── */
+/* ============================================================ */
+
+.save-bar {
+    border-top-color: var(--border-glass) !important;
+}
+
+/* ============================================================ */
+/* ── PROFILE TOP ── */
+/* ============================================================ */
+
+.profile-top {
+    border-bottom-color: var(--border-glass) !important;
+}
+
+/* ============================================================ */
+/* ── LAYER BUTTONS ── */
+/* ============================================================ */
+
+.layer-btn {
+    border-color: var(--border-glass) !important;
+    color: var(--text-muted) !important;
+}
+
+.layer-btn.active, .layer-btn:hover {
+    background: var(--bg-active) !important;
+    color: var(--text-bright) !important;
+    border-color: rgba(46,204,113,0.3) !important;
+}
+
+/* ============================================================ */
+/* ── CHART TABS ── */
+/* ============================================================ */
+
+.chart-tab {
+    border-color: var(--border-glass) !important;
+    color: var(--text-muted) !important;
+}
+
+.chart-tab.active, .chart-tab:hover {
+    background: var(--bg-active) !important;
+    color: var(--text-bright) !important;
+    border-color: rgba(46,204,113,0.3) !important;
+}
+
+/* ============================================================ */
+/* ── RANGE SLIDER ── */
+/* ============================================================ */
+
+.setting-range {
+    background: var(--bg-input) !important;
+}
+
+.setting-range::-webkit-slider-thumb {
+    background: var(--green-bright) !important;
+}
+
+.range-val {
+    color: var(--text-bright) !important;
+}
+
+/* ============================================================ */
+/* ── DEVICE STATUS ── */
+/* ============================================================ */
+
+.device-dot.online {
+    background: var(--green-bright) !important;
+    box-shadow: 0 0 6px rgba(46,204,113,0.7) !important;
+}
+
+.device-dot.offline {
+    background: var(--red) !important;
+    box-shadow: 0 0 6px rgba(231,76,60,0.7) !important;
+}
+
+.device-dot.warn {
+    background: var(--amber) !important;
+    box-shadow: 0 0 6px rgba(243,156,18,0.7) !important;
+}
+
+.device-status.online {
+    background: rgba(46,204,113,0.15) !important;
+    color: var(--text-bright) !important;
+}
+.device-status.offline {
+    background: rgba(231,76,60,0.15) !important;
+    color: var(--red) !important;
+}
+.device-status.warn {
+    background: rgba(243,156,18,0.15) !important;
+    color: var(--amber) !important;
+}
+
+/* ── RISK COUNTER CARDS ── */
+
+.risk-counter-card::before {
+    background: var(--card-accent, var(--green-bright)) !important;
+}
+
+.risk-counter-value {
+    color: var(--card-accent, var(--green-bright)) !important;
+}
+
+/* ── STAT CARDS ── */
+
+.stat-card::before {
+    background: var(--card-accent, var(--green-bright)) !important;
+}
+
+.stat-icon {
+    color: var(--card-accent, var(--green-bright)) !important;
+    opacity: 0.12 !important;
+}
+
+/* ── SENSOR CARDS ── */
+
+.sensor-card::before {
+    background: var(--card-accent, var(--green-bright)) !important;
+}
+
+.sensor-icon-wrap {
+    background: var(--bg-active) !important;
+    color: var(--card-accent, var(--green-bright)) !important;
+}
+
+/* ── SIDEBAR LOGO ── */
+
+.sidebar-logo img {
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6)) drop-shadow(0 0 14px rgba(46,204,113,0.25)) !important;
+}
+
+body.light-theme .sidebar-logo img {
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08)) drop-shadow(0 0 14px rgba(13,107,58,0.15)) !important;
+}
+
+/* ── GAUGE ── */
+
+.risk-main .gauge-wrap svg path:first-child {
+    stroke: var(--border-glass) !important;
+}
+
+.gauge-label {
+    color: var(--amber) !important;
+}
+
+body.light-theme .gauge-label {
+    color: #8a6d0b !important;
+}
+
+/* ── MAP PLACEHOLDER SVG ── */
+
+.map-placeholder svg rect {
+    fill: var(--bg-card) !important;
+    stroke: var(--border-glass) !important;
+}
+
+.map-placeholder svg text {
+    fill: var(--text-muted) !important;
+}
+
+/* ── TREND ARROWS ── */
+
+.trend-up {
+    color: var(--red) !important;
+}
+.trend-down {
+    color: var(--green-bright) !important;
+}
+.trend-flat {
+    color: var(--text-muted) !important;
+}
+
+/* ── ALERT ICON WRAPS ── */
+
+.alert-icon-wrap.high {
+    background: rgba(231,76,60,0.15) !important;
+    color: var(--red) !important;
+}
+.alert-icon-wrap.moderate {
+    background: rgba(243,156,18,0.15) !important;
+    color: var(--amber) !important;
+}
+.alert-icon-wrap.low {
+    background: rgba(46,204,113,0.15) !important;
+    color: var(--text-bright) !important;
+}
+.alert-icon-wrap.info {
+    background: rgba(52,152,219,0.15) !important;
+    color: var(--blue) !important;
+}
+.alert-icon-wrap.rain {
+    background: rgba(52,152,219,0.15) !important;
+    color: var(--blue) !important;
+}
+.alert-icon-wrap.temp {
+    background: rgba(243,156,18,0.12) !important;
+    color: var(--amber) !important;
+}
+
+/* ── LIGHT THEME: RESTORE COLORFUL ACCENTS ──                   */
+
+
+/* Per-card colored stat/sensor values & icons (temp, rainfall, pH, wind, etc.) */
+body.light-theme .stat-value,
+body.light-theme .sensor-value,
+body.light-theme .stat-icon,
+body.light-theme .sensor-icon-wrap {
+    color: var(--card-accent, var(--green-bright)) !important;
+}
+
+body.light-theme .risk-counter-value {
+    color: var(--card-accent, var(--green-bright)) !important;
+}
+
+/* Risk gauge percentage */
+body.light-theme .gauge-label {
+    color: var(--amber) !important;
+}
+
+/* Badges & pills */
+body.light-theme .badge-moderate,
+body.light-theme .pill-moderate {
+    color: var(--amber) !important;
+}
+body.light-theme .badge-high,
+body.light-theme .pill-high,
+body.light-theme .badge-action {
+    color: var(--red) !important;
+}
+body.light-theme .badge-low,
+body.light-theme .pill-low {
+    color: var(--green-bright) !important;
+}
+body.light-theme .badge-monitor {
+    color: var(--blue) !important;
+}
+body.light-theme .admin-badge,
+body.light-theme .sensor-badge {
+    color: var(--green-bright) !important;
+}
+
+/* Device / status dots and labels */
+body.light-theme .device-status.online,
+body.light-theme .device-dot.online,
+body.light-theme .status-dot.online {
+    color: var(--green-bright) !important;
+}
+body.light-theme .device-status.offline,
+body.light-theme .device-dot.offline {
+    color: var(--red) !important;
+}
+body.light-theme .device-status.warn,
+body.light-theme .device-dot.warn {
+    color: var(--amber) !important;
+}
+
+/* Trend arrows */
+body.light-theme .trend-up {
+    color: var(--red) !important;
+}
+body.light-theme .trend-down {
+    color: var(--green-bright) !important;
+}
+body.light-theme .trend-flat {
+    color: var(--text-muted) !important;
+}
+
+/* Alert icon wraps */
+body.light-theme .alert-icon-wrap.high {
+    color: var(--red) !important;
+}
+body.light-theme .alert-icon-wrap.moderate,
+body.light-theme .alert-icon-wrap.temp {
+    color: var(--amber) !important;
+}
+body.light-theme .alert-icon-wrap.low {
+    color: var(--green-bright) !important;
+}
+body.light-theme .alert-icon-wrap.info,
+body.light-theme .alert-icon-wrap.rain {
+    color: var(--blue) !important;
+}
+
+/* Logo accent + sidebar brand */
+body.light-theme .accent,
+body.light-theme .sidebar-logo-text {
+    color: var(--green-bright) !important;
+}
+
+/* ============================================================ */
+/* ── VERIFY BUTTON ── */
+/* ============================================================ */
+
+.btn-verify-code.verified {
+    background: var(--green-bright) !important;
+    color: var(--text-inverse) !important;
+}
+
+/* ============================================================ */
+/* ── RESPONSIVE ── */
+/* ============================================================ */
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1rem !important;
+    }
+    .top-bar {
+        padding-left: 52px !important;
+    }
+}
+
+@media (max-width: 650px) {
+    .realtime-clock {
+        display: none !important;
+    }
+    .realtime-divider {
+        display: none !important;
+    }
+}
+
+/* ── SCROLL ANIMATIONS ── */
+
+/* Base state - hidden and slightly below */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Visible state - fully shown and in position */
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delays for multiple elements in a row */
+.animate-on-scroll.delay-1 { transition-delay: 0.1s; }
+.animate-on-scroll.delay-2 { transition-delay: 0.2s; }
+.animate-on-scroll.delay-3 { transition-delay: 0.3s; }
+.animate-on-scroll.delay-4 { transition-delay: 0.4s; }
+.animate-on-scroll.delay-5 { transition-delay: 0.5s; }
+
+/* Different animation directions */
+.animate-on-scroll.slide-left {
+    transform: translateX(-40px);
+}
+.animate-on-scroll.slide-left.visible {
+    transform: translateX(0);
+}
+
+.animate-on-scroll.slide-right {
+    transform: translateX(40px);
+}
+.animate-on-scroll.slide-right.visible {
+    transform: translateX(0);
+}
+
+.animate-on-scroll.scale-up {
+    transform: scale(0.9) translateY(30px);
+}
+.animate-on-scroll.scale-up.visible {
+    transform: scale(1) translateY(0);
+}
+
+/* Slight rotation for cards */
+.animate-on-scroll.rotate-in {
+    transform: rotate(-2deg) translateY(30px);
+}
+.animate-on-scroll.rotate-in.visible {
+    transform: rotate(0) translateY(0);
+}
+
+/* Page transition - smooth fade on page load */
+.page-transition {
+    animation: pageFadeIn 0.6s ease forwards;
+}
+
+@keyframes pageFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger children in a container */
+.stagger-children > * {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: staggerIn 0.6s ease forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.10s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.20s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.30s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.40s; }
+
+@keyframes staggerIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================
+   FINAL LIGHT-MODE ICON COLOR FIX
+   ============================================================
+   The light-theme rule above intentionally forces text to dark:
+       body.light-theme, body.light-theme * { color: var(--text-main) !important; }
+   That rule also affects Font Awesome icons. The selectors below
+   explicitly restore the colors used by the HTML pages.
+*/
+
+/* ── RISK MAP: RISK COUNTER DOTS ── */
+body.light-theme .risk-counter-card:nth-child(1) .risk-counter-label .fa-circle {
+    color: var(--red) !important;
+}
+
+body.light-theme .risk-counter-card:nth-child(2) .risk-counter-label .fa-circle {
+    color: var(--amber) !important;
+}
+
+body.light-theme .risk-counter-card:nth-child(3) .risk-counter-label .fa-circle {
+    color: var(--green-bright) !important;
+}
+
+/* Map-marker icons under the counters */
+body.light-theme .risk-counter-sub .fa-map-marker-alt {
+    color: var(--card-accent, var(--green-bright)) !important;
+}
+
+/* ── RISK MAP: LSTM / AI ── */
+body.light-theme .lstm-header .fa-brain,
+body.light-theme .lstm-big-card .fa-brain {
+    color: var(--red) !important;
+}
+
+/* Forecast information icon */
+body.light-theme .lstm-card .fa-info-circle {
+    color: var(--blue) !important;
+}
+
+/* ── RISK MAP: GIS MAP HEADER ── */
+body.light-theme .map-card .card-header-left .fa-map-marked-alt {
+    color: var(--green-bright) !important;
+}
+
+/* ── RISK MAP: RISK CLASSIFICATION ── */
+body.light-theme .risk-class-card .card-header-left .fa-shield-alt {
+    color: var(--green-bright) !important;
+}
+
+/* High / Moderate / Low classification warning icons.
+   The HTML gives each wrapper its own intended color. */
+body.light-theme .risk-class-item:nth-child(1) .risk-class-icon,
+body.light-theme .risk-class-item:nth-child(1) .risk-class-icon i {
+    color: var(--red) !important;
+}
+
+body.light-theme .risk-class-item:nth-child(2) .risk-class-icon,
+body.light-theme .risk-class-item:nth-child(2) .risk-class-icon i {
+    color: var(--amber) !important;
+}
+
+body.light-theme .risk-class-item:nth-child(3) .risk-class-icon,
+body.light-theme .risk-class-item:nth-child(3) .risk-class-icon i {
+    color: var(--green-bright) !important;
+}
+
+/* ── RISK MAP: LAYER BUTTONS ── */
+body.light-theme .layer-btn.active,
+body.light-theme .layer-btn.active i,
+body.light-theme .layer-btn:hover,
+body.light-theme .layer-btn:hover i {
+    color: var(--green-bright) !important;
+}
+
+/* ── RISK MAP: LEAFLET CONTROLS ── */
+body.light-theme .leaflet-control-zoom a,
+body.light-theme .leaflet-control-zoom a span {
+    color: var(--green-bright) !important;
+}
+
+/* ── DASHBOARD / SHARED STATUS DOTS ── */
+body.light-theme .pulse-dot {
+    background: var(--green-bright) !important;
+    box-shadow: 0 0 8px rgba(14,138,70,0.4) !important;
+}
+
+body.light-theme .data-control-status .fa-circle {
+    color: var(--green-bright) !important;
+}
+
+body.light-theme .device-dot.online,
+body.light-theme .status-dot.online {
+    background: var(--green-bright) !important;
+    color: var(--green-bright) !important;
+    box-shadow: 0 0 6px rgba(14,138,70,0.4) !important;
+}
+
+body.light-theme .device-dot.offline,
+body.light-theme .status-dot.offline {
+    background: var(--red) !important;
+    color: var(--red) !important;
+}
+
+body.light-theme .device-dot.warn,
+body.light-theme .status-dot.warn,
+body.light-theme .status-dot.warning {
+    background: var(--amber) !important;
+    color: var(--amber) !important;
+}
+
+/* ── SHARED COLORED ICONS USED BY THE DASHBOARD ── */
+body.light-theme .fa-shield-alt,
+body.light-theme .fa-shield,
+body.light-theme .fa-leaf {
+    color: var(--green-bright) !important;
+}
+
+body.light-theme .fa-exclamation-triangle,
+body.light-theme .fa-triangle-exclamation,
+body.light-theme .fa-temperature-half,
+body.light-theme .fa-thermometer-half {
+    color: var(--amber) !important;
+}
+
+body.light-theme .fa-droplet,
+body.light-theme .fa-tint,
+body.light-theme .fa-water {
+    color: var(--blue) !important;
+}
+
+body.light-theme .fa-cloud-rain,
+body.light-theme .fa-cloud-showers-heavy {
+    color: var(--teal) !important;
+}
+
+body.light-theme .fa-flask {
+    color: var(--purple) !important;
+}
+
+body.light-theme .fa-wind {
+    color: var(--blue) !important;
+}
+
+body.light-theme .fa-info-circle,
+body.light-theme .fa-circle-info {
+    color: var(--blue) !important;
+}
+
+/* ── NAVBAR: KEEP TEXT DARK, ICONS COLORED ── */
+body.light-theme .nav-links a,
+body.light-theme .nav-links a span,
+body.light-theme .mobile-nav-dropdown a {
+    color: var(--text-main) !important;
+}
+
+body.light-theme .nav-links a i,
+body.light-theme .mobile-nav-dropdown a i {
+    color: var(--green-bright) !important;
+}
+
+body.light-theme .nav-links a.active,
+body.light-theme .nav-links a.active span,
+body.light-theme .nav-links a.active i,
+body.light-theme .mobile-nav-dropdown a.active,
+body.light-theme .mobile-nav-dropdown a.active i {
+    color: var(--green-bright) !important;
+}
+
+body.light-theme .theme-toggle-btn,
+body.light-theme .theme-toggle-btn i,
+body.light-theme .account-btn-top i,
+body.light-theme .logout-btn-top i,
+body.light-theme .menu-toggle,
+body.light-theme .menu-toggle i {
+    color: var(--green-bright) !important;
+}
+
+/* Account/user text remains dark in light mode */
+body.light-theme .account-btn-top .user-name {
+    color: var(--text-main) !important;
+}
+
+/* ── GENERAL ICONS WITH EXPLICIT SEMANTIC CLASSES ── */
+body.light-theme .icon-green,
+body.light-theme .icon-online {
+    color: var(--green-bright) !important;
+}
+
+body.light-theme .icon-red,
+body.light-theme .icon-danger {
+    color: var(--red) !important;
+}
+
+body.light-theme .icon-warning,
+body.light-theme .icon-amber {
+    color: var(--amber) !important;
+}
+
+body.light-theme .icon-blue,
+body.light-theme .icon-info {
+    color: var(--blue) !important;
+}
+
+body.light-theme .icon-purple {
+    color: var(--purple) !important;
+}
+
+body.light-theme .icon-teal {
+    color: var(--teal) !important;
+}

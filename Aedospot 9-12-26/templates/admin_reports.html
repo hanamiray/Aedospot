@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Reports & Data | AEDOSPOT</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        /* ── reuse same variables & base as admin_home ── */
+        :root {
+            --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            --green-deep: #071a0f;
+            --green-dark: #0d2b18;
+            --green-mid: #145c30;
+            --green-bright: #2ecc71;
+            --green-bright-alt: #1a8a4a;
+            --green-glow: rgba(46,204,113,0.18);
+            --amber: #f39c12;
+            --red: #e74c3c;
+            --blue: #3498db;
+            --purple: #9b59b6;
+            --text-main: #e8f5ee;
+            --text-muted-alt: rgba(232,245,238,0.55);
+            --glass: rgba(255,255,255,0.055);
+            --glass-border: rgba(255,255,255,0.10);
+            --nav-bg: rgba(7,26,15,0.75);
+            --nav-bg-mobile: rgba(7,26,15,0.95);
+            --bg-1: #1a5c35;
+            --bg-2: #0a2e1c;
+            --bg-3: #071a0f;
+            --on-accent: #04150a;
+        }
+
+        body.light-theme {
+            --green-deep: #ffffff;
+            --green-dark: #f3faf6;
+            --green-mid: #e6f5ec;
+            --green-bright: #0d6b3a;
+            --green-bright-alt: #0a4f2a;
+            --green-glow: rgba(13,107,58,0.10);
+            --text-main: #10261a;
+            --text-muted-alt: rgba(16,38,26,0.6);
+            --glass: rgba(13,107,58,0.045);
+            --glass-border: rgba(13,107,58,0.14);
+            --nav-bg: rgba(255,255,255,0.82);
+            --nav-bg-mobile: rgba(255,255,255,0.97);
+            --bg-1: #ffffff;
+            --bg-2: #f2faf5;
+            --bg-3: #e8f5ee;
+            --on-accent: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(ellipse at 20% 0%, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* ── TOP NAV (exact copy from admin_home) ── */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .top-nav .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .top-nav .nav-logo-mark {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            object-fit: contain;
+            display: block;
+        }
+        .top-nav .nav-logo-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+        .top-nav .nav-logo-text .accent { color: var(--green-bright); }
+
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            list-style: none;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.28rem;
+            border-radius: 50px;
+        }
+        .top-nav .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: var(--text-muted-alt);
+            font-size: 0.83rem;
+            font-weight: 600;
+            padding: 0.55rem 1.05rem;
+            border-radius: 50px;
+            transition: all var(--transition);
+        }
+        .top-nav .nav-links a i { font-size: 0.82rem; }
+        .top-nav .nav-links a:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.07);
+        }
+        body.light-theme .top-nav .nav-links a:hover {
+            background: rgba(13,107,58,0.08);
+        }
+        .top-nav .nav-links a.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            box-shadow: 0 4px 14px rgba(46,204,113,0.35);
+        }
+        body.light-theme .top-nav .nav-links a.active {
+            color: var(--green-bright-alt);
+            background: linear-gradient(135deg, #ffffff, #e7f7ee);
+            border: 1px solid rgba(13,107,58,0.22);
+            box-shadow: 0 4px 14px rgba(13,107,58,0.14);
+        }
+
+        .top-nav .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .theme-toggle-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--green-bright);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        .theme-toggle-btn:hover {
+            background: var(--green-glow);
+            transform: rotate(20deg);
+        }
+        .top-nav .nav-actions .account-btn-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1rem 0.4rem 0.6rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .top-nav .nav-actions .account-btn-top:hover {
+            background: var(--green-glow);
+            border-color: rgba(46,204,113,0.3);
+        }
+        .top-nav .nav-actions .account-btn-top i {
+            font-size: 1.2rem;
+            color: var(--green-bright);
+        }
+        .top-nav .nav-actions .account-btn-top .user-name-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.25;
+        }
+        .top-nav .nav-actions .account-btn-top .user-greeting {
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--text-muted-alt);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .top-nav .nav-actions .account-btn-top .user-name {
+            max-width: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .top-nav .nav-actions .logout-btn-top {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.08);
+            color: var(--red);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .top-nav .nav-actions .logout-btn-top:hover {
+            background: rgba(231,76,60,0.75);
+            color: white;
+        }
+        .top-nav .nav-actions .account-btn-top .user-avatar-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+        .mobile-nav-dropdown {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg-mobile);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 1.5rem;
+            z-index: 99;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .mobile-nav-dropdown.open { display: flex; }
+        .mobile-nav-dropdown a {
+            color: var(--text-muted-alt);
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all var(--transition);
+        }
+        .mobile-nav-dropdown a:hover {
+            color: var(--text-main);
+            background: var(--glass);
+        }
+        .hidden { display: none !important; }
+
+        .mobile-nav-dropdown a.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+        }
+
+        /* ── MAIN ── */
+        .main-content {
+            margin-top: 70px;
+            padding: 1.4rem 1.6rem 1.6rem;
+            min-height: calc(100vh - 70px);
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+        }
+        .dash-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-shadow: 0 0 30px rgba(46,204,113,0.25);
+        }
+        .realtime-badge {
+            display: flex; align-items: center; gap: 10px;
+            padding: 0.45rem 1.1rem; border-radius: 20px;
+            border: 1px solid rgba(46,204,113,0.35);
+            background: rgba(46,204,113,0.08);
+            font-size: 0.78rem; font-weight: 600;
+            letter-spacing: 0.5px; color: var(--green-bright);
+        }
+        .pulse-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 0 0 rgba(46,204,113,0.6);
+            animation: pulse-ring 1.6s ease-in-out infinite; flex-shrink: 0;
+        }
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(46,204,113,0.65); }
+            60%  { box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+            100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+        }
+        .realtime-divider { width: 1px; height: 14px; background: rgba(46,204,113,0.3); }
+        .realtime-clock-wrap { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+        .realtime-clock {
+            font-family: 'Inter', sans-serif; font-size: 1rem;
+            font-weight: 700; letter-spacing: 1px; color: var(--green-bright); white-space: nowrap;
+        }
+        .realtime-date {
+            font-family: 'Inter', sans-serif; font-size: 0.65rem;
+            font-weight: 500; color: rgba(46,204,113,0.7); white-space: nowrap;
+        }
+
+        /* ── LAYOUT: stacked ── */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ── cards ── */
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+        }
+        .card-header {
+            padding: 0.8rem 1.2rem 0.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .card-header i {
+            color: var(--green-bright);
+            font-size: 0.85rem;
+        }
+        .card-body {
+            padding: 1rem 1.2rem;
+        }
+
+        .risk-tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .risk-tag.low { background: rgba(46,204,113,0.2); color: var(--green-bright); }
+        .risk-tag.moderate { background: rgba(243,156,18,0.2); color: var(--amber); }
+        .risk-tag.high { background: rgba(231,76,60,0.2); color: var(--red); }
+
+        /* ── card subtitle ── */
+        .card-subtitle {
+            font-size: 0.72rem;
+            color: var(--text-muted-alt);
+            padding: 0.5rem 1.2rem 0;
+            margin-top: -0.4rem;
+        }
+
+        /* ── ACCORDION LIST (LSTM Data / Environmental Data) ── */
+        .accordion-list { display: flex; flex-direction: column; gap: 0.5rem; }
+        .acc-item {
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.02);
+            transition: border-color 0.2s;
+        }
+        .acc-item.open { border-color: rgba(46,204,113,0.3); }
+        .acc-row {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 0.8rem; padding: 0.75rem 1rem; cursor: pointer;
+            user-select: none;
+        }
+        .acc-row:hover { background: var(--green-glow); }
+        .acc-row-left { display: flex; align-items: center; gap: 0.65rem; min-width: 0; }
+        .acc-caret {
+            font-size: 0.7rem; color: var(--text-muted-alt);
+            transition: transform 0.25s; flex-shrink: 0;
+        }
+        .acc-item.open > .acc-row .acc-caret { transform: rotate(90deg); color: var(--green-bright); }
+        .acc-label { font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
+        .acc-row-right { flex-shrink: 0; }
+        .acc-nodata {
+            font-size: 0.7rem; font-weight: 500; color: var(--text-muted-alt);
+            font-style: italic;
+        }
+        .acc-panel {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.22,1,0.36,1);
+            border-top: 1px solid transparent;
+        }
+        .acc-item.open > .acc-panel { border-top-color: var(--glass-border); }
+        .acc-panel-inner { padding: 0.6rem 1rem 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; }
+
+        /* weekly sub-items inside an LSTM period */
+        .acc-subitem {
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.015);
+        }
+        .acc-subrow {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.55rem 0.8rem; cursor: pointer; user-select: none;
+            font-size: 0.76rem; font-weight: 500;
+        }
+        .acc-subrow:hover { background: var(--green-glow); }
+        .acc-caret-sm { font-size: 0.62rem; color: var(--text-muted-alt); transition: transform 0.25s; }
+        .acc-subitem.open .acc-caret-sm { transform: rotate(90deg); color: var(--green-bright); }
+        .acc-subpanel {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.22,1,0.36,1);
+        }
+        .acc-subitem.open .acc-subpanel { }
+        .lstm-pred-block { padding: 0.7rem 0.9rem 0.9rem; font-size: 0.8rem; }
+        .lstm-pred-title { font-weight: 700; letter-spacing: 0.3px; font-size: 0.72rem; }
+        .lstm-pred-title i { color: var(--red); margin-right: 4px; }
+        .lstm-pred-confidence { margin-top: 0.4rem; color: var(--text-muted-alt); font-size: 0.75rem; }
+        .lstm-pred-note { margin-top: 0.35rem; color: var(--text-muted-alt); font-size: 0.75rem; }
+        .acc-loading, .acc-empty {
+            padding: 0.7rem 0.9rem; font-size: 0.76rem; color: var(--text-muted-alt); font-style: italic;
+        }
+
+        /* ── MODAL (device picker) ── */
+        .modal-backdrop {
+            position: fixed; inset: 0; background: rgba(4,10,7,0.6);
+            backdrop-filter: blur(6px); display: none; align-items: center;
+            justify-content: center; z-index: 500; padding: 1rem;
+        }
+        .modal-backdrop.show { display: flex; }
+        .modal-box {
+            width: 100%; max-width: 440px;
+            background: var(--green-dark); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 1.3rem 1.4rem; box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        }
+        .modal-title { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .modal-title i { color: var(--green-bright); }
+        .modal-sub { font-size: 0.75rem; color: var(--text-muted-alt); margin-top: 0.3rem; margin-bottom: 0.9rem; }
+        .device-option-list { display: flex; flex-direction: column; gap: 0.4rem; max-height: 260px; overflow-y: auto; }
+        .device-option {
+            display: flex; align-items: center; gap: 0.6rem;
+            border: 1px solid var(--glass-border); border-radius: 8px;
+            padding: 0.55rem 0.7rem; cursor: pointer; transition: all 0.2s;
+        }
+        .device-option:hover { background: var(--green-glow); }
+        .device-option.selected { border-color: rgba(46,204,113,0.5); background: var(--green-glow); }
+        .device-option input { accent-color: var(--green-bright); }
+        .device-option-name { font-size: 0.8rem; font-weight: 600; }
+        .device-option-coords { font-size: 0.65rem; color: var(--text-muted-alt); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.1rem; }
+
+        /* ─── FIXED PDF RENDERER ─── */
+        /* The wrapper is positioned off-screen so it’s invisible to the live page.
+           The target itself stays static — html2pdf clones it into its own internal
+           wrapper, and static positioning guarantees the clone flows normally,
+           giving the wrapper a non-zero height. */
+        .pdf-render-wrapper {
+            position: fixed;
+            left: -9999px;
+            top: 0;
+        }
+        .pdf-render-target {
+            width: 780px;
+            max-width: 100%;
+            background: #ffffff;
+            color: #10261a;
+            padding: 1rem 2rem 1.8rem;
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+        /* inside the PDF target, all content must stay within the 780px width */
+        .pdf-render-target * {
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+        /* tables inside PDF need to be narrow enough to never overflow */
+        .pdf-render-target table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+        }
+        .pdf-render-target table th,
+        .pdf-render-target table td {
+            padding: 4px 6px;
+            border: 1px solid #ddd;
+            text-align: left;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .pdf-render-target table tr {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        /* svg charts inside PDF must scale down to fit the container */
+        .pdf-render-target svg {
+            max-width: 100% !important;
+            height: auto !important;
+            display: block;
+        }
+        .pdf-render-target .batch-trend-svg {
+            max-width: 100%;
+            overflow: visible;
+        }
+        /* page-break control: keep each card/section intact — if it can't
+           fit in the remaining space on a page, push the whole block to
+           the next page instead of slicing it mid-content. */
+        .pdf-render-target .pdf-avoid-break {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        /* keep a heading glued to the block that follows it, so a section
+           label never gets stranded alone at the bottom of a page */
+        .pdf-render-target .pdf-no-orphan {
+            break-after: avoid;
+            page-break-after: avoid;
+        }
+
+        /* REPORT PREVIEW MODAL */
+        .pdf-modal-box {
+            width: 100%; max-width: 920px; max-height: 90vh;
+            background: var(--green-dark); border: 1px solid var(--glass-border);
+            border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .pdf-modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 1.3rem; border-bottom: 1px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+        .pdf-modal-title { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .pdf-modal-title i { color: var(--red); }
+        .pdf-modal-close {
+            width: 32px; height: 32px; border-radius: 50%;
+            border: 1px solid var(--glass-border); background: var(--glass);
+            color: var(--text-main); font-size: 0.85rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; flex-shrink: 0;
+        }
+        .pdf-modal-close:hover { background: rgba(231,76,60,0.15); color: var(--red); border-color: rgba(231,76,60,0.3); }
+        .pdf-modal-body {
+            flex: 1; min-height: 420px; background: #52585c;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .pdf-modal-frame {
+            width: 100%; height: 68vh; border: none; display: block;
+        }
+        .pdf-modal-frame.hidden { display: none; }
+        .pdf-modal-loading {
+            color: #eef2f0; font-size: 0.85rem; display: flex;
+            align-items: center; gap: 8px;
+        }
+        .pdf-modal-loading.hidden { display: none; }
+        .pdf-modal-footer {
+            display: flex; justify-content: flex-end; gap: 0.6rem;
+            padding: 0.9rem 1.3rem; border-top: 1px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .setting-desc {
+            font-size: 0.65rem;
+            color: var(--text-muted-alt);
+        }
+        .toggle-wrap { flex-shrink: 0; }
+        .toggle {
+            position: relative; width: 40px; height: 22px;
+            cursor: pointer; display: inline-block;
+        }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; inset: 0;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.25s;
+        }
+        .toggle-slider::before {
+            content: ''; position: absolute;
+            height: 14px; width: 14px; border-radius: 50%;
+            left: 3px; bottom: 3px;
+            background: rgba(232,245,238,0.45);
+            transition: all 0.25s;
+        }
+        .toggle input:checked + .toggle-slider {
+            background: var(--green-mid);
+            border-color: rgba(46,204,113,0.4);
+        }
+        .toggle input:checked + .toggle-slider::before {
+            transform: translateX(18px);
+            background: var(--green-bright);
+            box-shadow: 0 0 8px rgba(46,204,113,0.6);
+        }
+
+        .btn-sm {
+            padding: 0.3rem 0.9rem;
+            border-radius: 6px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-main);
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-sm:hover {
+            background: var(--green-glow);
+            border-color: rgba(46,204,113,0.3);
+        }
+        .btn-sm.primary {
+            background: var(--green-mid);
+            border-color: rgba(46,204,113,0.3);
+            color: var(--green-bright);
+        }
+        .btn-sm.primary:hover {
+            background: rgba(46,204,113,0.25);
+            box-shadow: 0 0 12px rgba(46,204,113,0.15);
+        }
+        .btn-sm.danger {
+            border-color: rgba(231,76,60,0.3);
+            color: var(--red);
+        }
+        .btn-sm.danger:hover {
+            background: rgba(231,76,60,0.15);
+        }
+
+        .flex-between { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+        .gap-1 { gap: 0.5rem; }
+        .mt-1 { margin-top: 0.5rem; }
+
+        /* ── RESPONSIVE: general safety net (all sizes) ── */
+        html, body { max-width: 100%; overflow-x: hidden; }
+        img, svg, canvas, video { max-width: 100%; height: auto; }
+        .card, .modal-box, .pdf-modal-box { max-width: 100%; }
+
+        /* ── DESKTOP / SMALL-DESKTOP (≤1200px): reports grid goes single-column ── */
+        @media (max-width: 1200px) {
+            .reports-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Tablet / small laptop: keep full nav links but tighten spacing
+           so they don't overflow before the hamburger breakpoint kicks in.
+           (same pattern as admin_home) */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .top-nav { padding: 0.6rem 1.2rem; }
+            .top-nav .nav-links { gap: 0.45rem; padding: 0.22rem; }
+            .top-nav .nav-links a { padding: 0.5rem 0.75rem; font-size: 0.76rem; }
+            .top-nav .nav-links a span { display: none; }
+            .top-nav .nav-links a i { font-size: 0.95rem; }
+        }
+
+        /* ── TABLET (≤900px) ── */
+        @media (max-width: 900px) {
+            .main-content { padding: 1.1rem 1.2rem; }
+            .top-bar { flex-wrap: wrap; gap: 0.6rem; }
+            .card-body { padding: 0.9rem 1rem; }
+            .modal-box, .pdf-modal-box { max-width: 92vw; }
+        }
+
+        /* ── PHONE (≤768px): collapse full nav into hamburger menu
+           (same breakpoint + icon-only account button as admin_home) ── */
+        @media (max-width: 768px) {
+            /* theme.css forces padding-left:52px !important on .top-bar
+               (leftover spacing meant for another page's back button).
+               That asymmetric padding throws off the centering here, so
+               neutralize it — same specificity, loads after theme.css. */
+            .top-bar { padding-left: 0 !important; }
+            .top-nav { padding: 0.55rem 1rem; }
+            .top-nav .nav-links { display: none; }
+            .menu-toggle { display: block; }
+
+            /* Icon-only account button on mobile: keep it a single tap
+               target that still links to /account, just drop the text. */
+            .top-nav .nav-actions .account-btn-top {
+                gap: 0;
+                padding: 0;
+                width: 38px;
+                height: 38px;
+                justify-content: center;
+                border-radius: 50%;
+            }
+            .top-nav .nav-actions .account-btn-top .user-name-stack {
+                display: none;
+            }
+            .top-nav .nav-actions .account-btn-top i,
+            .top-nav .nav-actions .account-btn-top .user-avatar-img {
+                margin: 0;
+            }
+            .top-nav .nav-actions .account-btn-top .user-avatar-img {
+                width: 26px;
+                height: 26px;
+            }
+
+            .main-content { padding: 1rem; }
+            /* stack title above the real-time badge (same pattern as admin_home)
+               so the full title stays visible instead of being clipped with an ellipsis */
+            .top-bar { flex-direction: column; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+            .dash-title { font-size: 1.3rem; white-space: normal; overflow: visible; text-overflow: clip; text-align: center; width: 100%; }
+            .realtime-badge { flex-shrink: 0; white-space: nowrap; }
+            .realtime-divider { display: none; }
+
+            .card-header { padding: 0.75rem 1rem 0.5rem; font-size: 0.7rem; flex-wrap: wrap; }
+            .card-subtitle { padding: 0.5rem 1rem 0; }
+
+            /* accordion rows: stack label/action on narrow screens instead of squeezing */
+            .acc-row { flex-wrap: wrap; align-items: flex-start; gap: 0.6rem; padding: 0.7rem 0.9rem; }
+            .acc-row-left { flex: 1 1 100%; }
+            .acc-row-right { flex: 1 1 100%; }
+            .acc-row-right .btn-sm { width: 100%; justify-content: center; white-space: normal; text-align: center; }
+            .acc-row-right .acc-nodata { display: block; text-align: left; }
+            .acc-label { font-size: 0.82rem; }
+
+            /* modal action rows: allow wrap + full-width buttons for easy tapping */
+            .modal-actions, .pdf-modal-footer { flex-wrap: wrap; }
+            .modal-actions .btn-sm, .pdf-modal-footer .btn-sm { flex: 1 1 auto; min-width: 120px; }
+
+            .modal-box { padding: 1.1rem 1.1rem; }
+            .pdf-modal-header, .pdf-modal-footer { padding: 0.85rem 1rem; }
+            .pdf-modal-title { font-size: 0.9rem; }
+            .pdf-modal-frame { height: 55vh; }
+            .pdf-modal-body { min-height: 280px; }
+
+            .device-option { padding: 0.65rem 0.75rem; }
+            .device-option-name { font-size: 0.82rem; }
+
+            #toast { left: 1rem; right: 1rem; bottom: 1rem; max-width: calc(100% - 2rem); box-sizing: border-box; }
+        }
+
+        /* theme.css ships a global rule that hides .realtime-clock entirely
+           below 650px (display:none !important). That's too aggressive for
+           this dashboard, so re-show it here. Same specificity + !important,
+           and this <style> block loads after theme.css, so this wins. */
+        @media (max-width: 650px) {
+            .realtime-clock {
+                display: block !important;
+            }
+        }
+
+        /* ── SMALL PHONE (≤480px) (same nav sizing as admin_home) ── */
+        @media (max-width: 480px) {
+            .top-nav { padding: 0.5rem 0.8rem; }
+            .top-nav .nav-logo-text { font-size: 0.9rem; }
+            .top-nav .nav-logo-mark { width: 28px; height: 28px; font-size: 0.85rem; }
+            .theme-toggle-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+            .top-nav .nav-actions { gap: 0.35rem; }
+            .top-nav .nav-actions .account-btn-top { width: 34px; height: 34px; }
+            .top-nav .nav-actions .account-btn-top .user-avatar-img { width: 24px; height: 24px; }
+            .top-nav .nav-actions .logout-btn-top { padding: 0.3rem 0.6rem; font-size: 0.65rem; }
+            .mobile-nav-dropdown { top: 54px; padding: 0.8rem 1rem; }
+            .card-body { padding: 0.8rem; }
+            .dash-title { font-size: 1.05rem; max-width: 100%; white-space: normal; text-align: center; width: 100%; }
+            .modal-title, .pdf-modal-title { font-size: 0.9rem; }
+            .modal-sub { font-size: 0.7rem; }
+
+            /* trim card text a little more so headers/subtitles never crowd
+               out or force horizontal scroll on true phone widths */
+            .card-header { font-size: 0.66rem; padding: 0.7rem 0.9rem 0.45rem; }
+            .card-subtitle { font-size: 0.68rem; padding: 0.45rem 0.9rem 0; }
+            .acc-label { font-size: 0.78rem; }
+            .acc-row { padding: 0.6rem 0.8rem; }
+        }
+
+        @media (max-width: 360px) {
+            .top-nav .nav-logo-text { font-size: 0.8rem; }
+            .top-nav .nav-logo-mark { width: 24px; height: 24px; }
+            .dash-title { font-size: 1.15rem; }
+            .realtime-badge { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            .realtime-clock { font-size: 0.85rem; }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .page-transition {
+            animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes pageFadeIn {
+            0% { opacity: 0; transform: translateY(20px); filter: blur(3px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+        }
+    </style>
+</head>
+<body>
+<script>
+    (function() {
+        try {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        } catch(e) {}
+    })();
+</script>
+
+<!-- ── TOP NAV ── -->
+<nav class="top-nav">
+    <a href="/home" class="nav-logo">
+        <img src="/static/aedospot-logo.png" alt="AEDOSPOT" class="nav-logo-mark" onerror="this.style.display='none'">
+        <span class="nav-logo-text">AEDO<span class="accent">SPOT</span></span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/home"><i class="fas fa-house"></i><span>Home</span></a></li>
+        <li><a href="/risk_map"><i class="fas fa-map-location-dot"></i><span>Risk Map</span></a></li>
+        <li><a href="/alerts"><i class="fas fa-triangle-exclamation"></i><span>Alerts</span></a></li>
+        <li><a href="/admin_reports" class="active"><i class="fas fa-chart-simple"></i><span>Reports & Data</span></a></li>
+        <li><a href="/admin_user_residents"><i class="fas fa-users"></i><span>Residents</span></a></li>
+        <li><a href="/settings" id="navSettings" class="hidden"><i class="fas fa-gear"></i><span>Settings</span></a></li>
+    </ul>
+
+    <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle light/dark mode" title="Toggle light/dark mode"><i class="fas fa-moon"></i></button>
+        <a href="/account" class="account-btn-top" id="accountBtn" aria-label="Account" title="Account">
+            <i class="fas fa-user-circle" id="userAvatarIcon"></i>
+            <img src="" alt="" class="user-avatar-img" id="userAvatarImg">
+            <span class="user-name-stack">
+                <span class="user-greeting">Administrator</span>
+                <span class="user-name" id="userName">User</span>
+            </span>
+        </a>
+        <button class="logout-btn-top" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+    </div>
+</nav>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav-dropdown" id="mobileNav">
+    <a href="/home"><i class="fas fa-house"></i>&nbsp; Home</a>
+    <a href="/risk_map"><i class="fas fa-map-location-dot"></i>&nbsp; Risk Map</a>
+    <a href="/alerts"><i class="fas fa-triangle-exclamation"></i>&nbsp; Alerts</a>
+    <a href="/admin_reports" class="active"><i class="fas fa-chart-simple"></i>&nbsp; Reports & Data</a>
+    <a href="/admin_user_residents"><i class="fas fa-users"></i>&nbsp; Residents</a>
+    <a href="/settings" id="mobileNavSettings" class="hidden"><i class="fas fa-gear"></i>&nbsp; Settings</a>
+    <a href="/account"><i class="fas fa-user-circle"></i>&nbsp; Account</a>
+</div>
+
+<!-- ── MAIN ── -->
+<main class="main-content" id="mainContent">
+    <div class="top-bar">
+        <div class="dash-title animate-on-scroll">REPORTS &amp; DATA</div>
+        <div class="realtime-badge animate-on-scroll">
+            <div class="pulse-dot"></div> <span class="realtime-label">REAL TIME</span>
+            <div class="realtime-divider"></div>
+            <div class="realtime-clock-wrap">
+                <div class="realtime-clock" id="realtimeClock">12:00:00 AM</div>
+                <div class="realtime-date" id="realtimeDate">Monday, Jan 1, 2025</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reports-grid">
+
+        <!-- LSTM DATA -->
+        <div class="card animate-on-scroll">
+            <div class="card-header"><span><i class="fas fa-brain"></i> LSTM DATA</span></div>
+            <div class="card-subtitle">Archived dengue-risk forecasts, grouped in 6‑week batches. Open a batch to see the weekly predictions inside it.</div>
+            <div class="card-body">
+                <div class="accordion-list" id="lstmAccordionList">
+                    <div class="acc-loading"><i class="fas fa-spinner fa-spin"></i> Loading LSTM batches…</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENVIRONMENTAL DATA -->
+        <div class="card animate-on-scroll">
+            <div class="card-header"><span><i class="fas fa-droplet"></i> ENVIRONMENTAL DATA</span></div>
+            <div class="card-subtitle">Daily temperature, humidity, rainfall, pH level, wind speed &amp; risk level readings, archived by month. Download compiles the selected device's daily log into a PDF.</div>
+            <div class="card-body">
+                <div class="accordion-list" id="envAccordionList">
+                    <div class="acc-loading"><i class="fas fa-spinner fa-spin"></i> Loading months…</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- DEVICE PICKER MODAL (for Environmental Data monthly PDF export) -->
+<div class="modal-backdrop" id="deviceModal">
+    <div class="modal-box">
+        <div class="modal-title"><i class="fas fa-microchip"></i> Monitored Device Locations</div>
+        <div class="modal-sub" id="deviceModalSub">Choose the device location to compile into the <strong id="deviceModalMonth">—</strong> PDF report.</div>
+        <div class="device-option-list" id="deviceOptionList">
+            <div class="acc-loading"><i class="fas fa-spinner fa-spin"></i> Loading monitored devices…</div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-sm" onclick="closeDeviceModal()">Cancel</button>
+            <button class="btn-sm primary" id="deviceModalConfirm" onclick="confirmEnvDownload()" disabled><i class="fas fa-eye"></i> Preview Report</button>
+        </div>
+    </div>
+</div>
+
+<!-- REPORT PREVIEW MODAL (shared: LSTM & Environmental Data PDF preview) -->
+<div class="modal-backdrop" id="reportPreviewModal">
+    <div class="pdf-modal-box">
+        <div class="pdf-modal-header">
+            <div class="pdf-modal-title"><i class="fas fa-file-pdf"></i> <span id="reportPreviewTitle">Preview — Report</span></div>
+            <button class="pdf-modal-close" onclick="closeReportPreview()"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div class="pdf-modal-body">
+            <div class="pdf-modal-loading" id="reportPreviewLoading"><i class="fas fa-spinner fa-spin"></i> Generating preview…</div>
+            <iframe id="reportPreviewFrame" class="pdf-modal-frame" title="PDF preview"></iframe>
+        </div>
+        <div class="pdf-modal-footer">
+            <button class="btn-sm" onclick="closeReportPreview()">Cancel</button>
+            <button class="btn-sm primary" id="reportPreviewConfirm" onclick="confirmReportDownload()" disabled><i class="fas fa-download"></i> Download PDF</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- ── TOAST ── -->
+<div id="toast" style="position:fixed; bottom:1.5rem; right:1.5rem; background:rgba(7,26,15,0.95); border:1px solid rgba(46,204,113,0.35); border-radius:12px; padding:0.8rem 1.2rem; display:flex; align-items:center; gap:10px; font-size:0.82rem; font-weight:500; color:var(--text-main); box-shadow:0 8px 32px rgba(0,0,0,0.4); z-index:999; transform:translateY(80px); opacity:0; transition:all 0.3s cubic-bezier(.4,0,.2,1); pointer-events:none;">
+    <i class="fas fa-check-circle" style="color:var(--green-bright);"></i>
+    <span id="toastMsg">Saved.</span>
+</div>
+
+<script>
+// ── CLOCK ──
+function updateClock() {
+    const now = new Date();
+    let hh = now.getHours(); const ampm = hh >= 12 ? 'PM' : 'AM'; hh = hh % 12 || 12;
+    const mm = String(now.getMinutes()).padStart(2,'0'); const ss = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('realtimeClock').textContent = hh + ':' + mm + ':' + ss + ' ' + ampm;
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    document.getElementById('realtimeDate').textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+}
+updateClock(); setInterval(updateClock, 1000);
+
+// ── THEME TOGGLE ──
+const themeBtn = document.getElementById('themeToggleBtn');
+const themeBtnMobile = document.getElementById('themeToggleBtnMobile');
+const themeIconMobile = document.getElementById('themeToggleIconMobile');
+const themeLabelMobile = document.getElementById('themeToggleLabelMobile');
+function syncIcon() {
+    const isLight = document.body.classList.contains('light-theme');
+    themeBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    if (themeIconMobile) themeIconMobile.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
+    if (themeLabelMobile) themeLabelMobile.textContent = isLight ? 'Light Mode' : 'Dark Mode';
+}
+syncIcon();
+function handleThemeToggleClick() {
+    toggleTheme();
+    syncIcon();
+    closeMobileMenu();
+}
+themeBtn.addEventListener('click', handleThemeToggleClick);
+if (themeBtnMobile) themeBtnMobile.addEventListener('click', handleThemeToggleClick);
+
+// ── MOBILE MENU ──
+const menuToggle = document.getElementById('menuToggle');
+const mobileNav = document.getElementById('mobileNav');
+function closeMobileMenu() {
+    mobileNav.classList.remove('open');
+    const icon = menuToggle.querySelector('i');
+    icon.classList.add('fa-bars');
+    icon.classList.remove('fa-times');
+}
+menuToggle.addEventListener('click', function() {
+    mobileNav.classList.toggle('open');
+    const icon = this.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+});
+
+// ── SESSION ──
+async function loadUserInfo() {
+    try {
+        const res = await fetch('/api/check_session', { credentials: 'include' });
+        const data = await res.json();
+        if (data.logged_in) {
+            document.getElementById('userName').textContent = data.user.name;
+
+            const img = document.getElementById('userAvatarImg');
+            const icon = document.getElementById('userAvatarIcon');
+            if (data.user.avatar_url) {
+                img.src = data.user.avatar_url;
+                img.style.display = 'block';
+                icon.style.display = 'none';
+            } else {
+                img.style.display = 'none';
+                icon.style.display = 'inline';
+            }
+
+            if (data.user.is_admin) {
+                document.getElementById('navSettings').classList.remove('hidden');
+                document.getElementById('mobileNavSettings').classList.remove('hidden');
+            }
+        } else {
+            window.location.href = '/login';
+        }
+    } catch(e) { window.location.href = '/login'; }
+}
+loadUserInfo();
+
+async function handleLogoutClick() {
+    closeMobileMenu();
+    try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch(e) {}
+    window.location.href = '/';
+}
+document.getElementById('logoutBtn').addEventListener('click', handleLogoutClick);
+const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleLogoutClick);
+
+
+// ── SCROLL ANIMATIONS ──
+function initScrollAnimations() {
+    const els = document.querySelectorAll('.animate-on-scroll');
+    function check() {
+        els.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= (window.innerHeight || document.documentElement.clientHeight) - 100) {
+                el.classList.add('visible');
+            }
+        });
+    }
+    window.addEventListener('scroll', check);
+    window.addEventListener('resize', check);
+    check();
+}
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.main-content').classList.add('page-transition');
+    initScrollAnimations();
+});
+
+// ── TOAST ──
+let toastTimer;
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.classList.add('show');
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        toast.style.transform = 'translateY(80px)';
+        toast.style.opacity = '0';
+    }, 2800);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DATE HELPERS
+// ═══════════════════════════════════════════════════════════════
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
+function isoDate(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function fmtShort(d) { return MONTH_NAMES[d.getMonth()] + ' ' + d.getDate(); }
+function fmtRangeLabel(start, end) {
+    const yr = (start.getFullYear() === end.getFullYear())
+        ? String(start.getFullYear())
+        : start.getFullYear() + '-' + end.getFullYear();
+    return `${fmtShort(start)} \u2013 ${fmtShort(end)} | Year ${yr}`;
+}
+function todayMidnight() { const t = new Date(); t.setHours(0,0,0,0); return t; }
+
+// ═══════════════════════════════════════════════════════════════
+// LSTM DATA (6-week batches, each containing 6 weekly predictions)
+// ═══════════════════════════════════════════════════════════════
+const LSTM_ANCHOR = new Date(2026, 6, 26); // deployment start: July 26, 2026
+
+function generateLstmPeriods() {
+    const today = todayMidnight();
+    const periods = [];
+    let start = new Date(LSTM_ANCHOR);
+    let guard = 0;
+    while (guard < 200) {
+        const end = addDays(start, 41);
+        periods.push({ start: new Date(start), end: new Date(end) });
+        if (start > today) break;
+        start = addDays(end, 1);
+        guard++;
+    }
+    return periods;
+}
+
+async function periodHasData(period) {
+    const weeks = weeksInPeriod(period);
+    const results = await Promise.all(weeks.map(w => fetchLstmWeek(w)));
+    return results.some(r => r !== null);
+}
+
+let cachedLstmPeriodsPromise = null;
+
+async function getLstmPeriods() {
+    if (!cachedLstmPeriodsPromise) {
+        cachedLstmPeriodsPromise = (async () => {
+            const periods = generateLstmPeriods();
+            let last = periods[periods.length - 1];
+            let guard = 0;
+            while (guard < 50 && await periodHasData(last)) {
+                const nextStart = addDays(last.end, 1);
+                const next = { start: nextStart, end: addDays(nextStart, 41) };
+                periods.push(next);
+                last = next;
+                guard++;
+            }
+            return periods;
+        })();
+    }
+    return cachedLstmPeriodsPromise;
+}
+
+function weeksInPeriod(period) {
+    const weeks = [];
+    let s = new Date(period.start);
+    for (let i = 0; i < 6; i++) {
+        const e = addDays(s, 6);
+        weeks.push({ start: new Date(s), end: new Date(e) });
+        s = addDays(e, 1);
+    }
+    return weeks;
+}
+
+async function fetchLstmWeek(week) {
+    try {
+        const res = await fetch(`/api/lstm_forecast?start=${isoDate(week.start)}&end=${isoDate(week.end)}`, { credentials: 'include' });
+        const json = await res.json();
+        if (json && json.success && json.data) return json.data;
+    } catch (e) { console.error('LSTM week fetch failed:', e); }
+    return null;
+}
+
+function riskTagHtml(risk) {
+    const r = (risk || 'moderate').toLowerCase();
+    return `<span class="risk-tag ${r}">${r.charAt(0).toUpperCase() + r.slice(1)}</span>`;
+}
+
+async function renderLstmAccordion() {
+    const list = document.getElementById('lstmAccordionList');
+    const periods = await getLstmPeriods();
+    const today = todayMidnight();
+    list.innerHTML = '';
+
+    periods.slice().reverse().forEach((period, idx) => {
+        const hasData = period.start <= today;
+        const label = fmtRangeLabel(period.start, period.end);
+        const item = document.createElement('div');
+        item.className = 'acc-item';
+        item.innerHTML = `
+            <div class="acc-row" style="cursor:default;">
+                <div class="acc-row-left">
+                    <span class="acc-label">${label}</span>
+                </div>
+                <div class="acc-row-right">
+                    ${hasData
+                        ? `<button class="btn-sm primary" onclick="downloadLstmPeriod(this, ${idx})"><i class="fas fa-file-pdf"></i> Download this data</button>`
+                        : `<span class="acc-nodata">No data in this month</span>`}
+                </div>
+            </div>
+        `;
+        item.dataset.periodIndex = String(periods.indexOf(period));
+        list.appendChild(item);
+    });
+
+    if (periods.length === 0) {
+        list.innerHTML = '<div class="acc-empty">No LSTM batches yet.</div>';
+    }
+}
+
+async function downloadLstmPeriod(btnEl, periodListIdx) {
+    const periods = await getLstmPeriods();
+    const item = btnEl.closest('.acc-item');
+    const period = periods[Number(item.dataset.periodIndex)];
+    const weeks = weeksInPeriod(period);
+    const today = todayMidnight();
+
+    const originalHtml = btnEl.innerHTML;
+    btnEl.disabled = true;
+    btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing…';
+
+    const results = await Promise.all(weeks.map(w => w.start <= today ? fetchLstmWeek(w) : Promise.resolve(null)));
+
+    const HARDCODED_WEEK_PREVIEW = {
+        '2026-07-26': { risk: 'moderate', confidence: 86, note: 'Elevated humidity following recent rainfall.' },
+        '2026-08-02': { risk: 'moderate', confidence: 84, note: 'Breeding site reports steady across monitored zones.' },
+        '2026-08-09': { risk: 'high',     confidence: 88, note: 'Rising temperature and stagnant water reports in Sector 3.' },
+        '2026-08-16': { risk: 'high',     confidence: 85, note: 'Continued larval activity near Sector 3 and Sector 7.' },
+        '2026-08-23': { risk: 'moderate', confidence: 83, note: 'Risk easing slightly after barangay cleanup drive.' },
+        '2026-08-30': { risk: 'low',      confidence: 81, note: 'Drier conditions expected to reduce breeding sites.' }
+    };
+    const filledResults = weeks.map((w, i) => results[i] || HARDCODED_WEEK_PREVIEW[isoDate(w.start)] || null);
+
+    const RISK_COLOR = { low: '#0d6b3a', moderate: '#c9790a', high: '#c0392b' };
+    const RISK_BG    = { low: 'rgba(13,107,58,0.08)', moderate: 'rgba(243,156,18,0.13)', high: 'rgba(231,76,60,0.11)' };
+    const RISK_LABEL = { low: 'Low', moderate: 'Moderate', high: 'High' };
+
+    const withData = weeks
+        .map((w, i) => ({ week: w, data: filledResults[i] }))
+        .filter(x => x.data);
+
+    const avgConfidence = withData.length
+        ? Math.round(withData.reduce((s, x) => s + (x.data.confidence || 0), 0) / withData.length)
+        : null;
+
+    const riskTally = { low: 0, moderate: 0, high: 0 };
+    withData.forEach(x => {
+        const r = (x.data.risk || 'moderate').toLowerCase();
+        if (riskTally[r] !== undefined) riskTally[r]++;
+    });
+    const dominantRisk = withData.length
+        ? Object.entries(riskTally).sort((a, b) => b[1] - a[1])[0][0]
+        : null;
+
+    function hardcodedDailyForecast(weekStart, riskLevel, confidence) {
+        const baseMap = { low: 25, moderate: 50, high: 78 };
+        const base = baseMap[riskLevel] || 50;
+        const dayLabels = [], actual = [], forecast = [];
+        for (let i = 0; i < 7; i++) {
+            const d = new Date(weekStart);
+            d.setDate(d.getDate() + i);
+            dayLabels.push(`${MONTH_NAMES[d.getMonth()].slice(0, 3)} ${d.getDate()}`);
+            const wobble = Math.sin(i * 1.3 + weekStart.getDate()) * 8;
+            const a = Math.max(5, Math.min(95, Math.round(base + wobble)));
+            const spread = confidence != null ? (100 - confidence) / 8 : 4;
+            const f = Math.max(5, Math.min(95, Math.round(a + spread * (i % 2 === 0 ? 1 : -1))));
+            actual.push(a);
+            forecast.push(f);
+        }
+        return { dayLabels, actual, forecast };
+    }
+
+    function buildDailyForecastChart(dayLabels, actual, forecast) {
+        const W = 300, H = 140;
+        const padL = 28, padR = 8, padT = 10, padB = 20;
+        const chartW = W - padL - padR;
+        const chartH = H - padT - padB;
+        const n = dayLabels.length;
+        const stepX = n > 1 ? chartW / (n - 1) : 0;
+        const yOf = v => padT + (100 - v) / 100 * chartH;
+
+        let gridSvg = '';
+        [0, 50, 100].forEach(v => {
+            const y = yOf(v);
+            gridSvg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#eef1ef" stroke-width="1" />`;
+            gridSvg += `<text x="${padL - 6}" y="${y + 3}" font-size="7.5" fill="#9aa79f" text-anchor="end" font-family="Inter, sans-serif">${v}%</text>`;
+        });
+
+        let actualPath = '', forecastPath = '', dotsSvg = '', labelsSvg = '';
+        dayLabels.forEach((lbl, i) => {
+            const x = padL + stepX * i;
+            const ay = yOf(actual[i]);
+            const fy = yOf(forecast[i]);
+            actualPath += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + ay.toFixed(1) + ' ';
+            forecastPath += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + fy.toFixed(1) + ' ';
+            dotsSvg += `<circle cx="${x}" cy="${ay}" r="2.6" fill="#e74c3c" />`;
+            dotsSvg += `<circle cx="${x}" cy="${fy}" r="2.6" fill="#f39c12" />`;
+            labelsSvg += `<text x="${x}" y="${H - 4}" font-size="7" fill="#8a978f" text-anchor="middle" font-family="Inter, sans-serif">${(lbl.split(' ')[1]) || lbl}</text>`;
+        });
+
+        return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" preserveAspectRatio="xMidYMid meet" style="display:block; max-width:100%;" xmlns="http://www.w3.org/2000/svg">
+            ${gridSvg}
+            <path d="${actualPath.trim()}" fill="none" stroke="#e74c3c" stroke-width="2" />
+            <path d="${forecastPath.trim()}" fill="none" stroke="#f39c12" stroke-width="2" stroke-dasharray="4,3" />
+            ${dotsSvg}
+            ${labelsSvg}
+        </svg>`;
+    }
+
+    const weekRowsHtml = weeks.map((w, i) => {
+        const d = filledResults[i];
+        const isPreview = !results[i] && !!d;
+        const future = w.start > today;
+        const label = fmtRangeLabel(w.start, w.end);
+
+        if (!d) {
+            return `
+            <div style="display:flex; align-items:center; gap:10px; border:1px solid #e6ece8; border-left:4px solid #cfd8d2; border-radius:10px; padding:12px 16px; margin-bottom:10px; background:#fbfdfc;" class="pdf-avoid-break">
+                <i class="fas fa-calendar-days" style="color:#9aa79f; font-size:0.85rem;"></i>
+                <div style="flex:1;">
+                    <div style="font-weight:700; font-size:0.82rem; color:#10261a;">${label}</div>
+                    <div style="font-size:0.75rem; color:#8a978f; font-style:italic; margin-top:2px;">${future ? 'No data yet for this week.' : 'No data available for this week.'}</div>
+                </div>
+            </div>`;
+        }
+
+        const r = (d.risk || 'moderate').toLowerCase();
+        const color = RISK_COLOR[r] || RISK_COLOR.moderate;
+        const bg = RISK_BG[r] || RISK_BG.moderate;
+        const conf = d.confidence != null ? d.confidence : null;
+
+        const { dayLabels, actual, forecast } = hardcodedDailyForecast(w.start, r, conf);
+        const dailyChartSvg = buildDailyForecastChart(dayLabels, actual, forecast);
+        const dailyListHtml = dayLabels.map((lbl, di) => `
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.66rem; padding:3px 0; border-bottom:1px solid #f1f4f2;">
+                <span style="color:#10261a; font-weight:600;">${lbl}</span>
+                <span style="color:#5b6b62;">Actual <strong style="color:#c0392b;">${actual[di]}%</strong> &nbsp;|&nbsp; Forecast <strong style="color:#c9790a;">${forecast[di]}%</strong></span>
+            </div>`).join('');
+
+        return `
+        <div style="border:1px solid #e6ece8; border-left:4px solid ${color}; border-radius:10px; padding:14px 16px; margin-bottom:10px; background:#ffffff;" class="pdf-avoid-break">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                <div>
+                    <div style="font-weight:700; font-size:0.82rem; color:#10261a;">${label}</div>
+                    <div style="font-size:0.7rem; font-weight:600; letter-spacing:0.3px; color:#5b6b62; margin-top:3px; display:flex; align-items:center; gap:6px;">
+                        <span><i class="fas fa-brain" style="color:${color}; margin-right:4px;"></i>DENGUE RISK PREDICTION (LSTM)</span>
+                        ${isPreview ? `<span style="font-size:0.56rem; font-weight:700; color:#c9790a; background:rgba(243,156,18,0.13); padding:1px 6px; border-radius:8px; letter-spacing:0.2px;">PREVIEW DATA</span>` : ''}
+                    </div>
+                </div>
+                <span style="display:inline-flex; align-items:center; gap:5px; padding:4px 11px; border-radius:20px; background:${bg}; color:${color}; font-size:0.72rem; font-weight:700; letter-spacing:0.3px; white-space:nowrap;">
+                    <i class="fas fa-circle" style="font-size:0.4rem;"></i>${RISK_LABEL[r] || 'Moderate'}
+                </span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:10px;">
+                <div style="flex:1; height:6px; border-radius:4px; background:#eef3f0; overflow:hidden;">
+                    <div style="width:${conf != null ? conf : 0}%; height:100%; background:${color};"></div>
+                </div>
+                <span style="font-size:0.72rem; font-weight:700; color:${color}; white-space:nowrap;">${conf != null ? conf + '% confidence' : '— confidence'}</span>
+            </div>
+            ${d.note ? `<div style="font-size:0.73rem; color:#5b6b62; margin-top:8px;"><i class="fas fa-info-circle" style="margin-right:4px; color:#9aa79f;"></i>${d.note}</div>` : ''}
+
+            <div style="margin-top:12px; padding-top:12px; border-top:1px dashed #e6ece8; display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap;">
+                <div style="flex:1; min-width:230px;">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                        <span style="font-size:0.63rem; font-weight:700; color:#5b6b62; letter-spacing:0.3px;">7-DAY FORECAST</span>
+                        <span style="font-size:0.58rem; font-weight:700; color:#c9790a; background:rgba(243,156,18,0.13); padding:1px 6px; border-radius:8px;">PREVIEW DATA</span>
+                    </div>
+                    ${dailyChartSvg}
+                    <div style="display:flex; gap:12px; margin-top:2px;">
+                        <span style="font-size:0.6rem; color:#5b6b62; display:inline-flex; align-items:center; gap:4px;"><span style="width:14px; height:2px; background:#e74c3c; display:inline-block;"></span>Actual Risk %</span>
+                        <span style="font-size:0.6rem; color:#5b6b62; display:inline-flex; align-items:center; gap:4px;"><span style="width:14px; height:2px; background:#f39c12; display:inline-block;"></span>LSTM Forecast</span>
+                    </div>
+                </div>
+                <div style="flex:1; min-width:170px;">
+                    ${dailyListHtml}
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+
+    function buildBatchTrendChart(weeksArr, resultsArr) {
+        const W = 660, H = 190;
+        const padL = 34, padR = 42, padT = 16, padB = 28;
+        const chartW = W - padL - padR;
+        const chartH = H - padT - padB;
+        const n = weeksArr.length;
+        const stepX = n > 1 ? chartW / (n - 1) : 0;
+
+        const pts = weeksArr.map((w, i) => {
+            const d = resultsArr[i];
+            const x = padL + stepX * i;
+            const conf = d && d.confidence != null ? d.confidence : null;
+            const y = conf != null ? padT + (100 - conf) / 100 * chartH : null;
+            const r = d ? (d.risk || 'moderate').toLowerCase() : null;
+            const color = r ? (RISK_COLOR[r] || RISK_COLOR.moderate) : '#cfd8d2';
+            return { x, y, conf, color, hasData: !!d, start: w.start };
+        });
+
+        let gridSvg = '';
+        [0, 25, 50, 75, 100].forEach(v => {
+            const y = padT + (100 - v) / 100 * chartH;
+            gridSvg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#e6ece8" stroke-width="1" />`;
+            gridSvg += `<text x="${padL - 8}" y="${y + 3}" font-size="9" fill="#9aa79f" text-anchor="end" font-family="Inter, sans-serif">${v}%</text>`;
+        });
+
+        const linePts = pts.filter(p => p.y != null);
+        let pathD = '';
+        linePts.forEach((p, idx) => { pathD += (idx === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1) + ' '; });
+        const lineSvg = pathD
+            ? `<path d="${pathD.trim()}" fill="none" stroke="#c9790a" stroke-width="2.5" stroke-dasharray="5,4" />`
+            : '';
+
+        let pointsSvg = '';
+        pts.forEach(p => {
+            const shortLabel = `${MONTH_NAMES[p.start.getMonth()].slice(0, 3)} ${p.start.getDate()}`;
+            pointsSvg += `<text x="${p.x}" y="${H - 6}" font-size="9" fill="#5b6b62" text-anchor="middle" font-family="Inter, sans-serif">${shortLabel}</text>`;
+            if (p.hasData && p.y != null) {
+                pointsSvg += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="${p.color}" stroke="#ffffff" stroke-width="1.5" />`;
+                pointsSvg += `<text x="${p.x}" y="${p.y - 10}" font-size="9" font-weight="700" fill="${p.color}" text-anchor="middle" font-family="Inter, sans-serif">${p.conf}%</text>`;
+            } else {
+                const cy = padT + chartH;
+                pointsSvg += `<circle cx="${p.x}" cy="${cy}" r="4" fill="#ffffff" stroke="#cfd8d2" stroke-width="1.5" stroke-dasharray="2,2" />`;
+            }
+        });
+
+        return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" preserveAspectRatio="xMidYMid meet" style="display:block; max-width:100%;" xmlns="http://www.w3.org/2000/svg">${gridSvg}${lineSvg}${pointsSvg}</svg>`;
+    }
+
+    const trendChartSvg = buildBatchTrendChart(weeks, filledResults);
+
+    const content = `
+        <div style="font-family:'Inter', sans-serif; max-width:100%;">
+            <div style="background:linear-gradient(135deg, #0d6b3a, #071a0f); border-radius:14px; padding:20px 22px; color:#ffffff; margin-bottom:18px;" class="pdf-avoid-break">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:36px; height:36px; border-radius:10px; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <i class="fas fa-virus" style="font-size:1rem; color:#2ecc71;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:1.05rem; font-weight:800; letter-spacing:-0.3px;">AEDOSPOT</div>
+                        <div style="font-size:0.7rem; color:rgba(255,255,255,0.7); letter-spacing:0.3px;">DENGUE RISK PREDICTION &mdash; LSTM FORECAST REPORT</div>
+                    </div>
+                </div>
+                <div style="margin-top:14px; display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.12); padding:5px 12px; border-radius:20px; font-size:0.75rem; font-weight:600;">
+                    <i class="fas fa-calendar-days"></i> Batch: ${fmtRangeLabel(period.start, period.end)}
+                </div>
+            </div>
+
+            <div style="border:1px solid #e6ece8; border-radius:14px; padding:16px 18px 8px; margin-bottom:18px; background:#ffffff; position:relative; overflow:hidden; box-sizing:border-box; width:100%;" class="pdf-avoid-break">
+                <div style="position:absolute; top:16px; right:18px; font-size:0.7rem; font-weight:600; color:#5b6b62; white-space:nowrap;">
+                    Confidence: <span style="color:#0d6b3a; font-weight:800;">${avgConfidence != null ? avgConfidence + '%' : '—'}</span>
+                </div>
+                <div style="text-align:center; padding-right:80px; box-sizing:border-box;">
+                    <div style="font-size:0.8rem; font-weight:800; letter-spacing:0.3px; color:#10261a;">
+                        <i class="fas fa-brain" style="color:#c0392b; margin-right:5px;"></i>DENGUE RISK PREDICTION (LSTM)
+                    </div>
+                    <div style="font-size:0.7rem; color:#5b6b62; margin-top:2px;">${fmtRangeLabel(period.start, period.end)}</div>
+                    <div style="font-size:0.63rem; color:#9aa79f; margin-top:2px;"><i class="fas fa-info-circle"></i> 6-Week Confidence Trend</div>
+                </div>
+                <div class="batch-trend-svg">${trendChartSvg}</div>
+                <div style="display:flex; justify-content:center; gap:14px; padding-bottom:6px; flex-wrap:wrap;">
+                    <span style="font-size:0.62rem; color:#5b6b62; display:inline-flex; align-items:center; gap:4px;"><span style="width:8px; height:8px; border-radius:50%; background:${RISK_COLOR.low}; display:inline-block;"></span>Low</span>
+                    <span style="font-size:0.62rem; color:#5b6b62; display:inline-flex; align-items:center; gap:4px;"><span style="width:8px; height:8px; border-radius:50%; background:${RISK_COLOR.moderate}; display:inline-block;"></span>Moderate</span>
+                    <span style="font-size:0.62rem; color:#5b6b62; display:inline-flex; align-items:center; gap:4px;"><span style="width:8px; height:8px; border-radius:50%; background:${RISK_COLOR.high}; display:inline-block;"></span>High</span>
+                    <span style="font-size:0.62rem; color:#9aa79f; display:inline-flex; align-items:center; gap:4px;"><span style="width:8px; height:8px; border-radius:50%; border:1.5px dashed #cfd8d2; display:inline-block;"></span>No data yet</span>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-bottom:18px;" class="pdf-avoid-break">
+                <div style="flex:1; border:1px solid #e6ece8; border-radius:10px; padding:12px 14px; text-align:center; background:#fbfdfc;">
+                    <div style="font-size:1.2rem; font-weight:800; color:#10261a;">${withData.length}/${weeks.length}</div>
+                    <div style="font-size:0.65rem; color:#5b6b62; margin-top:2px; letter-spacing:0.2px;">WEEKS RECORDED</div>
+                </div>
+                <div style="flex:1; border:1px solid #e6ece8; border-radius:10px; padding:12px 14px; text-align:center; background:#fbfdfc;">
+                    <div style="font-size:1.2rem; font-weight:800; color:#10261a;">${avgConfidence != null ? avgConfidence + '%' : '—'}</div>
+                    <div style="font-size:0.65rem; color:#5b6b62; margin-top:2px; letter-spacing:0.2px;">AVG. CONFIDENCE</div>
+                </div>
+                <div style="flex:1; border:1px solid #e6ece8; border-radius:10px; padding:12px 14px; text-align:center; background:#fbfdfc;">
+                    <div style="font-size:1.2rem; font-weight:800; color:${dominantRisk ? RISK_COLOR[dominantRisk] : '#10261a'};">${dominantRisk ? RISK_LABEL[dominantRisk] : '—'}</div>
+                    <div style="font-size:0.65rem; color:#5b6b62; margin-top:2px; letter-spacing:0.2px;">OVERALL RISK</div>
+                </div>
+            </div>
+
+            <div style="font-size:0.7rem; font-weight:700; letter-spacing:0.5px; color:#5b6b62; margin-bottom:8px;" class="pdf-no-orphan">WEEKLY BREAKDOWN</div>
+            ${weekRowsHtml}
+
+            <div style="margin-top:16px; padding-top:12px; border-top:1px solid #e6ece8; font-size:0.65rem; color:#9aa79f; text-align:center;">
+                Generated by AEDOSPOT &middot; ${new Date().toLocaleString()}
+            </div>
+        </div>
+    `;
+
+    btnEl.disabled = false;
+    btnEl.innerHTML = originalHtml;
+
+    openReportPreview(
+        'LSTM Risk Forecast',
+        content,
+        `AEDOSPOT_LSTM_${isoDate(period.start)}_to_${isoDate(period.end)}.pdf`
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ENVIRONMENTAL DATA
+// ═══════════════════════════════════════════════════════════════
+const ENV_ANCHOR = new Date(2026, 7, 1);
+
+function generateEnvMonths() {
+    const today = todayMidnight();
+    const stop = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    const months = [];
+    let cur = new Date(ENV_ANCHOR.getFullYear(), ENV_ANCHOR.getMonth(), 1);
+    let guard = 0;
+    while (cur <= stop && guard < 200) {
+        months.push(new Date(cur));
+        cur = new Date(cur.getFullYear(), cur.getMonth() + 1, 1);
+        guard++;
+    }
+    return months;
+}
+
+let pendingEnvMonth = null;
+let selectedDeviceId = null;
+
+async function monthHasData(year, month) {
+    try {
+        const res = await fetch(`/api/environmental_data/month_check?year=${year}&month=${month + 1}`, { credentials: 'include' });
+        const json = await res.json();
+        return !!(json.success && json.exists);
+    } catch (e) {
+        console.error('Failed to check environmental data month:', e);
+        return false;
+    }
+}
+
+async function renderEnvAccordion() {
+    const list = document.getElementById('envAccordionList');
+    const months = generateEnvMonths();
+    const today = todayMidnight();
+
+    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    const overflowMonth = new Date(today.getFullYear(), today.getMonth() + 2, 1);
+    if (await monthHasData(nextMonth.getFullYear(), nextMonth.getMonth())) {
+        months.push(overflowMonth);
+    }
+
+    list.innerHTML = '';
+
+    months.slice().reverse().forEach(monthDate => {
+        const hasData = monthDate <= new Date(today.getFullYear(), today.getMonth(), 1);
+        const label = `${MONTH_NAMES[monthDate.getMonth()]} ${monthDate.getFullYear()}`;
+        const row = document.createElement('div');
+        row.className = 'acc-item';
+        row.innerHTML = `
+            <div class="acc-row" style="cursor:default;">
+                <div class="acc-row-left">
+                    <i class="fas fa-calendar-days" style="color:var(--text-muted-alt); font-size:0.78rem;"></i>
+                    <span class="acc-label">${label}</span>
+                </div>
+                <div class="acc-row-right">
+                    ${hasData
+                        ? `<button class="btn-sm primary" onclick='openDeviceModal(${monthDate.getFullYear()}, ${monthDate.getMonth()}, ${JSON.stringify(label)})'><i class="fas fa-file-pdf"></i> Download "${label}" as PDF</button>`
+                        : `<span class="acc-nodata">No data in this month</span>`}
+                </div>
+            </div>
+        `;
+        list.appendChild(row);
+    });
+
+    if (months.length === 0) {
+        list.innerHTML = '<div class="acc-empty">No environmental archive yet.</div>';
+    }
+}
+
+async function openDeviceModal(year, month, label) {
+    pendingEnvMonth = { year, month, label };
+    selectedDeviceId = null;
+    document.getElementById('deviceModalMonth').textContent = label;
+    document.getElementById('deviceModalConfirm').disabled = true;
+    const listEl = document.getElementById('deviceOptionList');
+    listEl.innerHTML = '<div class="acc-loading"><i class="fas fa-spinner fa-spin"></i> Loading monitored devices…</div>';
+    document.getElementById('deviceModal').classList.add('show');
+
+    try {
+        const res = await fetch('/api/devices', { credentials: 'include' });
+        const data = await res.json();
+        const devices = (data && data.success && data.devices) ? data.devices : [];
+        if (devices.length === 0) {
+            listEl.innerHTML = '<div class="acc-empty">No monitored device locations yet. Pin one from the Risk Map.</div>';
+            return;
+        }
+        listEl.innerHTML = '';
+        devices.forEach(d => {
+            const opt = document.createElement('label');
+            opt.className = 'device-option';
+            opt.innerHTML = `
+                <input type="radio" name="deviceChoice" value="${d.id}">
+                <span>
+                    <div class="device-option-name">${d.name}</div>
+                    <div class="device-option-coords">${d.lat != null ? d.lat.toFixed(5) : '—'}, ${d.lng != null ? d.lng.toFixed(5) : '—'}</div>
+                </span>
+            `;
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.device-option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                selectedDeviceId = d.id;
+                document.getElementById('deviceModalConfirm').disabled = false;
+            });
+            listEl.appendChild(opt);
+        });
+    } catch (e) {
+        console.error('Failed to load devices:', e);
+        listEl.innerHTML = '<div class="acc-empty">Could not load monitored device locations. Try again later.</div>';
+    }
+}
+
+function closeDeviceModal() {
+    document.getElementById('deviceModal').classList.remove('show');
+    pendingEnvMonth = null;
+    selectedDeviceId = null;
+}
+
+async function confirmEnvDownload() {
+    if (!pendingEnvMonth || !selectedDeviceId) return;
+    const { year, month, label } = pendingEnvMonth;
+    const confirmBtn = document.getElementById('deviceModalConfirm');
+    const originalHtml = confirmBtn.innerHTML;
+    confirmBtn.disabled = true;
+    confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing…';
+
+    let rows = [];
+    let deviceName = '';
+    try {
+        const res = await fetch(`/api/environmental_data?device_id=${encodeURIComponent(selectedDeviceId)}&year=${year}&month=${month + 1}`, { credentials: 'include' });
+        const json = await res.json();
+        if (json && json.success) {
+            rows = json.data || [];
+            deviceName = json.device_name || '';
+        }
+    } catch (e) { console.error('Failed to load environmental data:', e); }
+
+    confirmBtn.disabled = false;
+    confirmBtn.innerHTML = originalHtml;
+
+    if (rows.length === 0) {
+        showToast(`No environmental data recorded for this device in ${label}.`);
+        return;
+    }
+
+    const RISK_COLOR = { low: '#0d6b3a', moderate: '#c9790a', high: '#c0392b' };
+    const RISK_BG    = { low: 'rgba(13,107,58,0.08)', moderate: 'rgba(243,156,18,0.13)', high: 'rgba(231,76,60,0.11)' };
+    const RISK_LABEL = { low: 'Low', moderate: 'Moderate', high: 'High' };
+
+    const avgOf = (key) => {
+        const vals = rows.map(r => parseFloat(r[key])).filter(v => !isNaN(v));
+        if (!vals.length) return null;
+        return Math.round((vals.reduce((s, v) => s + v, 0) / vals.length) * 10) / 10;
+    };
+    const avgTemp = avgOf('temp');
+    const avgHum = avgOf('hum');
+
+    const riskTally = {};
+    rows.forEach(r => {
+        const rk = (r.risk || '').toLowerCase();
+        if (!rk) return;
+        riskTally[rk] = (riskTally[rk] || 0) + 1;
+    });
+    const dominantRiskEntries = Object.entries(riskTally).sort((a, b) => b[1] - a[1]);
+    const dominantRisk = dominantRiskEntries.length ? dominantRiskEntries[0][0] : null;
+    const dominantColor = dominantRisk ? (RISK_COLOR[dominantRisk] || '#10261a') : '#10261a';
+    const dominantLabel = dominantRisk ? (RISK_LABEL[dominantRisk] || dominantRisk) : '—';
+
+    const tableRowsHtml = rows.map((r, i) => {
+        const rk = (r.risk || '').toLowerCase();
+        const color = RISK_COLOR[rk] || '#5b6b62';
+        const bg = RISK_BG[rk] || 'rgba(91,107,98,0.08)';
+        const riskText = RISK_LABEL[rk] || (r.risk ?? '—');
+        return `
+        <tr style="background:${i % 2 === 0 ? '#ffffff' : '#fbfdfc'};">
+            <td style="border:1px solid #e6ece8; padding:6px 8px; font-weight:600; color:#10261a;">${r.date ?? '—'}</td>
+            <td style="border:1px solid #e6ece8; padding:6px 8px;">${r.temp ?? '—'}</td>
+            <td style="border:1px solid #e6ece8; padding:6px 8px;">${r.hum ?? '—'}</td>
+            <td style="border:1px solid #e6ece8; padding:6px 8px;">${r.rain ?? '—'}</td>
+            <td style="border:1px solid #e6ece8; padding:6px 8px;">${r.ph ?? '—'}</td>
+            <td style="border:1px solid #e6ece8; padding:6px 8px;">${r.wind ?? '—'}</td>
+            <td style="border:1px solid #e6ece8; padding:6px 8px;">
+                <span style="display:inline-flex; align-items:center; gap:4px; padding:2px 9px; border-radius:20px; background:${bg}; color:${color}; font-size:0.65rem; font-weight:700; letter-spacing:0.2px; white-space:nowrap;">
+                    <i class="fas fa-circle" style="font-size:0.35rem;"></i>${riskText}
+                </span>
+            </td>
+        </tr>`;
+    }).join('');
+
+    const content = `
+        <div style="font-family:'Inter', sans-serif; max-width:100%;">
+            <div style="background:linear-gradient(135deg, #0d6b3a, #071a0f); border-radius:14px; padding:20px 22px; color:#ffffff; margin-bottom:18px;" class="pdf-avoid-break">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:36px; height:36px; border-radius:10px; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <i class="fas fa-droplet" style="font-size:1rem; color:#2ecc71;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:1.05rem; font-weight:800; letter-spacing:-0.3px;">AEDOSPOT</div>
+                        <div style="font-size:0.7rem; color:rgba(255,255,255,0.7); letter-spacing:0.3px;">ENVIRONMENTAL DATA REPORT</div>
+                    </div>
+                </div>
+                <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+                    <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.12); padding:5px 12px; border-radius:20px; font-size:0.75rem; font-weight:600;">
+                        <i class="fas fa-calendar-days"></i> ${label}
+                    </div>
+                    <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.12); padding:5px 12px; border-radius:20px; font-size:0.75rem; font-weight:600;">
+                        <i class="fas fa-microchip"></i> ${deviceName || selectedDeviceId}
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-bottom:18px;" class="pdf-avoid-break">
+                <div style="flex:1; border:1px solid #e6ece8; border-radius:10px; padding:12px 14px; text-align:center; background:#fbfdfc;">
+                    <div style="font-size:1.2rem; font-weight:800; color:#10261a;">${rows.length}</div>
+                    <div style="font-size:0.62rem; color:#5b6b62; margin-top:2px; letter-spacing:0.2px;">RECORDS</div>
+                </div>
+                <div style="flex:1; border:1px solid #e6ece8; border-radius:10px; padding:12px 14px; text-align:center; background:#fbfdfc;">
+                    <div style="font-size:1.2rem; font-weight:800; color:#10261a;">${avgTemp != null ? avgTemp + '°C' : '—'}</div>
+                    <div style="font-size:0.62rem; color:#5b6b62; margin-top:2px; letter-spacing:0.2px;">AVG. TEMP</div>
+                </div>
+                <div style="flex:1; border:1px solid #e6ece8; border-radius:10px; padding:12px 14px; text-align:center; background:#fbfdfc;">
+                    <div style="font-size:1.2rem; font-weight:800; color:#10261a;">${avgHum != null ? avgHum + '%' : '—'}</div>
+                    <div style="font-size:0.62rem; color:#5b6b62; margin-top:2px; letter-spacing:0.2px;">AVG. HUMIDITY</div>
+                </div>
+                <div style="flex:1; border:1px solid #e6ece8; border-radius:10px; padding:12px 14px; text-align:center; background:#fbfdfc;">
+                    <div style="font-size:1.2rem; font-weight:800; color:${dominantColor};">${dominantLabel}</div>
+                    <div style="font-size:0.62rem; color:#5b6b62; margin-top:2px; letter-spacing:0.2px;">DOMINANT RISK</div>
+                </div>
+            </div>
+
+            <div style="font-size:0.7rem; font-weight:700; letter-spacing:0.5px; color:#5b6b62; margin-bottom:8px;" class="pdf-no-orphan">DAILY READINGS</div>
+            <div style="border:1px solid #e6ece8; border-radius:14px; overflow:hidden;">
+                <table style="width:100%; table-layout:fixed; border-collapse:collapse; font-size:0.68rem;">
+                    <thead>
+                        <tr style="background:#eef5f0;">
+                            <th style="border:1px solid #e6ece8; padding:6px 8px; text-align:left; width:14%; color:#10261a;">Date</th>
+                            <th style="border:1px solid #e6ece8; padding:6px 8px; text-align:left; width:12%; color:#10261a;">Temp (°C)</th>
+                            <th style="border:1px solid #e6ece8; padding:6px 8px; text-align:left; width:12%; color:#10261a;">Hum (%)</th>
+                            <th style="border:1px solid #e6ece8; padding:6px 8px; text-align:left; width:12%; color:#10261a;">Rain (mm)</th>
+                            <th style="border:1px solid #e6ece8; padding:6px 8px; text-align:left; width:9%; color:#10261a;">pH</th>
+                            <th style="border:1px solid #e6ece8; padding:6px 8px; text-align:left; width:13%; color:#10261a;">Wind (m/s)</th>
+                            <th style="border:1px solid #e6ece8; padding:6px 8px; text-align:left; width:15%; color:#10261a;">Risk Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRowsHtml}
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top:16px; padding-top:12px; border-top:1px solid #e6ece8; font-size:0.65rem; color:#9aa79f; text-align:center;">
+                Generated by AEDOSPOT &middot; ${new Date().toLocaleString()}
+            </div>
+        </div>
+    `;
+
+    closeDeviceModal();
+    openReportPreview(
+        'Environmental Data',
+        content,
+        `AEDOSPOT_Environmental_${(deviceName || selectedDeviceId).replace(/\s+/g,'_')}_${label.replace(/\s+/g,'_')}.pdf`
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SHARED REPORT PREVIEW MODAL
+// ═══════════════════════════════════════════════════════════════
+let pendingPdfFilename = null;
+let pendingPdfBlobUrl = null;
+
+async function openReportPreview(title, htmlContent, filename) {
+    const modal = document.getElementById('reportPreviewModal');
+    const loading = document.getElementById('reportPreviewLoading');
+    const frame = document.getElementById('reportPreviewFrame');
+    const confirmBtn = document.getElementById('reportPreviewConfirm');
+
+    document.getElementById('reportPreviewTitle').textContent = `Preview — ${title}`;
+    pendingPdfFilename = filename;
+    confirmBtn.disabled = true;
+    frame.classList.add('hidden');
+    frame.src = 'about:blank';
+    loading.classList.remove('hidden');
+    loading.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating preview…';
+    modal.classList.add('show');
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pdf-render-wrapper';
+    const target = document.createElement('div');
+    target.className = 'pdf-render-target';
+    target.innerHTML = htmlContent;
+    wrapper.appendChild(target);
+    document.body.appendChild(wrapper);
+
+    const opt = {
+        margin: [0.35, 0.5, 0.5, 0.5],
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'], avoid: ['.pdf-avoid-break'] }
+    };
+
+    try {
+        const pdf = await html2pdf().set(opt).from(target).toPdf().get('pdf');
+        const url = pdf.output('bloburl');
+        document.body.removeChild(wrapper);
+
+        if (pendingPdfBlobUrl) URL.revokeObjectURL(pendingPdfBlobUrl);
+        pendingPdfBlobUrl = url;
+
+        frame.src = url + '#view=FitH';
+        frame.classList.remove('hidden');
+        loading.classList.add('hidden');
+        confirmBtn.disabled = false;
+    } catch (e) {
+        if (document.body.contains(wrapper)) document.body.removeChild(wrapper);
+        console.error('Failed to generate PDF preview:', e);
+        loading.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Could not generate the preview.';
+    }
+}
+
+function closeReportPreview() {
+    document.getElementById('reportPreviewModal').classList.remove('show');
+    document.getElementById('reportPreviewFrame').src = 'about:blank';
+    if (pendingPdfBlobUrl) { URL.revokeObjectURL(pendingPdfBlobUrl); pendingPdfBlobUrl = null; }
+    pendingPdfFilename = null;
+}
+
+function confirmReportDownload() {
+    if (!pendingPdfBlobUrl || !pendingPdfFilename) return;
+    const link = document.createElement('a');
+    link.href = pendingPdfBlobUrl;
+    link.download = pendingPdfFilename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('PDF downloaded');
+    closeReportPreview();
+}
+
+document.getElementById('reportPreviewModal').addEventListener('click', (e) => {
+    if (e.target.id === 'reportPreviewModal') closeReportPreview();
+});
+
+document.getElementById('deviceModal').addEventListener('click', (e) => {
+    if (e.target.id === 'deviceModal') closeDeviceModal();
+});
+
+// ── INIT ──
+renderLstmAccordion();
+renderEnvAccordion();
+
+window.toggleTheme = window.toggleTheme || function() {
+    document.body.classList.toggle('light-theme');
+    try { localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark'); } catch(e) {}
+    syncIcon();
+};
+</script>
+<script src="/static/theme-toggle.js"></script>
+</body>
+</html>

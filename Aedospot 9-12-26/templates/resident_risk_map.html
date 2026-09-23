@@ -1,0 +1,3905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Map | AEDOSPOT</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet Heatmap plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+    <style>
+        :root {
+            --green-deep:   #071a0f;
+            --green-dark:   #0d2b18;
+            --green-mid:    #145c30;
+            --green-bright: #2ecc71;
+            --green-bright-alt: #1a8a4a;
+            --green-glow:   rgba(46,204,113,0.18);
+            --amber:        #f39c12;
+            --red:          #e74c3c;
+            --blue:         #3498db;
+            --purple:       #9b59b6;
+            --text-main:    #e8f5ee;
+            --text-muted:   rgba(232,245,238,0.55);
+            --glass:        rgba(255,255,255,0.055);
+            --glass-border: rgba(255,255,255,0.10);
+            --nav-bg: rgba(7,26,15,0.75);
+            --nav-bg-mobile: rgba(7,26,15,0.95);
+            --bg-1: #1a5c35;
+            --bg-2: #0a2e1c;
+            --bg-3: #071a0f;
+            --on-accent: #04150a;
+        }
+
+        body.light-theme {
+            --green-deep:   #ffffff;
+            --green-dark:   #f3faf6;
+            --green-mid:    #e6f5ec;
+            --green-bright: #0d6b3a;
+            --green-bright-alt: #0a4f2a;
+            --green-glow:   rgba(13,107,58,0.10);
+            --text-main:    #10261a;
+            --text-muted:   rgba(16,38,26,0.6);
+            --glass:        rgba(13,107,58,0.045);
+            --glass-border: rgba(13,107,58,0.14);
+            --nav-bg: rgba(255,255,255,0.82);
+            --nav-bg-mobile: rgba(255,255,255,0.97);
+            --bg-1: #ffffff;
+            --bg-2: #f2faf5;
+            --bg-3: #e8f5ee;
+            --on-accent: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at 20% 0%, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background var(--transition, 0.3s), color var(--transition, 0.3s);
+        }
+
+        /* ── TOP NAV ── */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background var(--transition, 0.3s), border-color var(--transition, 0.3s);
+        }
+
+        .top-nav .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .top-nav .nav-logo-mark {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            object-fit: contain;
+            display: block;
+        }
+
+        .top-nav .nav-logo-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .top-nav .nav-logo-text .accent { color: var(--green-bright); }
+
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            list-style: none;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.28rem;
+            border-radius: 50px;
+        }
+
+        .top-nav .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            font-weight: 600;
+            padding: 0.55rem 1.05rem;
+            border-radius: 50px;
+            transition: all 0.22s ease;
+        }
+
+        .top-nav .nav-links a i { font-size: 0.82rem; }
+
+        .top-nav .nav-links a:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.07);
+        }
+
+        body.light-theme .top-nav .nav-links a:hover {
+            background: rgba(13,107,58,0.08);
+        }
+
+        .top-nav .nav-links a.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            box-shadow: 0 4px 14px rgba(46,204,113,0.35);
+        }
+
+        body.light-theme .top-nav .nav-links a.active {
+            color: var(--green-bright-alt);
+            background: linear-gradient(135deg, #ffffff, #e7f7ee);
+            border: 1px solid rgba(13,107,58,0.22);
+            box-shadow: 0 4px 14px rgba(13,107,58,0.14);
+        }
+
+        .nav-item.hidden { display: none; }
+        .hidden { display: none !important; }
+
+        .top-nav .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--green-bright);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--green-glow);
+            transform: rotate(20deg);
+        }
+
+        .top-nav .nav-actions .account-btn-top {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0.4rem 1.1rem 0.4rem 0.8rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.22s ease;
+            cursor: pointer;
+        }
+
+        .top-nav .nav-actions .account-btn-top:hover {
+            background: var(--green-glow);
+            border-color: rgba(46,204,113,0.3);
+        }
+
+        .nav-avatar-wrap {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+        }
+
+        .nav-avatar {
+            width: 100%;
+            height: 100%;
+            display: none;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .nav-avatar-wrap i {
+            font-size: 1.1rem;
+            color: var(--green-bright);
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.25;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-greeting {
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--text-muted-alt);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            max-width: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .top-nav .nav-actions .logout-btn-top {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.08);
+            color: #ff8a80;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .top-nav .nav-actions .logout-btn-top:hover {
+            background: rgba(231,76,60,0.75);
+            color: white;
+        }
+
+        /* ── MOBILE MENU ── */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+
+        .mobile-nav-dropdown {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg-mobile);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 1.5rem;
+            z-index: 99;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .mobile-nav-dropdown.open { display: flex; }
+
+        .mobile-nav-dropdown a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.22s ease;
+        }
+
+        .mobile-nav-dropdown a:hover {
+            color: var(--text-main);
+            background: var(--glass);
+        }
+
+        .mobile-nav-dropdown a.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+        }
+
+        /* ── MAIN ── */
+        .main-content {
+            margin-top: 70px;
+            padding: 1.4rem 1.6rem 1.6rem;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+        }
+
+        .dash-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem; font-weight: 700;
+            letter-spacing: 3px; color: white;
+            text-shadow: 0 0 30px rgba(46,204,113,0.25);
+        }
+
+        .realtime-badge {
+            display: flex; align-items: center; gap: 10px;
+            padding: 0.45rem 1.1rem; border-radius: 20px;
+            border: 1px solid rgba(46,204,113,0.35);
+            background: rgba(46,204,113,0.08);
+            font-size: 0.78rem; font-weight: 600;
+            letter-spacing: 0.5px; color: var(--green-bright);
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 0 0 rgba(46,204,113,0.6);
+            animation: pulse-ring 1.6s ease-in-out infinite; flex-shrink: 0;
+        }
+
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(46,204,113,0.65); }
+            60%  { box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+            100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+        }
+
+        .realtime-divider { width: 1px; height: 14px; background: rgba(46,204,113,0.3); }
+        .realtime-clock-wrap { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+        .realtime-clock {
+            font-family: 'Inter', sans-serif; font-size: 1rem;
+            font-weight: 700; letter-spacing: 1px; color: var(--green-bright); white-space: nowrap;
+        }
+        .realtime-date {
+            font-family: 'Inter', sans-serif; font-size: 0.65rem;
+            font-weight: 500; color: rgba(46,204,113,0.7); white-space: nowrap;
+        }
+
+        /* ── RISK COUNTER ROW ── */
+        .risk-counters {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr) 1.6fr;
+            gap: 0.9rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .risk-counter-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            padding: 1rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .risk-counter-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+
+        .risk-counter-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: var(--card-accent, var(--green-bright)); opacity: 0.7;
+        }
+
+        .risk-counter-label {
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .risk-counter-value {
+            font-family: 'Inter', sans-serif;
+            font-size: 2.4rem; font-weight: 700; line-height: 1;
+            color: var(--card-accent, var(--green-bright));
+        }
+
+        .risk-counter-sub {
+            font-size: 0.68rem; color: var(--text-muted);
+            display: flex; align-items: center; gap: 5px;
+        }
+
+        /* LSTM prediction mini card */
+        .lstm-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            padding: 0.9rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .lstm-header {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem; font-weight: 700;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            color: var(--text-main);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .lstm-header i { color: var(--red); font-size: 0.9rem; }
+
+        .lstm-chart-wrap { flex: 1; position: relative; min-height: 60px; }
+
+        /* ── MAIN GRID ── */
+        .map-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 1rem;
+        }
+
+        /* MAP CARD */
+        .map-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            padding: 0.9rem 1.2rem 0.7rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .card-header-left { display: flex; align-items: center; gap: 8px; }
+        .card-header i { color: var(--green-bright); }
+
+        /* Layer toggle buttons */
+        .layer-toggles { display: flex; gap: 4px; }
+        .layer-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68rem; font-weight: 600;
+            padding: 3px 10px; border-radius: 6px;
+            border: 1px solid var(--glass-border);
+            background: transparent; color: var(--text-muted);
+            cursor: pointer; transition: all 0.2s;
+        }
+        .layer-btn.active, .layer-btn:hover {
+            background: var(--green-glow); color: var(--green-bright);
+            border-color: rgba(46,204,113,0.3);
+        }
+
+        #map {
+            flex: 1;
+            min-height: 400px;
+            border-radius: 0 0 14px 14px;
+        }
+
+        .leaflet-container { background: #0d2b18; }
+        /* The heat layer is purely decorative — it sat above the barangay
+           polygons in z-index and, as a full-canvas overlay, was eating
+           every map click before it could reach the barangay shape below,
+           even over fully transparent pixels. Click-through fixes it. */
+        .leaflet-heatmap-layer { pointer-events: none; }
+
+        /* Map info popup */
+        .map-popup-custom .leaflet-popup-content-wrapper {
+            background: rgba(7,26,15,0.95);
+            border: 1px solid rgba(46,204,113,0.25);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+        }
+        .map-popup-custom .leaflet-popup-tip { background: rgba(7,26,15,0.95); }
+
+        /* ── FIXED MARKER STYLES ── */
+        /* Marker dots - bigger and more visible */
+        .marker-dot {
+            width: 18px !important;
+            height: 18px !important;
+            border-radius: 50% !important;
+            border: 3px solid #ffffff !important;
+            box-shadow: 0 0 12px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.3) !important;
+            transition: transform 0.2s ease;
+        }
+        .marker-dot:hover {
+            transform: scale(1.2);
+        }
+        .marker-dot-high {
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 16px rgba(231,76,60,0.6), 0 0 30px rgba(231,76,60,0.3) !important;
+        }
+        .marker-dot-moderate {
+            background: radial-gradient(circle at 30% 30%, #f7dc6f, #d4a017) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 16px rgba(243,156,18,0.5), 0 0 30px rgba(243,156,18,0.25) !important;
+        }
+        .marker-dot-low {
+            background: radial-gradient(circle at 30% 30%, #58d68d, #1a8a4a) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 16px rgba(46,204,113,0.4), 0 0 30px rgba(46,204,113,0.2) !important;
+        }
+
+        /* Device marker - diamond shape with glow */
+        .marker-device {
+            width: 16px !important;
+            height: 16px !important;
+            border: 2.5px solid #ffffff !important;
+            box-shadow: 0 0 12px rgba(0,0,0,0.5), 0 0 20px rgba(52,152,219,0.3) !important;
+            transform: rotate(45deg) !important;
+            transition: transform 0.2s ease;
+        }
+        .marker-device:hover {
+            transform: rotate(45deg) scale(1.15) !important;
+        }
+        .marker-device-online {
+            background: radial-gradient(circle at 30% 30%, #5dade2, #1a5276) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 16px rgba(52,152,219,0.5), 0 0 30px rgba(52,152,219,0.25) !important;
+        }
+        .marker-device-offline {
+            background: radial-gradient(circle at 30% 30%, #aab7b8, #5d6d7e) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(0,0,0,0.3) !important;
+        }
+
+        /* ── RESIDENT "MY AREA" HIGHLIGHT ── pulsing ring around the
+           resident's Near Monitored Location and the sensor deployment
+           that feeds it, so the resident can spot their own area at a
+           glance regardless of whether the map is in heat/marker/both mode. */
+        .resident-highlight-marker { position: relative; width: 22px; height: 22px; }
+        .resident-highlight-marker .ring {
+            position: absolute; inset: 0; border-radius: 50%;
+            border: 3px solid #3498db;
+            animation: residentPulse 1.8s ease-out infinite;
+        }
+        .resident-highlight-marker .dot {
+            position: absolute; top: 50%; left: 50%; width: 12px; height: 12px;
+            margin: -6px 0 0 -6px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #5dade2, #2471a3);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 10px rgba(52,152,219,0.9);
+        }
+        .resident-highlight-marker.sensor .ring { border-color: #9b59b6; }
+        .resident-highlight-marker.sensor .dot {
+            background: radial-gradient(circle at 30% 30%, #c39bd3, #6c3483);
+            box-shadow: 0 0 10px rgba(155,89,182,0.9);
+        }
+        @keyframes residentPulse {
+            0%   { transform: scale(0.6); opacity: 0.9; }
+            100% { transform: scale(2.4); opacity: 0; }
+        }
+        .resident-tooltip {
+            background: rgba(52,152,219,0.92) !important;
+            border-color: rgba(255,255,255,0.4) !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+        .resident-tooltip.sensor-tooltip {
+            background: rgba(155,89,182,0.92) !important;
+        }
+
+        /* Permanent marker labels (location names) shown on the map */
+        .map-label-tooltip {
+            background: rgba(7,26,15,0.85);
+            border: 1px solid rgba(46,204,113,0.3);
+            border-radius: 6px;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            white-space: nowrap;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .map-label-tooltip::before {
+            border-top-color: rgba(46,204,113,0.3);
+        }
+
+        /* Light mode label fixes */
+        body.light-theme .map-label-tooltip {
+            background: rgba(255,255,255,0.92) !important;
+            border-color: rgba(13,107,58,0.3) !important;
+            color: #0d1f17 !important;
+            text-shadow: none !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
+        }
+
+        body.light-theme .map-label-tooltip::before {
+            border-top-color: rgba(13,107,58,0.3) !important;
+        }
+
+        /* Light mode popup fixes */
+        body.light-theme .map-popup-custom .leaflet-popup-content-wrapper {
+            background: rgba(255,255,255,0.95) !important;
+            border-color: rgba(13,107,58,0.2) !important;
+            color: #0d1f17 !important;
+        }
+
+        body.light-theme .map-popup-custom .leaflet-popup-tip {
+            background: rgba(255,255,255,0.95) !important;
+        }
+
+        body.light-theme .map-popup-custom .leaflet-popup-content div {
+            color: #0d1f17 !important;
+        }
+
+        body.light-theme .map-popup-custom .leaflet-popup-content span {
+            color: rgba(13,31,23,0.6) !important;
+        }
+
+        body.light-theme .map-popup-custom .popup-action-btn {
+            color: #0d1f17 !important;
+            border-color: rgba(13,31,23,0.15) !important;
+            background: rgba(13,31,23,0.05) !important;
+        }
+
+        body.light-theme .map-popup-custom .popup-action-btn:hover {
+            background: rgba(13,31,23,0.1) !important;
+        }
+
+        body.light-theme .map-popup-custom .popup-action-btn.danger {
+            color: #c0392b !important;
+            background: rgba(192,57,43,0.1) !important;
+            border-color: rgba(192,57,43,0.3) !important;
+        }
+
+        body.light-theme .map-popup-custom .popup-action-btn.danger:hover {
+            background: rgba(192,57,43,0.2) !important;
+        }
+
+        /* ── ADD LOCATION (Leaflet control, top-left of the map) ── */
+        .add-location-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--green-bright);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            color: var(--on-accent);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 3px 14px rgba(46,204,113,0.35);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .add-location-btn i { font-size: 0.78rem; }
+        .add-location-btn:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 4px 18px rgba(46,204,113,0.5);
+            transform: translateY(-1px);
+        }
+        .add-location-btn.active {
+            background: rgba(7,26,15,0.9);
+            color: var(--green-bright);
+            border-color: var(--green-bright);
+            box-shadow: inset 0 0 0 1px var(--green-bright);
+        }
+
+        /* ── LIGHT MODE FIXES FOR MAP CONTROLS ── */
+        body.light-theme .add-location-btn {
+            background: linear-gradient(135deg, #0d6b3a, #0a4f2a) !important;
+            color: #ffffff !important;
+            border-color: #0d6b3a !important;
+        }
+
+        body.light-theme .add-location-btn.active {
+            background: #ffffff !important;
+            color: #0d6b3a !important;
+            border-color: #0d6b3a !important;
+            box-shadow: inset 0 0 0 2px #0d6b3a !important;
+        }
+
+        body.light-theme .add-location-btn:hover {
+            filter: brightness(1.1) !important;
+            box-shadow: 0 4px 18px rgba(13,107,58,0.4) !important;
+        }
+
+        /* ── ADD DEVICE DEPLOYMENT ── */
+        .add-device-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--blue);
+            background: linear-gradient(135deg, var(--blue), #2980b9);
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 3px 14px rgba(52,152,219,0.35);
+            transition: all 0.2s;
+            white-space: nowrap;
+            margin-top: 8px;
+        }
+        .add-device-btn i { font-size: 0.78rem; }
+        .add-device-btn:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 4px 18px rgba(52,152,219,0.5);
+            transform: translateY(-1px);
+        }
+        .add-device-btn.active {
+            background: rgba(7,26,15,0.9);
+            color: var(--blue);
+            border-color: var(--blue);
+            box-shadow: inset 0 0 0 1px var(--blue);
+        }
+
+        body.light-theme .add-device-btn {
+            background: linear-gradient(135deg, #1f6fb0, #164f7d) !important;
+            color: #ffffff !important;
+            border-color: #1f6fb0 !important;
+        }
+
+        body.light-theme .add-device-btn:hover {
+            filter: brightness(1.1) !important;
+            box-shadow: 0 4px 18px rgba(31,111,176,0.4) !important;
+        }
+
+        body.light-theme .add-device-btn.active {
+            background: #ffffff !important;
+            color: #1f6fb0 !important;
+            border-color: #1f6fb0 !important;
+            box-shadow: inset 0 0 0 2px #1f6fb0 !important;
+        }
+
+        /* ── MAP POPUP ACTION BUTTONS ── */
+        .popup-actions {
+            display: flex; gap: 6px; margin-top: 10px;
+            padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .popup-action-btn {
+            flex: 1;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68rem; font-weight: 600;
+            padding: 6px 8px; border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            color: #e8f5ee;
+            cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+            transition: all 0.2s;
+        }
+        .popup-action-btn:hover { background: rgba(255,255,255,0.14); }
+        .popup-action-btn.danger {
+            color: #ff8a80;
+            background: rgba(231,76,60,0.14);
+            border-color: rgba(231,76,60,0.4);
+        }
+        .popup-action-btn.danger:hover { background: rgba(231,76,60,0.28); }
+
+        /* ── ADD LOCATION MODAL ── */
+        .modal-backdrop {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: none;
+            align-items: center; justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal-box {
+            width: 340px; max-width: 100%;
+            background: var(--green-dark);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 1.4rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        }
+        .modal-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            margin-bottom: 4px;
+            display: flex; align-items: center; gap: 8px;
+            color: var(--text-main);
+        }
+        .modal-title i { color: var(--green-bright); }
+        .modal-sub { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4; }
+        .modal-input {
+            width: 100%; padding: 10px 12px;
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 8px; color: var(--text-main); font-family: 'Inter', sans-serif;
+            font-size: 0.85rem; margin-bottom: 16px;
+        }
+        .modal-input:focus { outline: none; border-color: var(--green-bright); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 8px; }
+        .modal-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem; font-weight: 600;
+            padding: 8px 14px; border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            background: transparent; color: var(--text-muted);
+            transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .modal-btn:hover { color: var(--text-main); }
+        .modal-btn.primary {
+            background: var(--green-bright); color: var(--on-accent); border-color: var(--green-bright);
+        }
+        .modal-btn.primary:hover { opacity: 0.9; }
+        .modal-btn.danger {
+            color: #ffffff;
+            background: var(--red);
+            border-color: var(--red);
+            margin-right: auto;
+        }
+        .modal-btn.danger:hover { background: #c0392b; border-color: #c0392b; }
+        .modal-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* ── LIGHT MODE FIXES FOR MODAL ── */
+        body.light-theme .modal-box {
+            background: #ffffff !important;
+            border-color: rgba(13,107,58,0.2) !important;
+        }
+
+        body.light-theme .modal-title {
+            color: #0d1f17 !important;
+        }
+
+        body.light-theme .modal-title i {
+            color: #0d6b3a !important;
+        }
+
+        body.light-theme .modal-sub {
+            color: rgba(13,31,23,0.6) !important;
+        }
+
+        body.light-theme .modal-input {
+            background: #f3faf6 !important;
+            border-color: rgba(13,31,23,0.15) !important;
+            color: #0d1f17 !important;
+        }
+
+        body.light-theme .modal-input:focus {
+            border-color: #0d6b3a !important;
+            box-shadow: 0 0 0 3px rgba(13,107,58,0.15) !important;
+        }
+
+        body.light-theme .modal-btn {
+            color: rgba(13,31,23,0.6) !important;
+            border-color: rgba(13,31,23,0.15) !important;
+        }
+
+        body.light-theme .modal-btn:hover {
+            color: #0d1f17 !important;
+        }
+
+        body.light-theme .modal-btn.primary {
+            background: #0d6b3a !important;
+            color: #ffffff !important;
+            border-color: #0d6b3a !important;
+        }
+
+        body.light-theme .modal-btn.primary:hover {
+            background: #0a4f2a !important;
+        }
+
+        body.light-theme .modal-btn.danger {
+            background: #c0392b !important;
+            color: #ffffff !important;
+            border-color: #c0392b !important;
+        }
+
+        body.light-theme .modal-btn.danger:hover {
+            background: #a93226 !important;
+        }
+
+        /* ── BARANGAY USERS MODAL ── */
+        .barangay-users-box {
+            width: 440px !important;
+            padding: 0 !important;
+            overflow: hidden;
+        }
+        .barangay-users-header {
+            display: flex; align-items: center; gap: 12px;
+            padding: 1.2rem 1.4rem 1rem;
+            background: linear-gradient(135deg, rgba(46,204,113,0.10), rgba(46,204,113,0.02));
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .barangay-users-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.05rem; color: var(--on-accent);
+            box-shadow: 0 4px 14px rgba(46,204,113,0.3);
+            flex-shrink: 0;
+        }
+        .barangay-users-heading { min-width: 0; flex: 1; }
+        .barangay-users-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.98rem; font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .barangay-users-sub {
+            font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;
+        }
+        .barangay-users-close {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-muted);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; cursor: pointer; flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .barangay-users-close:hover { color: var(--text-main); background: rgba(255,255,255,0.08); }
+        .barangay-users-list {
+            max-height: 360px;
+            overflow-y: auto;
+            padding: 0.4rem 0;
+        }
+        .barangay-user-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 0.7rem 1.4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.15s;
+        }
+        .barangay-user-row:last-child { border-bottom: none; }
+        .barangay-user-row:hover { background: rgba(255,255,255,0.025); }
+        .barangay-user-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--green-glow);
+            color: var(--green-bright);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+            border: 1px solid rgba(46,204,113,0.25);
+            overflow: hidden;
+            position: relative;
+        }
+        .barangay-user-avatar img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .barangay-user-info { min-width: 0; flex: 1; }
+        .barangay-user-name {
+            font-size: 0.83rem; font-weight: 600; color: var(--text-main);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .barangay-user-email {
+            font-size: 0.7rem; color: var(--text-muted); margin-top: 1px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .barangay-user-near {
+            font-size: 0.68rem; color: var(--text-muted); margin-top: 3px;
+            display: flex; align-items: center; gap: 5px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .barangay-user-near i { color: var(--green-bright); font-size: 0.62rem; flex-shrink: 0; }
+        .barangay-user-near.unset { color: var(--text-muted); opacity: 0.6; font-style: italic; }
+        .barangay-user-near-label { font-weight: 500; color: var(--text-muted); flex-shrink: 0; }
+        .barangay-user-near-value { font-weight: 700; color: var(--text-main); }
+        .barangay-user-near.unset .barangay-user-near-value { color: var(--text-muted); font-weight: 500; }
+        .barangay-user-admin-tag {
+            font-size: 0.58rem; font-weight: 700; letter-spacing: 0.4px;
+            padding: 3px 9px; border-radius: 20px;
+            background: rgba(46,204,113,0.15); color: var(--green-bright);
+            flex-shrink: 0;
+        }
+        .barangay-users-empty {
+            padding: 2.4rem 1.4rem; text-align: center;
+            color: var(--text-muted); font-size: 0.8rem;
+        }
+        .barangay-users-empty i {
+            display: block; font-size: 1.6rem; margin-bottom: 10px;
+            color: var(--text-muted); opacity: 0.5;
+        }
+        .barangay-users-loading {
+            padding: 2.4rem 1.4rem; text-align: center;
+            color: var(--text-muted); font-size: 0.8rem;
+        }
+        .barangay-loc-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.65rem 1.3rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .barangay-loc-row:last-child { border-bottom: none; }
+        .barangay-loc-row:hover { background: rgba(255,255,255,0.025); }
+        .barangay-loc-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+        .barangay-loc-info { min-width: 0; flex: 1; }
+        .barangay-loc-name {
+            font-weight: 700;
+            font-size: 0.86rem;
+            color: var(--text-main);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .barangay-loc-meta {
+            display: flex;
+            gap: 10px;
+            margin-top: 2px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+        .barangay-loc-risk {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            padding: 3px 9px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+        body.light-theme .barangay-loc-name { color: #0d1f17 !important; }
+        body.light-theme .barangay-loc-meta { color: rgba(13,31,23,0.55) !important; }
+
+        .barangay-users-footer {
+            padding: 0.85rem 1.4rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex; justify-content: flex-end;
+        }
+        body.light-theme .barangay-users-header {
+            background: linear-gradient(135deg, rgba(13,107,58,0.08), rgba(13,107,58,0.01)) !important;
+        }
+        body.light-theme .barangay-users-title { color: #0d1f17 !important; }
+        body.light-theme .barangay-users-close {
+            background: #f3faf6 !important;
+            border-color: rgba(13,31,23,0.15) !important;
+            color: rgba(13,31,23,0.6) !important;
+        }
+        body.light-theme .barangay-user-avatar {
+            background: rgba(13,107,58,0.1) !important;
+            color: #0d6b3a !important;
+            border-color: rgba(13,107,58,0.25) !important;
+        }
+        body.light-theme .barangay-user-name { color: #0d1f17 !important; }
+        body.light-theme .barangay-user-email { color: rgba(13,31,23,0.55) !important; }
+        body.light-theme .barangay-user-near { color: rgba(13,31,23,0.55) !important; }
+        body.light-theme .barangay-user-near i { color: #0d6b3a !important; }
+        body.light-theme .barangay-user-near-label { color: rgba(13,31,23,0.55) !important; }
+        body.light-theme .barangay-user-near-value { color: #10261a !important; }
+        body.light-theme .barangay-user-near.unset .barangay-user-near-value { color: rgba(13,31,23,0.55) !important; }
+        body.light-theme .barangay-user-admin-tag {
+            background: rgba(13,107,58,0.12) !important;
+            color: #0d6b3a !important;
+        }
+
+        /* ── CONFIRM DIALOG ── */
+        .confirm-dialog {
+            max-width: 400px !important;
+        }
+
+        .confirm-dialog-title {
+            color: var(--text-main) !important;
+        }
+
+        .confirm-dialog-title i {
+            color: var(--red) !important;
+        }
+
+        .confirm-dialog-message {
+            color: var(--text-muted) !important;
+            font-size: 0.85rem !important;
+            line-height: 1.5 !important;
+            margin-bottom: 18px !important;
+        }
+
+        .confirm-dialog .modal-btn.confirm-danger {
+            background: var(--red) !important;
+            color: #ffffff !important;
+            border-color: var(--red) !important;
+        }
+
+        .confirm-dialog .modal-btn.confirm-danger:hover {
+            background: #c0392b !important;
+        }
+
+        .confirm-dialog .modal-btn.confirm-cancel {
+            border-color: var(--glass-border) !important;
+            color: var(--text-muted) !important;
+        }
+
+        .confirm-dialog .modal-btn.confirm-cancel:hover {
+            color: var(--text-main) !important;
+        }
+
+        body.light-theme .confirm-dialog .modal-btn.confirm-danger {
+            background: #c0392b !important;
+            color: #ffffff !important;
+            border-color: #c0392b !important;
+        }
+
+        body.light-theme .confirm-dialog .modal-btn.confirm-danger:hover {
+            background: #a93226 !important;
+        }
+
+        body.light-theme .confirm-dialog .modal-btn.confirm-cancel {
+            color: rgba(13,31,23,0.6) !important;
+            border-color: rgba(13,31,23,0.15) !important;
+        }
+
+        body.light-theme .confirm-dialog .modal-btn.confirm-cancel:hover {
+            color: #0d1f17 !important;
+        }
+
+        body.light-theme .confirm-dialog-title {
+            color: #0d1f17 !important;
+        }
+
+        body.light-theme .confirm-dialog-message {
+            color: rgba(13,31,23,0.7) !important;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--nav-bg-mobile);
+            border: 1px solid rgba(46,204,113,0.35);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-main);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 999;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(.4,0,.2,1);
+            pointer-events: none;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--green-bright); }
+
+        /* RIGHT PANEL */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* LSTM Big Chart */
+        .lstm-big-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .lstm-confidence-badge {
+            text-align: center;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            white-space: nowrap;
+            margin: 0.1rem 0 0.7rem;
+        }
+
+        .lstm-big-body {
+            padding: 0.8rem 1rem;
+            position: relative;
+            height: 190px;
+        }
+
+        /* RISK CLASSIFICATION */
+        .risk-class-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .risk-class-list { padding: 0.4rem 0; }
+
+        .risk-class-item {
+            display: flex; align-items: flex-start;
+            gap: 12px; padding: 0.75rem 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.2s;
+        }
+        .risk-class-item:last-child { border-bottom: none; }
+        .risk-class-item:hover { background: rgba(255,255,255,0.03); }
+
+        .risk-class-icon {
+            width: 34px; height: 34px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+
+        .risk-class-body { flex: 1; }
+        .risk-class-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem; font-weight: 700;
+            letter-spacing: 0.5px; margin-bottom: 2px;
+        }
+        .risk-class-desc { font-size: 0.68rem; color: var(--text-muted); line-height: 1.4; }
+
+        /* ── MY BARANGAY (ported from resident_2.html) ── */
+        .my-barangay-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .my-barangay-card:hover { background: rgba(255,255,255,0.03); }
+        .my-barangay-card.no-barangay { cursor: default; }
+
+        .my-barangay-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.9rem;
+            padding: 1.5rem 1.2rem;
+            text-align: center;
+        }
+
+        .my-barangay-icon {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            background: var(--mb-accent-glow, rgba(255,255,255,0.08));
+            color: var(--mb-accent, var(--text-muted));
+            border: 1px solid var(--mb-accent-border, var(--glass-border));
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .my-barangay-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .my-barangay-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.35rem; font-weight: 800;
+            letter-spacing: 0.3px;
+            color: var(--text-main);
+            line-height: 1.25;
+        }
+
+        .my-barangay-badge {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.8px; text-transform: uppercase;
+            padding: 5px 16px;
+            border-radius: 999px;
+            display: inline-flex; align-items: center; gap: 7px;
+            background: var(--mb-accent-glow, rgba(255,255,255,0.08));
+            color: var(--mb-accent, var(--text-muted));
+            border: 1px solid var(--mb-accent-border, var(--glass-border));
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .my-barangay-badge i { font-size: 0.5rem; }
+
+        /* ── MONITORED MORONG LOCATIONS ── */
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.65rem 1.2rem;
+            border-bottom: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--green-glow);
+            color: var(--green-bright);
+            border-color: rgba(46,204,113,0.3);
+        }
+
+        .filter-btn.f-high.active, .filter-btn.f-high:hover {
+            background: rgba(231,76,60,0.15);
+            color: var(--red);
+            border-color: rgba(231,76,60,0.3);
+        }
+
+        .filter-btn.f-moderate.active, .filter-btn.f-moderate:hover {
+            background: rgba(243,156,18,0.15);
+            color: var(--amber);
+            border-color: rgba(243,156,18,0.3);
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .hotspot-table { width: 100%; min-width: 620px; border-collapse: collapse; }
+        .hotspot-table th {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0.6rem 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .hotspot-table td {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .hotspot-table tr:last-child td { border-bottom: none; }
+        .hotspot-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+        .risk-pill {
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 2px 9px;
+            border-radius: 20px;
+            display: inline-block;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .pill-high     { background: rgba(231,76,60,0.2);  color: var(--red); }
+        .pill-moderate { background: rgba(243,156,18,0.2); color: var(--amber); }
+        .pill-low      { background: rgba(46,204,113,0.2); color: var(--green-bright); }
+        .pill-online   { background: rgba(52,152,219,0.2); color: var(--blue); }
+        .pill-offline  { background: rgba(127,140,141,0.2); color: #95a5a6; }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+            filter: blur(2px);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        .stagger-children>* {
+            opacity: 0;
+            transform: translateY(30px) scale(0.97);
+            filter: blur(1px);
+            animation: staggerIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .stagger-children>*:nth-child(1) { animation-delay: 0.05s; }
+        .stagger-children>*:nth-child(2) { animation-delay: 0.10s; }
+        .stagger-children>*:nth-child(3) { animation-delay: 0.15s; }
+        .stagger-children>*:nth-child(4) { animation-delay: 0.20s; }
+        .stagger-children>*:nth-child(5) { animation-delay: 0.25s; }
+
+        @keyframes staggerIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.97);
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        .page-transition {
+            animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(3px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        /* Responsive */
+
+        /* Tablet / small laptop: keep full nav links but tighten spacing
+           so they don't overflow before the hamburger breakpoint kicks in. */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .top-nav { padding: 0.6rem 1.2rem; }
+            .top-nav .nav-links { gap: 0.45rem; padding: 0.22rem; }
+            .top-nav .nav-links a { padding: 0.5rem 0.75rem; font-size: 0.76rem; }
+            .top-nav .nav-links a span { display: none; }
+            .top-nav .nav-links a i { font-size: 0.95rem; }
+        }
+
+        @media (max-width: 1100px) {
+            .map-grid { grid-template-columns: 1fr; }
+            .risk-counters { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            /* theme.css forces padding-left:52px !important on .top-bar
+               (leftover spacing meant for another page's back button).
+               That asymmetric padding throws off the centering here, so
+               neutralize it — same specificity, loads after theme.css. */
+            .top-bar { padding-left: 0 !important; }
+            .top-nav { padding: 0.55rem 1rem; }
+            .top-nav .nav-links { display: none; }
+            .menu-toggle { display: block; }
+
+            /* Icon-only account button on mobile: keep it a single tap
+               target that still links to /account, just drop the text. */
+            .top-nav .nav-actions .account-btn-top {
+                gap: 0;
+                padding: 0;
+                width: 38px;
+                height: 38px;
+                justify-content: center;
+                border-radius: 50%;
+            }
+            .top-nav .nav-actions .account-btn-top .user-name-stack {
+                display: none;
+            }
+
+            .main-content { padding: 1rem; }
+            .top-bar { flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
+            .dash-title { font-size: 1.4rem; letter-spacing: 1.5px; }
+            .realtime-divider { display: none; }
+            .realtime-badge { flex-shrink: 0; white-space: nowrap; }
+
+            /* Phone layout: High / Moderate / Low stay in one 3-column row,
+               and the LSTM prediction card drops to its own full-width row
+               underneath instead of squeezing into a 4th column. */
+            .risk-counters { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+            .lstm-big-card { grid-column: 1 / -1; }
+            .risk-counter-card { padding: 0.7rem 0.6rem; gap: 2px; }
+            .risk-counter-label { font-size: 0.55rem; letter-spacing: 0.6px; }
+            .risk-counter-value { font-size: 1.5rem; }
+            .risk-counter-sub { font-size: 0.6rem; }
+        }
+
+        /* theme.css ships a global rule that hides .realtime-clock entirely
+           below 650px (display:none !important). That's too aggressive for
+           this dashboard, so re-show it here. Same specificity + !important,
+           and this <style> block loads after theme.css, so this wins. */
+        @media (max-width: 650px) {
+            .realtime-clock {
+                display: block !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .top-nav { padding: 0.5rem 0.8rem; }
+            .top-nav .nav-logo-text { font-size: 0.9rem; }
+            .top-nav .nav-logo-mark { width: 28px; height: 28px; font-size: 0.85rem; }
+            .theme-toggle-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+            .top-nav .nav-actions { gap: 0.35rem; }
+            .top-nav .nav-actions .account-btn-top { width: 34px; height: 34px; }
+            .nav-avatar-wrap { width: 22px; height: 22px; }
+            .top-nav .nav-actions .logout-btn-top { padding: 0.3rem 0.6rem; font-size: 0.65rem; }
+
+            .risk-counters { gap: 0.4rem; }
+            .risk-counter-card { padding: 0.6rem 0.45rem; }
+            .risk-counter-label { font-size: 0.5rem; letter-spacing: 0.4px; }
+            .risk-counter-value { font-size: 1.25rem; }
+            .risk-counter-sub { font-size: 0.55rem; }
+            .risk-counter-sub i { display: none; }
+        }
+
+        @media (max-width: 360px) {
+            .top-nav .nav-logo-text { font-size: 0.8rem; }
+            .top-nav .nav-logo-mark { width: 24px; height: 24px; }
+            .dash-title { font-size: 1.2rem; letter-spacing: 1px; }
+            .realtime-badge { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            .realtime-clock { font-size: 0.85rem; }
+
+            .risk-counters { gap: 0.3rem; }
+            .risk-counter-card { padding: 0.5rem 0.35rem; }
+            .risk-counter-value { font-size: 1.1rem; }
+            .risk-counter-label { font-size: 0.46rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll,
+            .animate-on-scroll.visible,
+            .stagger-children>*,
+            .page-transition {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+        /* ── SENSOR MANAGEMENT (moved here from admin_settings) ── */
+        .section-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 0.9rem 1.3rem 0.75rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-header i { color: var(--green-bright); font-size: 0.9rem; }
+
+        body.light-theme .section-header i {
+            color: var(--green-bright);
+        }
+
+
+        /* ── SENSOR MANAGEMENT TABLE ── */
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .sensor-table { width: 100%; min-width: 560px; border-collapse: collapse; }
+        .sensor-table th {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0.55rem 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .sensor-table td {
+            padding: 0.65rem 1.2rem;
+            font-size: 0.78rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .sensor-table tr:last-child td { border-bottom: none; }
+        .sensor-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        body.light-theme .sensor-table th {
+            border-bottom-color: rgba(13,107,58,0.1);
+        }
+        body.light-theme .sensor-table td {
+            border-bottom-color: rgba(13,107,58,0.05);
+        }
+        body.light-theme .sensor-table tr:hover td {
+            background: rgba(13,107,58,0.03);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .sensor-status-cell {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-dot.dot-online {
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(46,204,113,0.5);
+        }
+        .status-dot.dot-offline { background: var(--red); }
+        .status-dot.dot-warning { background: var(--amber); }
+
+        body.light-theme .status-dot.dot-online {
+            box-shadow: 0 0 6px rgba(13,107,58,0.3);
+        }
+
+        /* Ping / Set Location buttons */
+        .ping-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.68rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        .ping-btn:hover {
+            color: var(--green-bright);
+            border-color: rgba(46,204,113,0.3);
+        }
+        body.light-theme .ping-btn:hover {
+            color: var(--green-bright);
+            border-color: rgba(13,107,58,0.3);
+        }
+
+        .set-location-btn {
+            background: transparent;
+            border: 1px dashed var(--glass-border);
+            color: var(--text-muted);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.68rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .set-location-btn:hover {
+            color: var(--green-bright);
+            border-color: rgba(46,204,113,0.4);
+            border-style: solid;
+        }
+        body.light-theme .set-location-btn:hover {
+            color: var(--green-bright);
+            border-color: rgba(13,107,58,0.4);
+        }
+
+        /* ── SET SENSOR LOCATION MODAL (pick a deployed device) ── */
+        .device-pick-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .device-pick-empty {
+            padding: 1.4rem 0.4rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+        .device-pick-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.55rem 0.7rem;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+        .device-pick-item:hover {
+            border-color: rgba(52,152,219,0.4);
+            background: rgba(52,152,219,0.08);
+        }
+        .device-pick-item.selected {
+            border-color: var(--green-bright);
+            background: var(--green-glow);
+        }
+        .device-pick-icon {
+            width: 30px; height: 30px; flex-shrink: 0;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(52,152,219,0.12);
+            font-size: 0.85rem;
+        }
+        .device-pick-info { min-width: 0; flex: 1; }
+        .device-pick-name {
+            font-size: 0.82rem; font-weight: 600; color: var(--text-main);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .device-pick-coords {
+            font-size: 0.68rem; color: var(--text-muted); margin-top: 1px;
+        }
+        .device-pick-check {
+            color: var(--green-bright);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        body.light-theme .device-pick-item {
+            background: #f3faf6;
+            border-color: rgba(13,31,23,0.12);
+        }
+        body.light-theme .device-pick-item:hover {
+            border-color: rgba(31,111,176,0.4);
+            background: rgba(31,111,176,0.06);
+        }
+        body.light-theme .device-pick-item.selected {
+            border-color: #0d6b3a;
+            background: rgba(13,107,58,0.08);
+        }
+        body.light-theme .device-pick-name { color: #0d1f17; }
+    </style>
+</head>
+<body>
+<script>
+    // ── EARLY THEME INIT (prevents flash of wrong theme) ──
+    (function() {
+        try {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        } catch(e) {}
+    })();
+</script>
+
+<!-- ── TOP NAV ── -->
+<nav class="top-nav">
+    <a href="/home" class="nav-logo">
+        <img src="/static/aedospot-logo.png" alt="AEDOSPOT" class="nav-logo-mark" onerror="this.style.display='none'">
+        <span class="nav-logo-text">AEDO<span class="accent">SPOT</span></span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/home"><i class="fas fa-house"></i><span>Home</span></a></li>
+        <li><a href="/risk_map" class="active"><i class="fas fa-map-location-dot"></i><span>Risk Map</span></a></li>
+        <li><a href="/alerts"><i class="fas fa-triangle-exclamation"></i><span>Alerts &amp; Notifications</span></a></li>
+        <li><a href="/account" id="navMyAccount"><i class="fas fa-id-card"></i><span>My Account</span></a></li>
+    </ul>
+
+    <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <a href="/account" class="account-btn-top" id="accountBtn">
+            <span class="nav-avatar-wrap">
+                <img id="navAvatar" class="nav-avatar" src="" alt="Profile">
+                <i id="navAvatarFallback" class="fas fa-user-circle"></i>
+            </span>
+            <span class="user-name-stack">
+                <span class="user-greeting" id="userGreeting">Resident</span>
+                <span class="user-name" id="userName">User</span>
+            </span>
+        </a>
+        <button class="logout-btn-top" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav-dropdown" id="mobileNav">
+    <a href="/home"><i class="fas fa-house"></i>&nbsp; Home</a>
+    <a href="/risk_map" class="active"><i class="fas fa-map-location-dot"></i>&nbsp; Risk Map</a>
+    <a href="/alerts"><i class="fas fa-triangle-exclamation"></i>&nbsp; Alerts &amp; Notifications</a>
+    <a href="/account" id="mobileNavMyAccount"><i class="fas fa-id-card"></i>&nbsp; My Account</a>
+</div>
+
+<!-- MAIN -->
+<main class="main-content" id="mainContent">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="dash-title animate-on-scroll">RISK MAP</div>
+        <div class="realtime-badge">
+            <div class="pulse-dot"></div>
+            REAL TIME
+            <div class="realtime-divider"></div>
+            <div class="realtime-clock-wrap">
+                <div class="realtime-clock" id="realtimeClock">12:00:00 AM</div>
+                <div class="realtime-date" id="realtimeDate">Monday, Jan 1, 2025</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RISK COUNTERS + LSTM MINI -->
+    <div class="risk-counters animate-on-scroll stagger-children">
+
+        <div class="risk-counter-card" style="--card-accent: var(--red);">
+            <div class="risk-counter-label"><i class="fas fa-circle" style="color:var(--red); font-size:0.5rem;"></i> &nbsp;High Risk Areas</div>
+            <div class="risk-counter-value" id="cntHigh">0</div>
+            <div class="risk-counter-sub"><i class="fas fa-map-marker-alt"></i> Active hotspots</div>
+        </div>
+
+        <div class="risk-counter-card" style="--card-accent: var(--amber);">
+            <div class="risk-counter-label"><i class="fas fa-circle" style="color:var(--amber); font-size:0.5rem;"></i> &nbsp;Moderate Areas</div>
+            <div class="risk-counter-value" id="cntModerate">6</div>
+            <div class="risk-counter-sub"><i class="fas fa-map-marker-alt"></i> Monitored zones</div>
+        </div>
+
+        <div class="risk-counter-card" style="--card-accent: var(--green-bright);">
+            <div class="risk-counter-label"><i class="fas fa-circle" style="color:var(--green-bright); font-size:0.5rem;"></i> &nbsp;Low Risk Areas</div>
+            <div class="risk-counter-value" id="cntLow">7</div>
+            <div class="risk-counter-sub"><i class="fas fa-map-marker-alt"></i> Safe zones</div>
+        </div>
+
+        <!-- LSTM 7-DAY FORECAST (wide, top row) -->
+        <div class="lstm-big-card animate-on-scroll">
+            <div class="card-header" style="flex-direction:column; align-items:center; gap:2px; text-align:center;">
+                <div class="card-header-left" style="justify-content:center;">
+                    <i class="fas fa-brain" style="color:var(--red);"></i>
+                    DENGUE RISK PREDICTION (LSTM)
+                </div>
+                <div id="lstmWeekRange" style="font-size:0.78rem; font-weight:600; letter-spacing:0.3px; color:var(--text-muted);"></div>
+                <div style="font-size:0.72rem; color:var(--text-muted); display:flex; align-items:center; justify-content:center; gap:5px;">
+                    <i class="fas fa-info-circle"></i>
+                    (Next 7-Day Forecast)
+                </div>
+            </div>
+            <div class="lstm-big-body">
+                <canvas id="lstmBigChart"></canvas>
+            </div>
+            <div class="lstm-confidence-badge" id="lstmConfidenceBadge">
+                Confidence: <span id="lstmConfidenceVal">--%</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MAP + RIGHT PANEL -->
+    <div class="map-grid animate-on-scroll stagger-children">
+
+        <!-- GIS MAP CARD -->
+        <div class="map-card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <i class="fas fa-map-marked-alt"></i>
+                    GIS RISK MAP
+                </div>
+                <div class="layer-toggles">
+                    <button class="layer-btn active" id="btnHeat" onclick="toggleLayer('heat')">Heatmap</button>
+                    <button class="layer-btn" id="btnMarker" onclick="toggleLayer('marker')">Markers</button>
+                    <button class="layer-btn" id="btnBoth" onclick="toggleLayer('both')">Both</button>
+                </div>
+            </div>
+            <div id="map"></div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+
+            <!-- RISK CLASSIFICATION -->
+            <div class="risk-class-card animate-on-scroll">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <i class="fas fa-shield-alt"></i>
+                        RISK CLASSIFICATION
+                    </div>
+                </div>
+                <div class="risk-class-list">
+
+                    <div class="risk-class-item">
+                        <div class="risk-class-icon" style="background:rgba(231,76,60,0.15); color:var(--red);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="risk-class-body">
+                            <div class="risk-class-name" style="color:var(--red);">High Risk Areas</div>
+                            <div class="risk-class-desc">High mosquito breeding potential. Immediate action required.</div>
+                        </div>
+                    </div>
+
+                    <div class="risk-class-item">
+                        <div class="risk-class-icon" style="background:rgba(243,156,18,0.15); color:var(--amber);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="risk-class-body">
+                            <div class="risk-class-name" style="color:var(--amber);">Moderate Risk Areas</div>
+                            <div class="risk-class-desc">Possible mosquito breeding activity. Stay alert.</div>
+                        </div>
+                    </div>
+
+                    <div class="risk-class-item">
+                        <div class="risk-class-icon" style="background:rgba(46,204,113,0.15); color:var(--green-bright);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="risk-class-body">
+                            <div class="risk-class-name" style="color:var(--green-bright);">Low Risk Areas</div>
+                            <div class="risk-class-desc">Unfavorable condition. Maintain prevention.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- MY BARANGAY -->
+            <div class="my-barangay-card animate-on-scroll" id="myBarangayCard" onclick="openMyBarangayModal()">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <i class="fas fa-map-pin"></i>
+                        MY BARANGAY
+                    </div>
+                </div>
+                <div class="my-barangay-body">
+                    <div class="my-barangay-icon" id="myBarangayIcon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <div class="my-barangay-label">Your Location</div>
+                        <div class="my-barangay-name" id="myBarangayName">--</div>
+                    </div>
+                    <div class="my-barangay-badge" id="myBarangayBadge">
+                        <i class="fas fa-circle" id="myBarangayDot"></i>
+                        <span id="myBarangayRisk">-- RISK AREA</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MONITORED MORONG LOCATIONS -->
+    <div class="glass-card animate-on-scroll" style="margin-top: 1.2rem;">
+        <div class="card-header">
+            <div class="card-header-left">
+                <i class="fas fa-table"></i>
+                MONITORED MORONG LOCATIONS
+            </div>
+        </div>
+        <div class="filter-bar">
+            <span style="font-size:0.65rem; color:var(--text-muted); margin-right:4px; font-weight:600; letter-spacing:0.5px;">FILTER:</span>
+            <button class="filter-btn active" onclick="filterTable('all', this)">All</button>
+            <button class="filter-btn f-high" onclick="filterTable('high', this)">High Risk</button>
+            <button class="filter-btn f-moderate" onclick="filterTable('moderate', this)">Moderate</button>
+            <button class="filter-btn" onclick="filterTable('low', this)">Low Risk</button>
+        </div>
+        <div class="table-scroll">
+        <table class="hotspot-table">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Risk Level</th>
+                    <th>Near Device</th>
+                    <th>Distance from Near Device</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody id="hotspotBody">
+                <!-- Filled by JS -->
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+</main>
+
+<!-- ADD / EDIT LOCATION & DEVICE DEPLOYMENT MODAL (shared) -->
+<div class="modal-backdrop" id="addLocationModal">
+    <div class="modal-box">
+        <div class="modal-title" id="pinModalTitle"><i class="fas fa-map-pin"></i> Add Monitored Location</div>
+        <div class="modal-sub" id="pinModalSub">Name this pin. It will be saved with the current live sensor reading and shown on the heatmap and in Monitored Hotspot Locations.</div>
+        <input type="text" class="modal-input" id="newLocationName" placeholder="e.g. Barangay San Jose Covered Court" maxlength="80">
+        <div class="modal-actions">
+            <button class="modal-btn danger" id="deletePinBtn" onclick="deleteCurrentPin()" style="display:none;"><i class="fas fa-trash"></i> Remove</button>
+            <button class="modal-btn" onclick="closeAddLocationModal()">Cancel</button>
+            <button class="modal-btn primary" id="saveLocationBtn" onclick="submitPinForm()"><i class="fas fa-check"></i> Save Location</button>
+        </div>
+    </div>
+</div>
+
+<!-- ── BARANGAY MONITORED LOCATIONS (map polygon click + sidebar list) ── -->
+<div class="modal-backdrop" id="barangayLocationsModal" onclick="if(event.target===this) closeBarangayLocationsModal()">
+    <div class="modal-box barangay-users-box">
+        <div class="barangay-users-header">
+            <div class="barangay-users-icon"><i class="fas fa-map-pin"></i></div>
+            <div class="barangay-users-heading">
+                <div class="barangay-users-title" id="barangayLocationsTitle">Monitored Locations</div>
+                <div class="barangay-users-sub" id="barangayLocationsSub">Monitored hotspot locations in this barangay.</div>
+            </div>
+            <button class="barangay-users-close" onclick="closeBarangayLocationsModal()" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="barangay-users-list" id="barangayLocationsList"></div>
+    </div>
+</div>
+
+<!-- SET SENSOR LOCATION MODAL — pick which deployed device a fixed sensor lives at -->
+<div class="modal-backdrop" id="sensorLocationModal" onclick="if(event.target===this) closeSensorLocationModal()">
+    <div class="modal-box" style="width:380px;">
+        <div class="modal-title"><i class="fas fa-map-pin"></i> Set Sensor Location</div>
+        <div class="modal-sub" id="sensorLocationSub">Choose which deployed device this sensor is attached to.</div>
+        <div class="device-pick-list" id="sensorLocationDeviceList"></div>
+        <div class="modal-actions">
+            <button class="modal-btn danger" id="unassignSensorBtn" onclick="unassignPickedDevice()" style="display:none;"><i class="fas fa-unlink"></i> Unassign</button>
+            <button class="modal-btn" onclick="closeSensorLocationModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="confirmDialog">
+    <div class="modal-box confirm-dialog">
+        <div class="modal-title confirm-dialog-title">
+            <i class="fas fa-exclamation-triangle" style="color: var(--red);"></i> Confirm Action
+        </div>
+        <div class="modal-sub confirm-dialog-message" id="confirmDialogMessage">
+            Are you sure you want to proceed? This action cannot be undone.
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn confirm-cancel" onclick="closeConfirmDialog()">Cancel</button>
+            <button class="modal-btn primary confirm-danger" id="confirmDialogConfirmBtn" onclick="confirmDialogAction()">
+                <i class="fas fa-trash"></i> Confirm
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Saved.</span></div>
+
+<script>
+    // ── SCROLL ANIMATIONS ──
+
+    function initScrollAnimations() {
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        
+        if (animatedElements.length === 0) return;
+        
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            return rect.top <= windowHeight - 100;
+        }
+        
+        function checkVisibility() {
+            animatedElements.forEach(el => {
+                if (isElementInViewport(el)) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+        
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    checkVisibility();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        
+        window.addEventListener('resize', checkVisibility);
+        checkVisibility();
+        
+        console.log('✨ Scroll animations initialized');
+    }
+
+    function initPageTransition() {
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.classList.add('page-transition');
+        }
+    }
+
+    function initStaggerChildren() {
+        const staggerContainers = document.querySelectorAll('.stagger-children');
+        staggerContainers.forEach(container => {
+            const children = container.children;
+            for (let i = 0; i < children.length; i++) {
+                children[i].style.opacity = '0';
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+            initPageTransition();
+            initStaggerChildren();
+            initScrollAnimations();
+        }, 100);
+    });
+
+
+    // ── THEME TOGGLE ──
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    function refreshThemeIcon() {
+        const isLight = document.body.classList.contains('light-theme');
+        themeToggleBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    }
+    refreshThemeIcon();
+    themeToggleBtn.addEventListener('click', function() {
+        toggleTheme();
+        refreshThemeIcon();
+    });
+
+    // ── MOBILE MENU ──
+    const mainContent = document.getElementById('mainContent');
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    menuToggle.addEventListener('click', function() {
+        mobileNav.classList.toggle('open');
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+    document.querySelectorAll('.mobile-nav-dropdown a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            mobileNav.classList.remove('open');
+            document.querySelector('.menu-toggle i').classList.remove('fa-times');
+            document.querySelector('.menu-toggle i').classList.add('fa-bars');
+        });
+    });
+
+    // ── CLOCK ──
+    function updateClock() {
+        const now = new Date();
+        let hh = now.getHours();
+        const ampm = hh >= 12 ? 'PM' : 'AM';
+        hh = hh % 12 || 12;
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('realtimeClock').textContent = hh + ':' + mm + ':' + ss + ' ' + ampm;
+        const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        document.getElementById('realtimeDate').textContent =
+            days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ── SESSION ──
+    async function loadUserInfo() {
+        try {
+            const res = await fetch('/api/check_session', { credentials: 'include' });
+            const data = await res.json();
+            if (data.logged_in) {
+                document.getElementById('userName').textContent = data.user.name;
+                document.getElementById('userGreeting').textContent = data.user.is_admin ? 'Administrator' : 'Resident';
+
+                const navAvatar = document.getElementById('navAvatar');
+                const navAvatarFallback = document.getElementById('navAvatarFallback');
+                if (data.user.avatar_url) {
+                    navAvatar.src = data.user.avatar_url;
+                    navAvatar.style.display = 'block';
+                    navAvatarFallback.style.display = 'none';
+                } else {
+                    navAvatar.style.display = 'none';
+                    navAvatarFallback.style.display = 'inline';
+                }
+            } else {
+                window.location.href = '/login';
+            }
+        } catch(e) { window.location.href = '/login'; }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch(e) {}
+        window.location.href = '/';
+    });
+
+    // ── HOTSPOT DATA ──
+    let hotspots = [];
+    let devices = [];
+    let currentFilter = 'all';
+
+    // Resident-only: the sensor deployment linked to the resident's Near
+    // Monitored Location, added to the heatmap alongside their location's
+    // own hotspot point (see renderHotspots()).
+    let residentDeviceHeatPoint = null;
+
+    // Resident-only: the barangay they registered under (My Account). Once
+    // set, the Monitored Morong Locations table below only lists hotspots
+    // that physically fall inside that barangay's boundary — a resident
+    // shouldn't see every barangay's locations, just their own. Stays null
+    // for admins, who see everything.
+    let residentBarangay = null;
+
+    // Resident-only: ids of the hotspot/device that are the resident's own
+    // (see focusResidentLocation()). Their regular black map-label-tooltip
+    // is suppressed in renderHotspots()/renderDevices() since the blue/
+    // purple "Your Monitored Location" / "Sensor Feeding Your Area"
+    // highlight tooltip already labels that same pin — showing both just
+    // stacks two overlapping tooltips on top of each other.
+    let residentNearHotspotId = null;
+    let residentLinkedDeviceId = null;
+
+    function updateCounters() {
+        const high = hotspots.filter(h => h.risk === 'high').length;
+        const mod  = hotspots.filter(h => h.risk === 'moderate').length;
+        const low  = hotspots.filter(h => h.risk === 'low').length;
+        document.getElementById('cntHigh').textContent     = high;
+        document.getElementById('cntModerate').textContent = mod;
+        document.getElementById('cntLow').textContent      = low;
+    }
+
+    // ── MY BARANGAY (resident's own barangay, ported from resident_2.html) ──
+    // Unlike resident_2's simple substring match, this uses the same
+    // geographic point-in-polygon test the map/sidebar modal uses
+    // (findBarangayFeature + isPointInBarangay), so the worst risk level
+    // shown here is based on which monitored locations physically fall
+    // inside the resident's barangay boundary, not on name matching.
+    function setBarangayAccent(hexColor, glowColor, borderColor) {
+        const icon = document.getElementById('myBarangayIcon');
+        const badge = document.getElementById('myBarangayBadge');
+        [icon, badge].forEach(el => {
+            if (!el) return;
+            el.style.setProperty('--mb-accent', hexColor);
+            el.style.setProperty('--mb-accent-glow', glowColor);
+            el.style.setProperty('--mb-accent-border', borderColor);
+        });
+    }
+
+    function updateMyBarangayDisplay() {
+        const card = document.getElementById('myBarangayCard');
+        const nameEl = document.getElementById('myBarangayName');
+        const riskEl = document.getElementById('myBarangayRisk');
+        if (!nameEl || !riskEl) return;
+
+        if (!residentBarangay) {
+            nameEl.textContent = '--';
+            riskEl.textContent = 'No barangay set';
+            setBarangayAccent('var(--text-muted)', 'rgba(255,255,255,0.08)', 'var(--glass-border)');
+            if (card) card.classList.add('no-barangay');
+            return;
+        }
+
+        if (card) card.classList.remove('no-barangay');
+        nameEl.textContent = 'Barangay ' + residentBarangay;
+
+        const feature = findBarangayFeature(residentBarangay);
+        const matches = feature ? hotspots.filter(h => isPointInBarangay(h.lat, h.lng, feature)) : [];
+
+        if (matches.length) {
+            const riskRank = { high: 2, moderate: 1, low: 0 };
+            const worst = matches.reduce((a, b) => (riskRank[b.risk] || 0) > (riskRank[a.risk] || 0) ? b : a);
+            const label = worst.risk.charAt(0).toUpperCase() + worst.risk.slice(1);
+            riskEl.textContent = `${label} Risk Area`;
+            if (worst.risk === 'high') {
+                setBarangayAccent('#e74c3c', 'rgba(231,76,60,0.14)', 'rgba(231,76,60,0.3)');
+            } else if (worst.risk === 'moderate') {
+                setBarangayAccent('#f39c12', 'rgba(243,156,18,0.14)', 'rgba(243,156,18,0.3)');
+            } else {
+                setBarangayAccent('#2ecc71', 'rgba(46,204,113,0.14)', 'rgba(46,204,113,0.3)');
+            }
+        } else {
+            riskEl.textContent = 'No data yet';
+            setBarangayAccent('var(--text-muted)', 'rgba(255,255,255,0.08)', 'var(--glass-border)');
+        }
+    }
+
+    // Card click: jump straight to the Monitored Locations modal for the
+    // resident's own barangay (same modal the map polygon click used to open).
+    function openMyBarangayModal() {
+        if (!residentBarangay) return;
+        openBarangayLocationsModalByName(residentBarangay);
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str == null ? '' : String(str);
+        return div.innerHTML;
+    }
+
+    // Maps a resident's saved barangay name to the matching GeoJSON feature's
+    // properties.name in MORONG_BARANGAYS, so the My Barangay card can open
+    // the same "monitored locations in this barangay" modal as clicking the
+    // polygon on the map used to. Most names match directly; a couple of the
+    // longer display names (e.g. the CCL barangay) use a shorter name in the
+    // boundary data, so those get an explicit mapping.
+    const BARANGAY_FEATURE_NAME_MAP = {
+        'Caniogan-Calero-Lanang (CCL)': 'Can-Cal-Lan',
+        // My Account's Barangay field saves this value without the "(CCL)"
+        // suffix used in the sidebar list above, so it needs its own entry
+        // to resolve to the same boundary feature.
+        'Caniogan-Calero-Lanang': 'Can-Cal-Lan'
+    };
+
+    function findBarangayFeature(barangayName) {
+        const featureName = BARANGAY_FEATURE_NAME_MAP[barangayName] || barangayName;
+        return MORONG_BARANGAYS.features.find(f => f.properties.name === featureName) || null;
+    }
+
+    // Sidebar-list entry point: looks up the barangay's boundary feature,
+    // then opens the same Monitored Locations modal used by the map's
+    // polygon click.
+    function openBarangayLocationsModalByName(barangayName) {
+        const feature = findBarangayFeature(barangayName);
+        if (!feature) {
+            showToast('No boundary data for this barangay yet.');
+            return;
+        }
+        openBarangayLocationsModal(barangayName, feature);
+    }
+
+    // ── BARANGAY MONITORED LOCATIONS MODAL (map polygon click + sidebar list) ──
+    // Ray-casting point-in-polygon test against the clicked barangay's
+    // GeoJSON ring, so we can tell which Monitored Morong Locations
+    // (hotspots) physically fall inside that barangay's boundary.
+    function isPointInBarangay(lat, lng, feature) {
+        const ring = feature.geometry.coordinates[0];
+        let inside = false;
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+            const xi = ring[i][0], yi = ring[i][1];
+            const xj = ring[j][0], yj = ring[j][1];
+            const intersect = ((yi > lat) !== (yj > lat)) &&
+                (lng < (xj - xi) * (lat - yi) / (yj - yi) + xi);
+            if (intersect) inside = !inside;
+        }
+        return inside;
+    }
+
+    function openBarangayLocationsModal(barangayName, feature) {
+        const modal = document.getElementById('barangayLocationsModal');
+        const listEl = document.getElementById('barangayLocationsList');
+        const titleEl = document.getElementById('barangayLocationsTitle');
+        const subEl = document.getElementById('barangayLocationsSub');
+
+        titleEl.textContent = 'Barangay ' + barangayName;
+
+        const matches = hotspots.filter(h => isPointInBarangay(h.lat, h.lng, feature));
+
+        subEl.textContent = matches.length
+            ? `${matches.length} monitored location${matches.length === 1 ? '' : 's'} in this barangay`
+            : 'No monitored locations in this barangay yet';
+
+        listEl.innerHTML = matches.length
+            ? matches.map(h => `
+                <div class="barangay-loc-row">
+                    <div class="barangay-loc-icon" style="background:${riskColor(h.risk)}22; color:${riskColor(h.risk)};">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="barangay-loc-info">
+                        <div class="barangay-loc-name">${escapeHtml(h.name)}</div>
+                    </div>
+                    <span class="barangay-loc-risk" style="background:${riskColor(h.risk)}22; color:${riskColor(h.risk)};">${h.risk}</span>
+                </div>
+            `).join('')
+            : '<div class="barangay-users-empty"><i class="fas fa-map-marker-alt"></i>No monitored locations here yet.</div>';
+
+        modal.classList.add('open');
+    }
+
+    function closeBarangayLocationsModal() {
+        document.getElementById('barangayLocationsModal').classList.remove('open');
+    }
+
+    // ── MONITORED MORONG LOCATIONS TABLE ──
+    function getTimeStr() {
+        const now = new Date();
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const dateStr = months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+        const hh = (now.getHours() % 12 || 12);
+        const mm = String(now.getMinutes()).padStart(2,'0');
+        const ampm = now.getHours() >= 12 ? 'pm' : 'am';
+        return dateStr + ' | ' + hh + ':' + mm + ' ' + ampm;
+    }
+
+    function formatUpdated(ts) {
+        if (!ts) return getTimeStr();
+        const d = new Date(ts.replace(' ', 'T') + 'Z');
+        if (isNaN(d.getTime())) return getTimeStr();
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const dateStr = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+        const hh = (d.getHours() % 12 || 12);
+        const mm = String(d.getMinutes()).padStart(2,'0');
+        const ampm = d.getHours() >= 12 ? 'pm' : 'am';
+        return dateStr + ' | ' + hh + ':' + mm + ' ' + ampm;
+    }
+
+    // ── Haversine distance helper (Near Device column) ──
+    function haversineDistanceMeters(lat1, lng1, lat2, lng2) {
+        const R = 6371000; // Earth radius in meters
+        const toRad = deg => deg * Math.PI / 180;
+        const dLat = toRad(lat2 - lat1);
+        const dLng = toRad(lng2 - lng1);
+        const a = Math.sin(dLat / 2) ** 2 +
+                  Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    function formatDistance(meters) {
+        if (meters < 1000) return Math.round(meters) + ' m';
+        return (meters / 1000).toFixed(2) + ' km';
+    }
+
+    function buildTable(filter = 'all') {
+        const tbody = document.getElementById('hotspotBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        // Residents only ever see monitored locations inside their own
+        // registered barangay (same point-in-polygon test used elsewhere
+        // on this page). Admins have no barangay of their own, so they
+        // keep seeing every location.
+        let baseList = hotspots;
+        if (residentBarangay) {
+            const feature = findBarangayFeature(residentBarangay);
+            baseList = feature ? hotspots.filter(h => isPointInBarangay(h.lat, h.lng, feature)) : [];
+        }
+
+        const filtered = filter === 'all' ? baseList : baseList.filter(h => h.risk === filter);
+
+        if (filtered.length === 0) {
+            const tr = document.createElement('tr');
+            let emptyMsg;
+            if (residentBarangay && baseList.length === 0) {
+                emptyMsg = `No monitored locations in Barangay ${escapeHtml(residentBarangay)} yet.`;
+            } else if (hotspots.length === 0) {
+                emptyMsg = 'No monitored locations yet. Add one from the Risk Map.';
+            } else {
+                emptyMsg = 'No locations match this filter.';
+            }
+            tr.innerHTML = `<td colspan="5" style="text-align:center; color:var(--text-muted); padding:1.4rem 0;">
+                ${emptyMsg}
+            </td>`;
+            tbody.appendChild(tr);
+            return;
+        }
+
+        filtered.forEach(h => {
+            const pillClass = h.risk === 'high' ? 'pill-high' : h.risk === 'moderate' ? 'pill-moderate' : 'pill-low';
+
+            const link = hotspotDeviceLinks[h.id];
+            const hasDevice = link && link.device_id;
+
+            const nearDeviceName = hasDevice ? (link.device_name || 'Unnamed device') : '—';
+            let distanceCell = '—';
+            if (hasDevice && link.device_lat != null && link.device_lng != null) {
+                const meters = haversineDistanceMeters(h.lat, h.lng, link.device_lat, link.device_lng);
+                distanceCell = formatDistance(meters);
+            }
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-weight:500;">${h.name}</td>
+                <td><span class="risk-pill ${pillClass}">${h.risk.charAt(0).toUpperCase() + h.risk.slice(1)}</span></td>
+                <td style="color:var(--text-muted); font-size:0.78rem;">${escapeHtml(nearDeviceName)}</td>
+                <td style="color:var(--text-muted); font-size:0.78rem;">${distanceCell}</td>
+                <td style="color:var(--text-muted); font-size:0.72rem; white-space:nowrap;">${formatUpdated(h.updated_at)}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function filterTable(filter, btn) {
+        currentFilter = filter;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        buildTable(filter);
+    }
+
+    // ── LEAFLET MAP ──
+    // Keep the whole map scoped to the Philippines only — panning/zooming out
+    // stops at the country's bounding box instead of revealing the rest of
+    // the world, and minZoom keeps the initial zoomed-out view no wider than
+    // roughly the whole archipelago.
+    const PH_BOUNDS = L.latLngBounds([4.2, 114.0], [21.5, 127.5]);
+    const map = L.map('map', {
+        center: [14.5183, 121.2343],
+        zoom: 17,
+        minZoom: 6,
+        maxZoom: 20,
+        zoomControl: true,
+        attributionControl: false,
+        maxBounds: PH_BOUNDS,
+        maxBoundsViscosity: 1.0
+    });
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles © Esri',
+        maxZoom: 20,
+        maxNativeZoom: 19,
+        noWrap: true,
+        bounds: PH_BOUNDS
+    }).addTo(map);
+
+    // NOTE: Esri's "World_Boundaries_and_Places" label tile layer is intentionally NOT
+    // added here. It prints generic place names (e.g. "Prinza", "San Roque" — both actually
+    // barangays of Teresa, not Morong) wherever it thinks a nearby place is, regardless of
+    // the real administrative line, which conflicts with the accurate barangay trace below.
+
+    // ── MORONG, RIZAL — BARANGAY BOUNDARIES (per-barangay GIS trace) ──
+    // Source: PSA/PSGC 2023 administrative boundary data for Morong, Rizal (PSGC 0405809000).
+    // Matches the 8 barangays confirmed against the reference political map: Bombongan,
+    // Can-Cal-Lan (Caniogan-Calero-Lanang), Lagundi, Maybancal, San Guillermo, San Jose,
+    // San Juan, San Pedro.
+    const MORONG_BARANGAYS = {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[121.22224590300004,14.51040978300005],[121.2171350340001,14.51196481100004],[121.21513922400004,14.51368007100006],[121.21416609100005,14.513829784000054],[121.21129023200002,14.511942993000046],[121.21025792800002,14.510324496000067],[121.209742903,14.507548502000077],[121.21119054300003,14.506322202000035],[121.21370409400002,14.50547479000005],[121.22019293700009,14.503992724000057],[121.22140411400005,14.502784971000038],[121.22731082700011,14.502366981000021],[121.22877971600008,14.505062987000029],[121.22610100700001,14.507448277000037],[121.22523548000002,14.507668167000078],[121.22324242900005,14.51014310700003],[121.22224590300004,14.51040978300005]]]},"properties":{"name":"Bombongan"},"id":405809001},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[121.25607127900004,14.52437968200007],[121.25351045800005,14.52501485200003],[121.25372089100007,14.528353562000067],[121.25193392600009,14.535177424000036],[121.24512303100005,14.538507571000025],[121.2406304440001,14.539481011000074],[121.23838441500003,14.534725647000077],[121.23953960200005,14.53331709900005],[121.24251482600006,14.532222054000043],[121.24503258300001,14.531731609000076],[121.24689269400005,14.52991233200004],[121.24699325200004,14.527382143000068],[121.24850163400004,14.525883493000036],[121.24855353600005,14.523933950000073],[121.25025735800011,14.523192734000077],[121.24919175900004,14.520837713000047],[121.25150299000006,14.519650470000043],[121.25343469100007,14.517280851000068],[121.25520095800006,14.516658035000036],[121.25607127900004,14.52437968200007]]]},"properties":{"name":"Can-Cal-Lan"},"id":405809002},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[121.25607127900004,14.52437968200007],[121.25610818000008,14.527993348000052],[121.25863344400013,14.537008431000059],[121.2597819250001,14.540491496000072],[121.26169181800002,14.543004949000023],[121.26085262300013,14.545431588000039],[121.26198946400007,14.547969845000068],[121.26195877300007,14.557322810000073],[121.26207844000011,14.571680182000025],[121.25853174100007,14.574570096000064],[121.25317471100004,14.58469737100006],[121.25130452000009,14.581267763000024],[121.24719189100006,14.566316568000051],[121.23979429500002,14.541780630000062],[121.23901648900005,14.539965197000072],[121.2406304440001,14.539481011000074],[121.24512303100005,14.538507571000025],[121.25193392600009,14.535177424000036],[121.25372089100007,14.528353562000067],[121.25351045800005,14.52501485200003],[121.25607127900004,14.52437968200007]]]},"properties":{"name":"Lagundi"},"id":405809003},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[121.25317471100004,14.58469737100006],[121.25762384700012,14.589898967000066],[121.25518820000002,14.589344800000053],[121.25340530000007,14.585953600000039],[121.25118844300005,14.585690880000065],[121.24056359200006,14.569443304000062],[121.2371552520001,14.560449451000066],[121.22994849300007,14.550758742000026],[121.2253284950001,14.542226268000036],[121.23409406200005,14.534562619000043],[121.23011687000006,14.529600321000034],[121.22977373200001,14.528692811000038],[121.23066092400008,14.526649786000062],[121.23187770900007,14.52647821700003],[121.23384172200008,14.527476026000045],[121.23662206900009,14.523049090000027],[121.23784521600008,14.521779517000027],[121.23965887900012,14.521359764000069],[121.24050807900005,14.523672162000029],[121.24919175900004,14.520837713000047],[121.25025735800011,14.523192734000077],[121.24855353600005,14.523933950000073],[121.24850163400004,14.525883493000036],[121.24699325200004,14.527382143000068],[121.24689269400005,14.52991233200004],[121.24503258300001,14.531731609000076],[121.24251482600006,14.532222054000043],[121.23953960200005,14.53331709900005],[121.23838441500003,14.534725647000077],[121.2406304440001,14.539481011000074],[121.23901648900005,14.539965197000072],[121.23979429500002,14.541780630000062],[121.24719189100006,14.566316568000051],[121.25130452000009,14.581267763000024],[121.25317471100004,14.58469737100006]]]},"properties":{"name":"Maybancal"},"id":405809004},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[121.22977373200001,14.528692811000038],[121.23011687000006,14.529600321000034],[121.23409406200005,14.534562619000043],[121.2253284950001,14.542226268000036],[121.21847265500003,14.536209864000057],[121.21024548700007,14.536398987000043],[121.20754130000012,14.535369711000046],[121.20823840000004,14.533381338000027],[121.20968406400006,14.532412884000053],[121.206951806,14.530883006000067],[121.20836472100008,14.528665385000068],[121.20686291400013,14.528309818000022],[121.206586881,14.526396301000034],[121.2050055400001,14.526887546000069],[121.20333530700009,14.526204482000024],[121.20449558100007,14.523930719000077],[121.20251656500011,14.523912005000057],[121.20262884900002,14.522611375000052],[121.20415872700003,14.52133413800004],[121.20464061500002,14.519116517000045],[121.2074570870001,14.518681414000072],[121.20740562300011,14.51578540700007],[121.20981506300006,14.515369019000042],[121.21045134200006,14.513006364000034],[121.21129023200002,14.511942993000046],[121.21416609100005,14.513829784000054],[121.21513922400004,14.51368007100006],[121.2171350340001,14.51196481100004],[121.22224590300004,14.51040978300005],[121.22570810700006,14.519988363000039],[121.22824453300007,14.522977576000072],[121.229885952,14.526306958000076],[121.22977373200001,14.528692811000038]]]},"properties":{"name":"San Guillermo"},"id":405809005},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[121.23872534800012,14.513352079000068],[121.23864964200004,14.515169317000074],[121.23717920900003,14.515232114000069],[121.23694272400007,14.516637016000061],[121.23420266200003,14.516677798000046],[121.23438912900008,14.518902396000044],[121.23337695100008,14.51944595700007],[121.23103091200005,14.52294965100003],[121.22824453300007,14.522977576000072],[121.22570810700006,14.519988363000039],[121.22224590300004,14.51040978300005],[121.22324242900005,14.51014310700003],[121.22523548000002,14.507668167000078],[121.22610100700001,14.507448277000037],[121.2264893250001,14.510269427000024],[121.22927772500009,14.511972410000055],[121.22991868300005,14.513577144000068],[121.2314064540001,14.51497602300003],[121.23310475800007,14.515369019000044],[121.23569198200005,14.51348357300003],[121.23872534800012,14.513352079000068]]]},"properties":{"name":"San Jose"},"id":405809006},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[121.24919175900004,14.520837713000047],[121.24050807900005,14.523672162000029],[121.23965887900012,14.521359764000069],[121.23784521600008,14.521779517000027],[121.23662206900009,14.523049090000027],[121.23384172200008,14.527476026000045],[121.23187770900007,14.52647821700003],[121.23066092400008,14.526649786000062],[121.22977373200001,14.528692811000038],[121.229885952,14.526306958000076],[121.22824453300007,14.522977576000072],[121.23103091200005,14.52294965100003],[121.23337695100008,14.51944595700007],[121.23438912900008,14.518902396000044],[121.23420266200003,14.516677798000046],[121.23694272400007,14.516637016000061],[121.23717920900003,14.515232114000069],[121.23864964200004,14.515169317000074],[121.23872534800012,14.513352079000068],[121.242443093,14.511883518000046],[121.24336944100001,14.512749045000078],[121.24680347800006,14.513572465000033],[121.24719647400002,14.512262478000027],[121.24939538100011,14.511017991000072],[121.25013458800005,14.509955966000064],[121.25051354800006,14.506447072000068],[121.25271713300003,14.50539440400007],[121.25430315300002,14.505857578000073],[121.25539519100005,14.50522256100004],[121.25384690200008,14.503037532000063],[121.25403947500003,14.501695183000038],[121.25582655500013,14.500129098000057],[121.25621170200009,14.498876222000032],[121.25641034700003,14.495418376000032],[121.25607123900011,14.49507276000003],[121.25624375700009,14.495135335000043],[121.25693400400007,14.49626302100006],[121.256923571,14.498271409000038],[121.25767897800004,14.498759869000029],[121.25726909900004,14.502629930000072],[121.25832947600009,14.503901438000076],[121.26073972400003,14.504787419000019],[121.26058036300003,14.506346581000056],[121.25883784100004,14.508480613000067],[121.25795730900008,14.511252536000029],[121.25534386800005,14.514453319000042],[121.25520095800006,14.516658035000036],[121.25343469100007,14.517280851000068],[121.25150299000006,14.519650470000043],[121.24919175900004,14.520837713000047]]]},"properties":{"name":"San Juan"},"id":405809007},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[121.23872534800012,14.513352079000068],[121.23569198200005,14.51348357300003],[121.23310475800007,14.515369019000044],[121.2314064540001,14.51497602300003],[121.22991868300005,14.513577144000068],[121.22927772500009,14.511972410000055],[121.2264893250001,14.510269427000024],[121.22610100700001,14.507448277000037],[121.22877971600008,14.505062987000029],[121.22731082700011,14.502366981000021],[121.23303087600004,14.500679266000072],[121.2384390420001,14.498625354000069],[121.23987807300011,14.500779709000028],[121.24175233200003,14.502442474000082],[121.24588437300008,14.499463106000066],[121.2477592350001,14.499061031000053],[121.249229205,14.49784945700003],[121.25168068000006,14.501232278000034],[121.25323037100009,14.500611997000021],[121.25607123900011,14.49507276000003],[121.25641034700003,14.495418376000032],[121.25621170200009,14.498876222000032],[121.25582655500013,14.500129098000057],[121.25403947500003,14.501695183000038],[121.25384690200008,14.503037532000063],[121.25539519100005,14.50522256100004],[121.25430315300002,14.505857578000073],[121.25271713300003,14.50539440400007],[121.25051354800006,14.506447072000068],[121.25013458800005,14.509955966000064],[121.24939538100011,14.511017991000072],[121.24719647400002,14.512262478000027],[121.24680347800006,14.513572465000033],[121.24336944100001,14.512749045000078],[121.242443093,14.511883518000046],[121.23872534800012,14.513352079000068]]]},"properties":{"name":"San Pedro"},"id":405809008}]};
+
+    // Untouched copy of the official PSGC trace, kept so "Remove Trace" can
+    // restore it after the admin manually adjusts the boundaries.
+    const DEFAULT_MORONG_BARANGAYS = JSON.parse(JSON.stringify(MORONG_BARANGAYS));
+
+    // Residents are view-only here: whatever boundary trace the admin has
+    // saved is loaded from the server below, once the boundary layer and
+    // drawing helpers are defined — see loadGisBoundariesFromServer(). This
+    // used to read from this browser's own localStorage, which meant a
+    // resident's map never reflected an admin's saved edits unless the admin
+    // happened to edit on that same device/browser. The database is now the
+    // single shared source of truth admins write to and residents read from.
+    let barangayBoundariesOverrideActive = false; // true once a saved (non-default) trace is loaded
+
+    const BARANGAY_COLORS = {
+        'Bombongan': '#a0522d',
+        'Can-Cal-Lan': '#16a085',
+        'Lagundi': '#3498db',
+        'Maybancal': '#b08968',
+        'San Guillermo': '#8e7cc3',
+        'San Jose': '#27ae60',
+        'San Juan': '#e07b39',
+        'San Pedro': '#2980b9'
+    };
+
+    map.createPane('barangayPane');
+    map.getPane('barangayPane').style.zIndex = 360;
+    map.getPane('barangayPane').style.pointerEvents = 'auto';
+
+    // Zoom level from which the barangay fill colors fade out. The white
+    // boundary trace (the outline itself) always stays visible at every
+    // zoom — only the solid color fill goes away, so the satellite imagery
+    // underneath is clear enough to place pins/locations inside a barangay.
+    const BARANGAY_FILL_FADE_ZOOM = 18;
+    function barangayFillOpacityForZoom(z) {
+        return z >= BARANGAY_FILL_FADE_ZOOM ? 0 : 0.28;
+    }
+
+    const barangayBoundaryLayer = L.geoJSON(MORONG_BARANGAYS, {
+        pane: 'barangayPane',
+        interactive: true,
+        style: function(feature) {
+            const c = BARANGAY_COLORS[feature.properties.name] || '#ffffff';
+            return {
+                color: '#ffffff',
+                weight: 1.4,
+                opacity: 0.85,
+                fillColor: c,
+                fillOpacity: barangayFillOpacityForZoom(map.getZoom()),
+                lineJoin: 'round'
+            };
+        },
+        onEachFeature: function (feature, layer) {
+            layer.bindTooltip(feature.properties.name, {
+                permanent: true,
+                direction: 'center',
+                className: 'barangay-name-label',
+                opacity: 1
+            });
+            // Clicking the barangay shape no longer opens a popup — the
+            // Monitored Locations modal is only reachable from the sidebar
+            // BARANGAY list now, so the shape stays free for placing pins.
+            layer.on('mouseover', function() {
+                const z = map.getZoom();
+                layer.setStyle({
+                    fillOpacity: z >= BARANGAY_FILL_FADE_ZOOM ? 0 : 0.42,
+                    weight: 2.2
+                });
+            });
+            layer.on('mouseout', function() {
+                layer.setStyle({
+                    fillOpacity: barangayFillOpacityForZoom(map.getZoom()),
+                    weight: 1.4
+                });
+            });
+        }
+    }).addTo(map);
+
+    // Barangay labels scale with zoom so they stay readable in/out, and the
+    // fill fades once zoomed in far enough to place pins (trace/outline
+    // stays put).
+    function updateBarangayLabelScale() {
+        const z = map.getZoom();
+        const scale = Math.max(0.55, Math.min(1.7, 1 + (z - 16) * 0.18));
+        document.querySelectorAll('.barangay-name-label').forEach(el => {
+            el.style.fontSize = (10.5 * scale).toFixed(1) + 'px';
+        });
+        if (z < 13) {
+            if (map.hasLayer(barangayBoundaryLayer)) map.removeLayer(barangayBoundaryLayer);
+        } else {
+            if (!map.hasLayer(barangayBoundaryLayer)) barangayBoundaryLayer.addTo(map);
+            barangayBoundaryLayer.eachLayer(layer => {
+                layer.setStyle({ fillOpacity: barangayFillOpacityForZoom(z) });
+            });
+        }
+    }
+    map.on('zoomend', updateBarangayLabelScale);
+    map.whenReady(updateBarangayLabelScale);
+
+    const heatLayer = L.heatLayer([], {
+        radius: 40,
+        blur: 30,
+        maxZoom: 18,
+        max: 1.0,
+        minOpacity: 0.35,
+        gradient: { 0.0: '#2ecc71', 0.35: '#27ae60', 0.55: '#f1c40f', 0.75: '#e67e22', 1.0: '#e74c3c' }
+    });
+
+    function riskColor(risk) {
+        return risk === 'high' ? '#e74c3c' : risk === 'moderate' ? '#f39c12' : '#2ecc71';
+    }
+
+    // ── FIXED MARKER FUNCTIONS ──
+    function makeIcon(risk) {
+        const color = riskColor(risk);
+        let cssClass = 'marker-dot';
+        if (risk === 'high') cssClass += ' marker-dot-high';
+        else if (risk === 'moderate') cssClass += ' marker-dot-moderate';
+        else cssClass += ' marker-dot-low';
+        
+        return L.divIcon({
+            className: '',
+            html: `<div class="${cssClass}"></div>`,
+            iconSize: [18, 18],
+            iconAnchor: [9, 9]
+        });
+    }
+
+    function makeDeviceIcon(status) {
+        let cssClass = 'marker-device';
+        if (status === 'offline') cssClass += ' marker-device-offline';
+        else cssClass += ' marker-device-online';
+        
+        return L.divIcon({
+            className: '',
+            html: `<div class="${cssClass}"></div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+        });
+    }
+
+    const markerLayer = L.layerGroup();
+    const deviceLayer = L.layerGroup();
+
+    function renderHotspots() {
+        const heatData = hotspots.map(h => {
+            const intensity = h.risk === 'high' ? 1.0 : h.risk === 'moderate' ? 0.65 : 0.4;
+            return [h.lat, h.lng, intensity];
+        });
+        // The sensor deployment feeding the resident's own Near Monitored
+        // Location doesn't have a hotspot entry of its own (it's a device
+        // pin), so it wouldn't otherwise show up on the heatmap. Fold it in
+        // here so switching layers or re-rendering (e.g. after a pin
+        // add/remove) never drops it.
+        if (residentDeviceHeatPoint) heatData.push(residentDeviceHeatPoint);
+        // heatLayer.setLatLngs() calls into the bundled leaflet-heat.js's
+        // redraw(), which dereferences `this._map._animating` without first
+        // checking that `_map` is non-null. When the heat layer isn't
+        // currently attached to the map (e.g. the admin has switched to
+        // "Markers only" view via toggleLayer), `_map` is null and that
+        // throws a TypeError. Because renderHotspots() runs inside
+        // executeRemovePin()'s success path, that exception used to be
+        // caught by removePin's generic catch block and shown to the admin
+        // as "Server error" — even though the deletion had already
+        // succeeded. Only touch setLatLngs while the layer is actually on
+        // the map; otherwise update its data directly so it's current the
+        // next time the heat view is switched back on (L.heatLayer's onAdd
+        // does its own redraw from the stored _latlngs).
+        if (map.hasLayer(heatLayer)) {
+            heatLayer.setLatLngs(heatData);
+        } else {
+            heatLayer._latlngs = heatData;
+        }
+
+        markerLayer.clearLayers();
+        hotspots.forEach(h => {
+            const marker = L.marker([h.lat, h.lng], { icon: makeIcon(h.risk) });
+            // Sensor data and risk level are no longer shown on this circle's
+            // popup — that data now lives on the actual device deployment pin
+            // (see renderDevices() below), since the deployment location is
+            // what the sensor data and risk level are actually based on.
+            const popupContent = `
+                <div style="font-family:'Inter',sans-serif; min-width:180px;">
+                    <div style="font-family:'Inter',sans-serif; font-size:1rem; font-weight:700; color:#e8f5ee;">
+                        ${h.name}
+                    </div>
+                </div>
+            `;
+            marker.bindPopup(popupContent, { className: 'map-popup-custom' });
+            const isMyHotspot = residentNearHotspotId != null && String(h.id) === String(residentNearHotspotId);
+            if (!isMyHotspot) {
+                marker.bindTooltip(h.name, {
+                    permanent: true,
+                    direction: 'top',
+                    offset: [0, -12],
+                    className: 'map-label-tooltip'
+                });
+            }
+            markerLayer.addLayer(marker);
+        });
+
+        updateCounters();
+        updateMyBarangayDisplay();
+        buildTable(currentFilter);
+    }
+
+    function renderDevices() {
+        deviceLayer.clearLayers();
+        devices.forEach(d => {
+            const marker = L.marker([d.lat, d.lng], { icon: makeDeviceIcon(d.status) });
+            const statusLabel = d.status === 'offline' ? 'Offline' : 'Online';
+            const statusColor = d.status === 'offline' ? '#7f8c8d' : '#3498db';
+            const deviceRisk = d.risk || 'low';
+            const deviceRiskColor = riskColor(deviceRisk);
+            // This deployment pin is the actual basis for the low/moderate/high
+            // risk level, so its popup carries the full sensor readout and
+            // risk level in addition to the existing Status and Coordinates.
+            const popupContent = `
+                <div style="font-family:'Inter',sans-serif; min-width:180px;">
+                    <div style="font-family:'Inter',sans-serif; font-size:1rem; font-weight:700; color:#e8f5ee; margin-bottom:6px;">
+                        <i class="fas fa-microchip" style="color:${statusColor};"></i> ${d.name}
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Status</span>
+                        <span style="color:${statusColor}; font-weight:700; font-size:0.75rem; text-transform:uppercase;">${statusLabel}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Coordinates</span>
+                        <span style="color:#e8f5ee; font-size:0.75rem;">${d.lat.toFixed(5)}, ${d.lng.toFixed(5)}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Risk Level</span>
+                        <span style="color:${deviceRiskColor}; font-weight:700; font-size:0.75rem; text-transform:uppercase;">${deviceRisk}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Temperature</span>
+                        <span style="color:#e8f5ee; font-size:0.75rem;">${d.temp != null ? d.temp + '°C' : '—'}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Humidity</span>
+                        <span style="color:#e8f5ee; font-size:0.75rem;">${d.hum != null ? d.hum + '%' : '—'}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Rainfall</span>
+                        <span style="color:#e8f5ee; font-size:0.75rem;">${d.rain != null ? d.rain + ' mm' : '—'}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">pH</span>
+                        <span style="color:#e8f5ee; font-size:0.75rem;">${d.ph != null ? d.ph : '—'}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Wind</span>
+                        <span style="color:#e8f5ee; font-size:0.75rem;">${d.wind != null ? d.wind + ' m/s' : '—'}</span>
+                    </div>
+                </div>
+            `;
+            marker.bindPopup(popupContent, { className: 'map-popup-custom' });
+            const isMySensor = residentLinkedDeviceId != null && String(d.id) === String(residentLinkedDeviceId);
+            if (!isMySensor) {
+                marker.bindTooltip(d.name, {
+                    permanent: true,
+                    direction: 'top',
+                    offset: [0, -12],
+                    className: 'map-label-tooltip'
+                });
+            }
+            deviceLayer.addLayer(marker);
+        });
+
+        buildDeviceLocationsTable();
+    }
+
+    // ── MONITORED DEVICE LOCATIONS TABLE ──
+    function buildDeviceLocationsTable() {
+        const tbody = document.getElementById('deviceLocationsBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        if (devices.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td colspan="10" style="text-align:center; color:var(--text-muted); padding:1.4rem 0;">
+                No device deployments yet. Pin one from the Risk Map.
+            </td>`;
+            tbody.appendChild(tr);
+            return;
+        }
+
+        devices.forEach(d => {
+            const pillClass = d.status === 'offline' ? 'pill-offline' : 'pill-online';
+            const statusLabel = d.status === 'offline' ? 'Offline' : 'Online';
+            const risk = d.risk || 'low';
+            const riskPillClass = risk === 'high' ? 'pill-high' : risk === 'moderate' ? 'pill-moderate' : 'pill-low';
+            const riskLabel = risk.charAt(0).toUpperCase() + risk.slice(1);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-weight:500;">${d.name}</td>
+                <td style="color:var(--text-muted); font-size:0.72rem; white-space:nowrap;">${d.lat.toFixed(5)}, ${d.lng.toFixed(5)}</td>
+                <td><span class="risk-pill ${pillClass}">${statusLabel}</span></td>
+                <td style="color:#e67e22;">${d.temp != null ? d.temp + '°C' : '—'}</td>
+                <td style="color:#3498db;">${d.hum != null ? d.hum + '%' : '—'}</td>
+                <td style="color:#1abc9c;">${d.rain != null ? d.rain + ' mm' : '—'}</td>
+                <td style="color:#9b59b6;">${d.ph != null ? d.ph : '—'}</td>
+                <td style="color:#f39c12;">${d.wind != null ? d.wind + ' m/s' : '—'}</td>
+                <td><span class="risk-pill ${riskPillClass}">${riskLabel}</span></td>
+                <td style="color:var(--text-muted); font-size:0.72rem; white-space:nowrap;">${formatUpdated(d.updated_at)}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    let currentLayer = 'heat';
+    heatLayer.addTo(map);
+    deviceLayer.addTo(map);
+
+    function toggleLayer(mode) {
+        currentLayer = mode;
+        document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
+
+        map.removeLayer(heatLayer);
+        map.removeLayer(markerLayer);
+
+        if (mode === 'heat' || mode === 'both') heatLayer.addTo(map);
+        if (mode === 'marker' || mode === 'both') markerLayer.addTo(map);
+    }
+
+    async function loadHotspots() {
+        try {
+            const res = await fetch('/api/hotspots', { credentials: 'include' });
+            const data = await parseJsonResponse(res);
+            if (data.success) hotspots = data.hotspots;
+        } catch (e) {
+            console.error('Failed to load hotspot locations:', e);
+        }
+        try {
+            renderHotspots();
+        } catch (e) {
+            console.error('Failed to render hotspot locations:', e);
+        }
+    }
+    async function loadDevices() {
+        try {
+            const res = await fetch('/api/devices', { credentials: 'include' });
+            const data = await parseJsonResponse(res);
+            if (data.success) devices = data.devices;
+        } catch (e) {
+            console.error('Failed to load device deployments:', e);
+        }
+        try {
+            renderDevices();
+        } catch (e) {
+            console.error('Failed to render device deployments:', e);
+        }
+    }
+
+    const hotspotsLoadedPromise = loadHotspots();
+    const devicesLoadedPromise = loadDevices();
+    loadSensorAssignments();
+    const hotspotLinksLoadedPromise = loadHotspotDeviceLinks();
+
+    // ── RESIDENT: FOCUS + HIGHLIGHT "MY AREA" ──
+    // Zooms the map to the resident's own Near Monitored Location (set on
+    // My Account) the first time the Risk Map loads, and keeps a pulsing
+    // highlight on it plus on whichever deployed sensor is linked as
+    // feeding that location — so if e.g. a resident's barangay is
+    // Bombongan and their Near Monitored Location is "Bukid Cafe", that's
+    // what greets them here, alongside "Engineering Learning Center" (or
+    // whichever device is linked) since that's the actual sensor behind
+    // their area's readings. Admins don't have a Near Monitored Location,
+    // so this is a no-op for them.
+    const residentHighlightLayer = L.layerGroup().addTo(map);
+    let residentLocationFocused = false;
+
+    function makeResidentHighlightIcon(kind) {
+        return L.divIcon({
+            className: '',
+            html: `<div class="resident-highlight-marker ${kind}"><div class="ring"></div><div class="dot"></div></div>`,
+            iconSize: [22, 22],
+            iconAnchor: [11, 11]
+        });
+    }
+
+    async function focusResidentLocation() {
+        try {
+            const res = await fetch('/api/check_session', { credentials: 'include' });
+            const data = await res.json();
+            if (!data.logged_in || data.user.is_admin) return;
+
+            if (data.user.barangay) {
+                residentBarangay = data.user.barangay;
+                buildTable(currentFilter);
+                updateMyBarangayDisplay();
+            }
+
+            const nearId = data.user.near_hotspot_id;
+            if (!nearId) return;
+
+            await Promise.all([hotspotsLoadedPromise, devicesLoadedPromise, hotspotLinksLoadedPromise]);
+
+            const myHotspot = hotspots.find(h => String(h.id) === String(nearId));
+            if (!myHotspot) return;
+
+            residentNearHotspotId = myHotspot.id;
+            renderHotspots(); // re-render now that this hotspot's plain tooltip should be suppressed
+
+            residentHighlightLayer.clearLayers();
+
+            const hotspotMarker = L.marker([myHotspot.lat, myHotspot.lng], {
+                icon: makeResidentHighlightIcon('mine'),
+                zIndexOffset: 700,
+                interactive: false
+            });
+            hotspotMarker.bindTooltip(`Your Monitored Location — ${myHotspot.name}`, {
+                permanent: true,
+                direction: 'top',
+                offset: [0, -14],
+                className: 'map-label-tooltip resident-tooltip'
+            });
+            residentHighlightLayer.addLayer(hotspotMarker);
+
+            const link = hotspotDeviceLinks[myHotspot.id];
+            const hasLinkedDevice = link && link.device_id && link.device_lat != null && link.device_lng != null;
+
+            if (hasLinkedDevice) {
+                const deviceMarker = L.marker([link.device_lat, link.device_lng], {
+                    icon: makeResidentHighlightIcon('sensor'),
+                    zIndexOffset: 700,
+                    interactive: false
+                });
+                deviceMarker.bindTooltip(`Sensor Feeding Your Area — ${link.device_name || 'Unnamed device'}`, {
+                    permanent: true,
+                    direction: 'top',
+                    offset: [0, -14],
+                    className: 'map-label-tooltip resident-tooltip sensor-tooltip'
+                });
+                residentHighlightLayer.addLayer(deviceMarker);
+
+                residentLinkedDeviceId = link.device_id;
+                renderDevices(); // re-render now that this device's plain tooltip should be suppressed
+
+                // Fold the sensor's location into the heatmap too — it has
+                // no hotspot entry of its own, so without this it would
+                // never show up while in heat view.
+                residentDeviceHeatPoint = [link.device_lat, link.device_lng, 0.85];
+                renderHotspots();
+            }
+
+            if (!residentLocationFocused) {
+                residentLocationFocused = true;
+                const bounds = hasLinkedDevice
+                    ? L.latLngBounds([myHotspot.lat, myHotspot.lng], [link.device_lat, link.device_lng])
+                    : L.latLngBounds([myHotspot.lat, myHotspot.lng], [myHotspot.lat, myHotspot.lng]);
+                map.flyToBounds(bounds.pad(0.6), { maxZoom: 18, duration: 1.4 });
+            }
+        } catch (e) {
+            console.error('Failed to focus resident location:', e);
+        }
+    }
+    focusResidentLocation();
+
+    // ── SENSOR MANAGEMENT TABLE ──
+    // Real sensor types (same ones tracked in Device Status on admin_home).
+    // No location has been assigned yet and no hardware has been deployed/
+    // detected, so every row starts unassigned + offline — nothing here is
+    // hardcoded to look "connected." Wire `location` and `status` up to a
+    // real device-detection endpoint once actual hardware comes online.
+    const sensorList = [
+        { name: 'DHT22 Sensor',           location: null, status: 'offline', lastSync: null },
+        { name: 'Tip Bucket Rain Gauge',  location: null, status: 'offline', lastSync: null },
+        { name: 'pH Sensor',              location: null, status: 'offline', lastSync: null },
+        { name: 'Anemometer',             location: null, status: 'offline', lastSync: null },
+        { name: 'Antenna',                location: null, status: 'offline', lastSync: null },
+    ];
+
+    // ── SENSOR ↔ DEVICE-LOCATION ASSIGNMENTS ──
+    // Maps each fixed sensor name (see sensorList above) to the deployed
+    // device pin it's been pointed at, via /api/sensor_assignments.
+    let sensorAssignments = {};
+
+    function buildSensorTable() {
+        const tbody = document.getElementById('sensorTableBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        sensorList.forEach(s => {
+            const dotClass = s.status === 'online' ? 'dot-online' : s.status === 'warning' ? 'dot-warning' : 'dot-offline';
+            const statusLabel = s.status.charAt(0).toUpperCase() + s.status.slice(1);
+
+            const assignment = sensorAssignments[s.name];
+            let locationCell;
+            if (assignment && assignment.device_id) {
+                const devName = assignment.device_name || 'Unnamed device';
+                locationCell = `
+                    <span style="display:inline-flex; align-items:center; gap:6px;">
+                        <span style="font-weight:500;">${escapeHtml(devName)}</span>
+                        <button class="ping-btn" onclick="openSensorLocationModal('${escapeHtml(s.name)}')" title="Change location">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                    </span>
+                `;
+            } else {
+                locationCell = `<button class="set-location-btn" onclick="openSensorLocationModal('${escapeHtml(s.name)}')"><i class="fas fa-map-pin" style="margin-right:4px;"></i>Set Location</button>`;
+            }
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${locationCell}</td>
+                <td style="font-weight:500;">${s.name}</td>
+                <td><span class="sensor-status-cell"><span class="status-dot ${dotClass}"></span>${statusLabel}</span></td>
+                <td style="color:var(--text-muted);">${s.lastSync || '—'}</td>
+                <td>
+                    <button class="ping-btn" onclick="showToast('${s.name} pinged.')">
+                        <i class="fas fa-sync-alt" style="margin-right:4px;"></i>Ping
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+    buildSensorTable();
+
+    async function loadSensorAssignments() {
+        try {
+            const res = await fetch('/api/sensor_assignments', { credentials: 'include' });
+            const data = await parseJsonResponse(res);
+            if (data.success) {
+                sensorAssignments = {};
+                data.assignments.forEach(a => { sensorAssignments[a.sensor_name] = a; });
+            }
+        } catch (e) {
+            console.error('Failed to load sensor assignments:', e);
+        }
+        buildSensorTable();
+    }
+
+    // ── HOTSPOT ↔ NEAREST-DEVICE LINKS (Monitored Morong Locations table) ──
+    let hotspotDeviceLinks = {};
+
+    async function loadHotspotDeviceLinks() {
+        try {
+            const res = await fetch('/api/hotspot_device_links', { credentials: 'include' });
+            const data = await parseJsonResponse(res);
+            if (data.success) {
+                hotspotDeviceLinks = {};
+                data.links.forEach(l => { hotspotDeviceLinks[l.hotspot_id] = l; });
+            }
+        } catch (e) {
+            console.error('Failed to load hotspot near-device links:', e);
+        }
+        buildTable(currentFilter);
+    }
+
+    // ── SHARED DEVICE-PICKER MODAL ──
+    // Same popup, listing every Monitored Device Location pin, used both by
+    // Sensor Management ("Set Location" for a fixed sensor type) and by
+    // Monitored Morong Locations ("Set Location" for a hotspot's nearest
+    // device). `devicePicker` tracks which one is currently open so Save/
+    // Unassign know which endpoint + local map to update.
+    let devicePicker = { kind: null, key: null };
+
+    // Opens the popup listing every "Monitored Device Location" pin so the
+    // admin can pick which one this fixed sensor type is physically at.
+    function openSensorLocationModal(sensorName) {
+        devicePicker = { kind: 'sensor', key: sensorName };
+        document.getElementById('sensorLocationSub').textContent =
+            `Choose which deployed device "${sensorName}" is attached to.`;
+        renderDevicePickerList();
+
+        const assignment = sensorAssignments[sensorName];
+        document.getElementById('unassignSensorBtn').style.display =
+            (assignment && assignment.device_id) ? 'inline-flex' : 'none';
+
+        document.getElementById('sensorLocationModal').classList.add('open');
+    }
+
+    // Opens the same popup so the admin can pick the device pin nearest to
+    // this hotspot location.
+    function openHotspotDeviceModal(hotspotId, hotspotName) {
+        devicePicker = { kind: 'hotspot', key: hotspotId };
+        document.getElementById('sensorLocationSub').textContent =
+            `Choose the deployed device nearest to "${hotspotName}".`;
+        renderDevicePickerList();
+
+        const link = hotspotDeviceLinks[hotspotId];
+        document.getElementById('unassignSensorBtn').style.display =
+            (link && link.device_id) ? 'inline-flex' : 'none';
+
+        document.getElementById('sensorLocationModal').classList.add('open');
+    }
+
+    function renderDevicePickerList() {
+        const listEl = document.getElementById('sensorLocationDeviceList');
+
+        let currentDeviceId = null;
+        if (devicePicker.kind === 'sensor') {
+            const a = sensorAssignments[devicePicker.key];
+            currentDeviceId = a ? a.device_id : null;
+        } else if (devicePicker.kind === 'hotspot') {
+            const l = hotspotDeviceLinks[devicePicker.key];
+            currentDeviceId = l ? l.device_id : null;
+        }
+
+        if (!devices.length) {
+            listEl.innerHTML = `<div class="device-pick-empty">
+                <i class="fas fa-microchip" style="display:block; font-size:1.4rem; margin-bottom:8px; opacity:0.5;"></i>
+                No device deployments yet.<br>Pin one from the Risk Map first (the "Add Device Deployment" button).
+            </div>`;
+            return;
+        }
+
+        listEl.innerHTML = devices.map(d => {
+            const isSelected = String(d.id) === String(currentDeviceId);
+            const isOffline = d.status === 'offline';
+            const statusColor = isOffline ? '#7f8c8d' : '#3498db';
+            return `
+                <div class="device-pick-item ${isSelected ? 'selected' : ''}" onclick="pickDeviceForPicker(${d.id})">
+                    <div class="device-pick-icon" style="color:${statusColor};"><i class="fas fa-microchip"></i></div>
+                    <div class="device-pick-info">
+                        <div class="device-pick-name">${escapeHtml(d.name)}</div>
+                        <div class="device-pick-coords">${d.lat.toFixed(5)}, ${d.lng.toFixed(5)}</div>
+                    </div>
+                    <span class="risk-pill ${isOffline ? 'pill-offline' : 'pill-online'}">${isOffline ? 'Offline' : 'Online'}</span>
+                    ${isSelected ? '<i class="fas fa-check device-pick-check"></i>' : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    async function pickDeviceForPicker(deviceId) {
+        if (devicePicker.kind === 'sensor') {
+            await assignSensorLocation(deviceId);
+        } else if (devicePicker.kind === 'hotspot') {
+            await assignHotspotDevice(deviceId);
+        }
+    }
+
+    async function unassignPickedDevice() {
+        if (devicePicker.kind === 'sensor') {
+            await unassignSensorLocation();
+        } else if (devicePicker.kind === 'hotspot') {
+            await unassignHotspotDevice();
+        }
+    }
+
+    async function assignSensorLocation(deviceId) {
+        const sensorName = devicePicker.key;
+        if (!sensorName) return;
+        try {
+            const res = await fetch('/api/sensor_assignments', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ sensor_name: sensorName, device_id: deviceId })
+            });
+            const data = await parseJsonResponse(res);
+            if (data.success) {
+                sensorAssignments[sensorName] = data.assignment;
+                buildSensorTable();
+                closeSensorLocationModal();
+                showToast('✅ Sensor location set.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to set sensor location.'));
+            }
+        } catch (e) {
+            console.error('assignSensorLocation failed:', e);
+            showToast('❌ ' + (e.userMessage || 'Server error. Please try again.'));
+        }
+    }
+
+    async function unassignSensorLocation() {
+        const sensorName = devicePicker.key;
+        if (!sensorName) return;
+        try {
+            const res = await fetch('/api/sensor_assignments', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ sensor_name: sensorName, device_id: null })
+            });
+            const data = await parseJsonResponse(res);
+            if (data.success) {
+                sensorAssignments[sensorName] = data.assignment;
+                buildSensorTable();
+                closeSensorLocationModal();
+                showToast('✅ Sensor unassigned.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to unassign sensor.'));
+            }
+        } catch (e) {
+            console.error('unassignSensorLocation failed:', e);
+            showToast('❌ ' + (e.userMessage || 'Server error. Please try again.'));
+        }
+    }
+
+    async function assignHotspotDevice(deviceId) {
+        const hotspotId = devicePicker.key;
+        if (hotspotId == null) return;
+        try {
+            const res = await fetch('/api/hotspot_device_links', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ hotspot_id: hotspotId, device_id: deviceId })
+            });
+            const data = await parseJsonResponse(res);
+            if (data.success) {
+                hotspotDeviceLinks[hotspotId] = data.link;
+                buildTable(currentFilter);
+                closeSensorLocationModal();
+                showToast('✅ Near device set.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to set near device.'));
+            }
+        } catch (e) {
+            console.error('assignHotspotDevice failed:', e);
+            showToast('❌ ' + (e.userMessage || 'Server error. Please try again.'));
+        }
+    }
+
+    async function unassignHotspotDevice() {
+        const hotspotId = devicePicker.key;
+        if (hotspotId == null) return;
+        try {
+            const res = await fetch('/api/hotspot_device_links', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ hotspot_id: hotspotId, device_id: null })
+            });
+            const data = await parseJsonResponse(res);
+            if (data.success) {
+                hotspotDeviceLinks[hotspotId] = data.link;
+                buildTable(currentFilter);
+                closeSensorLocationModal();
+                showToast('✅ Near device cleared.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to clear near device.'));
+            }
+        } catch (e) {
+            console.error('unassignHotspotDevice failed:', e);
+            showToast('❌ ' + (e.userMessage || 'Server error. Please try again.'));
+        }
+    }
+
+    function closeSensorLocationModal() {
+        document.getElementById('sensorLocationModal').classList.remove('open');
+        devicePicker = { kind: null, key: null };
+    }
+
+    // ── ADD LOCATION / ADD DEVICE DEPLOYMENT ──
+    let addingMode = null;
+
+    const PIN_CONFIG = {
+        hotspot: {
+            list: () => hotspots,
+            endpoint: '/api/hotspots',
+            addTitle: '<i class="fas fa-map-pin"></i> Add Monitored Location',
+            addSub: 'Name this pin. It will be saved with the current live sensor reading and shown on the heatmap and in Monitored Hotspot Locations.',
+            editTitle: '<i class="fas fa-map-pin"></i> Edit Monitored Location',
+            editSub: 'Update the name for this location, or remove it entirely.',
+            placeholder: 'e.g. Barangay San Jose Covered Court',
+            render: renderHotspots,
+            reload: loadHotspots,
+            buttonId: 'addLocationBtn',
+            buttonIdleLabel: '<i class="fas fa-map-pin"></i> Add Location'
+        },
+        device: {
+            list: () => devices,
+            endpoint: '/api/devices',
+            addTitle: '<i class="fas fa-microchip"></i> Add Device Deployment',
+            addSub: 'Name this sensor unit. It becomes a source of environmental data (temperature, humidity, rainfall, pH) feeding the risk map.',
+            editTitle: '<i class="fas fa-microchip"></i> Edit Device Deployment',
+            editSub: 'Update the name for this device, or remove it entirely.',
+            placeholder: 'e.g. Sensor Unit — Gate 2',
+            render: renderDevices,
+            reload: loadDevices,
+            buttonId: 'addDeviceBtn',
+            buttonIdleLabel: '<i class="fas fa-satellite-dish"></i> Add Device Deployment'
+        }
+    };
+
+    const AddLocationControl = L.Control.extend({
+        options: { position: 'topleft' },
+        onAdd: function() {
+            const btn = L.DomUtil.create('button', 'add-location-btn');
+            btn.id = 'addLocationBtn';
+            btn.type = 'button';
+            btn.innerHTML = PIN_CONFIG.hotspot.buttonIdleLabel;
+            L.DomEvent.disableClickPropagation(btn);
+            L.DomEvent.on(btn, 'click', () => toggleAddMode('hotspot'));
+            return btn;
+        }
+    });
+    // NOTE: "Add Location" is an admin-only action (residents don't create
+    // Monitored Locations), so this control is defined but intentionally
+    // never added to the map here — see PIN_CONFIG.hotspot for the config
+    // it still relies on elsewhere.
+    // map.addControl(new AddLocationControl());
+
+    const AddDeviceControl = L.Control.extend({
+        options: { position: 'topleft' },
+        onAdd: function() {
+            const btn = L.DomUtil.create('button', 'add-device-btn');
+            btn.id = 'addDeviceBtn';
+            btn.type = 'button';
+            btn.innerHTML = PIN_CONFIG.device.buttonIdleLabel;
+            L.DomEvent.disableClickPropagation(btn);
+            L.DomEvent.on(btn, 'click', () => toggleAddMode('device'));
+            return btn;
+        }
+    });
+    // NOTE: "Add Device Deployment" is an admin-only action, so this
+    // control is defined but intentionally never added to the map here.
+    // map.addControl(new AddDeviceControl());
+
+    // Residents are view-only: no Edit Trace controls here. The trace and
+    // barangay boundary overrides are drawn straight from whatever the
+    // admin most recently saved (see loadGisBoundariesFromServer() below).
+    let savedTraceLayer = null;       // the finished, saved Morong trace polygon
+
+    function drawSavedTrace(geojsonFeature) {
+        if (savedTraceLayer) { map.removeLayer(savedTraceLayer); savedTraceLayer = null; }
+        savedTraceLayer = L.geoJSON(geojsonFeature, {
+            interactive: false,
+            style: {
+                color: '#ffffff',
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0,
+                lineJoin: 'round'
+            }
+        }).addTo(map);
+    }
+
+    // Pulls both saved boundary overrides (the per-barangay adjustments and
+    // the freehand manual trace) from the database, so this view-only map
+    // always mirrors whatever the admin most recently saved.
+    async function loadGisBoundariesFromServer() {
+        try {
+            const res = await fetch('/api/gis_boundaries', { credentials: 'include' });
+            const data = await res.json();
+            if (!data || !data.success) return;
+
+            if (data.barangay_boundaries && Array.isArray(data.barangay_boundaries.features)) {
+                data.barangay_boundaries.features.forEach(sf => {
+                    const target = MORONG_BARANGAYS.features.find(f => f.properties.name === sf.properties.name);
+                    if (target) target.geometry.coordinates = sf.geometry.coordinates;
+                });
+                barangayBoundariesOverrideActive = true;
+                barangayBoundaryLayer.clearLayers();
+                barangayBoundaryLayer.addData(MORONG_BARANGAYS);
+                updateBarangayLabelScale();
+            }
+
+            if (data.manual_trace) {
+                drawSavedTrace(data.manual_trace);
+            }
+        } catch (e) {
+            console.error('Failed to load saved GIS boundaries from server:', e);
+        }
+    }
+    loadGisBoundariesFromServer();
+
+    function toggleAddMode(type) {
+        const wasActive = addingMode === type;
+        if (addingMode) resetAddButton(addingMode);
+        addingMode = wasActive ? null : type;
+
+        const mapEl = document.getElementById('map');
+        if (addingMode) {
+            const btn = document.getElementById(PIN_CONFIG[addingMode].buttonId);
+            btn.classList.add('active');
+            btn.innerHTML = '<i class="fas fa-crosshairs"></i> Click the map…';
+            mapEl.style.cursor = 'crosshair';
+        } else {
+            mapEl.style.cursor = '';
+        }
+    }
+
+    function resetAddButton(type) {
+        const btn = document.getElementById(PIN_CONFIG[type].buttonId);
+        btn.classList.remove('active');
+        btn.innerHTML = PIN_CONFIG[type].buttonIdleLabel;
+    }
+
+    map.on('click', function(e) {
+        if (!addingMode) return;
+        const type = addingMode;
+        toggleAddMode(type);
+        openAddModal(type, e.latlng.lat, e.latlng.lng);
+    });
+
+    function openAddModal(type, lat, lng) {
+        const cfg = PIN_CONFIG[type];
+        const modal = document.getElementById('addLocationModal');
+        modal.dataset.mode = 'add';
+        modal.dataset.type = type;
+        modal.dataset.lat = lat;
+        modal.dataset.lng = lng;
+        modal.dataset.id = '';
+
+        document.getElementById('pinModalTitle').innerHTML = cfg.addTitle;
+        document.getElementById('pinModalSub').textContent = cfg.addSub;
+        document.getElementById('newLocationName').value = '';
+        document.getElementById('newLocationName').placeholder = cfg.placeholder;
+        document.getElementById('deletePinBtn').style.display = 'none';
+        document.getElementById('saveLocationBtn').innerHTML = '<i class="fas fa-check"></i> Save Location';
+
+        modal.classList.add('open');
+        setTimeout(() => document.getElementById('newLocationName').focus(), 50);
+    }
+
+    function editPin(type, id) {
+        const item = PIN_CONFIG[type].list().find(x => String(x.id) === String(id));
+        if (!item) return;
+        map.closePopup();
+
+        const cfg = PIN_CONFIG[type];
+        const modal = document.getElementById('addLocationModal');
+        modal.dataset.mode = 'edit';
+        modal.dataset.type = type;
+        modal.dataset.id = id;
+
+        document.getElementById('pinModalTitle').innerHTML = cfg.editTitle;
+        document.getElementById('pinModalSub').textContent = cfg.editSub;
+        document.getElementById('newLocationName').value = item.name;
+        document.getElementById('newLocationName').placeholder = cfg.placeholder;
+        document.getElementById('deletePinBtn').style.display = 'inline-flex';
+        document.getElementById('saveLocationBtn').innerHTML = '<i class="fas fa-check"></i> Save Changes';
+
+        modal.classList.add('open');
+        setTimeout(() => document.getElementById('newLocationName').focus(), 50);
+    }
+
+    function closeAddLocationModal() {
+        document.getElementById('addLocationModal').classList.remove('open');
+    }
+
+    document.getElementById('newLocationName').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') submitPinForm();
+        if (e.key === 'Escape') closeAddLocationModal();
+    });
+
+    async function submitPinForm() {
+        const modal = document.getElementById('addLocationModal');
+        const type = modal.dataset.type;
+        const mode = modal.dataset.mode;
+        const cfg = PIN_CONFIG[type];
+        const name = document.getElementById('newLocationName').value.trim();
+
+        if (!name) {
+            showToast('❌ Please enter a name.');
+            return;
+        }
+
+        const saveBtn = document.getElementById('saveLocationBtn');
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving…';
+
+        try {
+            let res;
+            if (mode === 'edit') {
+                const id = modal.dataset.id;
+                res = await fetch(`${cfg.endpoint}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ name })
+                });
+                const data = await parseJsonResponse(res);
+
+                if (data.success) {
+                    await cfg.reload();
+                    closeAddLocationModal();
+                    showToast('✅ Changes saved.');
+                } else {
+                    showToast('❌ ' + (data.message || 'Failed to save changes.'));
+                }
+            } else {
+                const lat = parseFloat(modal.dataset.lat);
+                const lng = parseFloat(modal.dataset.lng);
+                res = await fetch(cfg.endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ name, lat, lng })
+                });
+                const data = await parseJsonResponse(res);
+
+                if (data.success) {
+                    await cfg.reload();
+                    closeAddLocationModal();
+                    showToast(type === 'device' ? '✅ Device deployment added successfully.' : '✅ Location added successfully.');
+                } else {
+                    showToast('❌ ' + (data.message || 'Failed to save.'));
+                }
+            }
+        } catch (e) {
+            console.error('submitPinForm failed:', e);
+            showToast('❌ ' + (e.userMessage || 'Server error. Please try again.'));
+            await cfg.reload();
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = mode === 'edit'
+                ? '<i class="fas fa-check"></i> Save Changes'
+                : '<i class="fas fa-check"></i> Save Location';
+        }
+    }
+
+    // ── CONFIRM DIALOG ──
+    let pendingRemoveAction = null;
+
+    function showConfirmDialog(message, onConfirm) {
+        const dialog = document.getElementById('confirmDialog');
+        document.getElementById('confirmDialogMessage').textContent = message;
+        pendingRemoveAction = onConfirm;
+        dialog.classList.add('open');
+    }
+
+    function closeConfirmDialog() {
+        document.getElementById('confirmDialog').classList.remove('open');
+        pendingRemoveAction = null;
+    }
+
+    function confirmDialogAction() {
+        if (typeof pendingRemoveAction === 'function') {
+            pendingRemoveAction();
+        }
+        closeConfirmDialog();
+    }
+
+    async function deleteCurrentPin() {
+        const modal = document.getElementById('addLocationModal');
+        const type = modal.dataset.type;
+        const id = modal.dataset.id;
+        if (!id) return;
+        await removePin(type, id, true);
+        closeAddLocationModal();
+    }
+
+    // Tracks in-flight "remove" requests by "type:id" so a fast double-click
+    // (or clicking Remove again before the map has finished updating) can't
+    // fire a second DELETE for the same pin — a second request would find
+    // the row already gone and legitimately 404, which would surface as a
+    // failure toast even though the removal already succeeded.
+    const pendingDeletes = new Set();
+
+    async function removePin(type, id, skipConfirm) {
+        const cfg = PIN_CONFIG[type];
+        const label = type === 'device' ? 'device deployment' : 'location';
+        const key = `${type}:${id}`;
+        if (pendingDeletes.has(key)) return;
+
+        if (!skipConfirm) {
+            showConfirmDialog(`Remove this ${label}? This can't be undone.`, async function() {
+                await executeRemovePin(type, id, cfg, label, key);
+            });
+            return;
+        }
+
+        await executeRemovePin(type, id, cfg, label, key);
+    }
+
+    async function executeRemovePin(type, id, cfg, label, key) {
+        pendingDeletes.add(key);
+        try {
+            const res = await fetch(`${cfg.endpoint}/${id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            const data = await parseJsonResponse(res);
+
+            if (data.success) {
+                // From here on, the deletion has already succeeded server-side.
+                // Nothing below this point — updating the local list, closing
+                // the popup, re-rendering the map — should ever be able to flip
+                // the outcome shown to the admin back to an error. Wrap the
+                // (best-effort) UI refresh separately so a failure inside it
+                // is only logged, never surfaced as "Server error" for a
+                // deletion that already went through.
+                try {
+                    map.closePopup();
+
+                    // Drop it from the local list and re-render right away so
+                    // the marker/heat point disappears from the map
+                    // immediately, instead of waiting on a second network
+                    // round trip. This is what actually removes it without a
+                    // page refresh — the DELETE already succeeded server-side
+                    // by this point.
+                    const list = cfg.list();
+                    const idx = list.findIndex(item => String(item.id) === String(id));
+                    if (idx !== -1) list.splice(idx, 1);
+                    cfg.render();
+                } catch (renderErr) {
+                    console.error(`Map refresh after removing ${label} failed (location was still deleted):`, renderErr);
+                }
+
+                showToast(type === 'device' ? '✅ Device deployment removed successfully.' : '✅ Location removed successfully.');
+
+                // Best-effort resync with the server in the background so the
+                // list stays authoritative (e.g. picks up anything else that
+                // changed). A hiccup here must never turn a successful removal
+                // into an error toast — the deletion already went through.
+                cfg.reload().catch(err => console.error(`Background reload after removing ${label} failed:`, err));
+            } else {
+                // The deletion itself did not succeed (e.g. already removed,
+                // or a validation error from the server) — this is the ONLY
+                // path that should ever show a failure message.
+                showToast('❌ ' + (data.message || `Failed to remove ${label}.`));
+            }
+        } catch (e) {
+            // Only a genuinely failed/unparseable DELETE request lands here —
+            // the deletion itself did not go through, so this is legitimately
+            // an error state (unlike a hiccup in the background resync above).
+            console.error('removePin failed:', e);
+            showToast('❌ ' + (e.userMessage || 'Server error. Please try again.'));
+        } finally {
+            pendingDeletes.delete(key);
+        }
+    }
+
+    async function parseJsonResponse(res) {
+        const raw = await res.text();
+        try {
+            return JSON.parse(raw);
+        } catch (parseErr) {
+            console.error(`Expected JSON from ${res.url} (status ${res.status}) but got:`, raw.slice(0, 300));
+            const err = new Error('Non-JSON response');
+            err.userMessage = res.status === 401 || res.status === 403
+                ? 'Your session may have expired — please log in again.'
+                : `Unexpected response from server (status ${res.status}). Please try again.`;
+            throw err;
+        }
+    }
+
+    // ── TOAST ──
+    let toastTimer;
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg.replace('✅ ', '').replace('❌ ', '');
+        const icon = toast.querySelector('i');
+        icon.style.color = msg.includes('❌') ? '#e74c3c' : '#2ecc71';
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // ── CHART DEFAULTS ──
+    function isLightTheme() {
+        return document.body.classList.contains('light-theme');
+    }
+
+    function lstmTextColors() {
+        return isLightTheme()
+            ? {
+                base:   'rgba(16,38,26,0.85)',
+                muted:  'rgba(16,38,26,0.65)',
+                grid:   'rgba(16,38,26,0.08)',
+                title:  '#10261a',
+                body:   'rgba(16,38,26,0.75)',
+                tooltipBg: 'rgba(255,255,255,0.95)',
+                tooltipBorder: 'rgba(13,107,58,0.25)'
+              }
+            : {
+                base:   'rgba(232,245,238,0.5)',
+                muted:  'rgba(232,245,238,0.75)',
+                grid:   'rgba(255,255,255,0.06)',
+                title:  '#e8f5ee',
+                body:   'rgba(232,245,238,0.75)',
+                tooltipBg: 'rgba(7,26,15,0.92)',
+                tooltipBorder: 'rgba(46,204,113,0.25)'
+              };
+    }
+
+    const lstmColors0 = lstmTextColors();
+    Chart.defaults.color = lstmColors0.base;
+    Chart.defaults.borderColor = lstmColors0.grid;
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // ── ROLLING 8-DAY FORECAST HELPERS (today + next 7 days) ──
+    const lstmDayAbbr = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const lstmMonthAbbr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEPT','OCT','NOV','DEC'];
+
+    function getRollingForecastDates() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const dates = [];
+        for (let i = 0; i < 8; i++) {
+            const d = new Date(today);
+            d.setDate(today.getDate() + i);
+            dates.push(d);
+        }
+        return dates;
+    }
+
+    function formatWeekRangeLabel(dates) {
+        const start = dates[0];
+        const end = dates[dates.length - 1];
+        const startStr = `${lstmMonthAbbr[start.getMonth()]} ${start.getDate()}`;
+        const endStr = `${lstmMonthAbbr[end.getMonth()]} ${end.getDate()}`;
+        return `${startStr} - ${endStr} | ${end.getFullYear()}`;
+    }
+
+    function buildForecastLabels(dates) {
+        return dates.map((d, i) => {
+            const dayLabel = `${lstmDayAbbr[d.getDay()]} ${d.getDate()}`;
+            return i === 0 ? [dayLabel, '(Today)'] : [dayLabel];
+        });
+    }
+
+    // ── LSTM 7-DAY FORECAST CHART (wide, top row) ──
+    // Rebuilt daily so the range and labels always start from today's real date.
+    let lstmWeekDates = getRollingForecastDates();
+    let lstmBigLabels = buildForecastLabels(lstmWeekDates);
+    document.getElementById('lstmWeekRange').textContent = formatWeekRangeLabel(lstmWeekDates);
+
+    const lstmBigCtx = document.getElementById('lstmBigChart').getContext('2d');
+    const lstmActual    = [38, null, null, null, null, null, null, null];
+    const lstmForecast  = [38, 42, 45, 50, 55, 52, 58, 60];
+
+    const lstmBigChart = new Chart(lstmBigCtx, {
+        type: 'line',
+        data: {
+            labels: lstmBigLabels,
+            datasets: [
+                {
+                    label: 'Actual Risk %',
+                    data: lstmActual,
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'rgba(231,76,60,0.12)',
+                    borderWidth: 2.5,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#e74c3c',
+                    tension: 0.4,
+                    fill: true,
+                    spanGaps: false
+                },
+                {
+                    label: 'LSTM Forecast',
+                    data: lstmForecast,
+                    borderColor: '#f39c12',
+                    backgroundColor: 'rgba(243,156,18,0.10)',
+                    borderWidth: 2.5,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#f39c12',
+                    borderDash: [5, 4],
+                    tension: 0.4,
+                    fill: true,
+                    spanGaps: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 800 },
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        boxWidth: 12, boxHeight: 3, padding: 12,
+                        color: lstmColors0.muted, font: { size: 10 },
+                        usePointStyle: true, pointStyle: 'line'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: lstmColors0.tooltipBg,
+                    borderColor: lstmColors0.tooltipBorder, borderWidth: 1,
+                    titleColor: lstmColors0.title, bodyColor: lstmColors0.body, padding: 8,
+                    callbacks: {
+                        label: ctx => ctx.parsed.y !== null ? ` ${ctx.dataset.label}: ${ctx.parsed.y}%` : ''
+                    }
+                }
+            },
+            scales: {
+                x: { grid: { color: lstmColors0.grid }, ticks: { font: { size: 10 } } },
+                y: {
+                    grid: { color: lstmColors0.grid },
+                    ticks: { font: { size: 10 }, callback: v => v + '%' },
+                    min: 0, max: 100
+                }
+            }
+        }
+    });
+
+    // Keep the date-range header + labels in sync with the real date.
+    // Checks periodically so the moment a new day starts, the rolling
+    // 8-day forecast (today + next 7 days) shifts forward automatically.
+    function refreshLstmWeekIfNeeded() {
+        const newDates = getRollingForecastDates();
+        if (newDates[0].toDateString() !== lstmWeekDates[0].toDateString()) {
+            lstmWeekDates = newDates;
+            lstmBigLabels = buildForecastLabels(lstmWeekDates);
+            document.getElementById('lstmWeekRange').textContent = formatWeekRangeLabel(lstmWeekDates);
+            lstmBigChart.data.labels = lstmBigLabels;
+            lstmBigChart.update();
+        }
+    }
+    setInterval(refreshLstmWeekIfNeeded, 60 * 1000); // check every minute
+
+    // ── LSTM CONFIDENCE (linked to backend) ──
+    async function fetchLstmConfidence() {
+        try {
+            const res = await fetch('/api/lstm_forecast', { credentials: 'include' });
+            const json = await res.json();
+            if (json.success && json.data && typeof json.data.confidence !== 'undefined') {
+                document.getElementById('lstmConfidenceVal').textContent = json.data.confidence + '%';
+            }
+        } catch (e) {
+            console.error('Error fetching LSTM confidence:', e);
+        }
+    }
+    fetchLstmConfidence();
+    setInterval(fetchLstmConfidence, 5 * 60 * 1000); // refresh every 5 minutes
+
+    function refreshLstmChartTheme() {
+        const c = lstmTextColors();
+        Chart.defaults.color = c.base;
+        Chart.defaults.borderColor = c.grid;
+
+        lstmBigChart.options.plugins.legend.labels.color = c.muted;
+        lstmBigChart.options.plugins.tooltip.backgroundColor = c.tooltipBg;
+        lstmBigChart.options.plugins.tooltip.borderColor = c.tooltipBorder;
+        lstmBigChart.options.plugins.tooltip.titleColor = c.title;
+        lstmBigChart.options.plugins.tooltip.bodyColor = c.body;
+        lstmBigChart.options.scales.x.grid.color = c.grid;
+        lstmBigChart.options.scales.y.grid.color = c.grid;
+        lstmBigChart.options.scales.x.ticks.color = c.base;
+        lstmBigChart.options.scales.y.ticks.color = c.base;
+        lstmBigChart.update();
+    }
+    if (typeof themeToggleBtn !== 'undefined' && themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+            setTimeout(refreshLstmChartTheme, 0);
+        });
+    }
+    refreshLstmChartTheme();
+
+    loadUserInfo();
+</script>
+<script src="/static/theme-toggle.js"></script>
+</body>
+</html>
