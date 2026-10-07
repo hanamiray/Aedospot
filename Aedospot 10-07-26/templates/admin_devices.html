@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devices | AEDOSPOT</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            --green-deep: #071a0f;
+            --green-dark: #0d2b18;
+            --green-mid: #145c30;
+            --green-bright: #2ecc71;
+            --green-bright-alt: #1a8a4a;
+            --green-glow: rgba(46,204,113,0.18);
+            --amber: #f39c12;
+            --red: #e74c3c;
+            --blue: #3498db;
+            --text-main: #e8f5ee;
+            --text-muted: rgba(232,245,238,0.55);
+            --glass: rgba(255,255,255,0.055);
+            --glass-border: rgba(255,255,255,0.10);
+            --nav-bg: rgba(7,26,15,0.75);
+            --nav-bg-mobile: rgba(7,26,15,0.95);
+            --bg-1: #1a5c35;
+            --bg-2: #0a2e1c;
+            --bg-3: #071a0f;
+            --on-accent: #04150a;
+        }
+        body.light-theme {
+            --green-deep: #ffffff;
+            --green-dark: #f3faf6;
+            --green-mid: #e6f5ec;
+            --green-bright: #0d6b3a;
+            --green-bright-alt: #0a4f2a;
+            --green-glow: rgba(13,107,58,0.10);
+            --text-main: #10261a;
+            --text-muted: rgba(16,38,26,0.6);
+            --glass: rgba(13,107,58,0.045);
+            --glass-border: rgba(13,107,58,0.14);
+            --nav-bg: rgba(255,255,255,0.82);
+            --nav-bg-mobile: rgba(255,255,255,0.97);
+            --bg-1: #ffffff;
+            --bg-2: #f2faf5;
+            --bg-3: #e8f5ee;
+            --on-accent: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at 20% 0%, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background var(--transition), color var(--transition);
+        }
+        .hidden { display: none !important; }
+
+        /* ── TOP NAV ── */
+        .top-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.6rem 2rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .top-nav .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .top-nav .nav-logo-mark { width: 36px; height: 36px; object-fit: contain; }
+        .top-nav .nav-logo-text { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); }
+        .top-nav .nav-logo-text .accent { color: var(--green-bright); }
+        .top-nav .nav-links {
+            display: flex; align-items: center; gap: 0.2rem; list-style: none;
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 0.28rem; border-radius: 50px;
+        }
+        .top-nav .nav-links a {
+            display: flex; align-items: center; gap: 7px; text-decoration: none;
+            color: var(--text-muted); font-size: 0.83rem; font-weight: 600;
+            padding: 0.55rem 1.05rem; border-radius: 50px; transition: all var(--transition);
+        }
+        .top-nav .nav-links a i { font-size: 0.82rem; }
+        .top-nav .nav-links a:hover { color: var(--text-main); background: rgba(255,255,255,0.07); }
+        body.light-theme .top-nav .nav-links a:hover { background: rgba(13,107,58,0.08); }
+        .top-nav .nav-links a.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            box-shadow: 0 4px 14px rgba(46,204,113,0.35);
+        }
+        body.light-theme .top-nav .nav-links a.active {
+            color: var(--green-bright-alt);
+            background: linear-gradient(135deg, #ffffff, #e7f7ee);
+            border: 1px solid rgba(13,107,58,0.22);
+            box-shadow: 0 4px 14px rgba(13,107,58,0.14);
+        }
+        .top-nav .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .theme-toggle-btn {
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; border: 1px solid var(--glass-border); background: var(--glass);
+            color: var(--green-bright); font-size: 0.9rem; cursor: pointer; transition: all var(--transition);
+        }
+        .theme-toggle-btn:hover { background: var(--green-glow); transform: rotate(20deg); }
+        .account-btn-top {
+            display: flex; align-items: center; gap: 8px; padding: 0.4rem 1rem 0.4rem 0.6rem;
+            border-radius: 50px; border: 1px solid var(--glass-border); background: var(--glass);
+            color: var(--text-main); text-decoration: none; font-size: 0.8rem; font-weight: 500;
+            transition: all var(--transition);
+        }
+        .account-btn-top:hover { background: var(--green-glow); border-color: rgba(46,204,113,0.3); }
+        .account-btn-top i { font-size: 1.2rem; color: var(--green-bright); }
+        .account-btn-top .user-avatar-img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; display: none; }
+        .user-name-stack { display: flex; flex-direction: column; align-items: center; line-height: 1.25; }
+        .user-greeting { font-size: 0.62rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+        .logout-btn-top {
+            padding: 0.4rem 1rem; border-radius: 50px; border: 1px solid rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.08); color: var(--red); font-size: 0.75rem; cursor: pointer;
+            transition: all var(--transition); font-family: 'Inter', sans-serif;
+        }
+        .logout-btn-top:hover { background: rgba(231,76,60,0.75); color: #fff; }
+        .menu-toggle { display: none; background: none; border: none; font-size: 1.3rem; color: var(--text-main); cursor: pointer; padding: 0.3rem; }
+        .mobile-nav-dropdown {
+            display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--nav-bg-mobile);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 1.5rem; z-index: 1099; flex-direction: column; gap: 0.3rem;
+        }
+        .mobile-nav-dropdown.open { display: flex; }
+        .mobile-nav-dropdown a {
+            color: var(--text-muted); text-decoration: none; padding: 0.7rem 1rem;
+            border-radius: 8px; font-size: 0.9rem; font-weight: 500;
+        }
+        .mobile-nav-dropdown a:hover { color: var(--text-main); background: var(--glass); }
+        .mobile-nav-dropdown a.active { color: var(--green-bright); background: var(--green-glow); }
+
+        /* ── MAIN ── */
+        .main-content { margin-top: 0; padding: 1.6rem 1.6rem 1.6rem; min-height: 100vh; }
+        .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
+        .dash-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; text-shadow: 0 0 30px rgba(46,204,113,0.25); }
+        .realtime-badge {
+            display: flex; align-items: center; gap: 10px; padding: 0.45rem 1.1rem; border-radius: 20px;
+            border: 1px solid rgba(46,204,113,0.35); background: rgba(46,204,113,0.08);
+            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.5px; color: var(--green-bright);
+        }
+        .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-bright); animation: pulse-ring 1.6s ease-in-out infinite; }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(46,204,113,0.65); }
+            60% { box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+            100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+        }
+        .realtime-divider { width: 1px; height: 14px; background: rgba(46,204,113,0.3); }
+        .realtime-clock-wrap { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+        .realtime-clock { font-size: 1rem; font-weight: 700; letter-spacing: 1px; color: var(--green-bright); white-space: nowrap; }
+        .realtime-date { font-size: 0.65rem; font-weight: 500; color: rgba(46,204,113,0.7); white-space: nowrap; }
+
+        /* Deployed device bar (same look as the other pages) */
+        .lstm-deployed-info {
+            display: flex; align-items: center; justify-content: flex-start; gap: 0.8rem; flex-wrap: wrap;
+            padding: 0.5rem 1.2rem; margin-bottom: 1.2rem; border-radius: 12px;
+            background: var(--glass); border: 1px solid var(--glass-border); backdrop-filter: blur(16px);
+        }
+        .lstm-deployed-key { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; }
+        .lstm-deployed-key i { color: var(--green-bright); font-size: 0.82rem; }
+        .lstm-deployed-val {
+            background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); border-radius: 10px;
+            font-size: 0.82rem; font-weight: 500; padding: 0.45rem 0.9rem; min-width: 220px;
+        }
+        .lstm-deployed-info.not-set .lstm-deployed-val { color: var(--text-muted); }
+        body.light-theme .lstm-deployed-info .lstm-deployed-val { background: rgba(13,107,58,0.04); }
+
+        /* ── CARDS ── */
+        .glass-card {
+            background: var(--glass); border: 1px solid var(--glass-border); border-radius: 14px;
+            backdrop-filter: blur(16px); overflow: hidden;
+        }
+        .card-header {
+            padding: 0.9rem 1.2rem 0.7rem; font-size: 0.95rem; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; border-bottom: 1px solid var(--glass-border);
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+        }
+        .card-header-left { display: flex; align-items: center; gap: 8px; }
+        .card-header i { color: var(--green-bright); }
+        .card-sub { font-size: 0.72rem; color: var(--text-muted); padding: 0.6rem 1.2rem 0; line-height: 1.45; }
+
+        .top-grid { display: grid; grid-template-columns: 1fr 380px; gap: 1rem; margin-bottom: 1.2rem; }
+        #devMap { height: 360px; }
+        .leaflet-container { background: #0d2b18; }
+
+        /* map pins */
+        .dev-pin { width: 16px; height: 16px; border: 2.5px solid #fff; transform: rotate(45deg);
+            box-shadow: 0 0 12px rgba(0,0,0,0.5); }
+        .dev-pin.online { background: radial-gradient(circle at 30% 30%, #5dade2, #1a5276); }
+        .dev-pin.offline { background: radial-gradient(circle at 30% 30%, #aab7b8, #5d6d7e); }
+        .dev-pin.deployed { box-shadow: 0 0 0 4px rgba(46,204,113,0.45), 0 0 16px rgba(46,204,113,0.7); }
+        .dev-label {
+            background: rgba(7,26,15,0.85); border: 1px solid rgba(46,204,113,0.3); border-radius: 6px;
+            color: #fff; font-size: 0.7rem; font-weight: 600; padding: 3px 10px; white-space: nowrap;
+        }
+        body.light-theme .dev-label { background: rgba(255,255,255,0.92); color: #0d1f17; border-color: rgba(13,107,58,0.3); }
+        .pick-pin { width: 14px; height: 14px; border-radius: 50%; background: var(--amber); border: 3px solid #fff; box-shadow: 0 0 12px rgba(243,156,18,0.8); }
+
+        /* ── FORM ── */
+        .form-body { padding: 1rem 1.2rem 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+        .field label { display: block; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
+        .field input {
+            width: 100%; padding: 0.6rem 0.8rem; background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 8px; color: var(--text-main); font-family: 'Inter', sans-serif; font-size: 0.84rem;
+        }
+        .field input:focus { outline: none; border-color: var(--green-bright); }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+        .form-hint { font-size: 0.68rem; color: var(--text-muted); line-height: 1.45; }
+        .form-hint i { color: var(--amber); margin-right: 4px; }
+
+        .btn {
+            font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 700; padding: 0.6rem 1rem;
+            border-radius: 10px; border: 1px solid var(--glass-border); background: transparent;
+            color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+        }
+        .btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+        .btn.primary { background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt)); color: var(--on-accent); border-color: var(--green-bright); }
+        .btn.primary:hover { filter: brightness(1.08); }
+        .btn.danger { color: var(--red); border-color: rgba(231,76,60,0.35); background: rgba(231,76,60,0.08); }
+        .btn.danger:hover { background: var(--red); color: #fff; }
+        .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+        .btn.sm { font-size: 0.68rem; padding: 0.35rem 0.65rem; border-radius: 8px; }
+        body.light-theme .btn.primary { color: #fff !important; }
+        body.light-theme .btn i { color: inherit !important; }
+
+        /* ── TABLE ── */
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .dev-table { width: 100%; min-width: 980px; border-collapse: collapse; }
+        .dev-table th {
+            font-size: 0.62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--text-muted); padding: 0.6rem 1.1rem; text-align: left; border-bottom: 1px solid var(--glass-border);
+        }
+        .dev-table td { padding: 0.75rem 1.1rem; font-size: 0.8rem; border-bottom: 1px solid rgba(46,204,113,0.35); vertical-align: middle; }
+        .dev-table tbody tr:last-child td { border-bottom: none; }
+        body.light-theme .dev-table td { border-bottom-color: rgba(13,107,58,0.3); }
+        body.light-theme .dev-table tbody tr:last-child td { border-bottom: none; }
+        .dev-table tr:last-child td { border-bottom: none; }
+        .dev-table tr:hover td { background: rgba(255,255,255,0.03); }
+        .dev-name { font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .dev-sub { font-size: 0.66rem; color: var(--text-muted); margin-top: 2px; }
+        .pill { font-size: 0.62rem; font-weight: 700; padding: 2px 9px; border-radius: 20px; display: inline-block; white-space: nowrap; }
+        .pill-online { background: rgba(52,152,219,0.2); color: var(--blue); }
+        .pill-offline { background: rgba(127,140,141,0.2); color: #95a5a6; }
+        .pill-deployed { background: rgba(46,204,113,0.18); color: var(--green-bright); }
+        .sensor-chips { display: flex; flex-wrap: wrap; gap: 4px; max-width: 250px; }
+        .chip { font-size: 0.6rem; font-weight: 600; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--glass-border); color: var(--text-muted); }
+        .chip.on { color: var(--green-bright); border-color: rgba(46,204,113,0.4); background: var(--green-glow); }
+        .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+        .empty-row { text-align: center; color: var(--text-muted); padding: 1.6rem 0 !important; }
+
+        /* ── MODAL ── */
+        .modal-backdrop {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none;
+            align-items: center; justify-content: center; z-index: 2000; padding: 1rem;
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal-box {
+            width: 560px; max-width: 100%; max-height: 90vh; overflow-y: auto;
+            background: var(--green-dark); border: 1px solid var(--glass-border); border-radius: 14px;
+            padding: 1.4rem; box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        }
+        .modal-title { font-size: 0.98rem; font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .modal-title i { color: var(--green-bright); }
+        .modal-sub { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.45; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+        .cred-row { display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem; }
+        .cred-label { font-size: 0.64rem; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-muted); width: 70px; flex-shrink: 0; }
+        .cred-val {
+            flex: 1; min-width: 0; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem;
+            padding: 0.5rem 0.7rem; background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 8px; overflow-wrap: anywhere;
+        }
+        .warn-box {
+            font-size: 0.72rem; line-height: 1.45; padding: 0.6rem 0.8rem; border-radius: 8px; margin-bottom: 0.8rem;
+            color: var(--amber); background: rgba(243,156,18,0.1); border: 1px solid rgba(243,156,18,0.3);
+        }
+        pre.code {
+            font-family: ui-monospace, Consolas, monospace; font-size: 0.7rem; line-height: 1.5;
+            background: rgba(0,0,0,0.35); color: #d6f5e3; padding: 0.8rem 0.9rem; border-radius: 8px;
+            overflow-x: auto; white-space: pre; border: 1px solid var(--glass-border);
+        }
+        body.light-theme pre.code { background: #f3faf6; color: #10261a !important; }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--nav-bg-mobile);
+            border: 1px solid rgba(46,204,113,0.35); border-radius: 12px; padding: 0.8rem 1.2rem;
+            display: flex; align-items: center; gap: 10px; font-size: 0.82rem; font-weight: 500;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 3000;
+            transform: translateY(80px); opacity: 0; transition: all 0.3s; pointer-events: none;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--green-bright); }
+
+        /* Sensor list (same look as Home > Device Status) */
+        .sensor-list { display: flex; flex-direction: column; min-width: 270px; }
+        .sensor-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        body.light-theme .sensor-row { border-bottom-color: rgba(0,0,0,0.06); }
+        .sensor-row:first-child { padding-top: 0; }
+        .sensor-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .sensor-info { display: flex; align-items: center; gap: 10px; }
+        .sensor-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .sensor-dot.online { background: var(--green-bright); box-shadow: 0 0 6px rgba(46,204,113,0.7); }
+        .sensor-dot.offline { background: var(--red); box-shadow: 0 0 6px rgba(231,76,60,0.7); }
+        .sensor-name { font-size: 0.78rem; font-weight: 500; }
+        .sensor-desc { font-size: 0.63rem; color: var(--text-muted); margin-top: 1px; }
+        .sensor-state { font-size: 0.63rem; font-weight: 600; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+        .sensor-state.online { background: rgba(46,204,113,0.15); color: var(--green-bright); }
+        .sensor-state.offline { background: rgba(231,76,60,0.15); color: var(--red); }
+
+        /* OpenWeatherMap switch */
+        .owm-cell { display: flex; align-items: center; gap: 10px; }
+        .owm-switch { position: relative; width: 36px; height: 20px; flex-shrink: 0; cursor: pointer; }
+        .owm-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+        .owm-slider { position: absolute; inset: 0; border-radius: 20px; background: rgba(127,140,141,0.35); transition: background 0.2s; }
+        .owm-slider::before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; top: 3px; border-radius: 50%; background: #fff; transition: transform 0.2s; }
+        .owm-switch input:checked + .owm-slider { background: var(--green-bright); }
+        .owm-switch input:checked + .owm-slider::before { transform: translateX(16px); }
+        .owm-switch input:focus-visible + .owm-slider { outline: 2px solid var(--green-bright); outline-offset: 2px; }
+        .owm-label { font-size: 0.72rem; font-weight: 700; }
+        .owm-label.on { color: var(--green-bright); }
+        .owm-label.off { color: #e67e22; }
+
+        /* ── BACK TO HOME (bottom right) ── */
+        .page-footer { display: flex; justify-content: flex-end; margin-top: 1.4rem; }
+        .back-home-btn {
+            display: inline-flex; align-items: center; gap: 8px; padding: 0.65rem 1.3rem; border-radius: 50px;
+            border: 1px solid rgba(46,204,113,0.4); background: var(--green-glow); color: var(--green-bright);
+            text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all var(--transition);
+        }
+        .back-home-btn:hover {
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt)); color: var(--on-accent);
+            border-color: var(--green-bright); box-shadow: 0 4px 14px rgba(46,204,113,0.3);
+        }
+        body.light-theme .back-home-btn { color: var(--green-bright) !important; }
+        body.light-theme .back-home-btn:hover { color: #ffffff !important; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .top-nav { padding: 0.6rem 1.2rem; }
+            .top-nav .nav-links a { padding: 0.5rem 0.75rem; }
+            .top-nav .nav-links a span { display: none; }
+        }
+        @media (max-width: 1000px) { .top-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .top-bar { padding-left: 0 !important; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
+            .top-nav { padding: 0.55rem 1rem; }
+            .top-nav .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .account-btn-top { gap: 0; padding: 0; width: 38px; height: 38px; justify-content: center; border-radius: 50%; }
+            .account-btn-top .user-name-stack { display: none; }
+            .account-btn-top .user-avatar-img { width: 26px; height: 26px; }
+            .main-content { padding: 1rem; }
+            .dash-title { font-size: 1.4rem; }
+            .realtime-divider { display: none; }
+            .lstm-deployed-info { flex-direction: column; align-items: flex-start; }
+            .lstm-deployed-val { min-width: 0; width: 100%; }
+            #devMap { height: 300px; }
+        }
+        @media (max-width: 650px) { .realtime-clock { display: block !important; } }
+    </style>
+</head>
+<body>
+<script>
+    (function() { try { if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme'); } catch(e) {} })();
+</script>
+
+<main class="main-content">
+
+    <div class="top-bar">
+        <div class="dash-title">DEVICES</div>
+        <div class="realtime-badge">
+            <div class="pulse-dot"></div> REAL TIME
+            <div class="realtime-divider"></div>
+            <div class="realtime-clock-wrap">
+                <div class="realtime-clock" id="realtimeClock">12:00:00 AM</div>
+                <div class="realtime-date" id="realtimeDate">Monday, Jan 1, 2025</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGISTERED DEVICES -->
+    <div class="glass-card">
+        <div class="card-header"><div class="card-header-left"><i class="fas fa-satellite-dish"></i> Registered Devices</div></div>
+        <div class="table-scroll">
+            <table class="dev-table">
+                <thead>
+                    <tr>
+                        <th>Device</th>
+                        <th>Device ID</th>
+                        <th>Coordinates</th>
+                        <th>OpenWeatherMap</th>
+                        <th>Sensors</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="deviceBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="page-footer">
+        <a href="/home" class="back-home-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+</main>
+
+<!-- CREDENTIALS / CONNECT MODAL -->
+<div class="modal-backdrop" id="connectModal" onclick="if(event.target===this) closeConnectModal()">
+    <div class="modal-box">
+        <div class="modal-title"><i class="fas fa-plug"></i> <span id="connectTitle">Connect device</span></div>
+        <div class="modal-sub">Put these in the device's firmware (ESP32 / gateway). Every reading it sends is saved under this device only.</div>
+        <div id="keyWarn" class="warn-box hidden"><i class="fas fa-triangle-exclamation"></i> Copy the API key now — it is shown only once. If you lose it, generate a new one.</div>
+        <div class="cred-row"><div class="cred-label">Device ID</div><div class="cred-val" id="credId">—</div><button class="btn sm" onclick="copyText('credId')"><i class="fas fa-copy"></i></button></div>
+        <div class="cred-row" id="credKeyRow"><div class="cred-label">API key</div><div class="cred-val" id="credKey">—</div><button class="btn sm" onclick="copyText('credKey')"><i class="fas fa-copy"></i></button></div>
+        <div class="cred-label" style="width:auto; margin:0.8rem 0 0.4rem;">Send readings to</div>
+        <pre class="code" id="connectSnippet"></pre>
+        <div class="modal-actions">
+            <button class="btn" onclick="copyText('connectSnippet')"><i class="fas fa-copy"></i> Copy example</button>
+            <button class="btn primary" onclick="closeConnectModal()">Done</button>
+        </div>
+    </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-backdrop" id="confirmModal" onclick="if(event.target===this) closeConfirm()">
+    <div class="modal-box" style="width:400px;">
+        <div class="modal-title"><i class="fas fa-triangle-exclamation" style="color:var(--red);"></i> <span id="confirmTitle">Confirm</span></div>
+        <div class="modal-sub" id="confirmText"></div>
+        <div class="modal-actions">
+            <button class="btn" onclick="closeConfirm()">Cancel</button>
+            <button class="btn danger" id="confirmOk">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Saved.</span></div>
+
+<script>
+    // ── helpers ──
+    function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+
+    async function parseJson(res) {
+        const raw = await res.text();
+        try { return JSON.parse(raw); }
+        catch (e) {
+            const err = new Error('Non-JSON response');
+            err.userMessage = (res.status === 401 || res.status === 403)
+                ? 'Your session may have expired — please log in again.'
+                : 'Unexpected response from server (status ' + res.status + ').';
+            throw err;
+        }
+    }
+
+    let toastTimer;
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg.replace('✅ ', '').replace('❌ ', '');
+        t.querySelector('i').style.color = msg.includes('❌') ? '#e74c3c' : '#2ecc71';
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── clock / session ──
+    function updateClock() {
+        const now = new Date();
+        let hh = now.getHours(); const ap = hh >= 12 ? 'PM' : 'AM'; hh = hh % 12 || 12;
+        document.getElementById('realtimeClock').textContent =
+            hh + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0') + ' ' + ap;
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const mons = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        document.getElementById('realtimeDate').textContent = days[now.getDay()] + ', ' + mons[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+    }
+    updateClock(); setInterval(updateClock, 1000);
+
+    async function loadUserInfo() {
+        try {
+            const res = await fetch('/api/check_session', { credentials: 'include' });
+            const data = await res.json();
+            if (!data.logged_in) { window.location.href = '/login'; }
+        } catch (e) { window.location.href = '/login'; }
+    }
+
+    // ── state ──
+    let devices = [];
+    let sensorAssignments = {};     // sensor_name -> { device_id, ... }
+    let deployedDeviceId = null;
+    const SENSOR_NAMES = ['DHT22 Sensor', 'Tip Bucket Rain Gauge', 'pH Sensor', 'Anemometer', 'Antenna'];
+    const SENSOR_DESCS = {
+        'DHT22 Sensor': 'Temperature & Humidity',
+        'Tip Bucket Rain Gauge': 'Rainfall measurement',
+        'pH Sensor': 'Water acidity probe',
+        'Anemometer': 'Wind speed & direction',
+        'Antenna': 'Data transmission'
+    };
+
+    // ── table ──
+    function fmtDate(ts) {
+        if (!ts) return null;
+        const d = new Date(String(ts).replace(' ', 'T') + (String(ts).includes('Z') || String(ts).includes('+') ? '' : 'Z'));
+        if (isNaN(d.getTime())) return null;
+        return d.toLocaleString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+    }
+
+    function sensorsFor(deviceId) {
+        return SENSOR_NAMES.filter(n => sensorAssignments[n] && String(sensorAssignments[n].device_id) === String(deviceId));
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('deviceBody');
+        if (!devices.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-row">No devices yet. Register devices from the Risk Map page.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = devices.map(d => {
+            const isDeployed = String(d.id) === String(deployedDeviceId);
+            const offline = d.status === 'offline';
+            const owmOn = d.use_openweathermap !== false;
+            const on = sensorsFor(d.id);
+            // A sensor is Online only when it's set to this device on the Risk Map AND the device itself is online.
+            const sensorRows = SENSOR_NAMES.map(n => {
+                const assigned = on.includes(n);
+                const up = assigned && !offline;
+                const desc = assigned ? SENSOR_DESCS[n] : 'Not set on Risk Map';
+                return '<div class="sensor-row"><div class="sensor-info"><div class="sensor-dot ' + (up ? 'online' : 'offline') + '"></div>' +
+                    '<div><div class="sensor-name">' + esc(n) + '</div><div class="sensor-desc">' + esc(desc) + '</div></div></div>' +
+                    '<div class="sensor-state ' + (up ? 'online' : 'offline') + '">' + (up ? 'Online' : 'Offline') + '</div></div>';
+            }).join('');
+            return '<tr>' +
+                '<td><div class="dev-name"><i class="fas fa-microchip" style="color:' + (offline ? '#7f8c8d' : '#3498db') + ';"></i>' + esc(d.name) +
+                    (isDeployed ? ' <span class="pill pill-deployed">Deployed</span>' : '') + '</div></td>' +
+                '<td style="font-family:ui-monospace,Consolas,monospace; font-size:0.74rem;">#' + esc(d.id) + '</td>' +
+                '<td style="color:var(--text-muted); font-size:0.74rem; white-space:nowrap;">' + d.lat.toFixed(5) + ', ' + d.lng.toFixed(5) + '</td>' +
+                '<td><div class="owm-cell">' +
+                    '<label class="owm-switch" title="' + (owmOn ? 'Turn off to use the real device' : 'Turn on to use OpenWeatherMap draft data') + '">' +
+                        '<input type="checkbox" ' + (owmOn ? 'checked ' : '') + 'onchange="toggleOwm(' + d.id + ', this.checked)"><span class="owm-slider"></span></label>' +
+                    '<div><div class="owm-label ' + (owmOn ? 'on' : 'off') + '">' + (owmOn ? 'Enabled' : 'Disabled') + '</div>' +
+                    '<div class="dev-sub">' + (owmOn ? 'Using OpenWeatherMap' : (on.length ? 'Using sensors' : 'No sensors set · no data')) + '</div></div>' +
+                '</div></td>' +
+                '<td><div class="sensor-list">' + sensorRows + '</div></td>' +
+                '<td><div class="row-actions">' +
+                    '<button class="btn sm" onclick="openConnectModal(' + d.id + ', null)"><i class="fas fa-plug"></i> Connect</button>' +
+                    '<button class="btn sm" onclick="regenerateKey(' + d.id + ')"><i class="fas fa-key"></i> New key</button>' +
+                    '<button class="btn sm danger" onclick="removeDevice(' + d.id + ')"><i class="fas fa-trash"></i></button>' +
+                '</div></td>' +
+            '</tr>';
+        }).join('');
+    }
+
+    async function toggleOwm(id, enabled) {
+        const d = devices.find(x => String(x.id) === String(id));
+        // The toggle decides the source: ON = OpenWeatherMap, OFF = real sensors.
+        try {
+            const res = await fetch('/api/devices/' + id + '/openweathermap', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
+                body: JSON.stringify({ enabled })
+            });
+            const data = await parseJson(res);
+            if (!data.success) throw new Error(data.message || 'Could not save the change.');
+            if (d) d.use_openweathermap = enabled;
+            showToast('✅ OpenWeatherMap ' + (enabled ? 'enabled' : 'disabled') + (d ? ' for ' + d.name : '') + '.');
+        } catch (e) {
+            showToast('❌ ' + (e.userMessage || e.message));
+        }
+        renderTable();
+    }
+
+    // ── loading ──
+    async function loadDevices() {
+        try {
+            const res = await fetch('/api/devices', { credentials: 'include' });
+            const data = await parseJson(res);
+            if (data.success) devices = data.devices;
+        } catch (e) { console.error('Failed to load devices:', e); }
+        renderTable();
+    }
+    async function loadAssignments() {
+        try {
+            const res = await fetch('/api/sensor_assignments', { credentials: 'include' });
+            const data = await parseJson(res);
+            if (data.success) {
+                sensorAssignments = {};
+                data.assignments.forEach(a => { sensorAssignments[a.sensor_name] = a; });
+            }
+        } catch (e) { console.error('Failed to load sensor assignments:', e); }
+        renderTable();
+    }
+    async function loadDeployed() {
+        try {
+            const res = await fetch('/api/lstm_deployed_device', { credentials: 'include' });
+            const data = await res.json();
+            if (!data.success || !data.deployed) return;
+            deployedDeviceId = data.deployed.device_id != null ? data.deployed.device_id : null;
+            renderTable();
+        } catch (e) { console.error('Failed to load deployed device:', e); }
+    }
+
+    // ── connect modal (Device ID + API key + example) ──
+    async function requestNewKey(id) {
+        const res = await fetch('/api/devices/' + id + '/api_key', { method: 'POST', credentials: 'include' });
+        const data = await parseJson(res);
+        if (!data.success || !data.api_key) throw new Error(data.message || 'Could not generate an API key.');
+        return data.api_key;
+    }
+
+    function buildSnippet(id, key) {
+        const url = location.origin + '/api/sensor_readings';
+        return 'POST ' + url + '\n' +
+            'Content-Type: application/json\n' +
+            'X-API-Key: ' + (key || '<your device API key>') + '\n\n' +
+            JSON.stringify({
+                device_id: id,
+                temperature: 30.5,
+                humidity: 65,
+                rainfall_mm: 0,
+                ph_level: 6.5,
+                wind_speed: 4.3
+            }, null, 2);
+    }
+
+    // generateKey: true = make a fresh key now (shown once); null/false = just show the ID + example
+    async function openConnectModal(id, generateKey) {
+        const d = devices.find(x => String(x.id) === String(id));
+        document.getElementById('connectTitle').textContent = 'Connect — ' + (d ? d.name : 'device #' + id);
+        document.getElementById('credId').textContent = id;
+        let key = null;
+        if (generateKey) {
+            try { key = await requestNewKey(id); }
+            catch (e) { console.error(e); showToast('❌ ' + (e.userMessage || e.message)); }
+        }
+        document.getElementById('keyWarn').classList.toggle('hidden', !key);
+        document.getElementById('credKey').textContent = key || 'Hidden — use “New key” to generate one';
+        document.getElementById('connectSnippet').textContent = buildSnippet(id, key);
+        document.getElementById('connectModal').classList.add('open');
+    }
+    function closeConnectModal() { document.getElementById('connectModal').classList.remove('open'); }
+
+    async function copyText(elId) {
+        const text = document.getElementById(elId).textContent;
+        try { await navigator.clipboard.writeText(text); showToast('✅ Copied.'); }
+        catch (e) { showToast('❌ Could not copy.'); }
+    }
+
+    // ── confirm helper ──
+    let confirmAction = null;
+    function showConfirm(title, text, okLabel, fn) {
+        document.getElementById('confirmTitle').textContent = title;
+        document.getElementById('confirmText').textContent = text;
+        document.getElementById('confirmOk').textContent = okLabel;
+        confirmAction = fn;
+        document.getElementById('confirmModal').classList.add('open');
+    }
+    function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); confirmAction = null; }
+    document.getElementById('confirmOk').addEventListener('click', async function() {
+        const fn = confirmAction; closeConfirm();
+        if (fn) await fn();
+    });
+
+    function regenerateKey(id) {
+        showConfirm('Generate a new API key?', 'The old key stops working right away. Update the device firmware with the new key.', 'Generate',
+            () => openConnectModal(id, true));
+    }
+
+    function removeDevice(id) {
+        const d = devices.find(x => String(x.id) === String(id));
+        showConfirm('Remove this device?', '“' + (d ? d.name : id) + '” and its saved readings will be removed. This can’t be undone.', 'Remove', async function() {
+            try {
+                const res = await fetch('/api/devices/' + id, { method: 'DELETE', credentials: 'include' });
+                const data = await parseJson(res);
+                if (data.success) { showToast('✅ Device removed.'); await loadDevices(); }
+                else showToast('❌ ' + (data.message || 'Failed to remove device.'));
+            } catch (e) { showToast('❌ ' + (e.userMessage || 'Server error. Please try again.')); }
+        });
+    }
+
+    // ── init ──
+    loadUserInfo();
+    loadDevices();
+    loadAssignments();
+    loadDeployed();
+    setInterval(loadDevices, 30 * 1000);       // keeps status / last reading fresh
+    setInterval(loadAssignments, 60 * 1000);
+    setInterval(loadDeployed, 30 * 1000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { loadDevices(); loadDeployed(); } });
+</script>
+<script src="/static/theme-toggle.js"></script>
+</body>
+</html>
