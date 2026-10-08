@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | AEDOSPOT</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0d6b3a;
+            --primary-light: #1a8a4a;
+            --primary-dark: #0a4f2a;
+            --primary-bg: #e8f5ee;
+            --text-dark: #1a2a22;
+            --text-muted: rgba(26,42,34,0.6);
+            --white: #ffffff;
+            --shadow: 0 20px 60px rgba(0,0,0,0.08);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: clamp(1rem, 4vw, 1.5rem);
+            padding-top: clamp(1.25rem, 5vh, 2.5rem);
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ── BACK / HOME BUTTON ── */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+            transition: all var(--transition);
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            max-width: 100%;
+            min-height: 40px;
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .back-btn i {
+            font-size: 0.9rem;
+        }
+
+        .auth-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1.2rem, 4vw, 2rem);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.04);
+            width: 100%;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .auth-header .logo {
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+
+        .auth-header .logo img {
+            height: clamp(34px, 9vw, 48px);
+            width: auto;
+            max-width: 100%;
+        }
+
+        .auth-header h1 {
+            font-size: clamp(1.2rem, 4.2vw, 1.5rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            margin-top: 0.3rem;
+            padding: 0 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.4rem;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            max-width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid rgba(0,0,0,0.06);
+            border-radius: 10px;
+            font-size: 16px; /* prevents iOS auto-zoom on focus, matches ~0.95rem visually */
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            outline: none;
+            transition: all var(--transition);
+            background: #f8faf9;
+            min-height: 44px; /* touch target */
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(13,107,58,0.08);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7a73' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            cursor: pointer;
+        }
+
+        .input-group select option {
+            background: var(--white);
+        }
+
+        .name-row {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .name-row .input-group {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .phone-wrapper {
+            display: flex;
+            align-items: stretch;
+            border: 2px solid rgba(0,0,0,0.06);
+            border-radius: 10px;
+            background: #f8faf9;
+            transition: all var(--transition);
+            overflow: hidden;
+        }
+
+        .phone-wrapper:focus-within {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(13,107,58,0.08);
+        }
+
+        .phone-prefix {
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            background: rgba(0,0,0,0.02);
+            border-right: 1px solid rgba(0,0,0,0.06);
+            flex-shrink: 0;
+        }
+
+        .phone-wrapper input {
+            flex: 1;
+            min-width: 0;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 0.8rem 1rem;
+            background: transparent !important;
+            box-shadow: none !important;
+            font-size: 16px;
+        }
+
+        .phone-wrapper input:focus {
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 3rem;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.6rem;
+            min-width: 40px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color var(--transition);
+        }
+
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+
+        .pw-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+
+        .pw-strength-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .pw-strength-fill {
+            height: 100%;
+            width: 0%;
+            background: #e74c3c;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .security-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 0.9rem;
+            min-height: 48px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+            margin-top: 0.5rem;
+        }
+
+        .btn-signup:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(13,107,58,0.3);
+        }
+
+        .btn-signup:active {
+            transform: translateY(0);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .message-box {
+            padding: 0.7rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: none;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .message-box.error {
+            background: #fde8e8;
+            border: 1px solid #f5c6c6;
+            color: #c0392b;
+        }
+
+        .message-box.success {
+            background: var(--primary-bg);
+            border: 1px solid rgba(13,107,58,0.2);
+            color: var(--primary);
+        }
+
+        /* ── TABLET ── */
+        @media (max-width: 900px) {
+            .auth-container {
+                max-width: 460px;
+            }
+        }
+
+        /* ── LARGE PHONE / SMALL TABLET ── */
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .auth-container {
+                max-width: 100%;
+            }
+
+            .auth-card {
+                padding: 1.8rem 1.2rem;
+                border-radius: 12px;
+            }
+
+            .name-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        /* ── SMALL PHONE ── */
+        @media (max-width: 360px) {
+            .auth-card {
+                padding: 1.4rem 0.9rem;
+            }
+
+            .auth-header h1 {
+                font-size: 1.1rem;
+            }
+
+            .back-btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .password-wrapper input {
+                padding-right: 2.6rem;
+            }
+
+            .phone-prefix {
+                padding: 0 0.7rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ── SHORT VIEWPORT (limited height, e.g. Galaxy Note5 portrait) ── */
+        @media (max-height: 700px) {
+            body {
+                padding-top: clamp(0.75rem, 3vh, 1.25rem);
+                padding-bottom: 0.75rem;
+            }
+
+            .back-btn {
+                margin-bottom: 0.6rem;
+            }
+
+            .auth-header {
+                margin-bottom: 1.2rem;
+            }
+
+            .auth-header .logo {
+                margin-bottom: 0.5rem;
+            }
+
+            .input-group {
+                margin-bottom: 0.8rem;
+            }
+
+            .auth-footer {
+                margin-top: 1rem;
+            }
+        }
+
+        /* ── VERY SHORT VIEWPORT (compact phones / landscape) ── */
+        @media (max-height: 560px) {
+            .auth-card {
+                padding-top: 1.2rem;
+                padding-bottom: 1.2rem;
+            }
+
+            .auth-header .logo img {
+                height: 30px;
+            }
+
+            .auth-header {
+                margin-bottom: 0.9rem;
+            }
+        }
+
+        /* ── LANDSCAPE PHONE (short viewport height) ── */
+        @media (max-height: 480px) and (orientation: landscape) {
+            body {
+                padding: 0.75rem;
+                padding-top: 0.75rem;
+            }
+
+            .auth-header {
+                margin-bottom: 1rem;
+            }
+
+            .input-group {
+                margin-bottom: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- ── BACK / HOME BUTTON ── -->
+            <button class="back-btn" onclick="goHome()">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </button>
+
+            <div class="auth-header">
+                <a href="/" class="logo">
+                    <img src="/static/aedospot-logo.png" alt="AEDOSPOT" onerror="this.style.display='none'">
+                </a>
+                <h1>Hi, Resident of Morong!</h1>
+                <p>Join AEDOSPOT to stay protected</p>
+            </div>
+
+            <div id="messageBox" class="message-box"></div>
+
+            <div class="name-row">
+                <div class="input-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" placeholder="First name">
+                </div>
+                <div class="input-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Last name">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+
+            <div class="input-group">
+                <label for="phone">Contact Number</label>
+                <div class="phone-wrapper">
+                    <span class="phone-prefix">+63</span>
+                    <input type="tel" id="phone" placeholder="9XXXXXXXXX" maxlength="10">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="barangay">Barangay</label>
+                <select id="barangay">
+                    <option value="">Select your barangay</option>
+                    <option value="Bombongan">Bombongan</option>
+                    <option value="Caniogan-Calero-Lanang">Caniogan-Calero-Lanang (CCL)</option>
+                    <option value="Lagundi">Lagundi</option>
+                    <option value="Maybancal">Maybancal</option>
+                    <option value="San Guillermo">San Guillermo</option>
+                    <option value="San Jose">San Jose</option>
+                    <option value="San Juan">San Juan</option>
+                    <option value="San Pedro">San Pedro</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Create a strong password">
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password', this)">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div id="pwHint" class="pw-hint">
+                    At least 8 characters with uppercase, lowercase, number, and special character.
+                </div>
+                <div id="pwStrengthBar" class="pw-strength-bar">
+                    <div id="pwStrengthFill" class="pw-strength-fill"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="confirm">Confirm Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="confirm" placeholder="Confirm your password">
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirm', this)">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="securityQuestion">Security Question</label>
+                <select id="securityQuestion">
+                    <option value="">Select a question</option>
+                    <option value="first_pet">What was the name of your first pet?</option>
+                    <option value="maiden_name">What is your mother's maiden name?</option>
+                    <option value="birth_city">What city were you born in?</option>
+                    <option value="crush">Who is your crush?</option>
+                    <option value="favorite_teacher">Who was your favorite childhood teacher?</option>
+                    <option value="childhood_nickname">What was your childhood nickname?</option>
+                </select>
+                <div class="security-hint">Used to verify your identity if you need to reset your password.</div>
+            </div>
+
+            <div class="input-group">
+                <label for="securityAnswer">Answer</label>
+                <input type="text" id="securityAnswer" placeholder="Your answer" autocomplete="off">
+            </div>
+
+            <button class="btn-signup" id="signupBtn">Create Account</button>
+
+            <div class="auth-footer">
+                Already have an account? <a href="/login">Log in here</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── GO HOME ──
+        function goHome() {
+            window.location.href = '/';
+        }
+
+        function showMessage(msg, isError = true) {
+            const box = document.getElementById('messageBox');
+            box.textContent = msg;
+            box.className = `message-box ${isError ? 'error' : 'success'}`;
+            box.style.display = 'block';
+            setTimeout(() => {
+                box.style.display = 'none';
+            }, 4000);
+        }
+
+        function togglePasswordVisibility(inputId, button) {
+            const input = document.getElementById(inputId);
+            const icon = button.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function checkPasswordStrength(password) {
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[!@#$%^&*(),.?":{}|<>_\-+=\[\];'`~/\\]/.test(password)) score++;
+            return score;
+        }
+
+        function updatePasswordMeter() {
+            const password = document.getElementById('password').value;
+            const score = checkPasswordStrength(password);
+            const fill = document.getElementById('pwStrengthFill');
+            const pct = (score / 5) * 100;
+            fill.style.width = pct + '%';
+
+            if (score <= 2) {
+                fill.style.background = '#e74c3c';
+            } else if (score <= 4) {
+                fill.style.background = '#f39c12';
+            } else {
+                fill.style.background = '#2ecc71';
+            }
+        }
+
+        function isPasswordStrong(password) {
+            return password.length >= 8 &&
+                /[A-Z]/.test(password) &&
+                /[a-z]/.test(password) &&
+                /[0-9]/.test(password) &&
+                /[!@#$%^&*(),.?":{}|<>_\-+=\[\];'`~/\\]/.test(password);
+        }
+
+        async function signup() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phoneInput = document.getElementById('phone').value.trim();
+            const barangay = document.getElementById('barangay').value;
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm').value;
+            const securityQuestion = document.getElementById('securityQuestion').value;
+            const securityAnswer = document.getElementById('securityAnswer').value.trim();
+
+            if (!firstName || !lastName || !email || !phoneInput || !password || !confirm) {
+                showMessage('All fields are required', true);
+                return;
+            }
+
+            if (!barangay) {
+                showMessage('Please select your barangay', true);
+                return;
+            }
+
+            if (!securityQuestion) {
+                showMessage('Please select a security question', true);
+                return;
+            }
+
+            if (!securityAnswer) {
+                showMessage('Please provide an answer to your security question', true);
+                return;
+            }
+
+            const digitsOnly = phoneInput.replace(/\D/g, '');
+            if (digitsOnly.length !== 10) {
+                showMessage('Please enter exactly 10 digits (e.g., 9123456789)', true);
+                return;
+            }
+
+            if (password !== confirm) {
+                showMessage('Passwords do not match', true);
+                return;
+            }
+
+            if (!isPasswordStrong(password)) {
+                showMessage('Password must be at least 8 characters with uppercase, lowercase, number, and special character', true);
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email address', true);
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name: lastName,
+                        email,
+                        phone: phoneInput,
+                        barangay,
+                        password,
+                        security_question: securityQuestion,
+                        security_answer: securityAnswer
+                    })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showMessage(data.message, false);
+                    setTimeout(() => {
+                        window.location.href = '/home';
+                    }, 1200);
+                } else {
+                    showMessage(data.message, true);
+                }
+            } catch(e) {
+                showMessage('Server error. Please try again.', true);
+            }
+        }
+
+        document.getElementById('signupBtn').addEventListener('click', signup);
+        document.getElementById('password').addEventListener('input', updatePasswordMeter);
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    signup();
+                }
+            });
+        });
+
+        document.getElementById('phone').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
+
+</body>
+</html>
