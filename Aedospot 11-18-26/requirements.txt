@@ -1,0 +1,14 @@
+flask
+gunicorn
+flask_cors
+requests
+python-dotenv
+psycopg2-binary
+tzdata
+google-auth
+
+numpy
+pandas
+scikit-learn
+joblib
+tensorflow
