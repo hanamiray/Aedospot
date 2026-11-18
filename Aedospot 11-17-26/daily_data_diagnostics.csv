@@ -1,0 +1,2 @@
+date,records_after_deduplication,expected_records_2s,coverage_percent_by_intervals,temperature_valid_percent,humidity_valid_percent,rainfall_valid_percent,wind_valid_percent,timestamp_gaps_over_10s,maximum_timestamp_gap_seconds,duplicate_timestamps_in_file,rain_gauge_operational_flag,anemometer_operational_flag,is_finished_day,accepted_for_ai,rejection_reason
+2026-11-15,322,43200,0.74,99.69,99.69,99.69,99.69,0,4.0,1,False,False,False,False,incomplete_current_day
