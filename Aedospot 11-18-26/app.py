@@ -405,7 +405,7 @@ def init_db():
         cursor.execute("ALTER TABLE device_daily_readings_owm ADD COLUMN sample_count INTEGER DEFAULT 1")
     # Complete-day tracking (see the COMPLETE-DAY RULE near daily_loc_table): when the day's first / last
     # reading arrived and the longest silence in between, so a day with missing hours is never counted.
-    for _cov_col, _cov_type in (('first_sample_at', 'TEXT'), ('last_sample_at', 'TEXT'), ('max_gap_seconds', 'REAL'), ('offline_seconds', 'REAL'), ('data_completeness', 'REAL'), ('validation_status', 'TEXT'), ('validation_notes', 'TEXT')):
+    for _cov_col, _cov_type in (('first_sample_at', 'TEXT'), ('last_sample_at', 'TEXT'), ('max_gap_seconds', 'REAL'), ('offline_seconds', 'REAL'), ('data_completeness', 'REAL'), ('validation_status', 'TEXT'), ('validation_notes', 'TEXT'), ('rain_basis', 'TEXT')):
         if _cov_col not in ddr_columns:
             cursor.execute(f"ALTER TABLE device_daily_readings_owm ADD COLUMN {_cov_col} {_cov_type}")
 
@@ -1431,16 +1431,23 @@ def check_session():
     if 'user_id' in session:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT phone, is_admin, must_setup, created_at, barangay, avatar_url, near_hotspot_id FROM users WHERE id = ?", (session['user_id'],))
+        cursor.execute("SELECT phone, is_admin, must_setup, created_at, barangay, avatar_url, near_hotspot_id, fullname, email FROM users WHERE id = ?", (session['user_id'],))
         user_data = cursor.fetchone()
         conn.close()
-        
+
+        if not user_data:   # account was deleted in the database: the old session is no longer valid
+            session.clear()
+            return jsonify({'logged_in': False})
+        session['is_admin'] = bool(user_data[1])
+        session['user_name'] = user_data[7]
+        session['user_email'] = user_data[8]
+
         return jsonify({
             'logged_in': True,
             'user': {
                 'id': session['user_id'],
-                'name': session.get('user_name'),
-                'email': session.get('user_email'),
+                'name': user_data[7],
+                'email': user_data[8],
                 'phone': user_data[0] if user_data else None,
                 'is_admin': bool(user_data[1]) if user_data else bool(session.get('is_admin')),
                 'must_setup': bool(user_data[2]) if user_data else False,
@@ -2455,7 +2462,12 @@ def ensure_daily_coverage_columns(cursor, table):
         return
     cursor.execute(f"PRAGMA table_info({table})")
     have = {c[1] for c in cursor.fetchall()}
-    for name, typ in (('first_sample_at', 'TEXT'), ('last_sample_at', 'TEXT'), ('max_gap_seconds', 'REAL'), ('offline_seconds', 'REAL'), ('data_completeness', 'REAL'), ('validation_status', 'TEXT'), ('validation_notes', 'TEXT')):
+    for name, typ in (('sample_count', 'INTEGER DEFAULT 1'),
+                      ('updated_at', 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'),
+                      ('first_sample_at', 'TEXT'), ('last_sample_at', 'TEXT'),
+                      ('max_gap_seconds', 'REAL'), ('offline_seconds', 'REAL'),
+                      ('data_completeness', 'REAL'), ('validation_status', 'TEXT'),
+                      ('validation_notes', 'TEXT'), ('rain_basis', 'TEXT')):
         if name not in have:
             cursor.execute(f"ALTER TABLE {table} ADD COLUMN {name} {typ}")
     _DAILY_COVERAGE_READY.add(table)
@@ -2469,6 +2481,104 @@ def owm_allowed_gap(cursor, device_id):
         return max(DAILY_MAX_GAP_SECONDS, 2 * int((row[0] if row else 0) or 0) * 60)
     except (TypeError, ValueError, IndexError):
         return DAILY_MAX_GAP_SECONDS
+
+
+# ── RAINFALL IS A DAILY TOTAL (mm/day), NOT AN AVERAGE ──
+# The model was trained on PAGASA daily rainfall TOTALS (mm/day). Before this change the daily row
+# stored a running AVERAGE of the polls, so the model received a different quantity than it learned.
+#   * Real sensor  : AEDOSPOT_RAIN_MODE=increment (default) -> every report is the mm that fell since the
+#                    previous report, so the day total is the SUM.
+#                    AEDOSPOT_RAIN_MODE=cumulative          -> every report is mm since midnight, so the
+#                    day total is the LARGEST value reported that day.
+#   * OpenWeatherMap: rain.1h is mm in the last hour, so every poll adds rain_1h x (poll interval / 60 min).
+# rain_basis = 'total' marks rows already stored this way (older rows are converted once, see
+# migrate_daily_rainfall_to_total()).
+SENSOR_RAIN_MODE = (os.getenv('AEDOSPOT_RAIN_MODE', 'increment') or 'increment').strip().lower()
+if SENSOR_RAIN_MODE not in ('increment', 'cumulative'):
+    SENSOR_RAIN_MODE = 'increment'
+
+
+def owm_poll_hours(cursor, device_id):
+    """Hours each OpenWeatherMap poll represents (sensor_refresh_rate is in minutes; 1 = real-time ~60 s)."""
+    try:
+        cursor.execute('SELECT sensor_refresh_rate FROM device_deployments WHERE id = ?', (device_id,))
+        row = cursor.fetchone()
+        minutes = int((row[0] if row else 1) or 1)
+    except (TypeError, ValueError, IndexError):
+        minutes = 1
+    return max(1, minutes) / 60.0
+
+
+def accumulate_sensor_rain(old_total, new_value):
+    """New daily rainfall total after one more sensor report."""
+    if new_value is None:
+        return old_total
+    if old_total is None:
+        return float(new_value)
+    if SENSOR_RAIN_MODE == 'cumulative':
+        return max(float(old_total), float(new_value))
+    return float(old_total) + float(new_value)
+
+
+def accumulate_owm_rain(old_total, rain_1h_mm, poll_hours):
+    """New daily rainfall total after one more OpenWeatherMap poll."""
+    inc = 0.0 if rain_1h_mm is None else float(rain_1h_mm) * poll_hours
+    return inc if old_total is None else float(old_total) + inc
+
+
+def legacy_rain_avg_to_total(src_name, avg, sample_count, poll_hours):
+    """Converts a rainfall value saved as a running AVERAGE (old behaviour) to a daily total.
+    sensor (increment) : average x number of reports   (exact: average = sum / n)
+    openweathermap     : average hourly rate x polls x hours per poll
+    sensor (cumulative): an average of cumulative values cannot be undone -> returned unchanged."""
+    if avg is None:
+        return None
+    n = int(sample_count or 1)
+    if src_name == 'openweathermap':
+        return float(avg) * n * (poll_hours or (1 / 60.0))
+    if SENSOR_RAIN_MODE == 'cumulative':
+        return float(avg)
+    return float(avg) * n
+
+
+def migrate_daily_rainfall_to_total():
+    """One-time, idempotent: converts every daily row still saved as an average (rain_basis IS NULL)
+    into a daily total and marks it rain_basis = 'total'. Safe to run on every start."""
+    converted = 0
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute('SELECT id FROM device_deployments')
+        dev_ids = [r[0] for r in cursor.fetchall()]
+        ensure_daily_coverage_columns(cursor, DAILY_OWM_TABLE)
+        targets = [(DAILY_OWM_TABLE, 'location_id', 'openweathermap')]
+        for did in dev_ids:
+            ensure_daily_loc_table(cursor, did)
+            targets.append((daily_loc_table(did), 'device_id', 'sensor'))
+        conn.commit()   # save the new columns BEFORE selecting from them
+        for tbl, id_col, src_name in targets:
+            cursor.execute(f"SELECT id, {id_col}, rainfall_mm, sample_count FROM {tbl} "
+                           f"WHERE rainfall_mm IS NOT NULL AND (rain_basis IS NULL OR rain_basis <> 'total')")
+            todo = cursor.fetchall()
+            poll_cache = {}
+            for row in todo:
+                rid, owner, rain, n = row[0], row[1], row[2], row[3]
+                if src_name == 'sensor' and SENSOR_RAIN_MODE == 'cumulative':
+                    continue   # cannot be recovered from an average; left as is (see legacy_rain_avg_to_total)
+                if owner not in poll_cache:
+                    poll_cache[owner] = owm_poll_hours(cursor, owner) if src_name == 'openweathermap' else None
+                total = legacy_rain_avg_to_total(src_name, rain, n, poll_cache[owner])
+                cursor.execute(f"UPDATE {tbl} SET rainfall_mm = ?, rain_basis = 'total' "
+                               f"WHERE id = ? AND (rain_basis IS NULL OR rain_basis <> 'total')", (total, rid))
+                converted += 1
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        _DAILY_COVERAGE_READY.clear()   # the rolled-back ALTERs are gone: re-check next time
+        raise
+    finally:
+        conn.close()
+    return converted
 
 
 def next_daily_coverage(reading_date, now_ts, row_existed, first, last, max_gap, offline, allowed_gap):
@@ -2601,7 +2711,8 @@ def load_device_daily_rows(device_id, start=None, end=None, month_prefix=None, l
         params.append(month_prefix + '%')
 
     cols = ('reading_date, temperature, humidity, rainfall_mm, wind_speed, updated_at, '
-            'first_sample_at, last_sample_at, max_gap_seconds, offline_seconds')
+            'first_sample_at, last_sample_at, max_gap_seconds, offline_seconds, '
+            'validation_status, data_completeness')
     rows = []
     allowed_gap = DAILY_MAX_GAP_SECONDS
     with get_db_connection() as conn:
@@ -2617,9 +2728,23 @@ def load_device_daily_rows(device_id, start=None, end=None, month_prefix=None, l
             conn.commit()
         except Exception as e:
             conn.rollback()   # Postgres aborts the whole transaction after one failed statement
+            _DAILY_COVERAGE_READY.discard(tbl)
             print(f"⚠️ sync_daily_validation({tbl}) failed, reading the days without it: {e}")
         cursor.execute(f'SELECT {cols} FROM {tbl} WHERE {where}', params)
         for r in cursor.fetchall():
+            computed_complete = day_is_complete(r[0], r[6], r[7], r[9], allowed_gap)
+            computed_pct = day_completeness_pct(r[0], r[7], r[9], allowed_gap)
+            status = (r[10] or '').strip().lower()
+            finished = str(r[0])[:10] < manila_today_str()
+            # For finished days the validation_status saved in the database wins, so a manual
+            # edit in Supabase (complete / incomplete) really changes what the AI and reports use.
+            if finished and status in ('complete', 'incomplete'):
+                is_complete = (status == 'complete')
+            else:
+                is_complete = computed_complete
+            pct = float(r[11]) if r[11] is not None else computed_pct
+            if finished and status == 'incomplete' and pct is not None and pct >= AI_PARTIAL_MIN_PCT:
+                pct = AI_PARTIAL_MIN_PCT - 1   # a day marked incomplete must not be repaired as "partial"
             rows.append({
                 'reading_date': r[0], 'temperature': r[1], 'humidity': r[2], 'rainfall_mm': r[3],
                 'wind_speed': r[4],
@@ -2628,7 +2753,9 @@ def load_device_daily_rows(device_id, start=None, end=None, month_prefix=None, l
                 'risk_level': _derived_risk_bucket(r[1], r[2], r[3], r[4]),
                 'updated_at': r[5],
                 'source': src,
-                'day_complete': day_is_complete(r[0], r[6], r[7], r[9], allowed_gap),
+                'day_complete': is_complete,
+                # % of the day covered (None = unknown). Used by the AI window to accept PARTIAL days.
+                'coverage_pct': pct,
             })
     if complete_only:
         rows = [x for x in rows if x['day_complete']]
@@ -2698,12 +2825,13 @@ def archive_device_daily_readings(reading_date, temp, humidity, rain_mm, wind_sp
             cursor.execute('''
                 SELECT sample_count, temperature, humidity, rainfall_mm, wind_speed,
                        first_sample_at, last_sample_at, max_gap_seconds,
-                       offline_seconds
+                       offline_seconds, rain_basis
                 FROM device_daily_readings_owm
                 WHERE location_id = ? AND reading_date = ?
             ''', (did, reading_date))
             existing = cursor.fetchone()
             allowed_gap = owm_allowed_gap(cursor, did)
+            poll_h = owm_poll_hours(cursor, did)
             cov_first, cov_last, cov_gap, cov_off = next_daily_coverage(
                 reading_date, now_ts, bool(existing),
                 existing['first_sample_at'] if existing else None,
@@ -2718,12 +2846,17 @@ def archive_device_daily_readings(reading_date, temp, humidity, rain_mm, wind_sp
                 new_n = n + 1
                 new_temp = (existing['temperature'] * n + temp) / new_n
                 new_hum = (existing['humidity'] * n + humidity) / new_n
-                new_rain = (existing['rainfall_mm'] * n + rain_mm) / new_n
+                prev_rain = existing['rainfall_mm']
+                if prev_rain is not None and existing['rain_basis'] != 'total':
+                    # today's row was started before rainfall became a daily total: convert it first
+                    prev_rain = legacy_rain_avg_to_total('openweathermap', prev_rain, n, poll_h)
+                new_rain = accumulate_owm_rain(prev_rain, rain_mm, poll_h)   # SUM, not average
                 new_wind = (existing['wind_speed'] * n + wind_speed) / new_n
 
                 cursor.execute('''
                     UPDATE device_daily_readings_owm
                     SET temperature = ?, humidity = ?, rainfall_mm = ?, wind_speed = ?,
+                        rain_basis = 'total',
                         sample_count = ?, updated_at = ?,
                         first_sample_at = ?, last_sample_at = ?, max_gap_seconds = ?, offline_seconds = ?,
                         data_completeness = ?, validation_status = ?, validation_notes = ?
@@ -2737,9 +2870,10 @@ def archive_device_daily_readings(reading_date, temp, humidity, rain_mm, wind_sp
                         (location_id, reading_date, temperature, humidity, rainfall_mm, wind_speed,
                          sample_count, updated_at,
                          first_sample_at, last_sample_at, max_gap_seconds, offline_seconds,
-                         data_completeness, validation_status, validation_notes)
-                    VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?)
-                ''', (did, reading_date, temp, humidity, rain_mm, wind_speed,
+                         data_completeness, validation_status, validation_notes, rain_basis)
+                    VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, 'total')
+                ''', (did, reading_date, temp, humidity,
+                      (None if rain_mm is None else rain_mm * poll_h), wind_speed,
                       now_ts, cov_first, cov_last, cov_gap, cov_off,
                       v_comp, v_status, v_notes))
             conn.commit()   # commit per device so each one is independent
@@ -5116,7 +5250,7 @@ def receive_sensor_reading():
             cursor.execute(f'''
                 SELECT sample_count, temperature, humidity, rainfall_mm, wind_speed,
                        first_sample_at, last_sample_at, max_gap_seconds,
-                       offline_seconds
+                       offline_seconds, rain_basis
                 FROM {loc_tbl} WHERE device_id = ? AND reading_date = ?
             ''', (device_id, today))
             ex = cursor.fetchone()
@@ -5136,15 +5270,21 @@ def receive_sensor_reading():
 
             if ex:
                 n = ex['sample_count'] or 1
+                prev_rain = ex['rainfall_mm']
+                if prev_rain is not None and ex['rain_basis'] != 'total':
+                    # today's row was started before rainfall became a daily total: convert it first
+                    prev_rain = legacy_rain_avg_to_total('sensor', prev_rain, n, None)
+                new_rain = accumulate_sensor_rain(prev_rain, vals['rainfall_mm'])   # SUM, not average
                 cursor.execute(f'''
                     UPDATE {loc_tbl}
                     SET temperature = ?, humidity = ?, rainfall_mm = ?, wind_speed = ?,
+                        rain_basis = 'total',
                         sample_count = ?, updated_at = ?,
                         first_sample_at = ?, last_sample_at = ?, max_gap_seconds = ?, offline_seconds = ?,
                         data_completeness = ?, validation_status = ?, validation_notes = ?
                     WHERE device_id = ? AND reading_date = ?
                 ''', (_avg(ex['temperature'], n, vals['temperature']), _avg(ex['humidity'], n, vals['humidity']),
-                      _avg(ex['rainfall_mm'], n, vals['rainfall_mm']),
+                      new_rain,
                       _avg(ex['wind_speed'], n, vals['wind_speed']), n + 1,
                       now_ts, cov_first, cov_last, cov_gap, cov_off,
                       v_comp, v_status, v_notes, device_id, today))
@@ -5154,8 +5294,8 @@ def receive_sensor_reading():
                         (device_id, reading_date, temperature, humidity, rainfall_mm, wind_speed,
                          sample_count, updated_at,
                          first_sample_at, last_sample_at, max_gap_seconds, offline_seconds,
-                         data_completeness, validation_status, validation_notes)
-                    VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?)
+                         data_completeness, validation_status, validation_notes, rain_basis)
+                    VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, 'total')
                 ''', (device_id, today, vals['temperature'], vals['humidity'], vals['rainfall_mm'],
                       vals['wind_speed'],
                       now_ts, cov_first, cov_last, cov_gap, cov_off,
@@ -5786,32 +5926,182 @@ def complete_day_window(rows, days=30):
     return window
 
 
+# ── GAP-TOLERANT 30-DAY WINDOW ──
+# complete_day_window() above stops at the FIRST missing / incomplete day, so one bad day inside the
+# last 30 left only the days after it and the AI needed 30 brand-new consecutive days (a "reset").
+# flexible_day_window() looks at the last 30 CALENDAR days instead and repairs up to AI_MAX_FILL_DAYS
+# of them (default 3), so one or two bad days no longer throw the whole window away:
+#   - 'partial' day (coverage >= AI_PARTIAL_MIN_PCT, default 60%): its own temperature / humidity /
+#     wind are kept (they are averages, so missing hours barely matter).
+#   - missing day: taken from the OTHER data source of the same device when it has a complete day
+#     (backup), otherwise linearly interpolated between the nearest good days.
+#   - rainfall (a daily TOTAL, so missing hours make it too low): backup source first, else the median
+#     rainfall of the good days in the window (never 0, never interpolated). A partial day keeps its
+#     own measured rain if that is higher (it is a lower bound).
+# More than AI_MAX_FILL_DAYS bad days in the window -> insufficient_data, as before.
+# The model must be trained with the SAME rule (see the notebook, gap-tolerant windows + augmentation).
+import statistics as _statistics
+AI_MAX_FILL_DAYS = int(os.getenv('AEDOSPOT_AI_MAX_FILL_DAYS', '3'))
+AI_PARTIAL_MIN_PCT = float(os.getenv('AEDOSPOT_AI_PARTIAL_MIN_PCT', '60'))
+_AI_WEATHER_FIELDS = ('temperature', 'humidity', 'wind_speed')
+_AI_ALL_FIELDS = ('temperature', 'humidity', 'rainfall_mm', 'wind_speed')
+
+
+def _ai_day_quality(r, today_str):
+    """'complete' | 'partial' | None for one daily row."""
+    if r.get('day_complete') and all(r.get(f) is not None for f in _AI_ALL_FIELDS):
+        return 'complete'
+    pct = r.get('coverage_pct')
+    finished = str(r['reading_date'])[:10] < today_str
+    if finished and pct is not None and pct >= AI_PARTIAL_MIN_PCT \
+            and all(r.get(f) is not None for f in _AI_WEATHER_FIELDS):
+        return 'partial'
+    return None
+
+
+def _lerp_fill(vals):
+    """Replaces None by linear interpolation between the nearest known neighbours (nearest value at the ends)."""
+    known = [i for i, v in enumerate(vals) if v is not None]
+    if not known:
+        return None
+    out = list(vals)
+    for i, v in enumerate(vals):
+        if v is not None:
+            continue
+        left = max((j for j in known if j < i), default=None)
+        right = min((j for j in known if j > i), default=None)
+        if left is not None and right is not None:
+            out[i] = vals[left] + (vals[right] - vals[left]) * (i - left) / (right - left)
+        else:
+            out[i] = vals[left if left is not None else right]
+    return out
+
+
+def flexible_day_window(rows, days=30, max_fill=None, backup_rows=None):
+    """(window newest-first, info). window is [] when it cannot be built.
+    rows: ALL daily rows of the device (complete or not). backup_rows: COMPLETE rows of the other source.
+    info = {'end': last day of the window | None, 'valid_days': complete days inside it,
+            'filled_dates': [repaired days]}"""
+    max_fill = AI_MAX_FILL_DAYS if max_fill is None else max(0, int(max_fill))
+    today = datetime.now(MANILA_TZ).date()
+    today_str = today.isoformat()
+    by_date = {str(r['reading_date'])[:10]: r for r in rows}
+    backup = {str(r['reading_date'])[:10]: r for r in (backup_rows or [])
+              if r.get('day_complete') and all(r.get(f) is not None for f in _AI_ALL_FIELDS)}
+    quality = {k: _ai_day_quality(r, today_str) for k, r in by_date.items()}
+    info = {'end': None, 'valid_days': 0, 'filled_dates': []}
+
+    end = None
+    for i in range(1, 2 + max(0, AI_MAX_STALE_DAYS)):          # yesterday, then back to the stale limit
+        d = today - timedelta(days=i)
+        if quality.get(d.isoformat()):
+            end = d
+            break
+    if end is None:
+        return [], info
+    keys = [(end - timedelta(days=i)).isoformat() for i in range(days - 1, -1, -1)]   # oldest -> newest
+    info['end'] = keys[-1]
+    good = [k for k in keys if quality.get(k) == 'complete']
+    info['valid_days'] = len(good)
+    if len(keys) - len(good) > max_fill:
+        return [], info
+
+    series = {}
+    for f in _AI_WEATHER_FIELDS:
+        vals = []
+        for k in keys:
+            if quality.get(k) in ('complete', 'partial'):
+                vals.append(float(by_date[k][f]))
+            elif k in backup:
+                vals.append(float(backup[k][f]))
+            else:
+                vals.append(None)
+        filled = _lerp_fill(vals)
+        if filled is None:
+            return [], info
+        series[f] = filled
+    good_rain = [float(by_date[k]['rainfall_mm']) for k in good]
+    median_rain = _statistics.median(good_rain) if good_rain else 0.0
+    rain = []
+    for k in keys:
+        own = by_date[k].get('rainfall_mm') if k in by_date else None
+        if quality.get(k) == 'complete':
+            rain.append(float(own))
+        elif k in backup:
+            rain.append(float(backup[k]['rainfall_mm']))
+        elif quality.get(k) == 'partial' and own is not None:
+            rain.append(max(float(own), median_rain))
+        else:
+            rain.append(median_rain)
+
+    template = by_date[keys[-1]]
+    window = []
+    for i in range(len(keys) - 1, -1, -1):                      # newest first, like complete_day_window
+        k = keys[i]
+        if quality.get(k) == 'complete':
+            window.append(by_date[k])
+            continue
+        row = dict(by_date.get(k) or template)
+        reason = ('backup_source' if k in backup else
+                  'partial_day' if quality.get(k) == 'partial' else 'interpolated')
+        row.update({'reading_date': k, 'temperature': series['temperature'][i],
+                    'humidity': series['humidity'][i], 'rainfall_mm': rain[i],
+                    'wind_speed': series['wind_speed'][i],
+                    'day_complete': True, 'filled': True, 'fill_reason': reason})
+        row['risk_level'] = _derived_risk_bucket(row['temperature'], row['humidity'],
+                                                 row['rainfall_mm'], row['wind_speed'])
+        window.append(row)
+        info['filled_dates'].append(k)
+    info['filled_dates'].sort()
+    return window, info
+
+
 def get_ai_outlook(device_id, force=False):
     """AI prediction (dict, see risk_model_service.predict_from_daily_rows) for ONE device.
-    ONLY complete days (readings from 12:00 AM to 11:59 PM, see COMPLETE-DAY RULE) count, and the
-    model needs the latest 30 of them in a row. An incomplete day (sensor offline, gaps) is never
-    aggregated as a day: it breaks the window until 30 complete days are collected again.
+    The model needs 30 consecutive calendar days ending at the latest usable day. A COMPLETE day is
+    a finished day whose coverage reached DAILY_MIN_COMPLETENESS_PCT. Up to AI_MAX_FILL_DAYS bad days
+    inside the window are repaired (see flexible_day_window) instead of restarting the count; more
+    than that -> 'insufficient_data'. The result lists the repaired days in 'filled_days'.
     Successful predictions are cached for 5 minutes per device/day."""
-    rows = load_device_daily_rows(device_id, limit=120, newest_first=True, complete_only=True)
-    if not rows:
+    rows = load_device_daily_rows(device_id, limit=120, newest_first=True)
+    primary = rows[0]['source'] if rows else None
+    if not any(r.get('day_complete') for r in rows):
         # No live source is active (e.g. OpenWeatherMap off, sensors offline): still use the
-        # complete days this device already saved, same as the Home card does.
-        rows = load_device_daily_rows(device_id, limit=120, newest_first=True, source_override='sensor',
-                                      complete_only=True)
-    window = complete_day_window(rows, 30)
+        # days this device already saved, same as the Home card does.
+        rows = load_device_daily_rows(device_id, limit=120, newest_first=True, source_override='sensor')
+        primary = 'sensor'
+    backup_rows = []
+    try:
+        backup_src = 'openweathermap' if primary == 'sensor' else 'sensor'
+        backup_rows = load_device_daily_rows(device_id, limit=120, newest_first=True,
+                                             source_override=backup_src, complete_only=True)
+    except Exception as e:
+        print(f"⚠️ AI backup source unavailable for device {device_id}: {e}")
+    window, info = flexible_day_window(rows, 30, backup_rows=backup_rows)
     if len(window) < 30:
         _AI_OUTLOOK_CACHE.pop(device_id, None)
-        return {'status': 'insufficient_data', 'days_available': len(window), 'days_required': 30,
-                'message': (f'Only {len(window)} valid day(s) in a row ending at the latest complete day (at most {AI_MAX_STALE_DAYS} day(s) old). A day counts only when its '
-                            f'data coverage reached {DAILY_MIN_COMPLETENESS_PCT:g}%; days below that are not counted.')}
-    rows = window
-    key = (device_id, rows[0]['reading_date'], len(rows))
+        where = (f"ending {info['end']}" if info['end'] else
+                 f"within the last {AI_MAX_STALE_DAYS + 1} day(s)")
+        return {'status': 'insufficient_data', 'days_available': info['valid_days'], 'days_required': 30,
+                'max_fill_days': AI_MAX_FILL_DAYS,
+                'message': (f"Only {info['valid_days']} valid day(s) in the 30 days {where}. The model accepts at most "
+                            f"{AI_MAX_FILL_DAYS} missing or partial day(s) (a partial day needs at least "
+                            f"{AI_PARTIAL_MIN_PCT:g}% coverage, a full day {DAILY_MIN_COMPLETENESS_PCT:g}%).")}
+    sig = tuple((str(w['reading_date'])[:10], w['temperature'], w['humidity'],
+                 w['rainfall_mm'], w['wind_speed']) for w in window)
+    key = (device_id, info['end'], tuple(info['filled_dates']), sig)
     hit = _AI_OUTLOOK_CACHE.get(device_id)
     now = time.time()
     if hit and not force and hit[0] == key and (now - hit[1]) < _AI_OUTLOOK_TTL_SECONDS:
         return hit[2]
-    result = predict_from_daily_rows(rows)
+    result = predict_from_daily_rows(window)
     if result.get('status') == 'ok':
+        result = dict(result)
+        result['days_filled'] = len(info['filled_dates'])
+        result['filled_days'] = info['filled_dates']
+        if info['filled_dates']:
+            result['data_note'] = (f"{len(info['filled_dates'])} of 30 days were repaired "
+                                   f"({', '.join(info['filled_dates'])}); treat this result with less confidence.")
         _AI_OUTLOOK_CACHE[device_id] = (key, now, result)
     else:
         _AI_OUTLOOK_CACHE.pop(device_id, None)
@@ -7013,6 +7303,13 @@ def serve_static(filename):
     return send_from_directory('static', filename)
 
 
+@app.after_request
+def no_cache_api(resp):
+    if request.path.startswith('/api/'):
+        resp.headers['Cache-Control'] = 'no-store'
+    return resp
+
+
 @app.errorhandler(Exception)
 def handle_unexpected_error(e):
     if request.path.startswith('/api/'):
@@ -7474,6 +7771,44 @@ This is an automated message from AEDOSPOT Dengue Monitor. Please do not reply t
         print(f"❌ Failed to send email: {str(e)}")
         return False, None, None
 
+@app.route('/api/trend_warnings', methods=['GET'])
+@api_login_required
+def get_resident_trend_warnings():
+    """View-only copy of Admin > Alerts > Dengue Preparedness Warnings for residents.
+    Same compute_trend_warnings(), same Warning Settings, same data source — for the device
+    the resident's alerts follow (get_resident_scope_device, same as /api/notifications)."""
+    try:
+        cfg = load_trend_settings()
+        device_id, device_name = get_resident_scope_device(session['user_id'])
+        payload = {
+            'success': True,
+            'enabled': cfg['enabled'],
+            'watch_days': cfg['watch_days'],
+            'warning_days': cfg['warning_days'],
+            'device_id': device_id,
+            'device_name': device_name,
+            'warnings': [],
+            'source': 'none',
+            'reason': 'no_deployed_device',
+            'sensor_offline': False,
+        }
+        if device_id is None:
+            return jsonify(payload)
+
+        src = get_data_source_for_device(device_id)
+        payload['source'] = src['source']
+        payload['reason'] = src.get('reason')
+        if src['source'] == 'none':
+            return jsonify(payload)
+
+        payload['sensor_offline'] = (src['source'] == 'sensor' and device_has_no_sensor_data(device_id))
+        if cfg['enabled']:
+            payload['warnings'] = compute_trend_warnings(device_id)
+        return jsonify(payload)
+    except Exception as e:
+        print(f"❌ resident trend_warnings error: {e}")
+        traceback.print_exc()
+        return jsonify({'success': False, 'message': 'Could not compute trend warnings.'}), 500
 
 @app.route('/api/email_preview', methods=['POST'])
 @admin_required
@@ -7518,6 +7853,13 @@ def email_preview():
 if __name__ == '__main__':
     if os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
         init_db()
+        try:
+            n = migrate_daily_rainfall_to_total()
+            print(f"✅ Daily rainfall converted from average to daily total for {n} old row(s).")
+        except Exception as e:
+            traceback.print_exc()
+            traceback.print_exc()
+            print(f"⚠️ Could not convert old daily rainfall rows: {e}")
         try:
             n = recompute_lstm_confidence_history()
             print(f"✅ LSTM confidence recomputed from real readings for {n} archived week(s).")

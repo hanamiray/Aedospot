@@ -1395,6 +1395,17 @@
         }
         .alert-sensor-only.risk-high i { color: var(--red); }
         .alert-sensor-only.risk-warning i { color: #e67e22; }
+        .alert-device-tag {
+            font-size: 0.66rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .alert-device-tag i { font-size: 0.62rem; color: var(--green-bright); }
+        .trend-ok.error, .trend-ok.error i { color: var(--amber); }
         .alert-time {
             font-size: 0.65rem;
             color: var(--text-muted);
@@ -2676,6 +2687,15 @@
             });
         }
 
+        // The HIGH alert is raised by the AI model (same prediction as the Home RISK LEVEL card).
+        // Its text carries the model, the probability of HIGH and the month it applies to.
+        // Alerts saved before the AI model have none of this, so null is returned for them.
+        function parseAiData(message) {
+            const m = /predicted by the AI model \(([^:)]+):\s*([\d.]+)% probability of HIGH(?:, cutoff ([\d.]+)%)?\)(?: for ([A-Za-z]+ \d{4}))?/.exec(message || '');
+            if (!m) return null;
+            return { model: m[1].trim(), pct: m[2], cutoff: m[3] || null, month: m[4] || null };
+        }
+
         // Parse environmental data from the alert message
         function parseEnvData(message) {
             const data = {
@@ -2806,8 +2826,11 @@
                 // own — sits below the delivery info, last in the stack.
                 // The in-app Warning (a factor stayed High for several days) is NOT a single sensor
                 // reading: it has no sensor-data popup, so it shows its message right in the row.
+                const aiInfo = isInAppOnly ? parseAiData(a.message) : null;
                 const sensorTag = isInAppOnly
-                    ? `<div class="alert-sensor-only${riskClass}"><i class="fas fa-satellite-dish"></i> Detected from Sensors</div>`
+                    ? (aiInfo
+                        ? `<div class="alert-sensor-only${riskClass}"><i class="fas fa-brain"></i> Predicted by AI &middot; ${escapeHtml(aiInfo.model)} ${escapeHtml(aiInfo.pct)}% HIGH</div>`
+                        : `<div class="alert-sensor-only${riskClass}"><i class="fas fa-satellite-dish"></i> Detected from Sensors</div>`)
                     : (a.trend_inapp
                         ? `<div class="alert-sensor-only${riskClass}"><i class="fas fa-chart-line"></i> Dengue Preparedness Warning</div>`
                         : '');
@@ -2816,7 +2839,12 @@
                 // it's admin-configured and fetched live when the notification
                 // is opened, so there's no separate resident-side copy of it
                 // to keep in sync. Email/SMS alerts keep their preview as-is.
-                const messagePreview = (isInAppOnly || a.trend_inapp) ? '' : `<div class="alert-sub">${a.message}</div>`;
+                const messagePreview = (isInAppOnly || a.trend_inapp) ? '' : `<div class="alert-sub">${escapeHtml(a.message || '')}</div>`;
+
+                // Same location tag as Admin > Alerts (which device this alert belongs to).
+                const deviceTag = (a.source !== 'notification' && (a.device_name || scopeDeviceName))
+                    ? `<div class="alert-device-tag"><i class="fas fa-location-dot"></i> ${escapeHtml(a.device_name || scopeDeviceName)}</div>`
+                    : '';
 
                 div.innerHTML = `
                     ${editMode ? `<label class="alert-checkbox-wrap"><input type="checkbox" class="alert-checkbox" data-idx="${idx}" ${checked} onchange="onAlertCheckboxChange(this)"></label>` : ''}
@@ -2825,7 +2853,8 @@
                     </div>
                     <div class="alert-body">
                         <div class="alert-datetime">${formatSentAt(a.created_at)}</div>
-                        <div class="alert-title${riskClass}">${a.title}</div>
+                        <div class="alert-title${riskClass}">${escapeHtml(a.title || '')}</div>
+                        ${deviceTag}
                         ${recipientLine}
                         ${sensorTag}
                         ${messagePreview}
@@ -2878,9 +2907,12 @@
             if (!a) return;
             if (a.trend_inapp) { openTrendInAppDetail(a); return; }
             document.getElementById('inAppDetailReadingsWrap').style.display = 'none';
-            document.getElementById('inAppDetailSourceTag').innerHTML = '<i class="fas fa-satellite-dish"></i> Detected from Sensors';
-            document.getElementById('inAppDetailGridLabel').textContent = 'Environmental Data';
-            
+            const aiInfo = parseAiData(a.message);
+            document.getElementById('inAppDetailSourceTag').innerHTML = aiInfo
+                ? '<i class="fas fa-brain"></i> Predicted by AI Model'
+                : '<i class="fas fa-satellite-dish"></i> Detected from Sensors';
+            document.getElementById('inAppDetailGridLabel').textContent = aiInfo ? 'AI Prediction & Environmental Data' : 'Environmental Data';
+
             // Environmental data is specific to THIS alert (the sensor
             // reading at the moment it fired) — stays dynamic per-alert,
             // parsed straight from the logged alert, same as before.
@@ -2912,6 +2944,19 @@
                     <span class="label">Risk Level</span>
                     <span class="value ${riskClass}">${level.charAt(0).toUpperCase() + level.slice(1)}</span>
                 </div>
+                ${aiInfo ? `
+                <div class="env-data-item">
+                    <span class="label">AI Model</span>
+                    <span class="value">${escapeHtml(aiInfo.model)}</span>
+                </div>
+                <div class="env-data-item">
+                    <span class="label">Probability of HIGH</span>
+                    <span class="value ${riskClass}">${escapeHtml(aiInfo.pct)}%${aiInfo.cutoff ? ' (cutoff ' + escapeHtml(aiInfo.cutoff) + '%)' : ''}</span>
+                </div>
+                ${aiInfo.month ? `<div class="env-data-item">
+                    <span class="label">Predicted For</span>
+                    <span class="value">${escapeHtml(aiInfo.month)}</span>
+                </div>` : ''}` : ''}
             `;
 
             // Update meta info — source is already called out by the badge above,
@@ -2967,26 +3012,42 @@
         }
         setInterval(tickAlertTimes, 15000);
 
+        // Residents only VIEW what the admin side produces, so this page re-reads the server every few
+        // seconds and re-draws only when something actually changed (keeps scroll position / open filters).
+        let scopeDeviceId;          // undefined until the first load
+        let lastAlertsSig = null;
         async function loadNotifications() {
             try {
                 const res = await fetch('/api/notifications', { credentials: 'include' });
                 const data = await res.json();
                 if (data.success) {
-                    recentAlerts = (data.notifications || [])
-                        .map(a => ({ ...a, key: alertKey(a) }));
+                    const next = (data.notifications || []).map(a => ({ ...a, key: alertKey(a) }));
                     // Alerts are per device: the server only returns the ones for your device location.
                     const dev = data.device || {};
-                    scopeDeviceName = dev.name || '';
+                    const newName = dev.name || '';
+                    const newId = dev.id != null ? dev.id : null;
+                    const deviceChanged = newId !== scopeDeviceId;
+                    scopeDeviceId = newId;
+                    scopeDeviceName = newName;
                     const box = document.getElementById('lstmDeployedInfo');
                     const val = document.getElementById('lstmDeployedVal');
-                    if (val) val.textContent = scopeDeviceName || 'Not set';
-                    if (box) box.classList.toggle('not-set', !scopeDeviceName);
+                    if (val) val.textContent = newName || 'Not set';
+                    if (box) box.classList.toggle('not-set', !newName);
+
+                    const sig = JSON.stringify([newId, next.map(a => [a.key, a.created_at, a.level, a.title])]);
+                    if (sig === lastAlertsSig && !deviceChanged) return;   // nothing new
+                    lastAlertsSig = sig;
+                    recentAlerts = next;
+                    // The device your alerts follow changed (admin moved it / re-linked it): refresh its warnings too.
+                    if (deviceChanged && typeof fetchTrendWarnings === 'function') fetchTrendWarnings();
                 }
             } catch (e) {
                 console.error('Failed to load notifications:', e);
             }
             buildAlerts();
         }
+        setInterval(function() { if (!document.hidden) loadNotifications(); }, 10 * 1000);
+        document.addEventListener('visibilitychange', function() { if (!document.hidden) loadNotifications(); });
 
         // ── DENGUE PREPAREDNESS WARNINGS ──
         // Same computation as Admin > Alerts (/api/admin/trend_warnings): same Warning Settings, thresholds,
@@ -3008,7 +3069,7 @@
             const where = info.device_name ? ' · ' + escapeHtml(info.device_name) : '';
             let html = '<span><i class="fas ' + icon + '"></i> Based on ' + label + where + '</span>';
             if (info.sensor_offline) {
-                html += '<span class="offline"><i class="fas fa-plug-circle-xmark"></i> Sensors are offline — showing the last saved days.</span>';
+                html += '<span class="offline"><i class="fas fa-plug-circle-xmark"></i> Sensors are offline — streak is from the last saved days and no new alerts are sent until they report again.</span>';
             }
             el.innerHTML = html;
         }
@@ -3026,7 +3087,7 @@
                     data.watch_days + ' or more days in a row.';
             }
             renderTrendSource(data);
-            const list = data.warnings || [];
+            const list = Array.isArray(data.warnings) ? data.warnings : [];
             if (!list.length) {
                 count.textContent = '';
                 const noSrc = data.source === 'none' ? (TREND_NO_SOURCE_TEXT[data.reason] || 'No data source for this device.') : null;
@@ -3037,7 +3098,7 @@
             count.textContent = '(' + list.length + ')';
             body.innerHTML = '<div class="trend-list">' + list.map(w => {
                 const isWarn = w.level === 'warning';
-                const days = w.dates.map((d, i) =>
+                const days = (w.dates || []).map((d, i) =>
                     '<span class="trend-day">' + escapeHtml(fmtTrendDay(d)) + ' · ' + escapeHtml(String(w.values[i])) + ' ' + escapeHtml(w.unit) + '</span>'
                 ).join('');
                 const note = isWarn
@@ -3054,18 +3115,30 @@
                     '</div></div>';
             }).join('') + '</div>';
         }
+        function renderTrendError() {
+            // Never leave the panel invisible when the request fails — say so instead.
+            const panel = document.getElementById('trendPanel');
+            const body = document.getElementById('trendBody');
+            if (!panel || !body) return;
+            panel.hidden = false;
+            // Keep whatever warnings are already on screen if there are any.
+            if (body.querySelector('.trend-list')) return;
+            body.innerHTML = '<div class="trend-ok error"><i class="fas fa-circle-info"></i> Could not load the preparedness warnings right now. Retrying automatically…</div>';
+        }
         async function fetchTrendWarnings() {
             try {
                 const res = await fetch('/api/trend_warnings', { credentials: 'include' });
                 const data = await res.json();
-                if (!data.success) { console.error('Trend warnings error:', data.message); return; }
+                if (!res.ok || !data.success) { console.error('Trend warnings error:', data.message); renderTrendError(); return; }
                 renderTrendWarnings(data);
             } catch (e) {
                 console.error('Error fetching trend warnings:', e);
+                renderTrendError();
             }
         }
         fetchTrendWarnings();
-        setInterval(function() { if (!document.hidden) fetchTrendWarnings(); }, 60 * 1000);
+        // Admin changes (Warning Settings, thresholds, new daily readings) show up here within ~30 s.
+        setInterval(function() { if (!document.hidden) fetchTrendWarnings(); }, 30 * 1000);
         document.addEventListener('visibilitychange', function() { if (!document.hidden) fetchTrendWarnings(); });
 
         // ── EDIT MODE ──

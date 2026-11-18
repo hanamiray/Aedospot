@@ -5110,8 +5110,10 @@
     document.getElementById('lstmWeekRange').textContent = formatWeekRangeLabel(lstmWeekDates);
 
     // ── AI MODEL CHART (Logistic Regression vs LSTM, from ai_model/) ──
-    // One bar per model = probability of HIGH dengue risk for the next month, from the latest
-    // 30 consecutive days of the deployed device. A yellow dashed mark shows each model's cutoff.
+    // One bar per model = risk score (1-100) for the next month, from the latest
+    // 30 consecutive days of the deployed device. 70 and above = HIGH, 69 and below = LOW,
+    // the same rule as Home. A yellow dashed mark shows where HIGH starts (70).
+    const AI_HIGH_START = 70;
     const AI_RISK_COLORS = { HIGH: '#e74c3c', LOW: '#2ecc71', NONE: 'rgba(127,140,141,0.45)' };
     const aiChartMeta = { thresholds: [null, null] };
     const lstmBigCtx = document.getElementById('lstmBigChart').getContext('2d');
@@ -5121,7 +5123,7 @@
         data: {
             labels: ['Logistic Regression', 'LSTM'],
             datasets: [{
-                label: 'Probability of HIGH risk',
+                label: 'Risk score (70 and above = HIGH)',
                 data: [null, null],
                 backgroundColor: [AI_RISK_COLORS.NONE, AI_RISK_COLORS.NONE],
                 borderRadius: 6,
@@ -5139,9 +5141,9 @@
                     borderColor: lstmColors0.tooltipBorder, borderWidth: 1,
                     titleColor: lstmColors0.title, bodyColor: lstmColors0.body, padding: 8,
                     callbacks: {
-                        label: ctx => ctx.parsed.y !== null ? ` Probability of HIGH risk: ${ctx.parsed.y}%` : ' Not available',
+                        label: ctx => ctx.parsed.y !== null ? ` Risk score: ${ctx.parsed.y}%` : ' Not available',
                         afterLabel: ctx => aiChartMeta.thresholds[ctx.dataIndex] != null
-                            ? ` Cutoff for HIGH: ${aiChartMeta.thresholds[ctx.dataIndex]}%` : ''
+                            ? ` HIGH starts at ${aiChartMeta.thresholds[ctx.dataIndex]}% (69 and below = LOW)` : ''
                     }
                 }
             },
@@ -5235,7 +5237,20 @@
     // Tumatawag na may device_id ng deployed device, kaya ang chart at confidence
     // ay galing lang sa readings ng location na iyon. Kapag walang deployed device,
     // global ang gagamitin ng backend (parang dati).
-    // Fills one model tile. m = {risk, probability_high, threshold} or null; emptyMsg = text when no result.
+    // Risk score shown to users (1-100): 70 and above = HIGH, 69 and below = LOW.
+    // The backend (display_score) already maps each model's own cutoff to 70; the raw probability
+    // is only a fallback if display_score is missing.
+    function aiScoreOf(m) {
+        if (!m || m.probability_high == null) return null;
+        if (m.display_score != null) return Number(m.display_score);
+        return Math.round(m.probability_high * 100);
+    }
+    function aiIsHigh(m) {
+        const sc = (m && m.display_score != null) ? Number(m.display_score) : null;
+        return sc != null ? sc >= AI_HIGH_START : (m && m.risk === 'HIGH');
+    }
+
+    // Fills one model tile. m = {risk, probability_high, display_score} or null; emptyMsg = text when no result.
     function setAiTile(tileId, riskId, detailId, m, emptyMsg) {
         const tile = document.getElementById(tileId);
         const riskEl = document.getElementById(riskId);
@@ -5247,11 +5262,11 @@
             detEl.textContent = emptyMsg || '\u2014';
             return;
         }
-        const pct = Math.round(m.probability_high * 1000) / 10;
-        const cut = Math.round(m.threshold * 1000) / 10;
-        tile.dataset.risk = m.risk === 'HIGH' ? 'high' : 'low';
-        riskEl.textContent = `${m.risk} RISK`;
-        detEl.textContent = `${pct}% probability of HIGH (cutoff ${cut}%)`;
+        const score = aiScoreOf(m);
+        const high = aiIsHigh(m);
+        tile.dataset.risk = high ? 'high' : 'low';
+        riskEl.textContent = high ? 'HIGH RISK' : 'LOW RISK';
+        detEl.textContent = `${score}% risk score (70% and above = HIGH)`;
     }
 
     async function fetchLstmForecast() {
@@ -5269,7 +5284,6 @@
             noteEl.textContent = msg;
         };
         const fmtDay = iso => { const p = String(iso).split('-'); return `${lstmMonthAbbr[Number(p[1]) - 1]} ${Number(p[2])}`; };
-        const toPct = x => (x == null ? null : Math.round(x * 1000) / 10);
 
         if (deployedDeviceId == null) { showNone('(No deployed device selected)'); return; }
         const requestedFor = deployedDeviceId;
@@ -5302,11 +5316,11 @@
 
             const lr = p.logistic_regression;
             const ls = (p.lstm && p.lstm.probability_high != null) ? p.lstm : null;
-            const colorOf = m => (m ? (m.risk === 'HIGH' ? AI_RISK_COLORS.HIGH : AI_RISK_COLORS.LOW) : AI_RISK_COLORS.NONE);
+            const colorOf = m => (m ? (aiIsHigh(m) ? AI_RISK_COLORS.HIGH : AI_RISK_COLORS.LOW) : AI_RISK_COLORS.NONE);
 
-            lstmBigChart.data.datasets[0].data = [toPct(lr.probability_high), ls ? toPct(ls.probability_high) : null];
+            lstmBigChart.data.datasets[0].data = [aiScoreOf(lr), ls ? aiScoreOf(ls) : null];
             lstmBigChart.data.datasets[0].backgroundColor = [colorOf(lr), colorOf(ls)];
-            aiChartMeta.thresholds = [toPct(lr.threshold), ls ? toPct(ls.threshold) : null];
+            aiChartMeta.thresholds = [AI_HIGH_START, ls ? AI_HIGH_START : null];
             lstmBigChart.update();
 
             // Both models are shown separately here (Home shows only the final prediction).

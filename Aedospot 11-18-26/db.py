@@ -235,6 +235,9 @@ class _ConnWrapper:
     def commit(self):
         self._conn.commit()
 
+    def rollback(self):          # ← IDAGDAG
+        self._conn.rollback()
+
     def close(self):
         # Actually releases this session back to Supabase's pooler so the
         # next get_db_connection() (or another process entirely) can use
@@ -248,19 +251,15 @@ class _ConnWrapper:
     def __enter__(self):
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_type is None:
-            self._conn.commit()
-        else:
-            # Leaving a failed transaction uncommitted before closing is
-            # fine (the whole connection is going away), but rollback keeps
-            # behavior predictable if this ever gets reused.
-            try:
+    def __exit__(self, exc_type, exc, tb):   # ← IDAGDAG/AYUSIN
+        try:
+            if exc_type:
                 self._conn.rollback()
-            except Exception:
-                pass
-        self.close()
-
+            else:
+                self._conn.commit()
+        finally:
+            self._conn.close()           # para hindi mag-leak ang connections
+        return False
 
 def get_db_connection():
     """Returns a Postgres (Supabase pooler) connection wrapped to behave like sqlite3.

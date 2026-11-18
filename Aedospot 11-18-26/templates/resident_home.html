@@ -387,7 +387,7 @@
         .data-control-bar {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             gap: 0.8rem;
             padding: 0.5rem 1.2rem;
             margin-bottom: 1.2rem;
@@ -398,7 +398,27 @@
             flex-wrap: wrap;
         }
 
+        .data-control-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .data-control-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .data-control-label i { color: var(--green-bright); }
+
         .data-control-status {
+            margin-left: auto;
             font-size: 0.65rem;
             color: var(--text-muted-alt);
             display: flex;
@@ -629,6 +649,35 @@
             backdrop-filter: blur(16px);
             overflow: hidden;
             grid-column: 1 / 2;
+        }
+
+        /* ── DEPLOYED DEVICE LOCATION (read-only copy of admin_home's selector) ── */
+        .deploy-bar { position: relative; z-index: 20; }
+        .lstm-deploy-wrap { position: relative; min-width: 220px; width: 260px; max-width: 100%; }
+        .lstm-deploy-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            padding: 0.45rem 0.9rem;
+            text-align: left;
+            cursor: default;
+        }
+        .lstm-deploy-btn > i:first-child { font-size: 0.8rem; color: var(--green-bright); flex-shrink: 0; }
+        .lstm-deploy-btn #lstmDeployLabel { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .lstm-deploy-btn:not(.has-device) #lstmDeployLabel { color: var(--text-muted-alt); }
+        .lstm-deploy-btn.has-device #lstmDeployLabel { color: var(--text-main); }
+        body.light-theme .lstm-deploy-btn { background: #ffffff; }
+        @media (max-width: 768px) {
+            .deploy-bar { align-items: stretch; }
+            .lstm-deploy-wrap { width: 100%; min-width: 0; }
+            .lstm-deploy-btn { min-height: 44px; font-size: 0.9rem; }
         }
 
         .alerts-card {
@@ -1172,6 +1221,8 @@
             .bottom-grid { grid-template-columns: 1fr; }
             .chart-card { grid-column: 1 / 2; }
             .alerts-card { grid-column: 1 / 2; }
+            .data-control-bar { flex-direction: column; align-items: flex-start; }
+            .data-control-status { margin-left: 0; }
             .main-content { padding: 1rem; }
             .top-bar { flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
             .dash-title { font-size: 1.4rem; }
@@ -1318,7 +1369,20 @@
         <div class="data-control-bar animate-on-scroll">
             <div class="data-control-status" id="dataControlStatus">
                 <i class="fas fa-circle"></i>
-                <span id="dataStatus">Synced in real time</span>
+                <span id="dataStatus">Realtime — live data updating every minute</span>
+            </div>
+        </div>
+
+        <!-- Deployed Device Location (view-only: set by the admin in admin_home) -->
+        <div class="data-control-bar deploy-bar animate-on-scroll" id="deployBar">
+            <div class="data-control-left">
+                <span class="data-control-label"><i class="fas fa-map-marker-alt"></i> Deployed Device Location</span>
+            </div>
+            <div class="lstm-deploy-wrap" id="lstmDeployWrap">
+                <div class="lstm-deploy-btn single" id="lstmDeployBtn" title="Set by the administrator">
+                    <i class="fas fa-microchip"></i>
+                    <span id="lstmDeployLabel">No deployed location yet</span>
+                </div>
             </div>
         </div>
 
@@ -1388,10 +1452,8 @@
                     ENVIRONMENTAL TREND ANALYSIS
                     <div style="margin-left:auto; display:flex; align-items:center; gap:6px;">
                         <div class="chart-tabs" id="chartTabs">
-                            <button class="chart-tab" data-range-ms="5000" style="font-size:0.55rem; padding:2px 8px; border-radius:4px; border:1px solid var(--glass-border); background:transparent; color:var(--text-muted-alt); cursor:pointer; transition:all 0.2s;">5 SEC</button>
-                            <button class="chart-tab" data-range-ms="60000" style="font-size:0.55rem; padding:2px 8px; border-radius:4px; border:1px solid var(--glass-border); background:transparent; color:var(--text-muted-alt); cursor:pointer; transition:all 0.2s;">1 MIN</button>
-                            <button class="chart-tab active" data-range-ms="900000" style="font-size:0.55rem; padding:2px 8px; border-radius:4px; border:1px solid var(--glass-border); background:transparent; color:var(--text-muted-alt); cursor:pointer; transition:all 0.2s;">15 MIN</button>
-                            <button class="chart-tab" data-range-ms="1800000" style="font-size:0.55rem; padding:2px 8px; border-radius:4px; border:1px solid var(--glass-border); background:transparent; color:var(--text-muted-alt); cursor:pointer; transition:all 0.2s;">30 MIN</button>
+                            <button class="chart-tab active" data-range-ms="60000" style="font-size:0.55rem; padding:2px 8px; border-radius:4px; border:1px solid var(--glass-border); background:transparent; color:var(--text-muted-alt); cursor:pointer; transition:all 0.2s;">1 MIN</button>
+                            <button class="chart-tab" data-range-ms="900000" style="font-size:0.55rem; padding:2px 8px; border-radius:4px; border:1px solid var(--glass-border); background:transparent; color:var(--text-muted-alt); cursor:pointer; transition:all 0.2s;">15 MIN</button>
                             <button class="chart-tab" data-range-ms="3600000" style="font-size:0.55rem; padding:2px 8px; border-radius:4px; border:1px solid var(--glass-border); background:transparent; color:var(--text-muted-alt); cursor:pointer; transition:all 0.2s;">1 HR</button>
                         </div>
                     </div>
@@ -1614,11 +1676,11 @@
         }
 
         function getStatusText(value) {
-            if (value === 0) return 'Data updates paused (Off)';
-            if (value === 1) return 'Synced in real time';
-            if (value === 15) return 'Synced every 15 minutes';
-            if (value === 60) return 'Synced every 1 hour';
-            return 'Synced in real time';
+            if (value === 0) return 'Turned off getting data';
+            if (value === 1) return 'Realtime — live data updating every minute';
+            if (value === 15) return '15 mins — live data updating every 15 minutes';
+            if (value === 60) return '1 hour — live data updating every 1 hour';
+            return 'Realtime — live data updating every minute';
         }
 
         function setDataRefreshInterval(intervalMs, updateStatus, value) {
@@ -1634,7 +1696,7 @@
 
             if (intervalMs === 0) {
                 if (updateStatus !== false) {
-                    statusEl.textContent = 'Data updates paused (Off)';
+                    statusEl.textContent = 'Turned off getting data';
                 }
                 if (statusWrap) statusWrap.classList.add('is-off');
                 return;
@@ -1651,16 +1713,36 @@
 
             if (updateStatus !== false) {
                 statusEl.textContent = getStatusText(value !== undefined ? value : 1);
+                homeStatusBase = statusEl.textContent;
             }
         }
 
         async function loadGlobalRefreshRate() {
             try {
                 await refreshDeployedDevice();   // know the admin's deployed device before the first data fetch
-                const res = await fetch('/api/get_sensor_refresh_rate', { credentials: 'include' });
+                const q = (lstmDeployedDeviceId != null) ? ('?device_id=' + encodeURIComponent(lstmDeployedDeviceId)) : '';
+                const res = await fetch('/api/get_sensor_refresh_rate' + q, { credentials: 'include' });
                 const data = await res.json();
 
                 if (data.success) {
+                    rateDeviceId = (data.device_id === undefined) ? null : data.device_id;
+
+                    // Admin has not chosen a deployed device location yet -> no rate to follow.
+                    if (rateDeviceId === null) {
+                        if (refreshTimer) { clearInterval(refreshTimer); refreshTimer = null; }
+                        lastKnownRefreshValue = null;
+                        const st = document.getElementById('dataStatus');
+                        if (st) {
+                            st.textContent = 'Waiting for a deployed device location';
+                            const w = st.closest('.data-control-status');
+                            if (w) w.classList.add('is-off');
+                        }
+                        homeStatusBase = null;
+                        fetchRealWeatherData();   // shows the proper "no deployed device" state
+                        applyChartRangeFromSaved(null);
+                        return;
+                    }
+
                     let refreshRate = data.refresh_rate;
                     if (refreshRate === null || refreshRate === undefined || typeof refreshRate !== 'number') {
                         refreshRate = 1;
@@ -1689,12 +1771,14 @@
 
         // ── LIVE SYNC WITH ADMIN ──
         let lastKnownRefreshValue = null;
+        let rateDeviceId = null;   // deployed device whose refresh rate is being followed
 
         async function checkForRefreshRateChange() {
             try {
-                const res = await fetch('/api/get_sensor_refresh_rate', { credentials: 'include' });
+                if (rateDeviceId === null) return;   // nothing deployed; loadGlobalRefreshRate handles that case
+                const res = await fetch('/api/get_sensor_refresh_rate?device_id=' + encodeURIComponent(rateDeviceId), { credentials: 'include' });
                 const data = await res.json();
-                if (!data.success) return;
+                if (!data.success || data.device_id !== rateDeviceId) return;
 
                 let refreshRate = data.refresh_rate;
                 if (refreshRate === null || refreshRate === undefined || typeof refreshRate !== 'number') {
@@ -1718,7 +1802,7 @@
             }
         }
 
-        // Check every 20 seconds, but don't start until after initial load
+        // Check every 20 seconds (same as admin_home), but don't start until after initial load
         setTimeout(function() {
             setInterval(checkForRefreshRateChange, 20000);
         }, 5000);
@@ -1748,19 +1832,19 @@
             if (!rangeMs) {
                 try {
                     const saved = localStorage.getItem(CHART_RANGE_STORAGE_KEY);
-                    rangeMs = saved ? parseInt(saved) : 900000;
+                    rangeMs = saved ? parseInt(saved) : 60000;
                 } catch(e) {
-                    rangeMs = 900000;
+                    rangeMs = 60000;
                 }
             }
-            if (isNaN(rangeMs) || ![5000, 60000, 900000, 1800000, 3600000].includes(rangeMs)) {
-                rangeMs = 900000;
+            if (isNaN(rangeMs) || ![60000, 900000, 3600000].includes(rangeMs)) {
+                rangeMs = 60000;
             }
             applyChartRange(rangeMs, false);
         }
 
         // ── DATA STORE ──
-        const CHART_TAB_INTERVALS_MS = [5000, 60000, 900000, 1800000, 3600000];
+        const CHART_TAB_INTERVALS_MS = [60000, 900000, 3600000];
         const VISIBLE_POINTS = 15;
 
         const chartHistories = {};
@@ -1781,10 +1865,6 @@
             const mm = String(t.getMinutes()).padStart(2, '0');
             const ampm = t.getHours() >= 12 ? 'PM' : 'AM';
 
-            if (intervalMs === 5000) {
-                const ss = String(t.getSeconds()).padStart(2, '0');
-                return hh + ':' + mm + ':' + ss + ' ' + ampm;
-            }
             return hh + ':' + mm + ' ' + ampm;
         }
 
@@ -1933,7 +2013,7 @@
             };
         }
 
-        let currentRangeMs = 900000;
+        let currentRangeMs = 60000;
 
         const initialWindow = chartHistories[currentRangeMs];
 
@@ -2021,14 +2101,14 @@
         document.querySelectorAll('.chart-tab').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 const rangeMs = parseInt(this.dataset.rangeMs);
-                if (!isNaN(rangeMs) && [5000, 60000, 900000, 1800000, 3600000].includes(rangeMs)) {
+                if (!isNaN(rangeMs) && [60000, 900000, 3600000].includes(rangeMs)) {
                     applyChartRange(rangeMs, true);
                 }
             });
         });
 
         function applyChartRange(rangeMs, persist) {
-            if (![5000, 60000, 900000, 1800000, 3600000].includes(rangeMs)) rangeMs = 900000;
+            if (![60000, 900000, 3600000].includes(rangeMs)) rangeMs = 60000;
             currentRangeMs = rangeMs;
             markActiveTab(rangeMs);
             updateTrendChart();
@@ -2061,7 +2141,7 @@
         // OpenWeatherMap enabled OR real sensors set (never both). If it has neither,
         // there is nothing to display. The server decides this per deployed device.
         let homeShowingNoData = false;
-        let homeStatusBase = null;   // the normal "Synced ..." text, restored when data comes back
+        let homeStatusBase = null;   // the normal status text, restored when data comes back
         const NO_DATA_STATUS = {
             no_deployed_device: 'no data — no deployed device chosen',
             no_source: 'no data — OpenWeatherMap is off and no sensors are set',
@@ -2088,6 +2168,16 @@
         let deployedLoadedOnce = false;
 
         // Returns true only when the deployed device CHANGED after the first load.
+        // Read-only: shows what the admin picked in admin_home's "Deployed Device Location".
+        function renderDeployedLocation() {
+            const name = (lstmDeployedDeviceId != null) ? lstmDeployedDeviceName : null;
+            const label = document.getElementById('lstmDeployLabel');
+            const btn = document.getElementById('lstmDeployBtn');
+            if (label) label.textContent = name || 'No deployed location yet';
+            if (btn) btn.classList.toggle('has-device', !!name);
+        }
+
+        // Returns true only when the deployed device CHANGED after the first load.
         async function refreshDeployedDevice() {
             try {
                 const res = await fetch('/api/lstm_deployed_device', { credentials: 'include' });
@@ -2098,6 +2188,7 @@
                 lstmDeployedDeviceId = newId;
                 lstmDeployedDeviceName = data.deployed.device_name;
                 deployedLoadedOnce = true;
+                renderDeployedLocation();
                 return changed;
             } catch (e) {
                 console.error('Failed to load deployed device:', e);
@@ -2137,14 +2228,19 @@
                 const res = await fetch('/api/ai_risk_outlook?device_id=' + encodeURIComponent(requestedFor), { credentials: 'include' });
                 const json = await res.json();
                 if (String(requestedFor) !== String(lstmDeployedDeviceId)) return;   // device changed meanwhile
-                aiOutlook = (json && json.success && json.prediction) ? { deviceId: requestedFor, prediction: json.prediction } : null;
+                aiOutlook = (json && json.success && json.prediction)
+                    ? { deviceId: requestedFor, prediction: json.prediction }
+                    : { deviceId: requestedFor, prediction: { status: 'error', message: (json && json.message) || '' } };
             } catch (e) {
                 console.error('AI risk outlook failed:', e);
-                aiOutlook = null;
+                aiOutlook = { deviceId: requestedFor, prediction: { status: 'error', message: 'Could not reach the server.' } };
             }
+            // A failed / unavailable model is retried after ~30 s instead of waiting the full 5 minutes.
+            const st = aiOutlook.prediction && aiOutlook.prediction.status;
+            if (st === 'error' || st === 'model_unavailable') aiFetchedAt = Date.now() - AI_REFRESH_MS + 30 * 1000;
             if (lastRiskPayload) {
                 if (!homeShowingNoData) renderRiskGauge(lastRiskPayload);
-                else if (lastRiskPayload.risk_window) showNoData(lastRiskPayload.reason, lastRiskPayload);
+                else if (lstmDeployedDeviceId != null) showNoData(lastRiskPayload.reason, lastRiskPayload);
             }
         }
 
@@ -2182,7 +2278,8 @@
 
         function renderAiRiskGauge(ai) {
             const m = ai.main;
-            const pct = Math.round(m.probability_high * 100);
+            // Display score (1-69 LOW, 70-100 HIGH) from the backend, same as admin_home; the raw probability is only a fallback.
+            const pct = (m.display_score != null) ? m.display_score : Math.round(m.probability_high * 100);
             const isHigh = m.risk === 'HIGH';
             const bucket = isHigh ? 'high' : 'low';
             const color = isHigh ? '#e74c3c' : '#2ecc71';
@@ -2225,58 +2322,47 @@
             document.querySelector('.risk-main').dataset.risk = 'none';
         }
 
-        // Draws the risk gauge / % / title / text from a /api/get_sensor_data?window=30 payload.
-        // Used with live data and in the no-data state (readings hidden, risk % kept).
+        // AI has not answered yet: nothing is computed or guessed here, the card just waits.
+        function renderAiWaiting() {
+            const fill = document.getElementById('gaugeFill');
+            fill.setAttribute('stroke', '#7f8c8d');
+            fill.setAttribute('stroke-dashoffset', '150.8');
+            const pctEl = document.getElementById('riskPctLabel');
+            pctEl.textContent = '--';
+            pctEl.style.setProperty('color', '#7f8c8d', 'important');
+            const title = document.getElementById('riskLevelTitle');
+            title.style.color = '#7f8c8d';
+            title.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> WAITING FOR AI PREDICTION';
+            document.getElementById('riskStatus').textContent = 'The AI model is preparing the prediction…';
+            document.querySelector('.risk-main').dataset.risk = 'none';
+        }
+
+        // Model not loaded / prediction failed: say so, never show another risk value instead.
+        function renderAiUnavailable(st) {
+            const fill = document.getElementById('gaugeFill');
+            fill.setAttribute('stroke', '#7f8c8d');
+            fill.setAttribute('stroke-dashoffset', '150.8');
+            const pctEl = document.getElementById('riskPctLabel');
+            pctEl.textContent = '--';
+            pctEl.style.setProperty('color', '#7f8c8d', 'important');
+            const title = document.getElementById('riskLevelTitle');
+            title.style.color = '#7f8c8d';
+            title.innerHTML = '<i class="fas fa-ban"></i> AI PREDICTION UNAVAILABLE';
+            document.getElementById('riskStatus').textContent =
+                'The AI model cannot give a prediction right now. ' + ((st && st.message) || '');
+            document.querySelector('.risk-main').dataset.risk = 'none';
+        }
+
+        // Draws the RISK LEVEL card. ONLY the AI model's prediction is shown (same as admin_home):
+        // the readings in `data` (/api/get_sensor_data) are never turned into a risk value here.
         function renderRiskGauge(data) {
             lastRiskPayload = data;
             const ai = pickAiResult();
-            if (ai) { renderAiRiskGauge(ai); return; }     // AI model result takes over the card
+            if (ai) { renderAiRiskGauge(ai); return; }
             const st = aiStatusInfo();
-            if (st && st.status === 'insufficient_data') { renderAiNotReady(st); return; }
-            const hasRisk = !(data.risk_level === null || data.risk_level === undefined);
-            const fill = document.getElementById('gaugeFill');
-            const pctEl = document.getElementById('riskPctLabel');
-            const titleEl = document.getElementById('riskLevelTitle');
-            if (!hasRisk) {
-                fill.setAttribute('stroke-dashoffset', '150.8');
-                fill.setAttribute('stroke', '#7f8c8d');
-                const win = data.risk_window;
-                const collecting = win && win.ready === false;
-                pctEl.textContent = collecting ? (win.days_collected + '/' + win.days_required) : '--';
-                pctEl.style.setProperty('color', '#7f8c8d', 'important');
-                titleEl.style.color = '#7f8c8d';
-                titleEl.innerHTML = collecting
-                    ? '<i class="fas fa-database"></i> NOT ENOUGH DATA YET'
-                    : '<i class="fas fa-ban"></i> NO RISK DATA';
-                document.getElementById('riskStatus').textContent = collecting
-                    ? 'Not enough data yet. The risk level will show once ' + win.days_required +
-                      ' days of readings are collected (' + win.days_collected + ' of ' + win.days_required + ' days so far).'
-                    : 'No risk value was reported for this reading.';
-                if (collecting) {
-                    fill.setAttribute('stroke-dashoffset', (150.8 - (win.days_collected / win.days_required) * 150.8).toFixed(1));
-                }
-                document.querySelector('.risk-main').dataset.risk = 'none';
-            } else {
-                const risk = data.risk_level;
-                pctEl.textContent = risk + '%';
-                fill.setAttribute('stroke-dashoffset', (150.8 - (risk / 100) * 150.8).toFixed(1));
-
-                // 0-66% low, 67-100% high (same cutoff as the server)
-                const riskPct = Math.round(risk);
-                const riskBucket = riskPct <= 66 ? 'low' : 'high';
-                const riskColor = riskBucket === 'low' ? '#2ecc71' : '#e74c3c';
-                document.querySelector('.risk-main').dataset.risk = riskBucket;
-                fill.setAttribute('stroke', riskColor);
-                pctEl.style.setProperty('color', riskColor, 'important');
-
-                titleEl.style.color = riskColor;
-                titleEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + riskBucket.toUpperCase() + ' RISK';
-                const where = lstmDeployedDeviceName ? ' at ' + lstmDeployedDeviceName : '';
-                const fb = aiStatusInfo() ? '(AI model unavailable: showing the rule-based value.) ' : '';
-                document.getElementById('riskStatus').textContent = fb +
-                    (riskBucket === 'low' ? 'Based on the latest 30 days' + where + ', conditions are unlikely to support mosquito breeding.'
-                    : 'Based on the latest 30 days' + where + ', conditions strongly favor mosquito breeding. Take immediate prevention measures.');
-            }
+            if (st && st.status === 'insufficient_data') { renderAiNotReady(st); return; }   // AI needs 30 consecutive days
+            if (st) { renderAiUnavailable(st); return; }                                       // model_unavailable / error
+            renderAiWaiting();                                                                 // AI has not answered yet
         }
 
         // Which deployed device the chart on screen belongs to: when the admin switches device,
@@ -2294,7 +2380,7 @@
             const el = document.getElementById('dataStatus');
             if (!el) return;
             const wrap = el.closest('.data-control-status');
-            if (el.textContent === 'Data updates paused (Off)') return;   // already paused, leave it
+            if (el.textContent === 'Turned off getting data') return;   // already paused, leave it
             if (homeStatusBase === null) homeStatusBase = el.textContent;
             const interval = homeStatusBase.split(' — ')[0];
             el.textContent = interval + ' — ' + (NO_DATA_STATUS[reason] || 'no data to display');
@@ -2331,10 +2417,10 @@
             title.innerHTML = '<i class="fas fa-ban"></i> NO DATA';
             document.getElementById('riskStatus').textContent = NO_DATA_MESSAGES[reason] || 'No data to display.';
 
-            // Readings stay hidden, but the risk % is still shown when the server could work it out
-            // from the days this device already saved (same as admin_home).
-            if (data && data.risk_window) {
-                renderRiskGauge(data);
+            // Readings stay hidden, but the AI prediction (made from the days this device already
+            // saved) is still shown for a deployed device (same as admin_home).
+            if (lstmDeployedDeviceId != null && reason !== 'no_deployed_device') {
+                renderRiskGauge(data || {});
                 const rs = document.getElementById('riskStatus');
                 rs.textContent += ' Live readings are hidden: ' +
                     (NO_DATA_MESSAGES[reason] || 'no data source is active.');
@@ -2723,8 +2809,9 @@
             }
         }
 
-        // Initial load
+        // Initial load, then every 5 seconds (same cadence as admin_home's Recent Alerts)
         loadHomeAlerts();
+        scheduleAligned(5000, function() { if (!document.hidden) loadHomeAlerts(); });
 
         // Reload alerts when the page becomes visible again
         document.addEventListener('visibilitychange', function() {

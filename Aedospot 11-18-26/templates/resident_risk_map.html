@@ -14,8 +14,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Leaflet Heatmap plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
     <style>
         :root {
@@ -385,7 +383,7 @@
         /* ── RISK COUNTER ROW ── */
         .risk-counters {
             display: grid;
-            grid-template-columns: repeat(2, 1fr) 1.6fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 0.9rem;
             margin-bottom: 1.1rem;
         }
@@ -427,29 +425,6 @@
             font-size: 0.68rem; color: var(--text-muted);
             display: flex; align-items: center; gap: 5px;
         }
-
-        /* LSTM prediction mini card */
-        .lstm-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            backdrop-filter: blur(16px);
-            padding: 0.9rem 1.1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .lstm-header {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.78rem; font-weight: 700;
-            letter-spacing: 1.2px; text-transform: uppercase;
-            color: var(--text-main);
-            display: flex; align-items: center; gap: 6px;
-        }
-        .lstm-header i { color: var(--red); font-size: 0.9rem; }
-
-        .lstm-chart-wrap { flex: 1; position: relative; min-height: 60px; }
 
         /* ── MAIN GRID ── */
         .map-grid {
@@ -1197,36 +1172,6 @@
             gap: 1rem;
         }
 
-        /* Prediction Confidence Display = OFF (set in admin Settings -> LSTM Model Settings):
-           hide the LSTM card and let High / Low fill the row. */
-        .lstm-big-card.lstm-card-hidden { display: none !important; }
-        .risk-counters.lstm-hidden { grid-template-columns: repeat(2, 1fr); }
-
-        /* LSTM Big Chart */
-        .lstm-big-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            backdrop-filter: blur(16px);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .lstm-confidence-badge {
-            text-align: center;
-            font-size: 0.82rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            white-space: nowrap;
-            margin: 0.1rem 0 0.7rem;
-        }
-
-        .lstm-big-body {
-            padding: 0.8rem 1rem;
-            position: relative;
-            height: 190px;
-        }
-
         /* RISK CLASSIFICATION */
         .risk-class-card {
             background: var(--glass);
@@ -1509,7 +1454,6 @@
 
         @media (max-width: 1100px) {
             .map-grid { grid-template-columns: 1fr; }
-            .risk-counters { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
             /* theme.css forces padding-left:52px !important on .top-bar
@@ -1541,11 +1485,8 @@
             .realtime-divider { display: none; }
             .realtime-badge { flex-shrink: 0; white-space: nowrap; }
 
-            /* Phone layout: High / Low stay in one 2-column row,
-               and the LSTM prediction card drops to its own full-width row
-               underneath instead of squeezing into a 4th column. */
+            /* Phone layout: High / Low stay side by side in one compact row. */
             .risk-counters { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-            .lstm-big-card { grid-column: 1 / -1; }
             .risk-counter-card { padding: 0.7rem 0.6rem; gap: 2px; }
             .risk-counter-label { font-size: 0.55rem; letter-spacing: 0.6px; }
             .risk-counter-value { font-size: 1.5rem; }
@@ -1881,7 +1822,7 @@
         </div>
     </div>
 
-    <!-- RISK COUNTERS + LSTM MINI -->
+    <!-- RISK COUNTERS (High / Low) -->
     <div class="risk-counters animate-on-scroll stagger-children">
 
         <div class="risk-counter-card" style="--card-accent: var(--red);">
@@ -1894,30 +1835,6 @@
             <div class="risk-counter-label"><i class="fas fa-circle" style="color:var(--green-bright); font-size:0.5rem;"></i> &nbsp;Low Risk Areas</div>
             <div class="risk-counter-value" id="cntLow">7</div>
             <div class="risk-counter-sub"><i class="fas fa-map-marker-alt"></i> Safe zones</div>
-        </div>
-
-        <!-- LSTM 7-DAY FORECAST (wide, top row) -->
-        <div class="lstm-big-card animate-on-scroll">
-            <div class="card-header" style="flex-direction:column; align-items:center; gap:2px; text-align:center;">
-                <div class="card-header-left" style="justify-content:center;">
-                    <i class="fas fa-brain" style="color:var(--red);"></i>
-                    DENGUE RISK PREDICTION (LSTM)
-                </div>
-                <div id="lstmWeekRange" style="font-size:0.78rem; font-weight:600; letter-spacing:0.3px; color:var(--text-muted);"></div>
-                <div style="font-size:0.72rem; color:var(--text-muted); display:flex; align-items:center; justify-content:center; gap:5px;">
-                    <i class="fas fa-info-circle"></i>
-                    <span id="lstmHorizonLabel">(Next 7-Day Forecast)</span>
-                </div>
-            </div>
-            <div class="lstm-big-body">
-                <canvas id="lstmBigChart"></canvas>
-                <div id="lstmNoData" style="display:flex; align-items:center; justify-content:center; gap:6px; font-size:0.78rem; color:var(--text-muted); text-align:center; padding-top:6px;">
-                    <i class="fas fa-info-circle"></i> Not enough real readings yet for this device location.
-                </div>
-            </div>
-            <div class="lstm-confidence-badge" id="lstmConfidenceBadge">
-                Confidence: <span id="lstmConfidenceVal">--%</span>
-            </div>
         </div>
 
     </div>
@@ -2266,7 +2183,7 @@
     let residentNearHotspotId = null;
     let residentLinkedDeviceId = null;
 
-    // The device the three risk counters (and LSTM confidence) follow. For a resident this
+    // The device the three risk counters follow. For a resident this
     // is THEIR OWN device (the one linked to their Near Monitored Location); if they have
     // none, it falls back to the admin's deployed device. See resolveResidentScopeDevice().
     let scopeDeviceId = null;
@@ -2734,6 +2651,17 @@
     map.on('zoomend', updateBarangayLabelScale);
     map.whenReady(updateBarangayLabelScale);
 
+    // Silence the Canvas2D "willReadFrequently" warning from leaflet-heat.
+    (function () {
+        const origGetContext = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function (type, attrs) {
+            if (type === '2d' && this.classList.contains('leaflet-heatmap-layer')) {
+                attrs = Object.assign({ willReadFrequently: true }, attrs || {});
+            }
+            return origGetContext.call(this, type, attrs);
+        };
+    })();
+
     const heatLayer = L.heatLayer([], {
         radius: 40,
         blur: 30,
@@ -2874,6 +2802,12 @@
             // risk level in addition to the existing Status and Coordinates.
             const popupContent = `
                 <div style="font-family:'Inter',sans-serif; min-width:180px;">
+                    <div style="display:flex; flex-direction:column; align-items:center; gap:2px; padding:10px 12px; margin:0 0 10px 0; border-radius:10px; background:${deviceRiskColor}26; border:1px solid ${deviceRiskColor}80; color:${deviceRiskColor}; --pc:${deviceRiskColor};">
+                        <span style="color:rgba(232,245,238,0.6); font-size:0.65rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase;">Risk Level</span>
+                        <div style="font-size:1.5rem; font-weight:800; line-height:1.1; letter-spacing:0.04em; text-transform:uppercase; color:${deviceRiskColor}; --pc:${deviceRiskColor};">
+                            <i class="fas ${nd ? 'fa-circle-question' : (deviceRisk === 'high' ? 'fa-triangle-exclamation' : 'fa-circle-check')}"></i> ${nd ? 'No Data' : deviceRisk}
+                        </div>
+                    </div>
                     <div style="font-family:'Inter',sans-serif; font-size:1rem; font-weight:700; color:#e8f5ee; margin-bottom:6px;">
                         <i class="fas fa-microchip" style="color:${statusColor}; --pc:${statusColor};"></i> ${d.name}
                     </div>
@@ -2884,10 +2818,6 @@
                     <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
                         <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Coordinates</span>
                         <span style="color:#e8f5ee; font-size:0.75rem;">${d.lat.toFixed(5)}, ${d.lng.toFixed(5)}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Risk Level</span>
-                        <span style="color:${deviceRiskColor}; --pc:${deviceRiskColor}; font-weight:700; font-size:0.75rem; text-transform:uppercase;">${deviceRisk}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
                         <span style="color:rgba(232,245,238,0.6); font-size:0.75rem;">Temperature</span>
@@ -3807,265 +3737,6 @@
         toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
     }
 
-    // ── CHART DEFAULTS ──
-    function isLightTheme() {
-        return document.body.classList.contains('light-theme');
-    }
-
-    function lstmTextColors() {
-        return isLightTheme()
-            ? {
-                base:   'rgba(16,38,26,0.85)',
-                muted:  'rgba(16,38,26,0.65)',
-                grid:   'rgba(16,38,26,0.08)',
-                title:  '#10261a',
-                body:   'rgba(16,38,26,0.75)',
-                tooltipBg: 'rgba(255,255,255,0.95)',
-                tooltipBorder: 'rgba(13,107,58,0.25)'
-              }
-            : {
-                base:   'rgba(232,245,238,0.5)',
-                muted:  'rgba(232,245,238,0.75)',
-                grid:   'rgba(255,255,255,0.06)',
-                title:  '#e8f5ee',
-                body:   'rgba(232,245,238,0.75)',
-                tooltipBg: 'rgba(7,26,15,0.92)',
-                tooltipBorder: 'rgba(46,204,113,0.25)'
-              };
-    }
-
-    const lstmColors0 = lstmTextColors();
-    Chart.defaults.color = lstmColors0.base;
-    Chart.defaults.borderColor = lstmColors0.grid;
-    Chart.defaults.font.family = "'Inter', sans-serif";
-
-    // ── FORECAST HORIZON (from admin Settings -> LSTM Model Settings) ──
-    // Display-only. Default 7 days; the chart shows today + N days.
-    let lstmHorizon = 7;
-    // Daily risk values (0-100) from /api/lstm_forecast for the resident's own device location.
-    // The backend reads that device's own daily data: OpenWeatherMap rows while the device is on
-    // OpenWeatherMap, and its sensor rows once the device is switched to sensors. No made-up numbers:
-    // while there isn't enough real data the chart stays empty.
-    let lstmBackendRisks = null;
-
-    function buildForecastSeries(horizon) {
-        if (!(lstmBackendRisks && lstmBackendRisks.length)) {
-            const empty = new Array(horizon + 1).fill(null);
-            return { actual: empty.slice(), forecast: empty.slice() };
-        }
-        const base = [lstmBackendRisks[0], ...lstmBackendRisks];   // today + next days
-        const forecast = base.slice(0, horizon + 1);
-        let last = forecast[forecast.length - 1];
-        while (forecast.length < horizon + 1) {          // horizons longer than 7 days: keep the trend going
-            last = Math.min(95, last + (forecast.length % 2 ? 2 : -1));
-            forecast.push(last);
-        }
-        const actual = [forecast[0]];
-        while (actual.length < horizon + 1) actual.push(null);
-        return { actual, forecast };
-    }
-
-    function applyLstmSeries() {
-        const series = buildForecastSeries(lstmHorizon);
-        lstmBigChart.data.datasets[0].data = series.actual;
-        lstmBigChart.data.datasets[1].data = series.forecast;
-        lstmBigChart.update();
-        const note = document.getElementById('lstmNoData');
-        if (note) note.style.display = (lstmBackendRisks && lstmBackendRisks.length) ? 'none' : 'flex';
-    }
-
-    // ── ROLLING FORECAST HELPERS (today + next N days) ──
-    const lstmDayAbbr = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    const lstmMonthAbbr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEPT','OCT','NOV','DEC'];
-
-    function getRollingForecastDates() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const dates = [];
-        for (let i = 0; i < lstmHorizon + 1; i++) {
-            const d = new Date(today);
-            d.setDate(today.getDate() + i);
-            dates.push(d);
-        }
-        return dates;
-    }
-
-    function formatWeekRangeLabel(dates) {
-        const start = dates[0];
-        const end = dates[dates.length - 1];
-        const startStr = `${lstmMonthAbbr[start.getMonth()]} ${start.getDate()}`;
-        const endStr = `${lstmMonthAbbr[end.getMonth()]} ${end.getDate()}`;
-        return `${startStr} - ${endStr} | ${end.getFullYear()}`;
-    }
-
-    function buildForecastLabels(dates) {
-        return dates.map((d, i) => {
-            const dayLabel = `${lstmDayAbbr[d.getDay()]} ${d.getDate()}`;
-            return i === 0 ? [dayLabel, '(Today)'] : [dayLabel];
-        });
-    }
-
-    // ── LSTM 7-DAY FORECAST CHART (wide, top row) ──
-    // Rebuilt daily so the range and labels always start from today's real date.
-    let lstmWeekDates = getRollingForecastDates();
-    let lstmBigLabels = buildForecastLabels(lstmWeekDates);
-    document.getElementById('lstmWeekRange').textContent = formatWeekRangeLabel(lstmWeekDates);
-
-    const lstmBigCtx = document.getElementById('lstmBigChart').getContext('2d');
-    const { actual: lstmActual, forecast: lstmForecast } = buildForecastSeries(lstmHorizon);
-
-    const lstmBigChart = new Chart(lstmBigCtx, {
-        type: 'line',
-        data: {
-            labels: lstmBigLabels,
-            datasets: [
-                {
-                    label: 'Actual Risk %',
-                    data: lstmActual,
-                    borderColor: '#e74c3c',
-                    backgroundColor: 'rgba(231,76,60,0.12)',
-                    borderWidth: 2.5,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#e74c3c',
-                    tension: 0.4,
-                    fill: true,
-                    spanGaps: false
-                },
-                {
-                    label: 'LSTM Forecast',
-                    data: lstmForecast,
-                    borderColor: '#f39c12',
-                    backgroundColor: 'rgba(243,156,18,0.10)',
-                    borderWidth: 2.5,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#f39c12',
-                    borderDash: [5, 4],
-                    tension: 0.4,
-                    fill: true,
-                    spanGaps: false
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: { duration: 800 },
-            interaction: { mode: 'index', intersect: false },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        boxWidth: 12, boxHeight: 3, padding: 12,
-                        color: lstmColors0.muted, font: { size: 10 },
-                        usePointStyle: true, pointStyle: 'line'
-                    }
-                },
-                tooltip: {
-                    backgroundColor: lstmColors0.tooltipBg,
-                    borderColor: lstmColors0.tooltipBorder, borderWidth: 1,
-                    titleColor: lstmColors0.title, bodyColor: lstmColors0.body, padding: 8,
-                    callbacks: {
-                        label: ctx => ctx.parsed.y !== null ? ` ${ctx.dataset.label}: ${ctx.parsed.y}%` : ''
-                    }
-                }
-            },
-            scales: {
-                x: { grid: { color: lstmColors0.grid }, ticks: { font: { size: 10 } } },
-                y: {
-                    grid: { color: lstmColors0.grid },
-                    ticks: { font: { size: 10 }, callback: v => v + '%' },
-                    min: 0, max: 100
-                }
-            }
-        }
-    });
-
-    // Keep the date-range header + labels in sync with the real date.
-    // Checks periodically so the moment a new day starts, the rolling
-    // 8-day forecast (today + next 7 days) shifts forward automatically.
-    function refreshLstmWeekIfNeeded() {
-        const newDates = getRollingForecastDates();
-        if (newDates[0].toDateString() !== lstmWeekDates[0].toDateString()) {
-            lstmWeekDates = newDates;
-            lstmBigLabels = buildForecastLabels(lstmWeekDates);
-            document.getElementById('lstmWeekRange').textContent = formatWeekRangeLabel(lstmWeekDates);
-            lstmBigChart.data.labels = lstmBigLabels;
-            lstmBigChart.update();
-        }
-    }
-    setInterval(refreshLstmWeekIfNeeded, 60 * 1000); // check every minute
-
-    // ── LSTM SETTINGS (linked to admin Settings -> LSTM Model Settings) ──
-    function applyLstmHorizon(days) {
-        const n = parseInt(days, 10);
-        if (!(n >= 1 && n <= 30)) return;
-        if (n === lstmHorizon && lstmBigChart.data.labels.length === n + 1) return;
-
-        lstmHorizon = n;
-        lstmWeekDates = getRollingForecastDates();
-        lstmBigLabels = buildForecastLabels(lstmWeekDates);
-        document.getElementById('lstmWeekRange').textContent = formatWeekRangeLabel(lstmWeekDates);
-        document.getElementById('lstmHorizonLabel').textContent = `(Next ${n}-Day Forecast)`;
-        lstmBigChart.data.labels = lstmBigLabels;
-        applyLstmSeries();
-    }
-
-    // Show/hide the whole LSTM prediction card (Prediction Confidence Display).
-    function applyLstmCardVisibility(show) {
-        const card = document.querySelector('.lstm-big-card');
-        const row = document.querySelector('.risk-counters');
-        if (!card || !row) return;
-        card.classList.toggle('lstm-card-hidden', !show);
-        row.classList.toggle('lstm-hidden', !show);
-        try { localStorage.setItem('lstmConfidenceDisplay', show ? '1' : '0'); } catch (e) {}
-        if (show) requestAnimationFrame(() => { try { lstmBigChart.resize(); } catch (e) {} });
-    }
-
-    // Use the last known choice immediately so the layout doesn't jump on load.
-    try {
-        if (localStorage.getItem('lstmConfidenceDisplay') === '0') applyLstmCardVisibility(false);
-    } catch (e) {}
-
-    async function loadLstmSettings() {
-        try {
-            const res = await fetch('/api/lstm_settings', { credentials: 'include' });
-            const json = await res.json();
-            if (json.success && json.settings) {
-                applyLstmHorizon(json.settings.forecast_horizon);
-                applyLstmCardVisibility(json.settings.confidence_display !== false);
-            }
-        } catch (e) {
-            console.error('Failed to load LSTM settings:', e);
-        }
-    }
-    loadLstmSettings();
-    setInterval(loadLstmSettings, 60 * 1000);                       // pick up changes made in admin Settings
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) loadLstmSettings(); });
-
-    // ── LSTM FORECAST + CONFIDENCE (linked to backend, per device) ──
-    async function fetchLstmConfidence() {
-        try {
-            const requestedFor = scopeDeviceId;
-            const url = requestedFor != null
-                ? `/api/lstm_forecast?device_id=${encodeURIComponent(requestedFor)}`
-                : '/api/lstm_forecast';
-            const res = await fetch(url, { credentials: 'include' });
-            const json = await res.json();
-            if (String(requestedFor) !== String(scopeDeviceId)) return;   // device changed while waiting
-            if (!json.success || !json.data) return;
-            const conf = json.data.confidence;
-            document.getElementById('lstmConfidenceVal').textContent =
-                (conf === null || typeof conf === 'undefined') ? '\u2014' : conf + '%';
-            const ok = Array.isArray(json.data.forecast) && json.data.forecast.length && !json.data.is_placeholder;
-            lstmBackendRisks = ok ? json.data.forecast.map(f => Number(f.risk)) : null;
-            applyLstmSeries();
-        } catch (e) {
-            console.error('Error fetching LSTM forecast:', e);
-        }
-    }
-    setInterval(fetchLstmConfidence, 5 * 60 * 1000); // refresh every 5 minutes
-
     // ── WHICH DEVICE THE RISK AREAS DEPEND ON ──
     // Resident's own device = the device linked ("Near Device") to the monitored location
     // they're near. That is independent of what the admin picked on the admin Home dropdown.
@@ -4094,45 +3765,16 @@
             return;   // keep whatever was last resolved
         }
 
-        const changed = String(resolved) !== String(scopeDeviceId);
         scopeDeviceId = resolved;
         await hotspotsLoadedPromise;
         updateCounters();
-        if (changed || !lstmConfidenceFetchedOnce) {
-            lstmConfidenceFetchedOnce = true;
-            fetchLstmConfidence();
-        }
     }
-    let lstmConfidenceFetchedOnce = false;
     resolveResidentScopeDevice();
     setInterval(resolveResidentScopeDevice, 30 * 1000);   // pick up admin changes (links / deployed device)
     // Locations follow their Near Device's risk level; refresh them (and the devices) so the
     // risk and Last Updated shown here stay current without reloading the page.
     setInterval(function() { if (!document.hidden) { loadHotspots(); loadDevices(); } }, 30 * 1000);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) resolveResidentScopeDevice(); });
-
-    function refreshLstmChartTheme() {
-        const c = lstmTextColors();
-        Chart.defaults.color = c.base;
-        Chart.defaults.borderColor = c.grid;
-
-        lstmBigChart.options.plugins.legend.labels.color = c.muted;
-        lstmBigChart.options.plugins.tooltip.backgroundColor = c.tooltipBg;
-        lstmBigChart.options.plugins.tooltip.borderColor = c.tooltipBorder;
-        lstmBigChart.options.plugins.tooltip.titleColor = c.title;
-        lstmBigChart.options.plugins.tooltip.bodyColor = c.body;
-        lstmBigChart.options.scales.x.grid.color = c.grid;
-        lstmBigChart.options.scales.y.grid.color = c.grid;
-        lstmBigChart.options.scales.x.ticks.color = c.base;
-        lstmBigChart.options.scales.y.ticks.color = c.base;
-        lstmBigChart.update();
-    }
-    if (typeof themeToggleBtn !== 'undefined' && themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', function() {
-            setTimeout(refreshLstmChartTheme, 0);
-        });
-    }
-    refreshLstmChartTheme();
 
     loadUserInfo();
 </script>
