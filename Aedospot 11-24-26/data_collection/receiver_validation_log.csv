@@ -1,0 +1,3098 @@
+timestamp,event,details
+2026-11-15T01:53:42+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-15T01:55:14+08:00,INVALID_READING,2026-11-15T01:55:14+08:00: invalid_json:Expecting value
+2026-11-15T01:56:17+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-15T01:57:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T01:58:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T01:59:25+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T02:00:27+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T02:01:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T02:02:32+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T02:03:34+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T02:04:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T02:05:38+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T15:47:38+08:00,INVALID_READING,2026-11-15T15:47:38+08:00: invalid_json:Expecting value
+2026-11-15T15:47:40+08:00,INVALID_READING,2026-11-15T15:47:40+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:42+08:00,INVALID_READING,2026-11-15T15:47:42+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:44+08:00,INVALID_READING,2026-11-15T15:47:44+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:46+08:00,INVALID_READING,2026-11-15T15:47:46+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:48+08:00,INVALID_READING,2026-11-15T15:47:48+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:50+08:00,INVALID_READING,2026-11-15T15:47:50+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:52+08:00,INVALID_READING,2026-11-15T15:47:52+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:54+08:00,INVALID_READING,2026-11-15T15:47:54+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:56+08:00,INVALID_READING,2026-11-15T15:47:56+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:47:58+08:00,INVALID_READING,2026-11-15T15:47:58+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:00+08:00,INVALID_READING,2026-11-15T15:48:00+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:02+08:00,INVALID_READING,2026-11-15T15:48:02+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:04+08:00,INVALID_READING,2026-11-15T15:48:04+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:06+08:00,INVALID_READING,2026-11-15T15:48:06+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:08+08:00,INVALID_READING,2026-11-15T15:48:08+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:10+08:00,INVALID_READING,2026-11-15T15:48:10+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:13+08:00,INVALID_READING,2026-11-15T15:48:13+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:15+08:00,INVALID_READING,2026-11-15T15:48:15+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:17+08:00,INVALID_READING,2026-11-15T15:48:17+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:19+08:00,INVALID_READING,2026-11-15T15:48:19+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:21+08:00,INVALID_READING,2026-11-15T15:48:21+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:23+08:00,INVALID_READING,2026-11-15T15:48:23+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:25+08:00,INVALID_READING,2026-11-15T15:48:25+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:27+08:00,INVALID_READING,2026-11-15T15:48:27+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:31+08:00,INVALID_READING,2026-11-15T15:48:31+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:33+08:00,INVALID_READING,2026-11-15T15:48:33+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:35+08:00,INVALID_READING,2026-11-15T15:48:35+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:37+08:00,INVALID_READING,2026-11-15T15:48:37+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:37+08:00,BATCH_REJECTED,"batch not uploaded; expected about 30 samples; valid coverage={'temperature': 3.3, 'humidity': 3.3, 'rainfall': 96.7, 'wind': 96.7}"
+2026-11-15T15:48:39+08:00,INVALID_READING,2026-11-15T15:48:39+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:41+08:00,INVALID_READING,2026-11-15T15:48:41+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:43+08:00,INVALID_READING,2026-11-15T15:48:43+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:45+08:00,INVALID_READING,2026-11-15T15:48:45+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:47+08:00,INVALID_READING,2026-11-15T15:48:47+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:49+08:00,INVALID_READING,2026-11-15T15:48:49+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:51+08:00,INVALID_READING,2026-11-15T15:48:51+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:53+08:00,INVALID_READING,2026-11-15T15:48:53+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:55+08:00,INVALID_READING,2026-11-15T15:48:55+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:57+08:00,INVALID_READING,2026-11-15T15:48:57+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:48:59+08:00,INVALID_READING,2026-11-15T15:48:59+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:49:01+08:00,INVALID_READING,2026-11-15T15:49:01+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-15T15:49:37+08:00,BATCH_REJECTED,"batch not uploaded; expected about 30 samples; valid coverage={'temperature': 60.0, 'humidity': 60.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-15T15:51:42+08:00,INVALID_READING,2026-11-15T15:51:42+08:00: invalid_json:Expecting value
+2026-11-15T15:52:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-15T15:53:47+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T15:54:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T15:55:52+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T15:56:55+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T15:57:59+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T15:59:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:00:06+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:01:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:02:10+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:03:14+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:04:16+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:05:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:06:22+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:07:24+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:08:26+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:09:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:10:32+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:11:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:12:40+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:13:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:14:48+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:15:52+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:16:56+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:18:00+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:19:03+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:20:05+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:21:07+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:22:09+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:23:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:24:13+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:25:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:26:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-15T16:27:27+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 110.0, 'humidity': 110.0, 'rainfall': 110.0, 'wind': 110.0}"
+2026-11-15T16:28:33+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 113.3, 'humidity': 113.3, 'rainfall': 113.3, 'wind': 113.3}"
+2026-11-15T16:29:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-15T16:30:53+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 34.5125, 'humidity': 62.496875, 'rainfall_mm': 0.0, 'wind_speed': 0.248828125}"
+2026-11-15T16:32:09+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 34.51842105263158, 'humidity': 62.56578947368421, 'rainfall_mm': 0.0, 'wind_speed': 0.42944078947368414}"
+2026-11-15T16:33:25+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 34.56578947368421, 'humidity': 62.6, 'rainfall_mm': 0.0, 'wind_speed': 0.3672697368421053}"
+2026-11-15T16:34:38+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 500: INTERNAL SERVER ERROR; payload={'device_id': 7, 'temperature': 34.6, 'humidity': 62.544736842105266, 'rainfall_mm': 0.0, 'wind_speed': 0.3983552631578947}"
+2026-11-15T16:35:53+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 34.6, 'humidity': 62.352777777777774, 'rainfall_mm': 0.0, 'wind_speed': 0.49461805555555555}"
+2026-11-19T07:16:19+08:00,INVALID_READING,2026-11-19T07:16:19+08:00: invalid_json:Expecting value
+2026-11-19T07:17:21+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-19T07:18:25+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:18:51+08:00,INVALID_READING,2026-11-19T07:18:51+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:18:53+08:00,INVALID_READING,2026-11-19T07:18:53+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:01+08:00,INVALID_READING,2026-11-19T07:27:01+08:00: invalid_json:Expecting value
+2026-11-19T07:27:02+08:00,INVALID_READING,2026-11-19T07:27:02+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:05+08:00,INVALID_READING,2026-11-19T07:27:05+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:07+08:00,INVALID_READING,2026-11-19T07:27:07+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:09+08:00,INVALID_READING,2026-11-19T07:27:09+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:11+08:00,INVALID_READING,2026-11-19T07:27:11+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:13+08:00,INVALID_READING,2026-11-19T07:27:13+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:15+08:00,INVALID_READING,2026-11-19T07:27:15+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:17+08:00,INVALID_READING,2026-11-19T07:27:17+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:19+08:00,INVALID_READING,2026-11-19T07:27:19+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:21+08:00,INVALID_READING,2026-11-19T07:27:21+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:23+08:00,INVALID_READING,2026-11-19T07:27:23+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:25+08:00,INVALID_READING,2026-11-19T07:27:25+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:27+08:00,INVALID_READING,2026-11-19T07:27:27+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:29+08:00,INVALID_READING,2026-11-19T07:27:29+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:31+08:00,INVALID_READING,2026-11-19T07:27:31+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:33+08:00,INVALID_READING,2026-11-19T07:27:33+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:35+08:00,INVALID_READING,2026-11-19T07:27:35+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:59+08:00,INVALID_READING,2026-11-19T07:27:59+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:27:59+08:00,BATCH_REJECTED,"batch not uploaded; expected about 30 samples; valid coverage={'temperature': 36.7, 'humidity': 36.7, 'rainfall': 96.7, 'wind': 36.7}"
+2026-11-19T07:28:01+08:00,INVALID_READING,2026-11-19T07:28:01+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:03+08:00,INVALID_READING,2026-11-19T07:28:03+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:05+08:00,INVALID_READING,2026-11-19T07:28:05+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:07+08:00,INVALID_READING,2026-11-19T07:28:07+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:09+08:00,INVALID_READING,2026-11-19T07:28:09+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:23+08:00,INVALID_READING,2026-11-19T07:28:23+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:25+08:00,INVALID_READING,2026-11-19T07:28:25+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:27+08:00,INVALID_READING,2026-11-19T07:28:27+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:29+08:00,INVALID_READING,2026-11-19T07:28:29+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:31+08:00,INVALID_READING,2026-11-19T07:28:31+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:33+08:00,INVALID_READING,2026-11-19T07:28:33+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:35+08:00,INVALID_READING,2026-11-19T07:28:35+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:37+08:00,INVALID_READING,2026-11-19T07:28:37+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:39+08:00,INVALID_READING,2026-11-19T07:28:39+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:41+08:00,INVALID_READING,2026-11-19T07:28:41+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:43+08:00,INVALID_READING,2026-11-19T07:28:43+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:28:59+08:00,BATCH_REJECTED,"batch not uploaded; expected about 30 samples; valid coverage={'temperature': 46.7, 'humidity': 46.7, 'rainfall': 100.0, 'wind': 46.7}"
+2026-11-19T07:29:17+08:00,INVALID_READING,2026-11-19T07:29:17+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:19+08:00,INVALID_READING,2026-11-19T07:29:19+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:21+08:00,INVALID_READING,2026-11-19T07:29:21+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:23+08:00,INVALID_READING,2026-11-19T07:29:23+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:25+08:00,INVALID_READING,2026-11-19T07:29:25+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:27+08:00,INVALID_READING,2026-11-19T07:29:27+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:29+08:00,INVALID_READING,2026-11-19T07:29:29+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:31+08:00,INVALID_READING,2026-11-19T07:29:31+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:33+08:00,INVALID_READING,2026-11-19T07:29:33+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:35+08:00,INVALID_READING,2026-11-19T07:29:35+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:37+08:00,INVALID_READING,2026-11-19T07:29:37+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:40+08:00,INVALID_READING,2026-11-19T07:29:40+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:42+08:00,INVALID_READING,2026-11-19T07:29:42+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:44+08:00,INVALID_READING,2026-11-19T07:29:44+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:46+08:00,INVALID_READING,2026-11-19T07:29:46+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:48+08:00,INVALID_READING,2026-11-19T07:29:48+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:50+08:00,INVALID_READING,2026-11-19T07:29:50+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:52+08:00,INVALID_READING,2026-11-19T07:29:52+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:54+08:00,INVALID_READING,2026-11-19T07:29:54+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:56+08:00,INVALID_READING,2026-11-19T07:29:56+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:29:58+08:00,INVALID_READING,2026-11-19T07:29:58+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:00+08:00,INVALID_READING,2026-11-19T07:30:00+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:00+08:00,BATCH_REJECTED,"batch not uploaded; expected about 30 samples; valid coverage={'temperature': 26.7, 'humidity': 26.7, 'rainfall': 100.0, 'wind': 26.7}"
+2026-11-19T07:30:02+08:00,INVALID_READING,2026-11-19T07:30:02+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:04+08:00,INVALID_READING,2026-11-19T07:30:04+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:06+08:00,INVALID_READING,2026-11-19T07:30:06+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:08+08:00,INVALID_READING,2026-11-19T07:30:08+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:10+08:00,INVALID_READING,2026-11-19T07:30:10+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:12+08:00,INVALID_READING,2026-11-19T07:30:12+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:14+08:00,INVALID_READING,2026-11-19T07:30:14+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:16+08:00,INVALID_READING,2026-11-19T07:30:16+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:18+08:00,INVALID_READING,2026-11-19T07:30:18+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:20+08:00,INVALID_READING,2026-11-19T07:30:20+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:22+08:00,INVALID_READING,2026-11-19T07:30:22+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:24+08:00,INVALID_READING,2026-11-19T07:30:24+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:26+08:00,INVALID_READING,2026-11-19T07:30:26+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:28+08:00,INVALID_READING,2026-11-19T07:30:28+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:30+08:00,INVALID_READING,2026-11-19T07:30:30+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:32+08:00,INVALID_READING,2026-11-19T07:30:32+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:34+08:00,INVALID_READING,2026-11-19T07:30:34+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:36+08:00,INVALID_READING,2026-11-19T07:30:36+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:38+08:00,INVALID_READING,2026-11-19T07:30:38+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:40+08:00,INVALID_READING,2026-11-19T07:30:40+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:42+08:00,INVALID_READING,2026-11-19T07:30:42+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:44+08:00,INVALID_READING,2026-11-19T07:30:44+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:46+08:00,INVALID_READING,2026-11-19T07:30:46+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:48+08:00,INVALID_READING,2026-11-19T07:30:48+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:50+08:00,INVALID_READING,2026-11-19T07:30:50+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:52+08:00,INVALID_READING,2026-11-19T07:30:52+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:54+08:00,INVALID_READING,2026-11-19T07:30:54+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:30:58+08:00,INVALID_READING,2026-11-19T07:30:58+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:00+08:00,BATCH_REJECTED,"batch not uploaded; expected about 30 samples; valid coverage={'temperature': 6.7, 'humidity': 6.7, 'rainfall': 100.0, 'wind': 6.7}"
+2026-11-19T07:31:10+08:00,INVALID_READING,2026-11-19T07:31:10+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:12+08:00,INVALID_READING,2026-11-19T07:31:12+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:16+08:00,INVALID_READING,2026-11-19T07:31:16+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:18+08:00,INVALID_READING,2026-11-19T07:31:18+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:20+08:00,INVALID_READING,2026-11-19T07:31:20+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:22+08:00,INVALID_READING,2026-11-19T07:31:22+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:25+08:00,INVALID_READING,2026-11-19T07:31:24+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:27+08:00,INVALID_READING,2026-11-19T07:31:27+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:29+08:00,INVALID_READING,2026-11-19T07:31:29+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:31+08:00,INVALID_READING,2026-11-19T07:31:31+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:33+08:00,INVALID_READING,2026-11-19T07:31:33+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:31:35+08:00,INVALID_READING,2026-11-19T07:31:35+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:32:01+08:00,BATCH_REJECTED,"batch not uploaded; expected about 30 samples; valid coverage={'temperature': 60.0, 'humidity': 60.0, 'rainfall': 100.0, 'wind': 60.0}"
+2026-11-19T07:33:04+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-19T07:34:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:34:39+08:00,INVALID_READING,2026-11-19T07:34:39+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:34:41+08:00,INVALID_READING,2026-11-19T07:34:41+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:34:43+08:00,INVALID_READING,2026-11-19T07:34:43+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:34:45+08:00,INVALID_READING,2026-11-19T07:34:45+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:34:47+08:00,INVALID_READING,2026-11-19T07:34:47+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-19T07:35:12+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":25,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 90.0, 'humidity': 90.0, 'rainfall': 106.7, 'wind': 90.0}"
+2026-11-19T07:36:16+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:37:19+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:38:22+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-19T07:39:26+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:40:29+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:41:32+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-19T07:42:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:43:39+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:44:43+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-19T07:45:47+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:46:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:47:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-19T07:48:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:50:16+08:00,INVALID_READING,2026-11-19T07:50:16+08:00: invalid_json:Expecting value
+2026-11-19T07:51:18+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-19T07:52:44+08:00,INVALID_READING,2026-11-19T07:52:44+08:00: invalid_json:Expecting value
+2026-11-19T07:53:47+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-19T07:54:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-19T07:55:51+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-19T07:56:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-19T18:55:57+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-19T19:18:38+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-19T19:58:46+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-19T20:21:33+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-19T20:51:00+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T09:39:23+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T10:06:12+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T10:31:49+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T11:06:25+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T11:26:24+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T11:39:24+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T12:08:56+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T12:51:52+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T13:35:57+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T13:49:56+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T14:16:49+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T14:25:49+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-20T16:40:21+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-21T17:08:07+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-21T17:19:14+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-21T17:25:48+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-21T17:34:48+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-21T17:42:17+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-21T18:08:43+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-21T18:20:53+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-21T18:26:38+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-22T19:50:13+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-22T20:55:42+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T21:12:24+08:00,INVALID_READING,2026-11-22T21:12:24+08:00: invalid_json:Expecting value
+2026-11-22T21:13:37+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T21:16:58+08:00,INVALID_READING,2026-11-22T21:16:58+08:00: invalid_json:Expecting value
+2026-11-22T21:20:53+08:00,INVALID_READING,2026-11-22T21:20:53+08:00: invalid_json:Expecting value
+2026-11-22T21:21:32+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T21:21:41+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T21:21:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-22T21:22:24+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T21:22:59+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:24:04+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:25:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:26:12+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:27:16+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:28:19+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:29:21+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T21:30:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T21:31:25+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T21:32:41+08:00,INVALID_READING,2026-11-22T21:32:41+08:00: invalid_json:Expecting value
+2026-11-22T21:33:30+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T21:33:45+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-22T21:34:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:35:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:36:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:37:59+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:39:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T21:40:07+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:41:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:42:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:43:19+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:44:22+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:45:25+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T21:46:29+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:47:33+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:48:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:49:41+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:50:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:51:50+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:52:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:53:58+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:55:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:56:05+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:57:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T21:58:12+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T21:59:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:00:18+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T22:01:22+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:02:27+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:03:31+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:04:35+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:05:39+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:06:43+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:07:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:08:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T22:09:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:10:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:12:01+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:13:06+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:14:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:15:12+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T22:16:16+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:17:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:18:24+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:19:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:20:32+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:21:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:22:43+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T22:22:52+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.771875, 'humidity': 67.68125, 'rainfall_mm': 0.0, 'wind_speed': 0.14628906249999998}"
+2026-11-22T22:23:03+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T22:23:09+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T22:23:12+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T22:24:08+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.723684210526315, 'humidity': 67.62894736842105, 'rainfall_mm': 0.0, 'wind_speed': 0.14391447368421054}"
+2026-11-22T22:25:24+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.721052631578946, 'humidity': 67.6421052631579, 'rainfall_mm': 0.0, 'wind_speed': 0.2429276315789473}"
+2026-11-22T22:26:40+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.71842105263158, 'humidity': 67.61842105263158, 'rainfall_mm': 0.0, 'wind_speed': 0.13470394736842103}"
+2026-11-22T22:27:56+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.707894736842107, 'humidity': 67.52105263157895, 'rainfall_mm': 0.0, 'wind_speed': 0.16463815789473682}"
+2026-11-22T22:29:12+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.52631578947368, 'rainfall_mm': 0.0, 'wind_speed': 0.14506578947368418}"
+2026-11-22T22:30:28+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.56052631578947, 'rainfall_mm': 0.0, 'wind_speed': 0.16463815789473685}"
+2026-11-22T22:31:44+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.58684210526316, 'rainfall_mm': 0.0, 'wind_speed': 0.1462171052631579}"
+2026-11-22T22:33:00+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.48947368421052, 'rainfall_mm': 0.0, 'wind_speed': 0.15888157894736843}"
+2026-11-22T22:34:17+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.42894736842105, 'rainfall_mm': 0.0, 'wind_speed': 0.12088815789473682}"
+2026-11-22T22:35:33+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.53684210526316, 'rainfall_mm': 0.0, 'wind_speed': 0.10016447368421051}"
+2026-11-22T22:36:49+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.40789473684211, 'rainfall_mm': 0.0, 'wind_speed': 0.010361842105263157}"
+2026-11-22T22:38:05+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.40789473684211, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-22T22:39:21+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.35263157894737, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-22T22:40:37+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.38157894736842, 'rainfall_mm': 0.0, 'wind_speed': 0.014967105263157894}"
+2026-11-22T22:41:53+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.33947368421053, 'rainfall_mm': 0.0, 'wind_speed': 0.08174342105263156}"
+2026-11-22T22:43:09+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.35263157894737, 'rainfall_mm': 0.0, 'wind_speed': 0.16118421052631576}"
+2026-11-22T22:44:25+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.38947368421053, 'rainfall_mm': 0.0, 'wind_speed': 0.21184210526315786}"
+2026-11-22T22:45:41+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.7, 'humidity': 67.44736842105263, 'rainfall_mm': 0.0, 'wind_speed': 0.17845394736842105}"
+2026-11-22T22:46:57+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.69736842105263, 'humidity': 67.47368421052632, 'rainfall_mm': 0.0, 'wind_speed': 0.16463815789473682}"
+2026-11-22T22:48:13+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.67105263157895, 'humidity': 67.5578947368421, 'rainfall_mm': 0.0, 'wind_speed': 0.1600328947368421}"
+2026-11-22T22:49:29+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.607894736842105, 'humidity': 67.68947368421053, 'rainfall_mm': 0.0, 'wind_speed': 0.15888157894736843}"
+2026-11-22T22:50:46+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.602631578947367, 'humidity': 67.61052631578947, 'rainfall_mm': 0.0, 'wind_speed': 0.2348684210526316}"
+2026-11-22T22:52:02+08:00,UPLOAD_FAILED,"TimeoutError: timed out; payload={'device_id': 7, 'temperature': 31.6, 'humidity': 67.62105263157895, 'rainfall_mm': 0.0, 'wind_speed': 0.1934210526315789}"
+2026-11-22T22:52:25+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T22:53:06+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 126.7, 'humidity': 126.7, 'rainfall': 126.7, 'wind': 126.7}"
+2026-11-22T22:54:09+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:55:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T22:56:14+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T22:57:18+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:58:21+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T22:59:26+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:00:29+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:01:33+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:02:35+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:03:39+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:04:43+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:05:45+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:06:48+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:07:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:08:56+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:09:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:11:01+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:12:05+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:13:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:14:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:15:14+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:16:16+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:17:19+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:18:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:19:26+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:20:33+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:21:14+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T23:21:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 110.0, 'humidity': 110.0, 'rainfall': 110.0, 'wind': 110.0}"
+2026-11-22T23:22:38+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:23:40+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:24:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:25:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:26:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:27:28+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T23:27:51+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:28:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:29:50+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T23:29:55+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:29:59+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T23:30:49+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-22T23:30:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:31:59+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:33:03+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:34:05+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:35:07+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:36:09+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:37:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:38:13+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:39:17+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:40:19+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.5, 'humidity': 67.684375, 'rainfall_mm': 0.0, 'wind_speed': 0.1544921875}"
+2026-11-22T23:41:21+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.493548387096773, 'humidity': 67.64516129032258, 'rainfall_mm': 0.0, 'wind_speed': 0.2258064516129032}"
+2026-11-22T23:42:23+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.425806451612903, 'humidity': 67.68709677419355, 'rainfall_mm': 0.0, 'wind_speed': 0.2723790322580645}"
+2026-11-22T23:43:25+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.416129032258066, 'humidity': 67.72258064516129, 'rainfall_mm': 0.0, 'wind_speed': 0.1933467741935484}"
+2026-11-22T23:44:27+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.416129032258066, 'humidity': 67.76451612903226, 'rainfall_mm': 0.0, 'wind_speed': 0.2540322580645161}"
+2026-11-22T23:45:29+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.412903225806453, 'humidity': 67.6774193548387, 'rainfall_mm': 0.0, 'wind_speed': 0.21169354838709675}"
+2026-11-22T23:46:31+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.4, 'humidity': 67.6774193548387, 'rainfall_mm': 0.0, 'wind_speed': 0.18629032258064515}"
+2026-11-22T23:47:33+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.4, 'humidity': 67.7516129032258, 'rainfall_mm': 0.0, 'wind_speed': 0.17782258064516127}"
+2026-11-22T23:48:35+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.4, 'humidity': 67.54193548387097, 'rainfall_mm': 0.0, 'wind_speed': 0.10584677419354838}"
+2026-11-22T23:49:37+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.4, 'humidity': 67.63870967741936, 'rainfall_mm': 0.0, 'wind_speed': 0.1284274193548387}"
+2026-11-22T23:50:39+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.4, 'humidity': 67.76451612903226, 'rainfall_mm': 0.0, 'wind_speed': 0.09879032258064516}"
+2026-11-22T23:51:41+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 31.4, 'humidity': 67.75806451612904, 'rainfall_mm': 0.0, 'wind_speed': 0.14818548387096775}"
+2026-11-22T23:52:45+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:53:48+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:54:51+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:55:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:56:58+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-22T23:58:01+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-22T23:59:04+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:00:07+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:01:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:02:14+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:03:17+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:04:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:05:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:06:27+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:07:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:08:33+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:08:39+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:09:35+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:10:31+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:10:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:11:28+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:11:39+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:12:42+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:13:43+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:13:47+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:13:57+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:14:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:14:58+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:15:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:16:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:18:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:19:05+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:20:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:21:10+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:22:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:23:18+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:24:06+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:24:22+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:25:06+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:25:24+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:26:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:27:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:28:33+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T00:29:38+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:30:42+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T00:31:50+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T00:32:46+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T07:42:21+08:00,INVALID_READING,2026-11-23T07:42:21+08:00: invalid_json:Expecting value
+2026-11-23T07:42:53+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T07:43:16+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T07:43:24+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-23T07:43:50+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T07:44:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:45:31+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:46:34+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:47:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T07:48:39+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T07:49:42+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T07:50:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:51:50+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:52:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:53:58+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:55:03+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:56:07+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:57:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:58:13+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T07:59:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:00:18+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:01:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:02:22+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:03:24+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:04:26+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:05:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:06:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:07:32+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:08:34+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:09:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:10:39+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:11:42+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:12:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:13:50+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:14:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:15:58+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:17:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:18:06+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:19:10+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:20:13+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:21:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:22:17+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:23:19+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:24:21+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:25:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:26:26+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:27:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:28:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:29:34+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:30:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:31:41+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:32:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:33:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:34:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:35:52+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:36:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:37:56+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:38:58+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:40:00+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:41:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:42:04+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:43:06+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:44:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:45:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:46:16+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:47:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:48:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:49:25+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:50:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:51:31+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:52:34+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:53:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:54:41+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:55:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:56:47+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T08:57:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:58:51+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T08:59:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:00:56+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:01:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:03:00+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:04:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:05:04+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:06:06+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:07:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:08:10+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:09:13+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:10:16+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:11:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:12:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:13:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:14:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:15:34+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:16:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:17:39+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:18:42+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:19:48+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:20:51+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 110.0, 'humidity': 110.0, 'rainfall': 110.0, 'wind': 110.0}"
+2026-11-23T09:21:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:22:55+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:23:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:25:00+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T09:26:04+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:27:09+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:28:12+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:29:17+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:30:21+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:31:25+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:32:29+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:33:33+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:34:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:35:41+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:36:45+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:37:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:38:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:39:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:41:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:42:06+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T09:43:10+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T14:10:48+08:00,INVALID_READING,2026-11-23T14:10:48+08:00: invalid_json:Expecting value
+2026-11-23T14:10:49+08:00,INVALID_READING,2026-11-23T14:10:49+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-23T14:10:51+08:00,INVALID_READING,2026-11-23T14:10:51+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-23T14:10:53+08:00,INVALID_READING,2026-11-23T14:10:53+08:00: temperature_missing_or_non_numeric;humidity_missing_or_non_numeric
+2026-11-23T14:11:44+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T14:11:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 90.0, 'humidity': 90.0, 'rainfall': 100.0, 'wind': 90.0}"
+2026-11-23T14:12:06+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T14:13:03+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T14:19:30+08:00,INVALID_READING,2026-11-23T14:19:30+08:00: invalid_json:Expecting value
+2026-11-23T14:20:25+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T14:20:33+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-23T14:21:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T14:22:40+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T14:23:41+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T14:24:45+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T14:25:48+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T14:26:50+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T14:27:52+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 50,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T14:34:08+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T14:34:47+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T14:36:09+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T14:37:03+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T14:37:58+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T15:34:09+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T15:35:03+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T15:52:57+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T15:53:50+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T16:13:37+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T16:14:29+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T17:00:21+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T17:01:10+08:00,SERIAL_ERROR,"could not open port 'COM5': FileNotFoundError(2, 'The system cannot find the file specified.', None, 2)"
+2026-11-23T19:35:38+08:00,INVALID_READING,2026-11-23T19:35:38+08:00: invalid_json:Expecting value
+2026-11-23T19:36:31+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T19:36:40+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-23T19:37:45+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T19:38:47+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T19:39:50+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:40:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T19:41:56+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:42:58+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:44:00+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:45:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:46:04+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:47:06+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:48:10+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T19:49:14+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T19:50:16+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:51:18+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:52:22+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T19:53:25+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:54:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T19:55:31+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:56:32+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:57:35+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:58:37+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T19:59:41+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T20:00:43+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:01:45+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:02:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T20:03:51+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:22:18+08:00,INVALID_READING,2026-11-23T20:22:18+08:00: invalid_json:Expecting value
+2026-11-23T20:23:09+08:00,SERIAL_ERROR,"could not open port 'COM5': PermissionError(13, 'Access is denied.', None, 5)"
+2026-11-23T20:23:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-23T20:24:24+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T20:25:26+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:26:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:27:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:28:32+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:29:35+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:30:38+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T20:31:41+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:32:45+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T20:33:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T20:34:51+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:35:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:36:55+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:37:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:38:59+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:40:01+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:41:03+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:42:05+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:43:09+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T20:44:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T20:45:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-23T20:46:17+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.593548387096774, 'humidity': 66.04516129032258, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:47:19+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.535483870967745, 'humidity': 66.02258064516128, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:48:21+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.516129032258064, 'humidity': 66.07096774193549, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:49:23+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.5, 'humidity': 66.17096774193548, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:50:25+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.5, 'humidity': 66.29354838709678, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:51:27+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.5, 'humidity': 66.30322580645161, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:52:29+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.5, 'humidity': 66.23225806451613, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:53:31+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.5, 'humidity': 66.13225806451612, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:54:33+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.5, 'humidity': 66.26451612903226, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:55:35+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.5, 'humidity': 66.22258064516129, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:56:37+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.47741935483871, 'humidity': 66.20967741935483, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:57:39+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.487096774193546, 'humidity': 66.30967741935484, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:58:41+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.47741935483871, 'humidity': 66.29354838709678, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T20:59:43+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.44516129032258, 'humidity': 66.29677419354839, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:00:46+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.45161290322581, 'humidity': 66.23225806451613, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:01:48+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.49032258064516, 'humidity': 66.2, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:02:50+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.49032258064516, 'humidity': 66.13548387096775, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:03:52+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.461290322580645, 'humidity': 66.10967741935484, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:04:54+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.403225806451616, 'humidity': 66.09354838709677, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:05:56+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.403225806451616, 'humidity': 66.26451612903226, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:06:58+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.41935483870968, 'humidity': 66.33870967741936, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:08:00+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.406451612903226, 'humidity': 66.23225806451613, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:09:02+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.23870967741935, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:10:04+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.05806451612904, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:11:06+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 65.90967741935484, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:12:08+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 65.83870967741936, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:13:10+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 65.96774193548387, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:14:12+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.380645161290325, 'humidity': 66.03225806451613, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:15:14+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.383870967741935, 'humidity': 66.08064516129032, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:16:17+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.39677419354839, 'humidity': 66.07741935483871, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:17:19+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.39677419354839, 'humidity': 66.15161290322581, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:18:21+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.37096774193548, 'humidity': 66.24516129032259, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:19:23+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.37096774193548, 'humidity': 66.25483870967741, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:20:25+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.31935483870967, 'humidity': 66.26774193548387, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:21:27+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.30322580645161, 'humidity': 66.36451612903225, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:22:29+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.30322580645161, 'humidity': 66.34516129032258, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:23:31+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 66.39354838709677, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:24:33+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 66.48387096774194, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:25:35+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 66.62903225806451, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:26:37+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.306451612903224, 'humidity': 66.66774193548387, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:27:39+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 66.69032258064516, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:28:41+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 66.66774193548387, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:29:43+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 66.61935483870968, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:30:45+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.31612903225806, 'humidity': 66.53870967741935, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:31:47+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.32258064516129, 'humidity': 66.52580645161291, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:32:50+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.351612903225806, 'humidity': 66.69677419354839, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:33:51+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.383870967741935, 'humidity': 66.73548387096774, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:34:54+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.39032258064516, 'humidity': 66.63548387096775, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:35:56+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.39354838709677, 'humidity': 66.50645161290322, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:36:58+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.49354838709678, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:38:00+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.35161290322581, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:39:02+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.36129032258064, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:40:04+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.30645161290323, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:41:06+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.2516129032258, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:42:08+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.14516129032258, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:43:10+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.06451612903226, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:44:12+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.04193548387097, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:45:14+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 66.04838709677419, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:46:16+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.4, 'humidity': 65.9, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:47:18+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.39354838709677, 'humidity': 65.86129032258064, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:48:20+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.329032258064515, 'humidity': 65.93225806451613, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:49:22+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.31290322580645, 'humidity': 65.94193548387096, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:50:25+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 65.74516129032259, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:51:26+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 65.69354838709677, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:52:29+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 65.76774193548387, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:53:31+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.3, 'humidity': 65.8, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:54:33+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.248387096774195, 'humidity': 65.84516129032258, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:55:35+08:00,UPLOAD_FAILED,"HTTPError: HTTP Error 409: CONFLICT; payload={'device_id': 7, 'temperature': 32.229032258064514, 'humidity': 65.93548387096774, 'rainfall_mm': 0.0, 'wind_speed': 0.0}"
+2026-11-23T21:56:38+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T21:57:40+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T21:58:42+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-23T21:59:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {
+  ""device_id"": 7,
+  ""risk_bucket"": ""low"",
+  ""risk_level"": 25,
+  ""success"": true,
+  ""switched_to_sensor"": false
+}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:02:59+08:00,INVALID_READING,2026-11-24T06:02:59+08:00: invalid_json:Expecting value
+2026-11-24T06:04:01+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-24T06:05:05+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T06:06:07+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:07:09+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:08:12+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:09:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T06:10:18+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:11:20+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:12:22+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:13:24+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:14:26+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:15:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:16:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:17:32+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:18:34+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:19:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:20:38+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:21:40+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:22:42+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:23:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:24:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:25:49+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:26:53+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T06:27:55+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:28:57+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:29:59+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:31:01+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:32:05+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T06:33:07+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:34:09+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:35:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:36:13+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:37:15+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:38:17+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:39:19+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:40:21+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:41:23+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:42:25+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:43:28+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:44:30+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:45:34+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T06:46:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:47:38+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:48:40+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:49:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T06:50:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:51:48+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:52:52+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T06:53:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:54:56+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:55:58+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:57:00+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:58:02+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T06:59:04+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:00:07+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:01:08+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:02:11+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:03:13+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:08:44+08:00,INVALID_READING,2026-11-24T07:08:44+08:00: invalid_json:Expecting value
+2026-11-24T07:09:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-24T07:10:50+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T07:11:52+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:12:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:13:56+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:23:34+08:00,INVALID_READING,2026-11-24T07:23:34+08:00: invalid_json:Expecting value
+2026-11-24T07:24:36+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 100.0, 'humidity': 100.0, 'rainfall': 100.0, 'wind': 100.0}"
+2026-11-24T07:25:40+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"
+2026-11-24T07:26:42+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:27:44+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:28:46+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:29:48+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:30:50+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 103.3, 'humidity': 103.3, 'rainfall': 103.3, 'wind': 103.3}"
+2026-11-24T07:31:54+08:00,UPLOAD_SUCCESS,"HTTP 200; {""device_id"":7,""risk_bucket"":""low"",""risk_level"":50,""success"":true,""switched_to_sensor"":false}
+; coverage={'temperature': 106.7, 'humidity': 106.7, 'rainfall': 106.7, 'wind': 106.7}"

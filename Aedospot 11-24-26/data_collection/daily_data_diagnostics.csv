@@ -1,0 +1,6 @@
+date,records_after_deduplication,expected_records_2s,coverage_percent_by_intervals,temperature_valid_percent,humidity_valid_percent,rainfall_valid_percent,wind_valid_percent,timestamp_gaps_over_10s,maximum_timestamp_gap_seconds,duplicate_timestamps_in_file,rain_gauge_operational_flag,anemometer_operational_flag,is_finished_day,accepted_for_ai,rejection_reason
+2026-11-15,1709,43200,3.95,97.48,97.48,99.82,99.82,7,49300.0,229,False,False,True,False,coverage_below_threshold_or_sensor_data_invalid_or_calibration_unconfirmed
+2026-11-19,953,43200,2.2,88.77,88.77,99.58,99.58,4,312015.0,229,False,False,True,False,coverage_below_threshold_or_sensor_data_invalid_or_calibration_unconfirmed
+2026-11-22,4612,43200,10.67,99.91,99.91,99.91,99.91,28,306890.0,229,False,False,True,False,coverage_below_threshold_or_sensor_data_invalid_or_calibration_unconfirmed
+2026-11-23,8653,43200,20.02,99.91,99.91,99.94,99.94,6,25878.0,229,False,False,True,False,coverage_below_threshold_or_sensor_data_invalid_or_calibration_unconfirmed
+2026-11-24,2016,43200,4.66,99.85,99.85,99.85,99.85,4,28961.0,229,False,False,False,False,incomplete_current_day

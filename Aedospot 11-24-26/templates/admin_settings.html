@@ -1,0 +1,3674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | AEDOSPOT</title>
+    <link rel="icon" type="image/png" href="/static/aedospot-favicon.png">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green-deep:   #071a0f;
+            --green-dark:   #0d2b18;
+            --green-mid:    #145c30;
+            --green-bright: #2ecc71;
+            --green-bright-alt: #1a8a4a;
+            --green-glow:   rgba(46,204,113,0.18);
+            --amber:        #f39c12;
+            --red:          #e74c3c;
+            --blue:         #3498db;
+            --purple:       #9b59b6;
+            --text-main:    #e8f5ee;
+            --text-muted:   rgba(232,245,238,0.55);
+            --glass:        rgba(255,255,255,0.055);
+            --glass-border: rgba(255,255,255,0.10);
+            --transition:   0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            --nav-bg: rgba(7,26,15,0.75);
+            --nav-bg-mobile: rgba(7,26,15,0.95);
+            --bg-1: #1a5c35;
+            --bg-2: #0a2e1c;
+            --bg-3: #071a0f;
+            --on-accent: #04150a;
+        }
+
+        body.light-theme {
+            --green-deep:   #ffffff;
+            --green-dark:   #f3faf6;
+            --green-mid:    #e6f5ec;
+            --green-bright: #0d6b3a;
+            --green-bright-alt: #0a4f2a;
+            --green-glow:   rgba(13,107,58,0.10);
+            --text-main:    #10261a;
+            --text-muted:   rgba(16,38,26,0.6);
+            --glass:        rgba(13,107,58,0.045);
+            --glass-border: rgba(13,107,58,0.14);
+            --nav-bg: rgba(255,255,255,0.82);
+            --nav-bg-mobile: rgba(255,255,255,0.97);
+            --bg-1: #ffffff;
+            --bg-2: #f2faf5;
+            --bg-3: #e8f5ee;
+            --on-accent: #ffffff;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at 20% 0%, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* ── TOP NAV ── */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .top-nav .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .top-nav .nav-logo-mark {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            object-fit: contain;
+            display: block;
+        }
+
+        .top-nav .nav-logo-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .top-nav .nav-logo-text .accent { color: var(--green-bright); }
+
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            list-style: none;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.28rem;
+            border-radius: 50px;
+        }
+
+        .top-nav .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            font-weight: 600;
+            padding: 0.55rem 1.05rem;
+            border-radius: 50px;
+            transition: all var(--transition);
+        }
+
+        .top-nav .nav-links a i { font-size: 0.82rem; }
+
+        .top-nav .nav-links a:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.07);
+        }
+
+        body.light-theme .top-nav .nav-links a:hover {
+            background: rgba(13,107,58,0.08);
+        }
+
+        .top-nav .nav-links a.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            box-shadow: 0 4px 14px rgba(46,204,113,0.35);
+        }
+
+        body.light-theme .top-nav .nav-links a.active {
+            color: var(--green-bright-alt);
+            background: linear-gradient(135deg, #ffffff, #e7f7ee);
+            border: 1px solid rgba(13,107,58,0.22);
+            box-shadow: 0 4px 14px rgba(13,107,58,0.14);
+        }
+
+        .nav-item.hidden { display: none; }
+
+        .top-nav .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--green-bright);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--green-glow);
+            transform: rotate(20deg);
+        }
+
+        .top-nav .nav-actions .account-btn-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1rem 0.4rem 0.6rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+
+        .top-nav .nav-actions .account-btn-top:hover {
+            background: var(--green-glow);
+            border-color: rgba(46,204,113,0.3);
+        }
+
+        .nav-avatar-wrap {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+        }
+
+        .nav-avatar {
+            width: 100%;
+            height: 100%;
+            display: none;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .nav-avatar-wrap i {
+            font-size: 1.2rem;
+            color: var(--green-bright);
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.25;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-greeting {
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .top-nav .nav-actions .account-btn-top .user-name {
+            max-width: none;
+            white-space: nowrap;
+        }
+
+        .top-nav .nav-actions .logout-btn-top {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.08);
+            color: #ff8a80;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .top-nav .nav-actions .logout-btn-top:hover {
+            background: rgba(231,76,60,0.75);
+            color: white;
+        }
+
+        /* ── MOBILE MENU ── */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+
+        .mobile-nav-dropdown {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg-mobile);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 1.5rem;
+            z-index: 99;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .mobile-nav-dropdown.open { display: flex; }
+
+        .mobile-nav-dropdown a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all var(--transition);
+        }
+
+        .mobile-nav-dropdown a:hover {
+            color: var(--text-main);
+            background: var(--glass);
+        }
+
+        .mobile-nav-dropdown a.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+        }
+
+        /* ── MAIN ── */
+        .main-content {
+            margin-top: 70px;
+            padding: 1.4rem 1.6rem 2.5rem;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.4rem;
+        }
+
+        .dash-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: white;
+            text-shadow: 0 0 30px rgba(46,204,113,0.25);
+        }
+
+        .realtime-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.45rem 1.1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(46,204,113,0.35);
+            background: rgba(46,204,113,0.08);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--green-bright);
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 0 0 rgba(46,204,113,0.6);
+            animation: pulse-ring 1.6s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(46,204,113,0.65); }
+            60%  { box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+            100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+        }
+
+        .realtime-divider { width: 1px; height: 14px; background: rgba(46,204,113,0.3); }
+        .realtime-clock-wrap { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+        .realtime-clock {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--green-bright);
+            white-space: nowrap;
+        }
+        .realtime-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: rgba(46,204,113,0.7);
+            white-space: nowrap;
+        }
+
+        /* ── SETTINGS LAYOUT ── */
+        .settings-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 1.2rem;
+            align-items: start;
+        }
+
+        /* ── SETTINGS NAV ── */
+        .settings-nav {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            position: sticky;
+            top: 1rem;
+        }
+
+        .settings-nav-header {
+            padding: 0.85rem 1.1rem 0.6rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .settings-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.75rem 1.1rem;
+            font-size: 0.83rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .settings-nav-item:last-child { border-bottom: none; }
+        .settings-nav-item i { width: 18px; text-align: center; font-size: 0.9rem; }
+        .settings-nav-item:hover { color: var(--text-main); background: rgba(255,255,255,0.03); }
+        .settings-nav-item.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+            border-left-color: var(--green-bright);
+        }
+
+        /* Compact dropdown selector shown in place of the nav list on
+           narrow screens — same section-switching behavior, far less
+           vertical space than a wrapped row of buttons. */
+        .settings-nav-select {
+            display: none;
+            width: 100%;
+            min-width: 0;
+            margin: 0.7rem;
+            width: calc(100% - 1.4rem);
+        }
+
+        body.light-theme .settings-nav-item.active {
+            color: var(--green-bright);
+            background: var(--green-glow);
+            border-left-color: var(--green-bright);
+        }
+
+        /* ── SETTINGS PANELS ── */
+        .settings-panel { display: none; flex-direction: column; gap: 1rem; }
+        .settings-panel.active { display: flex; }
+
+        /* ── SECTION CARD ── */
+        .section-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 0.9rem 1.3rem 0.75rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-header i { color: var(--green-bright); font-size: 0.9rem; }
+
+        body.light-theme .section-header i {
+            color: var(--green-bright);
+        }
+
+        .section-body { padding: 0.6rem 0; }
+
+        /* ── SETTING ROW ── */
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            gap: 1rem;
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-row:hover { background: rgba(255,255,255,0.02); }
+
+        body.light-theme .setting-row {
+            border-bottom: 1px solid rgba(13,107,58,0.06);
+        }
+        body.light-theme .setting-row:hover {
+            background: rgba(13,107,58,0.03);
+        }
+
+        .setting-info { flex: 1; min-width: 0; }
+        .setting-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        .setting-desc {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* ── TOGGLE SWITCH ── */
+        .toggle-wrap { flex-shrink: 0; }
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.25s;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 3px;
+            bottom: 3px;
+            background: rgba(232,245,238,0.45);
+            transition: all 0.25s;
+        }
+        .toggle input:checked + .toggle-slider {
+            background: var(--green-mid);
+            border-color: rgba(46,204,113,0.4);
+        }
+        .toggle input:checked + .toggle-slider::before {
+            transform: translateX(20px);
+            background: var(--green-bright);
+            box-shadow: 0 0 8px rgba(46,204,113,0.6);
+        }
+
+        body.light-theme .toggle-slider {
+            background: rgba(13,107,58,0.1);
+        }
+        body.light-theme .toggle-slider::before {
+            background: rgba(13,107,58,0.3);
+        }
+        body.light-theme .toggle input:checked + .toggle-slider {
+            background: var(--green-mid);
+            border-color: rgba(13,107,58,0.3);
+        }
+        body.light-theme .toggle input:checked + .toggle-slider::before {
+            background: var(--green-bright);
+            box-shadow: 0 0 8px rgba(13,107,58,0.4);
+        }
+
+        /* ── SELECT / INPUT ── */
+        .setting-select, .setting-input {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            padding: 0.45rem 0.8rem;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            min-width: 140px;
+        }
+        .setting-select:focus, .setting-input:focus {
+            border-color: rgba(46,204,113,0.4);
+            box-shadow: 0 0 0 2px rgba(46,204,113,0.08);
+        }
+        .setting-select option { background: #0d2b18; color: var(--text-main); }
+        .setting-input { min-width: 200px; }
+
+        /* ── EMAIL MESSAGE TEXTAREA ── */
+        .setting-textarea {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            padding: 0.7rem 0.9rem;
+            outline: none;
+            resize: vertical;
+            min-height: 108px;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+        .setting-textarea:focus {
+            border-color: rgba(46,204,113,0.4);
+            box-shadow: 0 0 0 2px rgba(46,204,113,0.08);
+        }
+        body.light-theme .setting-textarea {
+            background: rgba(13,107,58,0.06);
+            border-color: rgba(13,107,58,0.15);
+            color: var(--text-main);
+        }
+        body.light-theme .setting-textarea:focus {
+            border-color: rgba(13,107,58,0.4);
+            box-shadow: 0 0 0 2px rgba(13,107,58,0.08);
+        }
+        .setting-row.stacked {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .setting-row.stacked .setting-info { margin-bottom: 0.6rem; }
+        .char-count {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 4px;
+        }
+        .char-count.over-limit { color: var(--red); font-weight: 700; }
+
+        /* ── EMAIL PREVIEW (mimics the actual Gmail HTML email) ── */
+        .email-preview-wrap {
+            padding: 1rem 1.3rem 1.3rem;
+        }
+        .email-preview-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+        .email-preview-frame {
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: #05130a;
+        }
+        .live-email-preview-frame {
+            background: #ffffff;
+        }
+        .email-preview-iframe {
+            display: block;
+            width: 100%;
+            height: 760px;
+            border: 0;
+            background: #f4f7f5;
+        }
+        .email-preview-live-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-top: 0.7rem;
+            padding: 0.65rem 0.8rem;
+            border-radius: 8px;
+            background: rgba(46,204,113,0.06);
+            border: 1px solid rgba(46,204,113,0.12);
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            line-height: 1.5;
+        }
+        .email-preview-live-note i {
+            color: var(--green-bright);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .email-preview-subject-bar {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.8rem;
+            color: #e8f5ee;
+            background: rgba(255,255,255,0.03);
+        }
+        .email-preview-subject-bar strong { color: var(--green-bright); font-weight: 700; }
+        .email-preview-body {
+            padding: 22px 18px;
+        }
+        .email-preview-card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: #0d2b18;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .email-preview-header {
+            background: linear-gradient(135deg, #1a5c35, #0a2e1c);
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .email-preview-header h4 {
+            color: #2ecc71;
+            margin: 0;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+        .email-preview-header p {
+            color: #b0d4c0;
+            margin: 5px 0 0;
+            font-size: 0.72rem;
+        }
+        .email-preview-content { padding: 16px; }
+        .email-preview-badge {
+            text-align: center;
+            padding: 8px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .email-preview-readings {
+            color: #b0d4c0;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin: 0 0 16px;
+            padding-left: 18px;
+        }
+        .email-preview-advice {
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-left: 4px solid var(--green-bright);
+            padding: 12px 14px;
+        }
+        .email-preview-advice-label {
+            margin: 0 0 5px;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .email-preview-advice-text {
+            margin: 0;
+            color: #e8f5ee;
+            font-size: 0.78rem;
+            line-height: 1.6;
+        }
+        .email-preview-footer {
+            background: rgba(0,0,0,0.15);
+            padding: 12px 16px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .email-preview-footer p {
+            color: #7fa897;
+            font-size: 0.65rem;
+            margin: 0;
+        }
+        .preview-toggle-group {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 0.9rem;
+        }
+        .preview-toggle-btn {
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preview-toggle-btn.active {
+            color: var(--on-accent);
+            background: linear-gradient(135deg, var(--green-bright), var(--green-bright-alt));
+            border-color: transparent;
+        }
+
+        /* ── IN-APP NOTIFICATION PREVIEW (mirrors the real In-App Notification
+           card shown in Admin Alerts / resident Alerts) ── */
+        .inapp-preview-card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--nav-bg-mobile);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+        .inapp-preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .inapp-preview-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .inapp-preview-title i { color: var(--amber); }
+        .inapp-preview-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            border: 1px solid rgba(243,156,18,0.3);
+            background: rgba(243,156,18,0.12);
+            color: var(--amber);
+        }
+        .inapp-preview-badge.high-risk {
+            border-color: rgba(231,76,60,0.35);
+            background: rgba(231,76,60,0.12);
+            color: var(--red);
+        }
+        .inapp-preview-source {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+        .inapp-preview-card .env-data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem 0.8rem;
+            padding: 0.65rem 0.85rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            margin-bottom: 0.9rem;
+        }
+        .inapp-preview-card .env-data-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            padding: 0.15rem 0;
+        }
+        .inapp-preview-card .env-data-item .label { color: var(--text-muted); font-weight: 500; }
+        .inapp-preview-card .env-data-item .value { color: var(--text-main); font-weight: 600; }
+        .inapp-preview-card .env-data-item .value.high-risk { color: var(--red); }
+        .inapp-preview-card .env-data-item.wide { grid-column: 1 / -1; }
+        .inapp-preview-card .env-data-item .value.prob { color: var(--red); font-weight: 800; }
+        .inapp-preview-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.9rem; }
+        .inapp-preview-tag {
+            display: inline-flex; align-items: center; gap: 6px; max-width: 100%;
+            font-size: 0.68rem; font-weight: 700; letter-spacing: 0.3px; padding: 0.3rem 0.7rem; border-radius: 20px;
+            color: var(--green-bright); background: rgba(46,204,113,0.10); border: 1px solid rgba(46,204,113,0.3);
+            word-break: break-word;
+        }
+        .inapp-preview-tag.ai { color: var(--amber); background: rgba(243,156,18,0.12); border-color: rgba(243,156,18,0.3); }
+        .inapp-preview-note { font-size: 0.66rem; line-height: 1.45; color: var(--text-muted); margin: -0.4rem 0 0.9rem; }
+        .inapp-preview-field-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+        .inapp-preview-message {
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            word-break: break-word;
+            padding: 0.75rem 0.85rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+        }
+
+        body.light-theme .setting-select,
+        body.light-theme .setting-input {
+            background: rgba(13,107,58,0.06);
+            border-color: rgba(13,107,58,0.15);
+            color: var(--text-main);
+        }
+        body.light-theme .setting-select option {
+            background: #f3faf6;
+            color: var(--text-main);
+        }
+        body.light-theme .setting-select:focus,
+        body.light-theme .setting-input:focus {
+            border-color: rgba(13,107,58,0.4);
+            box-shadow: 0 0 0 2px rgba(13,107,58,0.08);
+        }
+
+        /* Range slider */
+        .setting-range-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .setting-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 120px;
+            height: 4px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+        .setting-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(46,204,113,0.5);
+            cursor: pointer;
+        }
+        .setting-range::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(46,204,113,0.5);
+            cursor: pointer;
+            border: none;
+        }
+
+        body.light-theme .setting-range {
+            background: rgba(13,107,58,0.12);
+        }
+        body.light-theme .setting-range::-webkit-slider-thumb {
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(13,107,58,0.3);
+        }
+        body.light-theme .setting-range::-moz-range-thumb {
+            background: var(--green-bright);
+            box-shadow: 0 0 6px rgba(13,107,58,0.3);
+        }
+
+        .range-val {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--green-bright);
+            min-width: 36px;
+            text-align: right;
+        }
+
+        /* Min–max range boxes */
+        .range-box-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .range-box {
+            width: 64px;
+            min-width: 64px;
+            text-align: center;
+            cursor: text;
+        }
+        .range-box-sep {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .range-box-unit {
+            font-size: 0.8rem;
+            color: var(--green-bright);
+            font-weight: 700;
+            min-width: 32px;
+        }
+
+        /* ── SAVE BUTTON ── */
+        .save-bar {
+            padding: 0.85rem 1.3rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        .btn-save {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0.55rem 1.4rem;
+            border-radius: 9px;
+            background: var(--green-mid);
+            border: 1px solid rgba(46,204,113,0.35);
+            color: var(--green-bright);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.22s;
+        }
+        .btn-save:hover {
+            background: rgba(46,204,113,0.25);
+            box-shadow: 0 0 14px rgba(46,204,113,0.2);
+        }
+
+        body.light-theme .btn-save {
+            color: var(--text-inverse);
+            background: var(--green-bright);
+            border-color: var(--green-bright);
+        }
+        body.light-theme .btn-save:hover {
+            background: var(--green-bright-alt);
+            box-shadow: 0 0 14px rgba(13,107,58,0.2);
+        }
+
+        .btn-cancel {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0.55rem 1.1rem;
+            border-radius: 9px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.22s;
+        }
+        .btn-cancel:hover { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
+
+        body.light-theme .btn-cancel {
+            border-color: rgba(13,107,58,0.15);
+            color: var(--text-muted);
+        }
+        body.light-theme .btn-cancel:hover {
+            color: var(--text-main);
+            border-color: rgba(13,107,58,0.3);
+        }
+
+        /* ── DANGER ZONE ── */
+        .danger-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.3rem;
+            border-bottom: 1px solid rgba(231,76,60,0.08);
+            gap: 1rem;
+        }
+        .danger-row:last-child { border-bottom: none; }
+        .danger-row:hover { background: rgba(231,76,60,0.02); }
+
+        body.light-theme .danger-row {
+            border-bottom: 1px solid rgba(231,76,60,0.06);
+        }
+        body.light-theme .danger-row:hover {
+            background: rgba(231,76,60,0.03);
+        }
+
+        .btn-danger {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            background: rgba(231,76,60,0.1);
+            border: 1px solid rgba(231,76,60,0.3);
+            color: #ff8a80;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.22s;
+            flex-shrink: 0;
+        }
+        .btn-danger:hover { background: rgba(231,76,60,0.75); color: white; }
+
+        body.light-theme .btn-danger {
+            color: var(--red);
+            border-color: rgba(231,76,60,0.25);
+            background: rgba(231,76,60,0.06);
+        }
+        body.light-theme .btn-danger:hover {
+            background: rgba(231,76,60,0.75);
+            color: white;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--nav-bg-mobile);
+            border: 1px solid rgba(46,204,113,0.35);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-main);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 999;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(.4,0,.2,1);
+            pointer-events: none;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--green-bright); }
+
+        /* ── WARNING (TREND) PREVIEW — mirrors the .trend-item card on Admin > Alerts ── */
+        .setting-desc code {
+            font-size: 0.68rem;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--green-bright);
+        }
+        .tw-item {
+            display: flex;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid var(--amber);
+            background: rgba(243,156,18,0.10);
+        }
+        .tw-item.warning { border-left-color: var(--red); background: rgba(231,76,60,0.12); }
+        .tw-icon { font-size: 1.3rem; margin-top: 2px; color: var(--amber); }
+        .tw-item.warning .tw-icon { color: var(--red); }
+        .tw-body { flex: 1; min-width: 0; }
+        .tw-title {
+            font-weight: 700; font-size: 0.9rem; color: var(--text-main);
+            display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+        }
+        .tw-badge {
+            font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;
+            padding: 2px 8px; border-radius: 999px; font-weight: 700; color: #fff; background: var(--amber);
+        }
+        .tw-item.warning .tw-badge { background: var(--red); }
+        .tw-msg { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; line-height: 1.5; word-break: break-word; }
+        .tw-days { display: flex; gap: 0.35rem; margin-top: 0.5rem; flex-wrap: wrap; }
+        .tw-day {
+            font-size: 0.7rem; padding: 3px 8px; border-radius: 8px;
+            border: 1px solid var(--glass-border); color: var(--text-main); background: var(--glass);
+        }
+        .tw-goto-link {
+            color: var(--green-bright); font-weight: 600; cursor: pointer;
+            text-decoration: underline; text-underline-offset: 2px;
+        }
+
+        /* ── WARNING ZONES (editable range per parameter + info card) ── */
+        .tw-zone-list { display: flex; flex-direction: column; gap: 0.6rem; padding-top: 0.3rem; }
+        .tw-zone-row {
+            display: grid;
+            grid-template-columns: minmax(150px, 1.1fr) auto minmax(0, 2fr);
+            gap: 0.5rem 1rem;
+            align-items: center;
+            padding: 0.7rem 0.9rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            transition: opacity 0.2s;
+        }
+        .tw-zone-row.off { opacity: 0.5; }
+        .tw-zone-name {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 600; font-size: 0.85rem; color: var(--text-main); cursor: pointer;
+        }
+        .tw-zone-name .tw-zone-ico { color: var(--green-bright); width: 1rem; text-align: center; }
+        .tw-zone-range { display: flex; align-items: center; gap: 0.4rem; }
+        .tw-zone-range .range-box { width: 72px; min-width: 72px; }
+        .tw-zone-note { font-size: 0.74rem; color: var(--text-muted); line-height: 1.45; }
+        @media (max-width: 760px) { .tw-zone-row { grid-template-columns: 1fr; } }
+
+        .tw-how { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-top: 0.3rem; }
+        .tw-how-step {
+            font-size: 0.75rem; font-weight: 600; padding: 6px 12px; border-radius: 10px;
+            border: 1px solid var(--glass-border); background: var(--glass); color: var(--text-muted);
+        }
+        .tw-how-step.watch { border-color: var(--amber); color: var(--amber); background: rgba(243,156,18,0.10); }
+        .tw-how-step.warning { border-color: var(--red); color: var(--red); background: rgba(231,76,60,0.12); }
+
+        /* Parameter selector (Rainfall / Humidity / Temperature / Wind Speed) above each warning-message editor.
+           Padded to line up with the .setting-row text below it, and laid out as 4 equal buttons
+           (2 x 2 on tablets/phones) so the row never wraps unevenly. */
+        .tw-ftabs-label {
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+            color: var(--text-muted); padding: 0.6rem 1.3rem 0; margin-bottom: 0.5rem;
+        }
+        .tw-ftabs {
+            display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem;
+            padding: 0 1.3rem 1.1rem; margin-bottom: 0.2rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .tw-ftab {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: inherit;
+            font-size: 0.8rem; font-weight: 700; padding: 11px 10px; border-radius: 10px; cursor: pointer;
+            border: 1px solid var(--glass-border); background: var(--glass); color: var(--text-muted);
+            white-space: nowrap; min-width: 0; transition: var(--transition);
+        }
+        .tw-ftab i { font-size: 0.85rem; flex-shrink: 0; }
+        .tw-ftab:hover { color: var(--text-main); border-color: var(--green-bright); transform: translateY(-1px); }
+        .tw-ftab:focus-visible { outline: 2px solid var(--green-bright); outline-offset: 2px; }
+        .tw-ftab.active {
+            color: var(--on-accent); background: var(--green-bright); border-color: var(--green-bright);
+            box-shadow: 0 4px 12px rgba(46,204,113,0.25);
+        }
+        @media (max-width: 768px) {
+            .tw-ftabs-label { padding: 0.5rem 0.9rem 0; }
+            .tw-ftabs { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0 0.9rem 0.9rem; gap: 0.5rem; }
+            .tw-ftab { font-size: 0.76rem; padding: 10px 8px; }
+        }
+        @media (max-width: 480px) {
+            .tw-ftabs-label { padding: 0.5rem 0.8rem 0; }
+            .tw-ftabs { padding: 0 0.8rem 0.8rem; }
+        }
+
+        /* Placeholder chips ({factor} {days} ...) and the long helper text inside the message editors */
+        .setting-row.stacked .setting-desc { font-size: 0.74rem; line-height: 1.6; max-width: 78ch; }
+        .setting-row.stacked .setting-desc code { display: inline-block; margin: 1px 2px; font-size: 0.72rem; padding: 1px 7px; }
+        .setting-row.stacked .setting-label { margin-bottom: 4px; }
+        .setting-row.stacked .setting-textarea { box-sizing: border-box; }
+
+        .tw-info-wrap { overflow-x: auto; padding-top: 0.3rem; }
+        .tw-info-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; min-width: 560px; }
+        .tw-info-table th {
+            text-align: left; font-size: 0.68rem; letter-spacing: 0.8px; text-transform: uppercase;
+            color: var(--text-muted); padding: 8px 10px; border-bottom: 1px solid var(--glass-border);
+        }
+        .tw-info-table td {
+            padding: 10px; vertical-align: top; color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border); line-height: 1.5;
+        }
+        .tw-info-table td.tw-zone-cell { white-space: nowrap; font-weight: 700; color: var(--green-bright); }
+        .tw-info-table td span.tw-muted { color: var(--text-muted); }
+        .tw-note-box {
+            margin-top: 0.7rem; padding: 0.7rem 0.9rem; border-radius: 10px; font-size: 0.76rem; line-height: 1.55;
+            border: 1px dashed var(--amber); background: rgba(243,156,18,0.08); color: var(--text-main);
+        }
+
+        /* ── DATABASE STORAGE ── */
+        .storage-hero {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 1.6rem;
+            align-items: center;
+            padding: 1.3rem 1.5rem;
+        }
+        .donut-wrap { position: relative; width: 220px; height: 220px; margin: 0 auto; }
+        .donut-wrap svg { width: 100%; height: 100%; display: block; }
+        .donut-track { stroke: rgba(255,255,255,0.08); }
+        body.light-theme .donut-track { stroke: rgba(13,107,58,0.10); }
+        .donut-seg { transition: stroke-dasharray 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+        .seg-readings { stroke: var(--green-bright); }
+        .seg-ai       { stroke: var(--blue); }
+        .seg-alerts   { stroke: var(--amber); }
+        .seg-core     { stroke: var(--purple); }
+        .seg-system   { stroke: rgba(232,245,238,0.38); }
+        .seg-free     { stroke: rgba(255,255,255,0.08); }
+        body.light-theme .seg-system { stroke: rgba(16,38,26,0.30); }
+        body.light-theme .seg-free   { stroke: rgba(13,107,58,0.10); }
+        .dot-readings { background: var(--green-bright); }
+        .dot-ai       { background: var(--blue); }
+        .dot-alerts   { background: var(--amber); }
+        .dot-core     { background: var(--purple); }
+        .dot-system   { background: rgba(232,245,238,0.38); }
+        .dot-free     { background: rgba(255,255,255,0.14); border: 1px solid var(--glass-border); }
+        body.light-theme .dot-system { background: rgba(16,38,26,0.30); }
+        body.light-theme .dot-free   { background: rgba(13,107,58,0.10); }
+
+        .donut-center {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; pointer-events: none;
+        }
+        .donut-pct { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; line-height: 1; color: var(--text-main); }
+        .donut-used { font-size: 0.8rem; font-weight: 700; color: var(--green-bright); margin-top: 6px; }
+        .donut-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 2px; }
+
+        .storage-status {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 0.25rem 0.75rem; border-radius: 999px;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+            border: 1px solid transparent;
+        }
+        .storage-status.ok     { color: var(--green-bright); background: rgba(46,204,113,0.10); border-color: rgba(46,204,113,0.30); }
+        .storage-status.warn   { color: var(--amber);        background: rgba(243,156,18,0.12); border-color: rgba(243,156,18,0.35); }
+        .storage-status.danger { color: var(--red);          background: rgba(231,76,60,0.12);  border-color: rgba(231,76,60,0.35); }
+
+        .storage-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 0.6rem; }
+        .storage-total { font-size: 1.35rem; font-weight: 800; color: var(--text-main); }
+        .storage-total small { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); }
+        .storage-legend-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 0.5rem 0; border-bottom: 1px dashed var(--glass-border); font-size: 0.82rem;
+        }
+        .storage-legend-row:last-child { border-bottom: none; }
+        .legend-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+        .legend-name { flex: 1; min-width: 0; color: var(--text-main); font-weight: 500; }
+        .legend-size { font-weight: 700; color: var(--text-main); }
+        .legend-pct { min-width: 46px; text-align: right; color: var(--text-muted); font-size: 0.75rem; }
+        .storage-checked { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.6rem; }
+
+        .tbl-row {
+            display: grid; grid-template-columns: minmax(120px, 220px) 1fr 80px;
+            align-items: center; gap: 0.8rem; padding: 0.5rem 1.3rem; font-size: 0.78rem;
+        }
+        .tbl-name { color: var(--text-main); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tbl-bar { height: 8px; border-radius: 8px; background: var(--glass); border: 1px solid var(--glass-border); overflow: hidden; }
+        .tbl-bar > span { display: block; height: 100%; border-radius: 8px; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .tbl-size { text-align: right; color: var(--text-muted); font-weight: 600; }
+
+        .scope-check { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.82rem; color: var(--text-main); padding: 0.35rem 0; }
+        .scope-check input { accent-color: var(--green-bright); width: 16px; height: 16px; flex-shrink: 0; }
+        .scope-check .scope-count { margin-left: auto; font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+        .scope-note { font-size: 0.68rem; color: var(--text-muted); margin: -0.15rem 0 0.35rem 1.65rem; line-height: 1.4; }
+
+        .clear-preview {
+            padding: 0.7rem 0.9rem; border-radius: 10px; font-size: 0.8rem; line-height: 1.5;
+            background: rgba(231,76,60,0.08); border: 1px solid rgba(231,76,60,0.25); color: var(--text-main);
+        }
+        .clear-preview.neutral { background: var(--glass); border-color: var(--glass-border); color: var(--text-muted); }
+        .clear-preview strong { color: var(--red); }
+        .btn-danger:disabled, .btn-save:disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+        .btn-danger.solid { background: rgba(231,76,60,0.85); color: #fff; border-color: rgba(231,76,60,0.9); padding: 0.55rem 1.2rem; font-size: 0.8rem; }
+        .btn-danger.solid:hover { background: #e74c3c; }
+
+        .dev-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+        .dev-table th {
+            text-align: left; font-size: 0.65rem; letter-spacing: 0.8px; text-transform: uppercase;
+            color: var(--text-muted); font-weight: 700; padding: 0.6rem 1.3rem 0.4rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .dev-table td { padding: 0.65rem 1.3rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-main); }
+        body.light-theme .dev-table td { border-bottom-color: rgba(13,107,58,0.06); }
+        .dev-table tr:last-child td { border-bottom: none; }
+        .dev-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .dev-table th.num { text-align: right; }
+        .dev-table .muted { color: var(--text-muted); }
+
+        .storage-info-note {
+            display: flex; align-items: flex-start; gap: 8px; margin: 0.4rem 1.3rem 0.9rem;
+            padding: 0.65rem 0.8rem; border-radius: 8px; font-size: 0.7rem; line-height: 1.5;
+            background: rgba(52,152,219,0.07); border: 1px solid rgba(52,152,219,0.2); color: var(--text-muted);
+        }
+        .storage-info-note i { color: var(--blue); margin-top: 2px; flex-shrink: 0; }
+
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 1000; display: none;
+            align-items: center; justify-content: center; padding: 1rem;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            width: 100%; max-width: 440px; border-radius: 16px; padding: 1.4rem;
+            background: var(--nav-bg-mobile); border: 1px solid rgba(231,76,60,0.35);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .modal-title { display: flex; align-items: center; gap: 10px; font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.7rem; }
+        .modal-title i { color: var(--red); }
+        .modal-text { font-size: 0.8rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0.9rem; }
+        .modal-text strong { color: var(--text-main); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1rem; }
+
+        @media (max-width: 700px) {
+            .storage-hero { grid-template-columns: 1fr; padding: 1rem; }
+            .tbl-row { grid-template-columns: 1fr 70px; padding: 0.5rem 0.9rem; }
+            .tbl-bar { grid-column: 1 / -1; order: 3; }
+            .dev-table th, .dev-table td { padding: 0.55rem 0.7rem; }
+            .dev-table .hide-sm { display: none; }
+            .storage-info-note { margin: 0.4rem 0.9rem 0.8rem; }
+        }
+
+        /* ── RESPONSIVE ── */
+
+        /* Tablet / small laptop: keep full nav links but tighten spacing
+           so they don't overflow before the hamburger breakpoint kicks in. */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .top-nav { padding: 0.6rem 1.2rem; }
+            .top-nav .nav-links { gap: 0.45rem; padding: 0.22rem; }
+            .top-nav .nav-links a { padding: 0.5rem 0.75rem; font-size: 0.76rem; }
+            .top-nav .nav-links a span { display: none; }
+            .top-nav .nav-links a i { font-size: 0.95rem; }
+        }
+
+        @media (max-width: 950px) {
+            .settings-layout { grid-template-columns: 1fr; }
+            .settings-nav {
+                position: static;
+                padding: 0;
+            }
+            .settings-nav-header { display: none; }
+            .settings-nav-item { display: none; }
+            .settings-nav-select { display: block; }
+            .section-body.form-grid-wrap { padding: 0; }
+        }
+
+        @media (max-width: 768px) {
+            /* theme.css forces padding-left:52px !important on .top-bar
+               (leftover spacing meant for another page's back button).
+               That asymmetric padding throws off the centering here, so
+               neutralize it — same specificity, loads after theme.css. */
+            .top-bar { padding-left: 0 !important; }
+            .top-nav { padding: 0.55rem 1rem; }
+            .top-nav .nav-links { display: none; }
+            .menu-toggle { display: block; }
+
+            /* Icon-only account button on mobile: keep it a single tap
+               target that still links to /account, just drop the text. */
+            .top-nav .nav-actions .account-btn-top {
+                gap: 0;
+                padding: 0;
+                width: 38px;
+                height: 38px;
+                justify-content: center;
+                border-radius: 50%;
+            }
+            .top-nav .nav-actions .account-btn-top .user-name-stack { display: none; }
+            .nav-avatar-wrap { width: 30px; height: 30px; }
+
+            .main-content { padding: 1rem; }
+            .top-bar { flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
+            .dash-title { font-size: 1.4rem; }
+            .realtime-divider { display: none; }
+            .realtime-badge { flex-shrink: 0; white-space: nowrap; }
+
+            /* Shrink content instead of hiding it so settings rows stay
+               fully visible on narrow screens. */
+            .section-header { padding: 0.75rem 0.9rem 0.6rem; font-size: 0.82rem; }
+            .setting-row { padding: 0.75rem 0.9rem; }
+            .setting-label { font-size: 0.8rem; }
+            .setting-desc { font-size: 0.68rem; }
+            .setting-textarea { font-size: 0.78rem; padding: 0.6rem 0.8rem; }
+            .setting-select, .setting-input { font-size: 0.76rem; }
+            .char-count { font-size: 0.64rem; }
+            .btn-save, .btn-cancel { font-size: 0.78rem; padding: 0.5rem 1.1rem; }
+            .preview-toggle-btn { font-size: 0.68rem; padding: 0.32rem 0.8rem; }
+            .email-preview-label { font-size: 0.66rem; }
+            .inapp-preview-title { font-size: 0.92rem; }
+            .inapp-preview-badge { font-size: 0.66rem; padding: 0.28rem 0.6rem; }
+            .inapp-preview-source { font-size: 0.68rem; }
+            .inapp-preview-card .env-data-grid { grid-template-columns: 1fr; }
+            .inapp-preview-card .env-data-item { font-size: 0.7rem; }
+            .inapp-preview-message { font-size: 0.78rem; }
+        }
+
+        /* theme.css ships a global rule that hides .realtime-clock entirely
+           below 650px (display:none !important). That's too aggressive for
+           this dashboard, so re-show it here. Same specificity + !important,
+           and this <style> block loads after theme.css, so this wins. */
+        @media (max-width: 650px) {
+            .realtime-clock {
+                display: block !important;
+            }
+            .main-content { padding: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .top-nav { padding: 0.5rem 0.8rem; }
+            .top-nav .nav-logo-text { font-size: 0.9rem; }
+            .top-nav .nav-logo-mark { width: 28px; height: 28px; font-size: 0.85rem; }
+            .theme-toggle-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+            .top-nav .nav-actions { gap: 0.35rem; }
+            .top-nav .nav-actions .account-btn-top { width: 34px; height: 34px; }
+            .nav-avatar-wrap { width: 24px; height: 24px; }
+            .top-nav .nav-actions .logout-btn-top { padding: 0.3rem 0.6rem; font-size: 0.65rem; }
+            .dash-title { font-size: 1.25rem; }
+
+            .section-header { font-size: 0.76rem; padding: 0.65rem 0.8rem 0.55rem; }
+            .setting-row { flex-wrap: wrap; padding: 0.65rem 0.8rem; }
+            .setting-range-wrap { width: 100%; justify-content: flex-start; }
+            .range-box-wrap { width: 100%; justify-content: flex-start; }
+            .setting-range { flex: 1; }
+            .setting-label { font-size: 0.76rem; }
+            .setting-desc { font-size: 0.65rem; }
+            .setting-textarea { font-size: 0.74rem; padding: 0.55rem 0.7rem; }
+            .char-count { font-size: 0.6rem; }
+            .btn-save, .btn-cancel { font-size: 0.72rem; padding: 0.45rem 0.9rem; }
+            .inapp-preview-title { font-size: 0.85rem; }
+            .inapp-preview-source { font-size: 0.65rem; }
+            .inapp-preview-card .env-data-item { font-size: 0.66rem; }
+            .inapp-preview-message { font-size: 0.74rem; }
+        }
+
+        @media (max-width: 360px) {
+            .top-nav .nav-logo-text { font-size: 0.8rem; }
+            .top-nav .nav-logo-mark { width: 24px; height: 24px; }
+            .dash-title { font-size: 1.1rem; }
+            .realtime-badge { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            .realtime-clock { font-size: 0.85rem; }
+            .section-header { font-size: 0.7rem; }
+        }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+            filter: blur(2px);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        .page-transition {
+            animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(3px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll,
+            .animate-on-scroll.visible,
+            .page-transition {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<script>
+    // ── EARLY THEME INIT (prevents flash of wrong theme) ──
+    (function() {
+        try {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        } catch(e) {}
+    })();
+</script>
+
+<!-- ── TOP NAV ── -->
+<nav class="top-nav">
+    <a href="/home" class="nav-logo">
+        <img src="/static/aedospot-logo.png" alt="AEDOSPOT" class="nav-logo-mark" onerror="this.style.display='none'">
+        <span class="nav-logo-text">AEDO<span class="accent">SPOT</span></span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/home"><i class="fas fa-house"></i><span>Home</span></a></li>
+        <li><a href="/risk_map"><i class="fas fa-map-location-dot"></i><span>Risk Map</span></a></li>
+        <li><a href="/alerts"><i class="fas fa-triangle-exclamation"></i><span>Alerts</span></a></li>
+        <li><a href="/admin_reports"><i class="fas fa-chart-simple"></i><span>Reports & Data</span></a></li>
+        <li><a href="/admin_user_residents"><i class="fas fa-users"></i><span>Residents</span></a></li>
+        <li><a href="/settings" class="active"><i class="fas fa-gear"></i><span>Settings</span></a></li>
+    </ul>
+
+    <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <a href="/account" class="account-btn-top" id="accountBtn">
+            <span class="nav-avatar-wrap">
+                <img id="navAvatar" class="nav-avatar" src="" alt="Profile">
+                <i id="navAvatarFallback" class="fas fa-user-circle"></i>
+            </span>
+            <span class="user-name-stack">
+                <span class="user-greeting">Administrator</span>
+                <span class="user-name" id="userName">User</span>
+            </span>
+        </a>
+        <button class="logout-btn-top" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav-dropdown" id="mobileNav">
+    <a href="/home"><i class="fas fa-house"></i>&nbsp; Home</a>
+    <a href="/risk_map"><i class="fas fa-map-location-dot"></i>&nbsp; Risk Map</a>
+    <a href="/alerts"><i class="fas fa-triangle-exclamation"></i>&nbsp; Alerts</a>
+    <a href="/admin_reports"><i class="fas fa-chart-simple"></i>&nbsp; Reports & Data</a>
+    <a href="/admin_user_residents"><i class="fas fa-users"></i>&nbsp; Residents</a>
+    <a href="/settings" class="active"><i class="fas fa-gear"></i>&nbsp; Settings</a>
+    <a href="/account"><i class="fas fa-user-circle"></i>&nbsp; Account</a>
+</div>
+
+<!-- MAIN -->
+<main class="main-content page-transition" id="mainContent">
+
+    <!-- TOP BAR -->
+    <div class="top-bar animate-on-scroll">
+        <div class="dash-title">SETTINGS</div>
+        <div class="realtime-badge">
+            <div class="pulse-dot"></div>
+            REAL TIME
+            <div class="realtime-divider"></div>
+            <div class="realtime-clock-wrap">
+                <div class="realtime-clock" id="realtimeClock">12:00:00 AM</div>
+                <div class="realtime-date" id="realtimeDate">Monday, Jan 1, 2025</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-layout animate-on-scroll">
+
+        <!-- LEFT NAV -->
+        <nav class="settings-nav">
+            <div class="settings-nav-header">Configuration</div>
+            <select class="settings-nav-select setting-select" id="settingsNavSelect" onchange="switchTabFromSelect(this)">
+                <option value="lstm">LSTM Model Settings</option>
+                <option value="email-messages">Email Messages</option>
+                <option value="app-messages">In-App Messages</option>
+                <option value="trend-warnings">Warning Settings</option>
+                <option value="database-storage">Database Storage</option>
+            </select>
+            <div class="settings-nav-item active" onclick="switchTab('lstm', this)">
+                <i class="fas fa-brain"></i> LSTM Model Settings
+            </div>
+            <div class="settings-nav-item" onclick="switchTab('email-messages', this)">
+                <i class="fas fa-envelope-open-text"></i> Email Messages
+            </div>
+            <div class="settings-nav-item" onclick="switchTab('app-messages', this)">
+                <i class="fas fa-bell"></i> In-App Messages
+            </div>
+            <div class="settings-nav-item" onclick="switchTab('trend-warnings', this)">
+                <i class="fas fa-triangle-exclamation"></i> Warning Settings
+            </div>
+            <div class="settings-nav-item" onclick="switchTab('database-storage', this)">
+                <i class="fas fa-database"></i> Database Storage
+            </div>
+        </nav>
+
+        <!-- RIGHT PANELS -->
+        <div>
+
+            <!-- ── LSTM MODEL SETTINGS ── -->
+            <div class="settings-panel active" id="panel-lstm">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-brain"></i> LSTM Model Settings</div>
+                    <div class="section-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Forecast Horizon</div>
+                                <div class="setting-desc">Number of days the LSTM model predicts ahead.</div>
+                            </div>
+                            <select class="setting-select" id="lstmHorizonSelect">
+                                <option value="3">3 days</option>
+                                <option value="7" selected>7 days</option>
+                                <option value="14">14 days</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Prediction Confidence Display</div>
+                                <div class="setting-desc">Show the LSTM prediction card (chart and confidence) on the Risk Map. When off, the card is hidden.</div>
+                            </div>
+                            <div class="toggle-wrap">
+                                <label class="toggle"><input type="checkbox" id="lstmConfidenceToggle" checked><span class="toggle-slider"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetLstmSettings()">Cancel</button>
+                        <button class="btn-save" onclick="saveLstmSettings()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── EMAIL MESSAGES ── -->
+            <div class="settings-panel" id="panel-email-messages">
+
+                <!-- High risk: Recommended Actions -->
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-envelope-open-text"></i> Risk Alert Email Messages</div>
+                    <div class="section-body">
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — Recommended Actions</div>
+                                <div class="setting-desc">Sent under "Recommended Actions" in the email whenever a resident receives a High risk alert. The Warning email below has its own Recommended Actions for each parameter.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="highAdviceMsg" maxlength="2000" oninput="onAdviceInput('high')" placeholder="Loading..."></textarea>
+                            <div class="char-count" id="highCharCount">0 / 2000</div>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Back to Low — Message (sent once)</div>
+                                <div class="setting-desc">One-time all-clear email. It is sent only when the risk goes back to Low <b>after</b> a High alert, and only to residents who received that High email. Example: Day 1 High = alert email, Day 2 Low = this email, Day 3 Low = nothing. A Low that never followed a High sends nothing. It appears under "Stay Protected" in the email.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="lowAdviceMsg" maxlength="2000" oninput="onAdviceInput('low')" placeholder="Loading..."></textarea>
+                            <div class="char-count" id="lowCharCount">0 / 2000</div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetAdviceMessages()">Reset to Default</button>
+                        <button class="btn-save" onclick="saveEmailMessages()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-eye"></i> High Risk Email Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="email-preview-label">Live preview of the actual resident email</div>
+
+                        <div class="email-preview-frame live-email-preview-frame">
+                            <div class="email-preview-subject-bar">
+                                <strong>Subject:</strong> <span id="previewSubject">AEDOSPOT Alert: High Dengue Risk Detected</span>
+                            </div>
+                            <iframe
+                                id="emailPreviewIframe"
+                                title="AEDOSPOT resident email preview"
+                                class="email-preview-iframe"
+                                sandbox="allow-same-origin"
+                            ></iframe>
+                        </div>
+
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            Preview uses the latest sensor reading and the same HTML template used when the email is sent. Residents only see the risk level, its percentage (filled in automatically, not part of the editable text) and the parameters — the AI model, probability and predicted month are admin-only and never go into an email. Changes to the messages above appear here automatically before saving.
+                        </div>
+                        <div class="email-preview-live-note" id="emailPreviewAiNote" style="display:none;">
+                            <i class="fas fa-circle-info"></i>
+                            The high risk percentage in this preview is an example — the AI is not predicting High for the deployed device right now. A real email shows the actual percentage.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back to Low (one-time all-clear) email preview -->
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-circle-check"></i> Back to Low Email Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="email-preview-label">Live preview of the one-time "back to Low" resident email</div>
+
+                        <div class="email-preview-frame live-email-preview-frame">
+                            <div class="email-preview-subject-bar">
+                                <strong>Subject:</strong> <span id="previewSubjectLow">AEDOSPOT Update: Dengue Risk Is Back to Low</span>
+                            </div>
+                            <iframe
+                                id="emailPreviewIframeLow"
+                                title="AEDOSPOT back to Low email preview"
+                                class="email-preview-iframe"
+                                sandbox="allow-same-origin"
+                            ></iframe>
+                        </div>
+
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            Sent only once, the first time the risk is Low after a High alert, and only to residents who received that High email. Edit the "Back to Low — Message" above and this preview updates as you type. The percentage and the parameters are filled in automatically.
+                        </div>
+                        <div class="email-preview-live-note" id="emailPreviewAiNoteLow" style="display:none;">
+                            <i class="fas fa-circle-info"></i>
+                            The percentage in this preview is an example — the AI is not predicting Low for the deployed device right now. A real email shows the actual percentage.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dengue Preparedness Warning: email wording + preview (one set of messages per parameter) -->
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-triangle-exclamation"></i> Dengue Preparedness Warning — Email Message</div>
+                    <div class="section-body">
+                        <div class="tw-ftabs-label">Parameter</div>
+                        <div class="tw-ftabs" data-tw-ftabs></div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Warning Message (Email)</div>
+                                <div class="setting-desc">Shown in the body of the email sent to residents when the selected parameter reaches the Warning level (red). Each parameter has its own message because each one calls for a different way to prepare. Placeholders you can use: <code>{factor}</code> <code>{days}</code> <code>{zone}</code> <code>{unit}</code> <code>{values}</code> — they are filled in automatically. It is sent only to residents who turned on Email in Residents. When it is sent, and how many days count as a Warning, is set in the Warning Settings tab.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="twEmailMsg" maxlength="500" oninput="onTwInput('email')" placeholder="Loading..." style="min-height:90px;"></textarea>
+                            <div class="char-count" id="twEmailCount">0 / 500</div>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Recommended Actions (Email)</div>
+                                <div class="setting-desc">The "Recommended Actions" list at the bottom of the warning email for the selected parameter. Put one action per line (start each line with • if you like). The same placeholders work here. This replaces the High Risk advice in warning emails, so each parameter can tell residents how to prepare for it specifically.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="twEmailActions" maxlength="1000" oninput="onTwInput('email')" placeholder="Loading..." style="min-height:170px;"></textarea>
+                            <div class="char-count" id="twEmailActionsCount">0 / 1000</div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetTwEmail()">Reset Selected Parameter to Default</button>
+                        <button class="btn-save" onclick="saveTwEmail()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-eye"></i> Warning Email Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="email-preview-label">What a resident receives by email when a Warning (red) is triggered</div>
+                        <div class="email-preview-frame live-email-preview-frame">
+                            <div class="email-preview-subject-bar">
+                                <strong>Subject:</strong> <span id="twEmailSubject"></span>
+                            </div>
+                            <iframe id="twEmailIframe" title="AEDOSPOT warning email preview" class="email-preview-iframe" style="height:820px;" sandbox="allow-same-origin"></iframe>
+                        </div>
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            Uses the Warning Message and Recommended Actions you are editing for the selected parameter — it updates as you type, before saving. The sample uses example readings and the number of days set in Warning Settings; real emails use the actual daily readings. Only Warning (red) alerts are emailed, not Watch.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── IN-APP MESSAGES ── -->
+            <div class="settings-panel" id="panel-app-messages">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-bell"></i> Resident Alerts — In-App Messages</div>
+                    <div class="section-body">
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">High Risk — Alert Headline</div>
+                                <div class="setting-desc">Shown whenever a High risk alert is logged. It is written for residents, so keep it in plain words. What shows with it depends on who is looking, and none of it is part of this text: <b>Admins</b> (Admin &gt; Alerts) also see the AI details — probability of HIGH, AI model (LSTM and others), predicted month and device location. <b>Residents</b> only see the High risk level, its percentage and the sensor readings (temperature, humidity, rainfall, wind). Use the Admin view / Resident view switch in the preview below to compare them.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="highAppMsg" maxlength="300" oninput="onAppInput('high')" placeholder="Loading..." style="min-height:70px;"></textarea>
+                            <div class="char-count" id="highAppCharCount">0 / 300</div>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Back to Low — Alert Headline (sent once)</div>
+                                <div class="setting-desc">Shown on the one-time "Risk Back to Low" notice. It is logged once, the first time the risk is Low after a High alert, and not again until the next High. Residents see the Low level, its percentage and the sensor readings. Admins also see the AI details in Admin &gt; Alerts.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="lowAppMsg" maxlength="300" oninput="onAppInput('low')" placeholder="Loading..." style="min-height:70px;"></textarea>
+                            <div class="char-count" id="lowAppCharCount">0 / 300</div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetAppMessages()">Reset to Default</button>
+                        <button class="btn-save" onclick="saveAppMessages()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-eye"></i> In-App Message Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="email-preview-label">Live preview of how this message appears as an In-App Notification</div>
+
+                        <div class="preview-toggle-group" role="tablist" aria-label="Who sees this notification">
+                            <button type="button" class="preview-toggle-btn active" id="appAudienceAdminBtn" onclick="setAppPreviewAudience('admin')"><i class="fas fa-user-shield"></i> Admin view</button>
+                            <button type="button" class="preview-toggle-btn" id="appAudienceResidentBtn" onclick="setAppPreviewAudience('resident')"><i class="fas fa-user"></i> Resident view</button>
+                        </div>
+
+                        <div class="email-preview-frame" style="padding:1.2rem;">
+                            <div class="inapp-preview-card">
+                                <div class="inapp-preview-header">
+                                    <div class="inapp-preview-title"><i class="fas fa-bell"></i> In-App Notification</div>
+                                    <div class="inapp-preview-badge" id="appPreviewBadge">High</div>
+                                </div>
+                                <div class="inapp-preview-source">Sent to all residents via In-App Notification</div>
+
+                                <!-- ADMIN VIEW ONLY: AI details (Admin > Alerts) -->
+                                <div data-app-audience="admin">
+                                    <div class="inapp-preview-tags">
+                                        <span class="inapp-preview-tag ai"><i class="fas fa-brain"></i> Predicted by AI Model</span>
+                                        <span class="inapp-preview-tag"><i class="fas fa-location-dot"></i> <span id="appPreviewDevice">--</span></span>
+                                    </div>
+
+                                    <div class="inapp-preview-field-label">AI Prediction</div>
+                                    <div class="env-data-grid">
+                                        <div class="env-data-item wide"><span class="label">Probability of HIGH</span><span class="value prob" id="appPreviewProb">--%</span></div>
+                                        <div class="env-data-item"><span class="label">AI Model</span><span class="value" id="appPreviewModel">--</span></div>
+                                        <div class="env-data-item"><span class="label">Predicted For</span><span class="value" id="appPreviewMonth">--</span></div>
+                                        <div class="env-data-item"><span class="label">Risk Level</span><span class="value" id="appPreviewRisk">High</span></div>
+                                    </div>
+                                    <div class="inapp-preview-note" id="appPreviewAiNote" style="display:none;"></div>
+                                </div>
+
+                                <!-- RESIDENT VIEW ONLY: just the level and its percentage, no AI wording -->
+                                <div data-app-audience="resident" style="display:none;">
+                                    <div class="inapp-preview-field-label">Risk Level</div>
+                                    <div class="env-data-grid">
+                                        <div class="env-data-item"><span class="label">Risk Level</span><span class="value high-risk">High</span></div>
+                                        <div class="env-data-item"><span class="label">High Risk</span><span class="value prob" id="appPreviewResidentPct">--%</span></div>
+                                    </div>
+                                    <div class="inapp-preview-note" id="appPreviewResidentNote" style="display:none;"></div>
+                                </div>
+
+                                <div class="inapp-preview-field-label">Environmental Data</div>
+                                <div class="env-data-grid">
+                                    <div class="env-data-item"><span class="label">Temperature</span><span class="value" id="appPreviewTemp">--°C</span></div>
+                                    <div class="env-data-item"><span class="label">Humidity</span><span class="value" id="appPreviewHumidity">--%</span></div>
+                                    <div class="env-data-item"><span class="label">Rainfall</span><span class="value" id="appPreviewRainfall">-- mm</span></div>
+                                    <div class="env-data-item"><span class="label">Wind Speed</span><span class="value" id="appPreviewWind">-- m/s</span></div>
+                                </div>
+
+                                <div class="inapp-preview-field-label">Message</div>
+                                <div class="inapp-preview-message" id="appPreviewCard">Loading...</div>
+                            </div>
+                            <div id="appPreviewMeta" style="font-size:0.65rem; color:var(--text-muted); margin-top:8px;"></div>
+                        </div>
+
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            The message above updates here instantly as you type — this is the same text used by the notification system. The Admin view is the In-App Notification shown in Admin Alerts, with the AI details (probability, model, predicted month, device location). The Resident view is what a resident sees on their own Alerts page: only the High risk level, its percentage and the sensor readings — no AI wording. These values refresh from the deployed device and are not part of the editable message, whether or not an email also went out.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-circle-check"></i> Back to Low — In-App Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="email-preview-label">How the one-time "Risk Back to Low" notice looks to a resident</div>
+                        <div class="email-preview-frame" style="padding:1.2rem;">
+                            <div class="inapp-preview-card">
+                                <div class="inapp-preview-header">
+                                    <div class="inapp-preview-title"><i class="fas fa-bell"></i> In-App Notification</div>
+                                    <div class="inapp-preview-badge" style="color:var(--green-bright);">Low</div>
+                                </div>
+                                <div class="inapp-preview-source">Sent to all residents via In-App Notification</div>
+                                <div class="inapp-preview-field-label">Risk Level</div>
+                                <div class="env-data-grid">
+                                    <div class="env-data-item"><span class="label">Risk Level</span><span class="value" style="color:var(--green-bright);">Low</span></div>
+                                    <div class="env-data-item"><span class="label">High Risk</span><span class="value prob" id="lowAppPreviewPct">--%</span></div>
+                                </div>
+                                <div class="inapp-preview-field-label">Environmental Data</div>
+                                <div class="env-data-grid">
+                                    <div class="env-data-item"><span class="label">Temperature</span><span class="value" id="lowAppPreviewTemp">--°C</span></div>
+                                    <div class="env-data-item"><span class="label">Humidity</span><span class="value" id="lowAppPreviewHumidity">--%</span></div>
+                                    <div class="env-data-item"><span class="label">Rainfall</span><span class="value" id="lowAppPreviewRain">-- mm</span></div>
+                                    <div class="env-data-item"><span class="label">Wind Speed</span><span class="value" id="lowAppPreviewWind">-- m/s</span></div>
+                                </div>
+                                <div class="inapp-preview-field-label">Message</div>
+                                <div class="inapp-preview-message" id="lowAppPreviewMsg">Loading...</div>
+                            </div>
+                        </div>
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            Updates as you type in "Back to Low — Alert Headline". The percentage and readings are filled in automatically and are not part of the editable text.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dengue Preparedness Warnings: in-app wording + preview (one set of messages per parameter) -->
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-triangle-exclamation"></i> Dengue Preparedness Warning — In-App Messages</div>
+                    <div class="section-body">
+                        <div class="tw-ftabs-label">Parameter</div>
+                        <div class="tw-ftabs" data-tw-ftabs></div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Watch Message</div>
+                                <div class="setting-desc">Shown in the amber "Watch" card under Dengue Preparedness Warnings on the Alerts page, for the selected parameter. Admins and residents both see this text, so write it for everyone. Placeholders you can use: <code>{factor}</code> <code>{days}</code> <code>{zone}</code> <code>{unit}</code> <code>{values}</code> — they are filled in automatically.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="twWatchMsg" maxlength="500" oninput="onTwInput('inapp')" placeholder="Loading..." style="min-height:90px;"></textarea>
+                            <div class="char-count" id="twWatchCount">0 / 500</div>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Warning Message</div>
+                                <div class="setting-desc">Shown in the red "Warning" card on the Alerts page, for the selected parameter. Same placeholders as above. The email wording is edited in the Email Messages tab.</div>
+                            </div>
+                            <textarea class="setting-textarea" id="twWarningMsg" maxlength="500" oninput="onTwInput('inapp')" placeholder="Loading..." style="min-height:90px;"></textarea>
+                            <div class="char-count" id="twWarningCount">0 / 500</div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetTwInapp()">Reset Selected Parameter to Default</button>
+                        <button class="btn-save" onclick="saveTwInapp()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-eye"></i> Warning In-App Preview</div>
+                    <div class="email-preview-wrap">
+                        <div class="email-preview-label">How the Watch and Warning cards appear on the Alerts page (sample for the selected parameter with example values)</div>
+                        <div id="twPreview" style="display:flex; flex-direction:column; gap:0.6rem; padding:0.4rem 0;"></div>
+                        <div class="email-preview-live-note">
+                            <i class="fas fa-circle-notch"></i>
+                            The preview updates as you type. Real cards use the actual daily readings, and the number of days comes from Warning Settings.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── WARNING SETTINGS (warning-zone streak warnings on Admin > Alerts) ── -->
+            <div class="settings-panel" id="panel-trend-warnings">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-triangle-exclamation"></i> Dengue Preparedness Warnings</div>
+                    <div class="section-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Enable Trend Warnings</div>
+                                <div class="setting-desc">Show a Watch / Warning on the Alerts page when a reading stays inside its warning zone (set below) for several days in a row.</div>
+                            </div>
+                            <div class="toggle-wrap">
+                                <label class="toggle"><input type="checkbox" id="twEnabled" checked onchange="updateTwPreview()"><span class="toggle-slider"></span></label>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Notify Residents by Email</div>
+                                <div class="setting-desc">When a factor reaches the Warning level (the 4th day in its zone and above, by default), send the warning Email message once per streak to residents near that device. Each resident gets it only if they enabled Email in Residents, after their own delay (15/30/60 min). It is cancelled if the streak drops back to Watch or the device turns High risk, and is never sent together with a High risk notification.</div>
+                            </div>
+                            <div class="toggle-wrap">
+                                <label class="toggle"><input type="checkbox" id="twNotify" checked><span class="toggle-slider"></span></label>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Watch After (days in a row)</div>
+                                <div class="setting-desc">Amber "Watch" appears when a parameter stays inside its warning zone for this many consecutive days. Day 1 gives no alert, so the default is day 2 (days 2 and 3 are Watch).</div>
+                            </div>
+                            <input type="number" class="setting-input range-box" id="twWatchDays" value="2" min="2" max="10" step="1" oninput="updateTwPreview()">
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Warning After (days in a row)</div>
+                                <div class="setting-desc">Red "Warning" appears from this consecutive day onward and the email goes out to residents — by default the 4th day and every day after it. Must not be lower than the Watch days.</div>
+                            </div>
+                            <input type="number" class="setting-input range-box" id="twWarningDays" value="4" min="2" max="10" step="1" oninput="updateTwPreview()">
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Warning Zones (range per parameter)</div>
+                                <div class="setting-desc">A day counts toward the streak when the day's reading falls <b>between the minimum and maximum</b> below (both included). Untick a parameter to stop warning about it. The reason behind each default is explained under "About the Warning Zones" below.</div>
+                            </div>
+                            <div class="tw-zone-list">
+                                <div class="tw-zone-row" id="twZoneRowTemp">
+                                    <label class="tw-zone-name"><input type="checkbox" id="twFactorTemp" checked onchange="updateTwZoneRows()"><i class="fas fa-temperature-half tw-zone-ico"></i> Temperature</label>
+                                    <div class="tw-zone-range">
+                                        <input type="number" class="setting-input range-box" id="twZoneTempMin" step="0.1" value="23">
+                                        <span class="range-box-sep">to</span>
+                                        <input type="number" class="setting-input range-box" id="twZoneTempMax" step="0.1" value="28">
+                                        <span class="range-box-unit">°C</span>
+                                    </div>
+                                    <div class="tw-zone-note">Range with the highest chance of mosquito breeding.</div>
+                                </div>
+                                <div class="tw-zone-row" id="twZoneRowHumidity">
+                                    <label class="tw-zone-name"><input type="checkbox" id="twFactorHumidity" checked onchange="updateTwZoneRows()"><i class="fas fa-droplet tw-zone-ico"></i> Humidity</label>
+                                    <div class="tw-zone-range">
+                                        <input type="number" class="setting-input range-box" id="twZoneHumidityMin" step="1" value="77">
+                                        <span class="range-box-sep">to</span>
+                                        <input type="number" class="setting-input range-box" id="twZoneHumidityMax" step="1" value="80">
+                                        <span class="range-box-unit">%</span>
+                                    </div>
+                                    <div class="tw-zone-note">Moist air keeps eggs and adult mosquitoes alive and active.</div>
+                                </div>
+                                <div class="tw-zone-row" id="twZoneRowRain">
+                                    <label class="tw-zone-name"><input type="checkbox" id="twFactorRain" checked onchange="updateTwZoneRows()"><i class="fas fa-cloud-rain tw-zone-ico"></i> Rainfall</label>
+                                    <div class="tw-zone-range">
+                                        <input type="number" class="setting-input range-box" id="twZoneRainMin" step="0.1" value="1">
+                                        <span class="range-box-sep">to</span>
+                                        <input type="number" class="setting-input range-box" id="twZoneRainMax" step="0.1" value="20">
+                                        <span class="range-box-unit">mm/day</span>
+                                    </div>
+                                    <div class="tw-zone-note">Light to moderate daily rain fills containers; very heavy rain flushes larvae away.</div>
+                                </div>
+                                <div class="tw-zone-row" id="twZoneRowWind">
+                                    <label class="tw-zone-name"><input type="checkbox" id="twFactorWind" checked onchange="updateTwZoneRows()"><i class="fas fa-wind tw-zone-ico"></i> Wind Speed</label>
+                                    <div class="tw-zone-range">
+                                        <input type="number" class="setting-input range-box" id="twZoneWindMin" step="0.1" value="0">
+                                        <span class="range-box-sep">to</span>
+                                        <input type="number" class="setting-input range-box" id="twZoneWindMax" step="0.1" value="1.7">
+                                        <span class="range-box-unit">m/s</span>
+                                    </div>
+                                    <div class="tw-zone-note">Calm air favors mosquito flight and biting; stronger wind suppresses it.</div>
+                                </div>
+                            </div>
+                            <div style="padding-top:0.7rem;">
+                                <button type="button" class="btn-cancel" onclick="resetTwZones()"><i class="fas fa-rotate-left"></i> Restore recommended zones</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-cancel" onclick="resetTwControls()">Cancel</button>
+                        <button class="btn-save" onclick="saveTrendControls()"><i class="fas fa-check"></i> Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-book-open"></i> About the Warning Zones</div>
+                    <div class="section-body">
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">How Watch and Warning are decided</div>
+                                <div class="setting-desc">Each parameter (temperature, humidity, rainfall, wind speed) is checked on its own, using the device's daily readings. A day that falls inside the zone adds to the streak; one day outside the zone resets it to zero.</div>
+                            </div>
+                            <div class="tw-how" id="twHow"></div>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="setting-info">
+                                <div class="setting-label">Recommended zones and why</div>
+                                <div class="setting-desc">These are the default zones that the "Restore recommended zones" button brings back. You can change them above to fit local conditions.</div>
+                            </div>
+                            <div class="tw-info-wrap">
+                                <table class="tw-info-table">
+                                    <thead><tr><th>Parameter</th><th>Warning zone</th><th>Why this range</th></tr></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Temperature</b></td>
+                                            <td class="tw-zone-cell">23 – 28 °C</td>
+                                            <td>This is the range with the highest chance of mosquito breeding. Eggs hatch quickly, larvae grow fast, and adult mosquitoes live longer and bite more often.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Humidity</b></td>
+                                            <td class="tw-zone-cell">77 – 80 %</td>
+                                            <td>Warm, moist air keeps eggs from drying out and lets adult mosquitoes survive longer and stay active, which supports breeding and biting.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Rainfall</b></td>
+                                            <td class="tw-zone-cell">3 – 7 mm/day</td>
+                                            <td>Light to moderate rain leaves water in containers, puddles and gutters, which mosquitoes use to lay eggs. Very heavy rain can wash larvae away, so the zone stops at 20 mm a day.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Wind Speed</b></td>
+                                            <td class="tw-zone-cell">0 – 1.6 m/s</td>
+                                            <td>Mosquitoes fly and bite best when the air is calm. Stronger wind makes flying difficult for them, so calm to light air is the favorable zone.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tw-note-box">
+                                <b>Good to know.</b> A Watch or Warning means current conditions favor mosquito breeding; it does not count dengue cases. Each parameter is checked on its own, so any one of them can trigger a Watch or Warning.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-pen-to-square"></i> Warning Messages</div>
+                    <div class="section-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Edit the wording of each channel in its own tab</div>
+                                <div class="setting-desc">
+                                    <span class="tw-goto-link" onclick="gotoSettingsTab('email-messages')">Email Messages</span> — warning email message and preview ·
+                                    <span class="tw-goto-link" onclick="gotoSettingsTab('app-messages')">In-App Messages</span> — Watch / Warning cards on the Alerts page
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── DATABASE STORAGE (Supabase usage + clear device history) ── -->
+            <div class="settings-panel" id="panel-database-storage">
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <i class="fas fa-database"></i> Database Storage
+                        <button class="btn-cancel" id="storageRefreshBtn" onclick="loadStorage(true)"
+                                style="margin-left:auto; padding:0.35rem 0.8rem; font-size:0.72rem; letter-spacing:0; text-transform:none;">
+                            <i class="fas fa-rotate"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="storage-hero">
+                        <div class="donut-wrap">
+                            <svg viewBox="0 0 220 220" id="storageDonut" aria-label="Database storage used"></svg>
+                            <div class="donut-center">
+                                <div class="donut-pct" id="storagePct">--%</div>
+                                <div class="donut-used" id="storageUsed">-- MB</div>
+                                <div class="donut-sub" id="storageOf">of -- MB</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="storage-head">
+                                <div class="storage-total" id="storageTotal">Loading… </div>
+                                <span class="storage-status ok" id="storageStatusPill" style="display:none;"></span>
+                            </div>
+                            <div id="storageLegend"></div>
+                            <div class="storage-checked" id="storageChecked"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-table"></i> Largest Tables</div>
+                    <div class="section-body" id="storageTables" style="padding:0.5rem 0;">
+                        <div class="setting-desc" style="padding:0.5rem 1.3rem;">Loading…</div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-broom"></i> Clear Device History</div>
+                    <div class="section-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Device Location</div>
+                                <div class="setting-desc">Only the history of the location you pick is deleted. Choose "All device locations" to clear every location at once.</div>
+                            </div>
+                            <select class="setting-select" id="clearDeviceSelect" onchange="updateClearPreview()">
+                                <option value="all">All device locations</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">Which history</div>
+                                <div class="setting-desc">Tick what to delete for that location.</div>
+                            </div>
+                            <div style="min-width:min(300px,100%); flex:0 1 340px;">
+                                <label class="scope-check"><input type="checkbox" id="clearScope_readings" checked onchange="updateClearPreview()"> Sensor &amp; weather readings <span class="scope-count" id="scopeCount_readings"></span></label>
+                                <div class="scope-note">Daily readings and the Home history chart. The AI model learns from these.</div>
+                                <label class="scope-check"><input type="checkbox" id="clearScope_ai" checked onchange="updateClearPreview()"> AI / LSTM archives <span class="scope-count" id="scopeCount_ai"></span></label>
+                                <div class="scope-note">Saved weekly predictions and daily risk scores shown in Reports &amp; Data.</div>
+                                <label class="scope-check"><input type="checkbox" id="clearScope_alerts" onchange="updateClearPreview()"> Alerts &amp; notifications <span class="scope-count" id="scopeCount_alerts"></span></label>
+                                <div class="scope-note">Residents will also lose these on their own Alerts page.</div>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-label">How far back</div>
+                                <div class="setting-desc">Keep recent days and delete only the older history, or delete everything.</div>
+                            </div>
+                            <select class="setting-select" id="clearAgeSelect" onchange="updateClearPreview()">
+                                <option value="7">Older than 7 days</option>
+                                <option value="30" selected>Older than 30 days</option>
+                                <option value="90">Older than 90 days</option>
+                                <option value="180">Older than 180 days</option>
+                                <option value="365">Older than 1 year</option>
+                                <option value="0">All history (everything)</option>
+                            </select>
+                        </div>
+                        <div class="setting-row stacked">
+                            <div class="clear-preview neutral" id="clearPreviewText">Loading…</div>
+                        </div>
+                    </div>
+                    <div class="storage-info-note">
+                        <i class="fas fa-circle-info"></i>
+                        <span>Users, device locations, messages and all other settings are never deleted. If you clear readings, the Home risk and AI prediction for that location need new complete days of data before they can work again. Deleted rows free space for reuse right away, but the used-storage circle may not shrink until Supabase reclaims the disk space (run <code>VACUUM FULL</code> in the Supabase SQL editor to shrink it at once).</span>
+                    </div>
+                    <div class="save-bar">
+                        <button class="btn-danger solid" id="clearHistoryBtn" onclick="openClearModal()" disabled><i class="fas fa-trash-can"></i> Delete History</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-location-dot"></i> History Per Device Location</div>
+                    <div class="section-body" style="padding:0.2rem 0 0.4rem; overflow-x:auto;">
+                        <table class="dev-table">
+                            <thead>
+                                <tr>
+                                    <th>Device location</th>
+                                    <th class="num">Readings</th>
+                                    <th class="num hide-sm">AI archive</th>
+                                    <th class="num hide-sm">Alerts</th>
+                                    <th>Data from → to</th>
+                                </tr>
+                            </thead>
+                            <tbody id="storageDevices">
+                                <tr><td colspan="5" class="muted">Loading…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Saved.</span></div>
+
+<!-- Confirm: clear device history -->
+<div class="modal-overlay" id="clearModal" onclick="if (event.target === this) closeClearModal()">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="clearModalTitle">
+        <div class="modal-title" id="clearModalTitle"><i class="fas fa-triangle-exclamation"></i> Delete history permanently?</div>
+        <div class="modal-text" id="clearModalBody"></div>
+        <div class="modal-text" style="margin-bottom:0.4rem;">This cannot be undone. Type <strong>DELETE</strong> to confirm.</div>
+        <input type="text" class="setting-input" id="clearConfirmInput" autocomplete="off" placeholder="DELETE"
+               style="width:100%; cursor:text;" oninput="onClearConfirmInput()" onkeydown="if (event.key === 'Enter') confirmClearHistory()">
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeClearModal()">Cancel</button>
+            <button class="btn-danger solid" id="clearConfirmBtn" onclick="confirmClearHistory()" disabled><i class="fas fa-trash-can"></i> Delete</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // ── THEME TOGGLE ──
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    function refreshThemeIcon() {
+        const isLight = document.body.classList.contains('light-theme');
+        themeToggleBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    }
+    refreshThemeIcon();
+    themeToggleBtn.addEventListener('click', function() {
+        toggleTheme();
+        refreshThemeIcon();
+    });
+
+    // ── MOBILE MENU ──
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuToggle.addEventListener('click', function() {
+        mobileNav.classList.toggle('open');
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+
+    document.querySelectorAll('.mobile-nav-dropdown a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            mobileNav.classList.remove('open');
+            document.querySelector('.menu-toggle i').classList.remove('fa-times');
+            document.querySelector('.menu-toggle i').classList.add('fa-bars');
+        });
+    });
+
+    // ── SCROLL ANIMATIONS ──
+    function initScrollAnimations() {
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        if (animatedElements.length === 0) return;
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            return rect.top <= windowHeight - 100;
+        }
+
+        function checkVisibility() {
+            animatedElements.forEach(function(el) {
+                if (isElementInViewport(el)) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    checkVisibility();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        window.addEventListener('resize', checkVisibility);
+        checkVisibility();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            initScrollAnimations();
+        }, 100);
+    });
+
+    // ── CLOCK ──
+    function updateClock() {
+        const now = new Date();
+        let hh = now.getHours();
+        const ampm = hh >= 12 ? 'PM' : 'AM';
+        hh = hh % 12 || 12;
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('realtimeClock').textContent = hh + ':' + mm + ':' + ss + ' ' + ampm;
+
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        document.getElementById('realtimeDate').textContent =
+            days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ── SESSION ──
+    async function loadUserInfo() {
+        try {
+            const res = await fetch('/api/check_session', { credentials: 'include' });
+            const data = await res.json();
+            if (data.logged_in) {
+                document.getElementById('userName').textContent = data.user.name;
+
+                const navAvatar = document.getElementById('navAvatar');
+                const navAvatarFallback = document.getElementById('navAvatarFallback');
+
+                if (data.user.avatar_url) {
+                    navAvatar.src = data.user.avatar_url;
+                    navAvatar.style.display = 'block';
+                    navAvatarFallback.style.display = 'none';
+                    navAvatar.onerror = function() {
+                        this.style.display = 'none';
+                        navAvatarFallback.style.display = 'inline-block';
+                    };
+                } else {
+                    navAvatar.style.display = 'none';
+                    navAvatarFallback.style.display = 'inline-block';
+                }
+            } else {
+                window.location.href = '/login';
+            }
+        } catch(e) {
+            window.location.href = '/login';
+        }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch(e) {}
+        window.location.href = '/';
+    });
+
+    // ── SETTINGS TAB SWITCH ──
+    function switchTab(tab, el) {
+        document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('panel-' + tab).classList.add('active');
+        if (el) el.classList.add('active');
+        const select = document.getElementById('settingsNavSelect');
+        if (select) select.value = tab;
+        if (tab === 'database-storage' && typeof loadStorage === 'function') loadStorage();
+    }
+
+    function switchTabFromSelect(select) {
+        const tab = select.value;
+        const navItem = document.querySelector('.settings-nav-item[onclick*="' + tab + '"]');
+        switchTab(tab, navItem);
+    }
+
+    // ── OPEN TAB FROM URL HASH (e.g. /admin/settings#lstm) ──
+    function openTabFromHash() {
+        const hash = window.location.hash.replace('#', '');
+        if (!hash) return;
+        const tabMap = { 'lstm': 'lstm', 'lstm-settings': 'lstm', 'email-messages': 'email-messages', 'email': 'email-messages', 'app-messages': 'app-messages', 'in-app-messages': 'app-messages', 'app': 'app-messages', 'trend-warnings': 'trend-warnings', 'warning-settings': 'trend-warnings', 'warnings': 'trend-warnings', 'database-storage': 'database-storage', 'database': 'database-storage', 'storage': 'database-storage' };
+        const tab = tabMap[hash];
+        if (!tab) return;
+        const navItem = document.querySelector('.settings-nav-item[onclick*="' + tab + '"]');
+        if (navItem) switchTab(tab, navItem);
+    }
+    openTabFromHash();
+
+    // ── TOAST ──
+    let toastTimer;
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg;
+        const icon = toast.querySelector('i');
+        if (msg.includes('❌') || msg.includes('error')) {
+            icon.style.color = '#e74c3c';
+        } else {
+            icon.style.color = 'var(--green-bright)';
+        }
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // ── LSTM MODEL SETTINGS: FORECAST HORIZON ──
+    // Saved to the database; the Risk Map's LSTM chart reads it (display only).
+    // Reports & Data always stay on the 7-day weekly archive.
+    let savedLstmHorizon = 7;
+    let savedLstmConfidence = true;
+
+    function setLstmConfidenceToggle(on) {
+        const t = document.getElementById('lstmConfidenceToggle');
+        if (t) t.checked = !!on;
+    }
+
+    function setLstmHorizonSelect(days) {
+        const sel = document.getElementById('lstmHorizonSelect');
+        if (!sel) return;
+        const v = String(days);
+        if (!Array.from(sel.options).some(o => o.value === v)) {
+            const opt = document.createElement('option');
+            opt.value = v;
+            opt.textContent = v + ' days';
+            sel.appendChild(opt);
+        }
+        sel.value = v;
+    }
+
+    async function loadLstmSettings() {
+        try {
+            const res = await fetch('/api/lstm_settings', { credentials: 'include' });
+            const data = await res.json();
+            if (data.success && data.settings) {
+                savedLstmHorizon = data.settings.forecast_horizon;
+                setLstmHorizonSelect(savedLstmHorizon);
+                savedLstmConfidence = !!data.settings.confidence_display;
+                setLstmConfidenceToggle(savedLstmConfidence);
+            }
+        } catch (e) {
+            console.error('Failed to load LSTM settings:', e);
+        }
+    }
+
+    async function saveLstmSettings() {
+        const sel = document.getElementById('lstmHorizonSelect');
+        if (!sel) return;
+        try {
+            const res = await fetch('/api/lstm_settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    forecast_horizon: parseInt(sel.value, 10),
+                    confidence_display: !!document.getElementById('lstmConfidenceToggle').checked
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                savedLstmHorizon = data.settings.forecast_horizon;
+                savedLstmConfidence = !!data.settings.confidence_display;
+                showToast('LSTM model settings saved.');
+            } else {
+                showToast('❌ ' + (data.message || 'Could not save LSTM settings.'));
+            }
+        } catch (e) {
+            console.error('saveLstmSettings failed:', e);
+            showToast('❌ Server error. Please try again.');
+        }
+    }
+
+    function resetLstmSettings() {
+        setLstmHorizonSelect(savedLstmHorizon);
+        setLstmConfidenceToggle(savedLstmConfidence);
+    }
+
+    loadLstmSettings();
+
+    // ── EMAIL MESSAGES (Recommended Actions text shown in resident risk alert emails) ──
+    const DEFAULT_LOW_ADVICE = "Good news: the dengue risk in your area has gone back down to Low. Thank you for staying careful. Please keep up your prevention habits: empty or cover containers that hold stagnant water, keep your surroundings clean, and use mosquito repellent. You will be notified again if the risk rises to High.";
+    const DEFAULT_HIGH_ADVICE = "High dengue risk detected. Take immediate precautions to prevent mosquito bites and eliminate all stagnant water around your home. Use mosquito repellent, wear long sleeves, and keep your surroundings clean. Monitor for dengue symptoms such as high fever, severe headache, body pain, rash, or bleeding. If symptoms develop, seek medical attention immediately.";
+
+    let currentPreviewLevel = 'high';
+    const previewTimers = { high: null, low: null };
+
+    async function loadEmailMessages() {
+        try {
+            const res = await fetch('/api/get_email_messages', { credentials: 'include' });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('highAdviceMsg').value = data.high_message;
+                document.getElementById('lowAdviceMsg').value = data.low_message || DEFAULT_LOW_ADVICE;
+            } else {
+                document.getElementById('highAdviceMsg').value = DEFAULT_HIGH_ADVICE;
+                document.getElementById('lowAdviceMsg').value = DEFAULT_LOW_ADVICE;
+            }
+        } catch (e) {
+            document.getElementById('highAdviceMsg').value = DEFAULT_HIGH_ADVICE;
+            document.getElementById('lowAdviceMsg').value = DEFAULT_LOW_ADVICE;
+        }
+        updateCharCount('high');
+        updateCharCount('low');
+        renderAllEmailPreviews();
+        updateTwEmailPreview();   // the Warning email preview shows this text under "Recommended Actions"
+    }
+
+    function updateCharCount(level) {
+        const textarea = document.getElementById(level + 'AdviceMsg');
+        const counter = document.getElementById(level + 'CharCount');
+        const len = textarea.value.length;
+        counter.textContent = len + ' / 2000';
+        counter.classList.toggle('over-limit', len > 2000);
+    }
+
+    function onAdviceInput(level) {
+        updateCharCount(level);
+        if (level === 'high') scheduleTwEmailPreview();   // the Warning email shows the High text, not the Low one
+
+        // The preview of the message being edited updates as the admin types.
+        clearTimeout(previewTimers[level]);
+        previewTimers[level] = setTimeout(function() {
+            renderEmailPreview(level);
+        }, 180);
+    }
+
+    // Both previews (High risk email, Back to Low email) are always shown; each updates on its own.
+    function renderAllEmailPreviews() {
+        renderEmailPreview('high');
+        renderEmailPreview('low');
+    }
+
+    const previewRequestIds = { high: 0, low: 0 };
+
+    async function renderEmailPreview(level) {
+        level = (level === 'low') ? 'low' : 'high';
+
+
+        const textarea = document.getElementById(level + 'AdviceMsg');
+        const adviceText = textarea.value.trim() ||
+            (level === 'low' ? DEFAULT_LOW_ADVICE : DEFAULT_HIGH_ADVICE);
+
+        const requestId = ++previewRequestIds[level];
+        const sfx = (level === 'low') ? 'Low' : '';
+        const iframe = document.getElementById('emailPreviewIframe' + sfx);
+        const subject = document.getElementById('previewSubject' + sfx);
+
+        try {
+            const res = await fetch('/api/email_preview', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    risk_level: level,
+                    advice_text: adviceText
+                })
+            });
+            const data = await res.json();
+
+            // Ignore an older request if the admin typed again while it was loading.
+            if (requestId !== previewRequestIds[level]) return;
+
+            if (!data.success) throw new Error(data.message || 'Preview failed');
+
+            subject.textContent = data.subject;
+            iframe.srcdoc = data.html;
+            const aiNote = document.getElementById('emailPreviewAiNote' + sfx);
+            if (aiNote) aiNote.style.display = data.ai_is_sample ? '' : 'none';
+        } catch (e) {
+            if (requestId !== previewRequestIds[level]) return;
+            iframe.srcdoc = '<div style="font-family:Arial,sans-serif;padding:30px;text-align:center;color:#b42318;background:#fff;">Unable to load email preview.</div>';
+        }
+    }
+
+    // Keep the monitoring values in the preview current even when the admin
+    // does not type anything. The email itself uses the latest sensor row too.
+    setInterval(function() {
+        renderAllEmailPreviews();
+    }, 60000);
+
+    async function saveEmailMessages() {
+        const high_message = document.getElementById('highAdviceMsg').value.trim();
+        const low_message = document.getElementById('lowAdviceMsg').value.trim();
+
+        if (high_message.length > 2000 || low_message.length > 2000) {
+            showToast('❌ Message is too long (2000 character max).');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/update_email_messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ high_message, low_message })
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('highAdviceMsg').value = data.high_message;
+                document.getElementById('lowAdviceMsg').value = data.low_message || DEFAULT_LOW_ADVICE;
+                updateCharCount('high');
+                updateCharCount('low');
+                renderAllEmailPreviews();
+                showToast('Email messages saved.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to save.'));
+            }
+        } catch (e) {
+            showToast('❌ Failed to save email messages.');
+        }
+    }
+
+    function resetAdviceMessages() {
+        document.getElementById('highAdviceMsg').value = DEFAULT_HIGH_ADVICE;
+        document.getElementById('lowAdviceMsg').value = DEFAULT_LOW_ADVICE;
+        updateCharCount('high');
+        updateCharCount('low');
+        renderAllEmailPreviews();
+    }
+
+    // ── IN-APP MESSAGES (headline shown on the resident Alerts page) ──
+    const DEFAULT_HIGH_APP = "High mosquito breeding risk detected";
+    const DEFAULT_LOW_APP = "Dengue risk is back to Low. Keep up your prevention habits.";
+    const APP_MSG_CHAR_LIMIT = 300;
+
+    let currentAppPreviewLevel = 'high';
+    let appPreviewTimer = null;
+    let appPreviewRequestId = 0;
+
+    async function loadAppMessages() {
+        try {
+            const res = await fetch('/api/get_app_messages', { credentials: 'include' });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('highAppMsg').value = data.high_message;
+                document.getElementById('lowAppMsg').value = data.low_message || DEFAULT_LOW_APP;
+            } else {
+                document.getElementById('highAppMsg').value = DEFAULT_HIGH_APP;
+                document.getElementById('lowAppMsg').value = DEFAULT_LOW_APP;
+            }
+        } catch (e) {
+            document.getElementById('highAppMsg').value = DEFAULT_HIGH_APP;
+            document.getElementById('lowAppMsg').value = DEFAULT_LOW_APP;
+        }
+        updateAppCharCount('high');
+        updateAppCharCount('low');
+        renderAppPreview(currentAppPreviewLevel);
+        renderLowAppPreview(true);
+    }
+
+    function updateAppCharCount(level) {
+        const textarea = document.getElementById(level + 'AppMsg');
+        const counter = document.getElementById(level + 'AppCharCount');
+        const len = textarea.value.length;
+        counter.textContent = len + ' / ' + APP_MSG_CHAR_LIMIT;
+        counter.classList.toggle('over-limit', len > APP_MSG_CHAR_LIMIT);
+    }
+
+    // Back to Low in-app preview: headline straight from the textarea, numbers from the server preview.
+    let lowAppPreviewTimer = null;
+    async function renderLowAppPreview(refreshData) {
+        const msg = document.getElementById('lowAppMsg').value.trim() || DEFAULT_LOW_APP;
+        document.getElementById('lowAppPreviewMsg').textContent = msg;
+        if (!refreshData) return;
+        try {
+            const res = await fetch('/api/app_message_preview', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ risk_level: 'low', headline: msg })
+            });
+            const d = await res.json();
+            if (!d.success) return;
+            const e = d.env || {};
+            document.getElementById('lowAppPreviewPct').textContent = (d.resident && d.resident.risk_pct != null) ? d.resident.risk_pct + '%' : '--%';
+            document.getElementById('lowAppPreviewTemp').textContent = e.temperature + '°C';
+            document.getElementById('lowAppPreviewHumidity').textContent = e.humidity + '%';
+            document.getElementById('lowAppPreviewRain').textContent = e.rainfall + ' mm';
+            document.getElementById('lowAppPreviewWind').textContent = e.wind + ' m/s';
+        } catch (err) { /* keep the last values */ }
+    }
+    setInterval(function() { renderLowAppPreview(true); }, 60000);
+
+    function onAppInput(level) {
+        updateAppCharCount(level);
+        if (level === 'low') {
+            renderLowAppPreview(false);   // instant, no network round-trip
+            clearTimeout(lowAppPreviewTimer);
+            lowAppPreviewTimer = setTimeout(function() { renderLowAppPreview(true); }, 400);
+            return;
+        }
+
+        // The currently selected in-app preview updates as the admin types.
+        if (level === currentAppPreviewLevel) {
+            // The message itself renders straight from the field — instantly,
+            // with no network round-trip and no dependency on anything saved
+            // to the database — so the preview can never show a stale,
+            // hardcoded, or previously-saved version of the message.
+            updateAppPreviewMessage(level);
+
+            // Sensor readings are separate context, not part of the editable
+            // message, so refreshing them can stay debounced.
+            clearTimeout(appPreviewTimer);
+            appPreviewTimer = setTimeout(function() {
+                refreshAppPreviewEnvData(level);
+            }, 180);
+        }
+    }
+
+    // Admin view / Resident view switch for the In-App preview. The admin card carries the AI details
+    // (probability, model, month, device). The resident card only shows the High risk level and its percentage.
+    let appPreviewAudience = 'admin';
+    function setAppPreviewAudience(audience) {
+        appPreviewAudience = (audience === 'resident') ? 'resident' : 'admin';
+        document.querySelectorAll('[data-app-audience]').forEach(function(el) {
+            el.style.display = (el.getAttribute('data-app-audience') === appPreviewAudience) ? '' : 'none';
+        });
+        document.getElementById('appAudienceAdminBtn').classList.toggle('active', appPreviewAudience === 'admin');
+        document.getElementById('appAudienceResidentBtn').classList.toggle('active', appPreviewAudience === 'resident');
+    }
+
+    // Renders the badge + the exact message text currently in the textarea.
+    // This is the same value onAppInput/saveAppMessages reads, so what the
+    // admin sees here is guaranteed to match what actually gets saved and
+    // what the notification system will use.
+    function updateAppPreviewMessage(level) {
+        currentAppPreviewLevel = level;
+
+
+        const textarea = document.getElementById(level + 'AppMsg');
+        const headline = textarea.value.trim() ||
+            DEFAULT_HIGH_APP;
+
+        const isHigh = level === 'high';
+        const badgeLabel = 'High';
+
+        const badge = document.getElementById('appPreviewBadge');
+        badge.textContent = badgeLabel;
+        badge.className = 'inapp-preview-badge' + (isHigh ? ' high-risk' : '');
+
+        const riskValue = document.getElementById('appPreviewRisk');
+        riskValue.textContent = badgeLabel;
+        riskValue.className = 'value high-risk';
+
+        // white-space: pre-wrap on .inapp-preview-message means line breaks
+        // the admin types show up here the same way they'll appear in the
+        // real In-App Notification, so basic formatting is preserved.
+        const card = document.getElementById('appPreviewCard');
+        card.textContent = headline;
+        document.getElementById('appPreviewMeta').textContent = headline.length + ' characters · exact text logged to Recent Alerts';
+    }
+
+    // Fetches only the environmental/sensor readings shown alongside the
+    // message — kept in a separate request (and a visually separate part of
+    // the card) from the editable message so the two never get conflated.
+    async function refreshAppPreviewEnvData(level) {
+        const textarea = document.getElementById(level + 'AppMsg');
+        const headline = textarea.value.trim() ||
+            DEFAULT_HIGH_APP;
+
+        const requestId = ++appPreviewRequestId;
+        try {
+            const res = await fetch('/api/app_message_preview', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    risk_level: level,
+                    headline: headline
+                })
+            });
+            const data = await res.json();
+
+            // Ignore an older request if the admin switched levels or typed again while it was loading.
+            if (requestId !== appPreviewRequestId) return;
+            if (!data.success) throw new Error(data.message || 'Preview failed');
+
+            const env = data.env || {};
+            document.getElementById('appPreviewTemp').textContent = env.temperature + '°C';
+            document.getElementById('appPreviewHumidity').textContent = env.humidity + '%';
+            document.getElementById('appPreviewRainfall').textContent = env.rainfall + ' mm';
+            document.getElementById('appPreviewWind').textContent = env.wind + ' m/s';
+
+            // AI prediction + device location (same fields the Alerts page shows when a High alert is opened)
+            const ai = data.ai;
+            document.getElementById('appPreviewDevice').textContent = data.device_name || 'No device deployed';
+            document.getElementById('appPreviewProb').textContent = ai
+                ? ai.pct + '%' + (ai.cutoff ? ' (HIGH starts at ' + ai.cutoff + '%)' : '') : '--%';
+            document.getElementById('appPreviewModel').textContent = ai ? ai.model : '--';
+            document.getElementById('appPreviewMonth').textContent = (ai && ai.month) ? ai.month : '--';
+            const note = document.getElementById('appPreviewAiNote');
+            note.textContent = 'Example percentage — the AI is not predicting High for this device right now. A real alert shows the actual percentage.';
+            note.style.display = (ai && ai.is_sample) ? '' : 'none';
+
+            // Resident view: only the High risk percentage (no model, cutoff or month)
+            const res_ = data.resident || {};
+            document.getElementById('appPreviewResidentPct').textContent = (res_.risk_pct !== null && res_.risk_pct !== undefined) ? res_.risk_pct + '%' : '--%';
+            const rNote = document.getElementById('appPreviewResidentNote');
+            rNote.textContent = 'Example percentage — the AI is not predicting High for this device right now. A real alert shows the actual percentage.';
+            rNote.style.display = res_.is_sample ? '' : 'none';
+        } catch (e) {
+            if (requestId !== appPreviewRequestId) return;
+            document.getElementById('appPreviewTemp').textContent = '--°C';
+            document.getElementById('appPreviewHumidity').textContent = '--%';
+            document.getElementById('appPreviewRainfall').textContent = '-- mm';
+            document.getElementById('appPreviewWind').textContent = '-- m/s';
+            document.getElementById('appPreviewDevice').textContent = '--';
+            document.getElementById('appPreviewProb').textContent = '--%';
+            document.getElementById('appPreviewModel').textContent = '--';
+            document.getElementById('appPreviewMonth').textContent = '--';
+            document.getElementById('appPreviewResidentPct').textContent = '--%';
+        }
+    }
+
+    // Renders the full preview: the message instantly, then the sensor
+    // readings once fetched. Used on load, toggle, save, and reset.
+    async function renderAppPreview(level) {
+        level = 'high';
+        updateAppPreviewMessage(level);
+        await refreshAppPreviewEnvData(level);
+    }
+
+    // Keep the preview's sensor values current even when the admin does not
+    // type anything. The actual alert log uses the latest sensor row too.
+    setInterval(function() {
+        renderAppPreview(currentAppPreviewLevel);
+    }, 60000);
+
+    async function saveAppMessages() {
+        const high_message = document.getElementById('highAppMsg').value.trim();
+        const low_message = document.getElementById('lowAppMsg').value.trim();
+
+        if (high_message.length > APP_MSG_CHAR_LIMIT || low_message.length > APP_MSG_CHAR_LIMIT) {
+            showToast('❌ Message is too long (' + APP_MSG_CHAR_LIMIT + ' character max).');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/update_app_messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ high_message, low_message })
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('highAppMsg').value = data.high_message;
+                document.getElementById('lowAppMsg').value = data.low_message || DEFAULT_LOW_APP;
+                updateAppCharCount('high');
+                updateAppCharCount('low');
+                renderAppPreview(currentAppPreviewLevel);
+                renderLowAppPreview(true);
+                showToast('In-app messages saved.');
+            } else {
+                showToast('❌ ' + (data.message || 'Failed to save.'));
+            }
+        } catch (e) {
+            showToast('❌ Failed to save in-app messages.');
+        }
+    }
+
+    function resetAppMessages() {
+        document.getElementById('highAppMsg').value = DEFAULT_HIGH_APP;
+        document.getElementById('lowAppMsg').value = DEFAULT_LOW_APP;
+        updateAppCharCount('high');
+        updateAppCharCount('low');
+        renderAppPreview(currentAppPreviewLevel);
+        renderLowAppPreview(true);
+    }
+
+
+    // ── WARNING SETTINGS (trend warnings) ──
+    // On/off, days, factors and the warning zone (min–max) of each parameter live in the Warning Settings tab. The wording of each channel lives
+    // in its own tab: Email Messages (warning_email_message + warning_email_actions)
+    // and In-App Messages (watch_message / warning_message), each written separately for every parameter.
+    // Each tab saves only its own fields.
+    const TW_DEFAULTS = {
+        enabled: true, notify_residents: true, watch_days: 2, warning_days: 4,
+        factors: { rain: true, humidity: true, temp: true, wind: true },
+        // Warning zone per parameter: [min, max], both included.
+        zones: { temp: [23, 28], humidity: [77, 80], rain: [1, 20], wind: [0, 1.7] },
+        // Wording per parameter (rain / humidity / temp / wind): watch_message + warning_message = In-App,
+        // warning_email_message + warning_email_actions = Email. Same text as app.py.
+        messages: {
+            "rain": {
+                        "watch_message": "{factor} has stayed within {zone} for {days} consecutive days ({values}). Light to moderate rain keeps refilling containers without washing larvae away. Residents are reminded to empty and cover containers that collect rainwater.",
+                        "warning_message": "{factor} has stayed within {zone} for {days} consecutive days ({values}). Steady rain keeps refilling containers, gutters and discarded items, so mosquito larvae are not being washed away. Check and clear every place where rainwater collects now to prepare for a possible dengue rise.",
+                        "warning_email_message": "{factor} near you has stayed within {zone} for {days} consecutive days ({values}). Steady rain like this leaves stagnant water in containers, gutters and discarded items around the home, which is where dengue mosquitoes breed. Please check your surroundings and clear stagnant water now to prepare for a possible dengue rise.",
+                        "warning_email_actions": "• Empty, scrub and turn over buckets, pails, drums, tires, cans, coconut shells and plant saucers that hold rainwater.\n• Clear clogged gutters, canals and drains so water does not pool.\n• Cover water storage containers tightly and change the water in flower vases and pet dishes.\n• Do this after every rain, and at least twice a week, since larvae can become adults in about 7 to 10 days.\n• Seek medical help early if fever lasts 2 days or more, or if you notice severe headache, body pain, rash or bleeding.",
+        },
+            "humidity": {
+                        "watch_message": "{factor} has stayed within {zone} for {days} consecutive days ({values}). Moist air helps mosquitoes live longer and stay active. Residents are reminded to use repellent and keep rooms dry and ventilated.",
+                        "warning_message": "{factor} has stayed within {zone} for {days} consecutive days ({values}). Humid air is helping mosquitoes survive longer and bite more, which raises the chance of dengue spreading. Protect yourself from bites and remove damp, dark resting spots at home now.",
+                        "warning_email_message": "{factor} near you has stayed within {zone} for {days} consecutive days ({values}). Moist air helps dengue mosquitoes live longer and stay active, so they have more chances to bite and spread the virus. Please protect your household from bites and reduce damp, dark corners at home now.",
+                        "warning_email_actions": "• Apply mosquito repellent and wear long sleeves and pants, especially in the early morning and late afternoon.\n• Put screens on windows and doors, and use a mosquito net when children nap.\n• Open windows and use fans to keep rooms dry and ventilated.\n• Declutter dark, damp corners under beds, behind curtains and inside closets, where mosquitoes rest.\n• Do not leave damp clothes piled up or hanging in dark rooms.\n• Seek medical help early if fever lasts 2 days or more, or if you notice severe headache, body pain, rash or bleeding.",
+        },
+            "temp": {
+                        "watch_message": "{factor} has stayed within {zone} for {days} consecutive days ({values}). This range speeds up mosquito breeding. Residents are reminded to empty water containers more often than usual.",
+                        "warning_message": "{factor} has stayed within {zone} for {days} consecutive days ({values}). This is the range where mosquitoes breed fastest and the virus develops quicker inside them. Clear water containers more often than usual and inspect your surroundings now to prepare for a possible dengue rise.",
+                        "warning_email_message": "{factor} near you has stayed within {zone} for {days} consecutive days ({values}). This is the range where dengue mosquitoes breed fastest, and eggs can turn into biting adults within about a week. Please clear and scrub water containers more often than usual and inspect your surroundings now.",
+                        "warning_email_actions": "• Empty and scrub every water container at least twice a week. Do not wait a full week.\n• Scrub the inner walls of containers to remove mosquito eggs that stick to them.\n• Keep water drums and pails tightly covered, and change the water in vases and pet dishes every 2 to 3 days.\n• Turn upside down or store indoors any tires, pots and containers you are not using.\n• Wear long sleeves and use repellent during the day, since dengue mosquitoes bite in the daytime.\n• Seek medical help early if fever lasts 2 days or more, or if you notice severe headache, body pain, rash or bleeding.",
+        },
+            "wind": {
+                        "watch_message": "{factor} has stayed within {zone} for {days} consecutive days ({values}). Calm air makes it easier for mosquitoes to fly and bite. Residents are reminded to use repellent and window screens.",
+                        "warning_message": "{factor} has stayed within {zone} for {days} consecutive days ({values}). Calm air lets mosquitoes fly and bite with ease, so bites are more likely at home and in the neighborhood. Protect yourself from bites now, especially children and anyone who rests during the day.",
+                        "warning_email_message": "{factor} near you has stayed within {zone} for {days} consecutive days ({values}). Calm air lets dengue mosquitoes fly and bite more easily, especially in the early morning and late afternoon. Please protect your household from bites now and keep your surroundings free of stagnant water.",
+                        "warning_email_actions": "• Apply mosquito repellent and wear long sleeves and pants, especially in the early morning and late afternoon.\n• Use an electric fan in rooms where people sit or sleep. Moving air makes it harder for mosquitoes to bite.\n• Keep windows and doors screened, and use a mosquito net for babies and anyone who naps during the day.\n• Avoid staying in shaded, still areas near plants and water, where mosquitoes gather.\n• Still check for stagnant water around the house, since mosquitoes stay close to where they breed.\n• Seek medical help early if fever lasts 2 days or more, or if you notice severe headache, body pain, rash or bleeding.",
+        }
+}
+    };
+    const TW_FACTOR_IDS = { rain: 'twFactorRain', humidity: 'twFactorHumidity', temp: 'twFactorTemp', wind: 'twFactorWind' };
+    const TW_ZONE_IDS = {
+        temp:     ['twZoneTempMin', 'twZoneTempMax'],
+        humidity: ['twZoneHumidityMin', 'twZoneHumidityMax'],
+        rain:     ['twZoneRainMin', 'twZoneRainMax'],
+        wind:     ['twZoneWindMin', 'twZoneWindMax']
+    };
+    const TW_ZONE_ROWS = { temp: 'twZoneRowTemp', humidity: 'twZoneRowHumidity', rain: 'twZoneRowRain', wind: 'twZoneRowWind' };
+    const TW_ZONE_NAMES = { temp: 'Temperature', humidity: 'Humidity', rain: 'Rainfall', wind: 'Wind Speed' };
+    // Same sanity limits as the backend, so the form catches a typo before saving.
+    const TW_ZONE_LIMITS = { temp: [-10, 60], humidity: [0, 100], rain: [0, 1000], wind: [0, 75] };
+    let twSaved = null;          // last settings returned by the server
+    let twEmailTimer = null;
+
+    // ── Per-parameter message editing ──
+    // Every parameter has its own wording for each channel. The Parameter buttons at the top of the In-App,
+    // and Email tabs choose which parameter the boxes show; twMsgs keeps what is typed for all four,
+    // and Save Changes sends all four parameters of that tab at once.
+    const TW_FACTORS = {
+        rain:     { label: 'Rainfall',    icon: 'fa-cloud-rain',        unit: 'mm',  zoneUnit: 'mm/day',
+                    sample: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13] },
+        humidity: { label: 'Humidity',    icon: 'fa-droplet',           unit: '%',   zoneUnit: '%',
+                    sample: [77.4, 78.1, 79.2, 78.6, 79.5, 78.9, 79.8, 78.3, 79.1, 78.0] },
+        temp:     { label: 'Temperature', icon: 'fa-temperature-half',  unit: '°C',  zoneUnit: '°C',
+                    sample: [25.1, 26.4, 27.2, 26.8, 25.9, 26.5, 27.0, 25.6, 26.9, 27.4] },
+        wind:     { label: 'Wind Speed',  icon: 'fa-wind',              unit: 'm/s', zoneUnit: 'm/s',
+                    sample: [0.8, 1.1, 1.4, 0.9, 1.2, 1.5, 1.0, 1.3, 0.7, 1.6] }
+    };
+    const TW_MSG_GROUPS = {
+        inapp: ['watch_message', 'warning_message'],
+        email: ['warning_email_message', 'warning_email_actions']
+    };
+    const TW_MSG_FIELDS = {       // message key -> textarea id
+        watch_message: 'twWatchMsg', warning_message: 'twWarningMsg',
+        warning_email_message: 'twEmailMsg', warning_email_actions: 'twEmailActions'
+    };
+    const TW_MSG_COUNTERS = {
+        watch_message: 'twWatchCount', warning_message: 'twWarningCount',
+        warning_email_message: 'twEmailCount', warning_email_actions: 'twEmailActionsCount'
+    };
+    const TW_MSG_NAMES = {
+        watch_message: 'Watch message', warning_message: 'Warning message',
+        warning_email_message: 'Warning email message', warning_email_actions: 'Recommended Actions'
+    };
+    const TW_MSG_LIMITS = { warning_email_actions: 1000 };   // every other message: 500
+    let twFactor = 'rain';       // parameter currently shown in the message boxes
+    let twMsgs = JSON.parse(JSON.stringify(TW_DEFAULTS.messages));
+
+    function twEl(id) { return document.getElementById(id); }
+
+    // Example daily values (inside each parameter's warning zone) used by every preview.
+    function twSampleVal(i, f) {
+        const s = TW_FACTORS[f || twFactor].sample;
+        return s[i % s.length];
+    }
+
+    // The parameter's warning zone as typed in Warning Settings (falls back to the defaults), e.g. "1–20 mm/day".
+    function twZoneLabel(f) {
+        const ids = TW_ZONE_IDS[f];
+        let lo = parseFloat(twEl(ids[0]).value), hi = parseFloat(twEl(ids[1]).value);
+        if (!isFinite(lo) || !isFinite(hi)) { lo = TW_DEFAULTS.zones[f][0]; hi = TW_DEFAULTS.zones[f][1]; }
+        return lo + '–' + hi + ' ' + TW_FACTORS[f].zoneUnit;
+    }
+
+    function twFill(tpl, days, f) {
+        f = f || twFactor;
+        const m = TW_FACTORS[f];
+        const vals = Array.from({ length: days }, (_, i) => twSampleVal(i, f));
+        const lo = parseFloat(twEl(TW_ZONE_IDS[f][0]).value);
+        return tpl.split('{factor}').join(m.label).split('{threshold}').join(String(isFinite(lo) ? lo : TW_DEFAULTS.zones[f][0]))
+                  .split('{zone}').join(twZoneLabel(f))
+                  .split('{unit}').join(m.unit).split('{days}').join(String(days))
+                  .split('{values}').join(vals.join(', ') + ' ' + m.unit);
+    }
+
+    // Parameter buttons at the top of the In-App / Email message editors.
+    function renderTwFactorTabs() {
+        const html = Object.keys(TW_FACTORS).map(f =>
+            '<button type="button" class="tw-ftab' + (f === twFactor ? ' active' : '') + '" onclick="twSelectFactor(\'' + f + '\')">' +
+            '<i class="fas ' + TW_FACTORS[f].icon + '"></i> ' + TW_FACTORS[f].label + '</button>').join('');
+        document.querySelectorAll('[data-tw-ftabs]').forEach(el => { el.innerHTML = html; });
+    }
+
+    function twSelectFactor(f) {
+        if (!TW_FACTORS[f]) return;
+        twFactor = f;
+        renderTwFactorTabs();
+        twLoadMsgFields();
+        updateTwPreview();
+    }
+
+    // twMsgs -> the boxes (one tab's boxes, or all of them)
+    function twLoadMsgFields(group) {
+        const keys = group ? TW_MSG_GROUPS[group] : Object.keys(TW_MSG_FIELDS);
+        keys.forEach(k => { twEl(TW_MSG_FIELDS[k]).value = twMsgs[twFactor][k] || ''; });
+    }
+
+    // the boxes -> twMsgs (for the parameter that is showing)
+    function twStoreMsgFields(group) {
+        TW_MSG_GROUPS[group].forEach(k => { twMsgs[twFactor][k] = twEl(TW_MSG_FIELDS[k]).value; });
+    }
+
+    function escapeHtmlTw(s) {
+        return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function gotoSettingsTab(tab) {
+        switchTab(tab, document.querySelector('.settings-nav-item[onclick*="' + tab + '"]'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // group: 'controls' | 'inapp' | 'email' (omit = everything)
+    function applyTrendSettingsToForm(s, group) {
+        const all = !group;
+        renderTwFactorTabs();
+        if (all || group === 'controls') {
+            twEl('twEnabled').checked = !!s.enabled;
+            twEl('twNotify').checked = s.notify_residents !== false;
+            twEl('twWatchDays').value = s.watch_days;
+            twEl('twWarningDays').value = s.warning_days;
+            Object.keys(TW_FACTOR_IDS).forEach(k => {
+                twEl(TW_FACTOR_IDS[k]).checked = (s.factors || {})[k] !== false;
+            });
+            const zones = s.zones || {};
+            Object.keys(TW_ZONE_IDS).forEach(k => {
+                const r = (Array.isArray(zones[k]) && zones[k].length === 2) ? zones[k] : TW_DEFAULTS.zones[k];
+                twEl(TW_ZONE_IDS[k][0]).value = r[0];
+                twEl(TW_ZONE_IDS[k][1]).value = r[1];
+            });
+            updateTwZoneRows();
+        }
+        // Messages: server value for every parameter, else that parameter's default.
+        const msgs = s.messages || {};
+        ['inapp', 'email'].forEach(g => {
+            if (!(all || group === g)) return;
+            Object.keys(TW_FACTORS).forEach(f => {
+                TW_MSG_GROUPS[g].forEach(k => {
+                    twMsgs[f][k] = (msgs[f] && msgs[f][k]) || TW_DEFAULTS.messages[f][k];
+                });
+            });
+            twLoadMsgFields(g);
+        });
+        updateTwPreview();
+    }
+
+    function twDays() {
+        const wd = Math.max(2, parseInt(twEl('twWatchDays').value) || 2);
+        const gd = Math.max(wd, parseInt(twEl('twWarningDays').value) || 4);
+        return { wd: wd, gd: gd };
+    }
+
+    // Dim the zone rows whose parameter is unticked.
+    function updateTwZoneRows() {
+        Object.keys(TW_ZONE_ROWS).forEach(k => {
+            const row = twEl(TW_ZONE_ROWS[k]);
+            if (row) row.classList.toggle('off', !twEl(TW_FACTOR_IDS[k]).checked);
+        });
+    }
+
+    // Day-by-day legend in "About the Warning Zones" (follows the Watch / Warning days above).
+    function renderTwHow() {
+        const box = twEl('twHow');
+        if (!box) return;
+        const d = twDays();
+        let html = '';
+        for (let day = 1; day < d.wd; day++) {
+            html += '<span class="tw-how-step">Day ' + day + ' in zone · no alert yet</span>';
+        }
+        if (d.gd > d.wd) {
+            for (let day = d.wd; day < d.gd; day++) {
+                html += '<span class="tw-how-step watch">Day ' + day + ' · Watch</span>';
+            }
+        }
+        html += '<span class="tw-how-step warning">Day ' + d.gd + ' and above · Warning</span>';
+        html += '<span class="tw-how-step">Reading outside the zone · streak resets</span>';
+        box.innerHTML = html;
+    }
+
+    // Reads the four zones from the form. Returns { zones } or null after showing an error toast.
+    function readTwZones() {
+        const zones = {};
+        for (const k of Object.keys(TW_ZONE_IDS)) {
+            const lo = parseFloat(twEl(TW_ZONE_IDS[k][0]).value);
+            const hi = parseFloat(twEl(TW_ZONE_IDS[k][1]).value);
+            if (!isFinite(lo) || !isFinite(hi)) {
+                showToast('❌ Enter a minimum and a maximum for ' + TW_ZONE_NAMES[k] + '.'); return null;
+            }
+            if (lo >= hi) {
+                showToast('❌ ' + TW_ZONE_NAMES[k] + ': the minimum must be lower than the maximum.'); return null;
+            }
+            const lim = TW_ZONE_LIMITS[k];
+            if (lo < lim[0] || hi > lim[1]) {
+                showToast('❌ ' + TW_ZONE_NAMES[k] + ' must be between ' + lim[0] + ' and ' + lim[1] + '.'); return null;
+            }
+            zones[k] = [lo, hi];
+        }
+        return zones;
+    }
+
+    function resetTwZones() {
+        Object.keys(TW_ZONE_IDS).forEach(k => {
+            twEl(TW_ZONE_IDS[k][0]).value = TW_DEFAULTS.zones[k][0];
+            twEl(TW_ZONE_IDS[k][1]).value = TW_DEFAULTS.zones[k][1];
+        });
+        showToast('Recommended zones restored — press Save Changes to apply them.');
+    }
+
+    function updateTwCounts() {
+        Object.keys(TW_MSG_FIELDS).forEach(k => {
+            twEl(TW_MSG_COUNTERS[k]).textContent = twEl(TW_MSG_FIELDS[k]).value.length + ' / ' + (TW_MSG_LIMITS[k] || 500);
+        });
+    }
+
+    // Typing in one of the warning-message boxes saves it for the showing parameter, then updates its counter + preview.
+    function onTwInput(group) {
+        twStoreMsgFields(group);
+        updateTwCounts();
+        if (group === 'inapp') updateTwInappPreview();
+        else if (group === 'email') scheduleTwEmailPreview();
+    }
+
+    function twSampleDates(days) {
+        const out = [];
+        const now = new Date();
+        const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        for (let i = days - 1; i >= 0; i--) {
+            const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+            out.push(mon[d.getMonth()] + ' ' + String(d.getDate()).padStart(2, '0'));
+        }
+        return out;
+    }
+
+    // In-App: the Watch / Warning cards the way Admin > Alerts draws them.
+    function updateTwInappPreview() {
+        const d = twDays();
+        const m = TW_FACTORS[twFactor];
+        const card = (cls, icon, badge, days, msg) => {
+            const chips = twSampleDates(days).map((dt, i) =>
+                '<span class="tw-day">' + escapeHtmlTw(dt) + ' · ' + twSampleVal(i) + ' ' + escapeHtmlTw(m.unit) + '</span>').join('');
+            return '<div class="tw-item ' + cls + '"><i class="fas ' + icon + ' tw-icon"></i>' +
+                '<div class="tw-body"><div class="tw-title">' + escapeHtmlTw(m.label) + ' in warning zone for ' + days + ' days' +
+                '<span class="tw-badge">' + badge + '</span></div>' +
+                '<div class="tw-msg">' + escapeHtmlTw(twFill(msg, days)) + '</div>' +
+                '<div class="tw-days">' + chips + '</div></div></div>';
+        };
+        twEl('twPreview').innerHTML =
+            (twEl('twEnabled').checked ? '' : '<div style="font-size:0.78rem; color:var(--text-muted);">Trend warnings are turned off in Warning Settings — nothing will show on the Alerts page.</div>') +
+            card('watch', 'fa-eye', 'Watch', d.wd, twEl('twWatchMsg').value) +
+            card('warning', 'fa-triangle-exclamation', 'Warning', d.gd, twEl('twWarningMsg').value);
+    }
+
+    // Email: mirrors _render_trend_email in app.py.
+    function buildTwEmailHtml(message, days, actions) {
+        const e = escapeHtmlTw;
+        const m = TW_FACTORS[twFactor];
+        const dates = twSampleDates(days);
+        const rows = dates.map(function(dt, i) {
+            return '<tr><td style="padding:7px 0; color:#63766d; border-bottom:1px solid #e1e9e4;">' + e(dt) + '</td>' +
+                '<td align="right" style="padding:7px 0; font-weight:700; color:#193025; border-bottom:1px solid #e1e9e4;">' + twSampleVal(i) + ' ' + e(m.unit) + '</td></tr>';
+        }).join('');
+        const msgHtml = e(message).replace(/\n/g, '<br>');
+        const actHtml = e(actions).replace(/\r\n|\r|\n/g, '<br>');
+        return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>' +
+            '<body style="margin:0; padding:0; background:#f4f7f5; font-family:Arial, Helvetica, sans-serif; color:#193025;">' +
+            '<div style="padding:28px 12px; background:#f4f7f5;"><div style="max-width:600px; margin:0 auto; background:#ffffff; border:1px solid #dfe8e2; border-radius:12px; overflow:hidden;">' +
+            '<div style="padding:26px 20px 22px; text-align:center;"><div style="font-size:25px; line-height:1.15; font-weight:800; color:#20d978;">AEDOSPOT DENGUE<br>MONITOR</div>' +
+            '<div style="margin-top:8px; font-size:12px; color:#789086;">Dengue Preparedness Warning</div></div>' +
+            '<div style="padding:0 28px 28px;"><div style="padding:18px 14px; border-radius:12px; background:#e74c3c; color:#ffffff; text-align:center;">' +
+            '<div style="font-size:11px; font-weight:700; letter-spacing:0.5px;">PREPAREDNESS WARNING</div>' +
+            '<div style="margin-top:6px; font-size:20px; font-weight:800;">' + e(m.label) + ' in warning zone for ' + days + ' days</div></div>' +
+            '<div style="margin-top:18px; font-size:13px; line-height:1.7; color:#40554b;">' + msgHtml + '</div>' +
+            '<div style="margin-top:16px; padding:14px; border:1px solid #dce7e0; border-radius:10px; background:#f8fbf9;"><div style="font-size:13px; font-weight:800;">Daily readings</div>' +
+            '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse; margin-top:8px; font-size:12px;">' + rows + '</table></div>' +
+            '<div style="margin-top:22px;"><div style="font-size:15px; font-weight:800; margin-bottom:10px;">Recommended Actions</div>' +
+            '<div style="font-size:13px; line-height:1.75; color:#40554b;">' + actHtml + '</div></div></div>' +
+            '<div style="padding:16px 24px; border-top:1px solid #e2e8e4; background:#fafcfb; text-align:center; font-size:11px; color:#788880;">AEDOSPOT Dengue Monitor — Morong, Rizal<br>This is an automated message. Please do not reply to this email.</div>' +
+            '</div></div></body></html>';
+    }
+
+    function updateTwEmailPreview() {
+        const days = twDays().gd;
+        const message = twFill(twEl('twEmailMsg').value, days);
+        const actions = twFill(twEl('twEmailActions').value, days);
+        twEl('twEmailSubject').textContent = 'AEDOSPOT Warning: ' + TW_FACTORS[twFactor].label + ' in warning zone for ' + days + ' days';
+        twEl('twEmailIframe').srcdoc = buildTwEmailHtml(message, days, actions);
+    }
+
+    // The iframe reloads on every update, so typing is debounced a little.
+    function scheduleTwEmailPreview() {
+        clearTimeout(twEmailTimer);
+        twEmailTimer = setTimeout(updateTwEmailPreview, 180);
+    }
+
+    function updateTwPreview() {
+        updateTwCounts();
+        renderTwHow();
+        updateTwInappPreview();
+        updateTwEmailPreview();
+    }
+
+    async function loadTrendSettings() {
+        renderTwFactorTabs();
+        try {
+            const res = await fetch('/api/trend_warning_settings', { credentials: 'include' });
+            const data = await res.json();
+            twSaved = data.success && data.settings ? data.settings : TW_DEFAULTS;
+        } catch (e) {
+            twSaved = TW_DEFAULTS;
+        }
+        applyTrendSettingsToForm(twSaved);
+    }
+
+    // Sends only the fields of one tab; the server keeps everything else as it was.
+    async function postTrendSettings(partial, group, doneMsg) {
+        try {
+            const res = await fetch('/api/trend_warning_settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(partial)
+            });
+            const data = await res.json();
+            if (data.success) {
+                twSaved = data.settings;
+                applyTrendSettingsToForm(data.settings, group);
+                showToast(doneMsg);
+            } else {
+                showToast('❌ ' + (data.message || 'Could not save warning settings.'));
+            }
+        } catch (e) {
+            showToast('❌ Failed to save warning settings.');
+        }
+    }
+
+    // Warning Settings tab
+    function saveTrendControls() {
+        const watch_days = parseInt(twEl('twWatchDays').value);
+        const warning_days = parseInt(twEl('twWarningDays').value);
+        if (!(watch_days >= 2 && watch_days <= 10) || !(warning_days >= 2 && warning_days <= 10)) {
+            showToast('❌ Days must be between 2 and 10.'); return;
+        }
+        if (warning_days < watch_days) {
+            showToast('❌ Warning days cannot be fewer than Watch days.'); return;
+        }
+        const factors = {};
+        Object.keys(TW_FACTOR_IDS).forEach(k => { factors[k] = twEl(TW_FACTOR_IDS[k]).checked; });
+        const zones = readTwZones();
+        if (!zones) return;
+        postTrendSettings({
+            enabled: twEl('twEnabled').checked,
+            notify_residents: twEl('twNotify').checked,
+            watch_days: watch_days, warning_days: warning_days, factors: factors, zones: zones
+        }, 'controls', 'Warning settings saved.');
+    }
+
+    function resetTwControls() {
+        applyTrendSettingsToForm(twSaved || TW_DEFAULTS, 'controls');
+    }
+
+    // Collects one tab's messages for ALL four parameters (checked before sending).
+    function twCollectMsgs(group) {
+        const out = {};
+        for (const f of Object.keys(TW_FACTORS)) {
+            out[f] = {};
+            for (const k of TW_MSG_GROUPS[group]) {
+                const text = String(twMsgs[f][k] || '').trim();
+                const limit = TW_MSG_LIMITS[k] || 500;
+                if (!text) {
+                    twSelectFactor(f);   // jump to the parameter that needs fixing
+                    showToast('❌ ' + TW_FACTORS[f].label + ': the ' + TW_MSG_NAMES[k] + ' is required.');
+                    return null;
+                }
+                if (text.length > limit) {
+                    twSelectFactor(f);
+                    showToast('❌ ' + TW_FACTORS[f].label + ': the ' + TW_MSG_NAMES[k] + ' is limited to ' + limit + ' characters.');
+                    return null;
+                }
+                out[f][k] = text;
+            }
+        }
+        return out;
+    }
+
+    function saveTwGroup(group, doneMsg) {
+        const messages = twCollectMsgs(group);
+        if (!messages) return;
+        postTrendSettings({ messages: messages }, group, doneMsg);
+    }
+
+    // Restores the default wording of the parameter that is showing (other parameters are left alone).
+    function resetTwGroup(group) {
+        TW_MSG_GROUPS[group].forEach(k => { twMsgs[twFactor][k] = TW_DEFAULTS.messages[twFactor][k]; });
+        twLoadMsgFields(group);
+        onTwInput(group);
+        showToast(TW_FACTORS[twFactor].label + ' wording restored — press Save Changes to apply it.');
+    }
+
+    // In-App Messages tab
+    function saveTwInapp() { saveTwGroup('inapp', 'In-app warning messages saved for all parameters.'); }
+    function resetTwInapp() { resetTwGroup('inapp'); }
+
+    // Email Messages tab
+    function saveTwEmail() { saveTwGroup('email', 'Warning email messages saved for all parameters.'); }
+    function resetTwEmail() { resetTwGroup('email'); }
+
+    // ── DATABASE STORAGE (Supabase usage + clear device history) ──
+    // `var` on purpose: openTabFromHash() can call switchTab() before this block has run.
+    var storageData = null;
+    var storageLoading = false;
+    var clearPreviewTimer = null;
+    var clearPreviewReq = 0;
+    var clearPreview = null;   // last dry-run answer: { total, deleted: {readings, ai, alerts} }
+    var STORAGE_SCOPES = ['readings', 'ai', 'alerts'];
+    var STORAGE_SCOPE_LABELS = { readings: 'sensor & weather readings', ai: 'AI / LSTM archives', alerts: 'alerts & notifications' };
+    var STORAGE_DONUT_R = 84;
+
+    function fmtBytes(b) {
+        b = Number(b) || 0;
+        if (b < 1024) return b + ' B';
+        if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+        if (b < 1073741824) return (b / 1048576).toFixed(1) + ' MB';
+        return (b / 1073741824).toFixed(2) + ' GB';
+    }
+
+    function fmtNum(n) { return Number(n || 0).toLocaleString(); }
+
+    function storageStatus(pct) {
+        if (pct >= 100) return { cls: 'danger', label: 'Over limit' };
+        if (pct >= 90)  return { cls: 'danger', label: 'Almost full' };
+        if (pct >= 70)  return { cls: 'warn',   label: 'Getting full' };
+        return { cls: 'ok', label: 'Healthy' };
+    }
+
+    function fmtDay(iso) {
+        if (!iso) return '—';
+        var p = String(iso).split('-');
+        var mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return p.length === 3 ? mon[parseInt(p[1], 10) - 1] + ' ' + parseInt(p[2], 10) + ', ' + p[0] : iso;
+    }
+
+    async function loadStorage(force) {
+        if (storageLoading) return;
+        if (storageData && !force) return;
+        storageLoading = true;
+        var btn = document.getElementById('storageRefreshBtn');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-rotate fa-spin"></i> Checking…'; }
+        try {
+            const res = await fetch('/api/admin/storage', { credentials: 'include' });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || 'Could not read the database size.');
+            storageData = data;
+            renderStorage(data);
+            updateClearPreview();
+        } catch (e) {
+            showToast('❌ ' + (e.message || 'Could not read the database size.'));
+            document.getElementById('storageTotal').textContent = 'Could not load storage';
+        } finally {
+            storageLoading = false;
+            if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-rotate"></i> Refresh'; }
+        }
+    }
+
+    function renderStorage(d) {
+        var limit = d.limit_bytes || 1;
+        var pct = d.used_percent || 0;
+        var st = storageStatus(pct);
+
+        // ── donut: one arc per category, drawn against the plan limit ──
+        var R = STORAGE_DONUT_R, C = 2 * Math.PI * R;
+        var svg = '<circle class="donut-track" cx="110" cy="110" r="' + R + '" fill="none" stroke-width="22"></circle>';
+        var offset = 0, targets = [];
+        d.categories.forEach(function(c) {
+            if (!c.bytes || offset >= C) return;
+            var len = Math.min(C - offset, (c.bytes / limit) * C);
+            if (len <= 0) return;
+            targets.push(len);
+            svg += '<circle class="donut-seg seg-' + c.key + '" cx="110" cy="110" r="' + R + '" fill="none" stroke-width="22"' +
+                   ' stroke-dasharray="0 ' + C + '" stroke-dashoffset="' + (-offset) + '" transform="rotate(-90 110 110)">' +
+                   '<title>' + escapeHtmlTw(c.label) + ': ' + fmtBytes(c.bytes) + '</title></circle>';
+            offset += len;
+        });
+        var donut = document.getElementById('storageDonut');
+        donut.innerHTML = svg;
+        var segs = donut.querySelectorAll('.donut-seg');
+        requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+                segs.forEach(function(el, i) { el.setAttribute('stroke-dasharray', targets[i] + ' ' + (C - targets[i])); });
+            });
+        });
+
+        document.getElementById('storagePct').textContent = (pct >= 10 ? Math.round(pct) : pct.toFixed(1)) + '%';
+        document.getElementById('storageUsed').textContent = fmtBytes(d.total_bytes) + ' used';
+        document.getElementById('storageOf').textContent = 'of ' + fmtBytes(limit);
+
+        var pill = document.getElementById('storageStatusPill');
+        pill.className = 'storage-status ' + st.cls;
+        pill.textContent = st.label;
+        pill.style.display = '';
+        document.getElementById('storageTotal').innerHTML =
+            fmtBytes(d.total_bytes) + ' <small>of ' + fmtBytes(limit) + ' · ' + fmtBytes(Math.max(0, limit - d.total_bytes)) + ' free</small>';
+
+        // ── legend ──
+        var rows = d.categories.map(function(c) {
+            return '<div class="storage-legend-row"><span class="legend-dot dot-' + c.key + '"></span>' +
+                '<span class="legend-name">' + escapeHtmlTw(c.label) + '</span>' +
+                '<span class="legend-size">' + fmtBytes(c.bytes) + '</span>' +
+                '<span class="legend-pct">' + (c.bytes * 100 / limit).toFixed(1) + '%</span></div>';
+        });
+        var free = Math.max(0, limit - d.total_bytes);
+        rows.push('<div class="storage-legend-row"><span class="legend-dot dot-free"></span>' +
+            '<span class="legend-name">Free</span><span class="legend-size">' + fmtBytes(free) + '</span>' +
+            '<span class="legend-pct">' + (free * 100 / limit).toFixed(1) + '%</span></div>');
+        document.getElementById('storageLegend').innerHTML = rows.join('');
+
+        var when = d.checked_at ? new Date(d.checked_at) : new Date();
+        document.getElementById('storageChecked').textContent =
+            'Last checked ' + when.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' }) +
+            ' · plan limit is set by SUPABASE_DB_LIMIT_MB on the server';
+
+        // ── largest tables ──
+        var maxT = Math.max.apply(null, d.tables.map(function(t) { return t.bytes; }).concat([1]));
+        document.getElementById('storageTables').innerHTML = d.tables.length ? d.tables.map(function(t) {
+            return '<div class="tbl-row"><span class="tbl-name" title="' + escapeHtmlTw(t.name) + '">' + escapeHtmlTw(t.name) + '</span>' +
+                '<span class="tbl-bar"><span class="dot-' + t.category + '" style="width:' + Math.max(1.5, t.bytes * 100 / maxT) + '%;"></span></span>' +
+                '<span class="tbl-size">' + fmtBytes(t.bytes) + '</span></div>';
+        }).join('') : '<div class="setting-desc" style="padding:0.5rem 1.3rem;">No tables found.</div>';
+
+        // ── device dropdown (keeps the current choice) ──
+        var sel = document.getElementById('clearDeviceSelect');
+        var keep = sel.value || 'all';
+        sel.innerHTML = '<option value="all">All device locations</option>' + d.devices.map(function(dev) {
+            return '<option value="' + dev.id + '">' + escapeHtmlTw(dev.name) + '</option>';
+        }).join('');
+        sel.value = Array.from(sel.options).some(function(o) { return o.value === keep; }) ? keep : 'all';
+
+        // ── per-device table ──
+        document.getElementById('storageDevices').innerHTML = d.devices.length ? d.devices.map(function(dev) {
+            var range = dev.oldest ? fmtDay(dev.oldest) + ' → ' + fmtDay(dev.newest) : '—';
+            return '<tr><td>' + escapeHtmlTw(dev.name) + '</td>' +
+                '<td class="num">' + fmtNum(dev.readings) + '</td>' +
+                '<td class="num hide-sm">' + fmtNum(dev.ai) + '</td>' +
+                '<td class="num hide-sm">' + fmtNum(dev.alerts) + '</td>' +
+                '<td class="muted">' + range + '</td></tr>';
+        }).join('') : '<tr><td colspan="5" class="muted">No device locations yet.</td></tr>';
+    }
+
+    // ── clear history ──
+    function getClearSelection() {
+        var scopes = STORAGE_SCOPES.filter(function(k) { return document.getElementById('clearScope_' + k).checked; });
+        return {
+            device_id: document.getElementById('clearDeviceSelect').value,
+            scopes: scopes,
+            older_than_days: parseInt(document.getElementById('clearAgeSelect').value, 10) || 0
+        };
+    }
+
+    function clearTargetName() {
+        var sel = document.getElementById('clearDeviceSelect');
+        return sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : 'All device locations';
+    }
+
+    // How much history the chosen location holds in total (before the "how far back" filter).
+    function refreshScopeCounts() {
+        if (!storageData) return;
+        var id = document.getElementById('clearDeviceSelect').value;
+        var devs = storageData.devices.filter(function(d) { return id === 'all' || String(d.id) === id; });
+        STORAGE_SCOPES.forEach(function(k) {
+            var n = devs.reduce(function(a, d) { return a + (d[k] || 0); }, 0);
+            document.getElementById('scopeCount_' + k).textContent = fmtNum(n) + ' in total';
+        });
+    }
+
+    function describeCleared(deleted) {
+        var parts = STORAGE_SCOPES.filter(function(k) { return deleted && deleted[k] !== undefined && document.getElementById('clearScope_' + k).checked; })
+            .map(function(k) { return STORAGE_SCOPE_LABELS[k] + ': ' + fmtNum(deleted[k]); });
+        return parts.join(' · ');
+    }
+
+    function ageText(days) { return days ? 'older than ' + days + ' day' + (days === 1 ? '' : 's') : 'all of the history'; }
+
+    function updateClearPreview() {
+        refreshScopeCounts();
+        var out = document.getElementById('clearPreviewText');
+        var btn = document.getElementById('clearHistoryBtn');
+        clearPreview = null;
+        btn.disabled = true;
+        clearTimeout(clearPreviewTimer);
+        var sel = getClearSelection();
+        var reqId = ++clearPreviewReq;
+
+        if (!sel.scopes.length) {
+            out.className = 'clear-preview neutral';
+            out.textContent = 'Tick at least one type of history to clear.';
+            return;
+        }
+        out.className = 'clear-preview neutral';
+        out.textContent = 'Counting records…';
+
+        clearPreviewTimer = setTimeout(async function() {
+            try {
+                const res = await fetch('/api/admin/storage/clear_history', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(Object.assign({ dry_run: true }, sel))
+                });
+                const data = await res.json();
+                if (reqId !== clearPreviewReq) return;
+                if (!data.success) throw new Error(data.message || 'Could not count the records.');
+                clearPreview = data;
+                if (!data.total) {
+                    out.className = 'clear-preview neutral';
+                    out.textContent = 'Nothing to delete for ' + data.device_name + ' (' + ageText(sel.older_than_days) + ').';
+                    return;
+                }
+                out.className = 'clear-preview';
+                out.innerHTML = 'This will permanently delete <strong>' + fmtNum(data.total) + ' record' + (data.total === 1 ? '' : 's') +
+                    '</strong> of <strong>' + escapeHtmlTw(data.device_name) + '</strong> (' + ageText(sel.older_than_days) + ').' +
+                    '<br><span style="color:var(--text-muted); font-size:0.72rem;">' + escapeHtmlTw(describeCleared(data.deleted)) + '</span>';
+                btn.disabled = false;
+            } catch (e) {
+                if (reqId !== clearPreviewReq) return;
+                out.className = 'clear-preview neutral';
+                out.textContent = '❌ ' + (e.message || 'Could not count the records.');
+            }
+        }, 250);
+    }
+
+    function openClearModal() {
+        if (!clearPreview || !clearPreview.total) return;
+        var sel = getClearSelection();
+        document.getElementById('clearModalBody').innerHTML =
+            'You are about to delete <strong>' + fmtNum(clearPreview.total) + ' records</strong> of <strong>' +
+            escapeHtmlTw(clearPreview.device_name) + '</strong> — ' + escapeHtmlTw(ageText(sel.older_than_days)) + '.' +
+            '<br>' + escapeHtmlTw(describeCleared(clearPreview.deleted));
+        var input = document.getElementById('clearConfirmInput');
+        input.value = '';
+        document.getElementById('clearConfirmBtn').disabled = true;
+        document.getElementById('clearModal').classList.add('open');
+        setTimeout(function() { input.focus(); }, 50);
+    }
+
+    function closeClearModal() {
+        document.getElementById('clearModal').classList.remove('open');
+    }
+
+    function onClearConfirmInput() {
+        document.getElementById('clearConfirmBtn').disabled =
+            document.getElementById('clearConfirmInput').value.trim().toUpperCase() !== 'DELETE';
+    }
+
+    async function confirmClearHistory() {
+        var confirmBtn = document.getElementById('clearConfirmBtn');
+        if (confirmBtn.disabled) return;
+        confirmBtn.disabled = true;
+        confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting…';
+        try {
+            const res = await fetch('/api/admin/storage/clear_history', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(Object.assign({ dry_run: false, confirm: 'DELETE' }, getClearSelection()))
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || 'Could not clear the history.');
+            closeClearModal();
+            showToast('Deleted ' + fmtNum(data.total) + ' record' + (data.total === 1 ? '' : 's') + ' of ' + data.device_name + '.');
+            storageData = null;
+            await loadStorage(true);
+        } catch (e) {
+            showToast('❌ ' + (e.message || 'Could not clear the history.'));
+        } finally {
+            confirmBtn.innerHTML = '<i class="fas fa-trash-can"></i> Delete';
+            onClearConfirmInput();
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeClearModal();
+    });
+
+    loadUserInfo();
+    loadEmailMessages();
+    loadAppMessages();
+    loadTrendSettings();
+
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+            loadUserInfo();
+        }
+    });
+</script>
+<script src="/static/theme-toggle.js"></script>
+
+</body>
+</html>
